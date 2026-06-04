@@ -1,0 +1,764 @@
+type,line,time,puller,pullX,pullY,pullMs,thrower,throwerX,throwerY,receiver,receiverX,receiverY,defender,turnoverX,turnoverY,team_side
+1,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",0.0,,,,,,,,,,,,,,home
+7,,,amuraoka,-9.51,103.52,4843.0,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,26.46,72.9,amuraoka,18.49,65.49,,,,home
+18,,,,,,,amuraoka,18.49,65.49,kjay,4.08,65.69,,,,home
+18,,,,,,,kjay,4.08,65.69,dmiller2,-14.04,70.98,,,,home
+18,,,,,,,dmiller2,-14.04,70.98,amuraoka,1.33,69.95,,,,home
+18,,,,,,,amuraoka,1.33,69.95,bklar,-12.94,77.84,,,,home
+18,,,,,,,bklar,-12.94,77.84,dmiller2,-3.81,83.54,,,,home
+20,,,,,,,dmiller2,-3.81,83.54,lcomire,25.91,93.7,,,,home
+11,,,,,,,,,,,,,dmiller2,,,home
+18,,,,,,,lcomire,-24.89,41.53,kjay,-6.77,26.01,,,,home
+18,,,,,,,kjay,-6.77,26.01,amuraoka,9.71,26.49,,,,home
+18,,,,,,,amuraoka,9.71,26.49,dmiller2,13.14,44.0,,,,home
+18,,,,,,,dmiller2,13.14,44.0,bklar,25.08,61.37,,,,home
+22,,,,,,,bklar,25.08,61.37,,,,,24.81,106.75,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",136.0,,,,,,,,,,,,,,home
+18,,,,,,,aturcotte,0.0,40.0,ostonehou,7.44,56.91,,,,home
+22,,,,,,,ostonehou,7.44,56.91,,,,,-2.58,110.66,home
+11,,,,,,,,,,,,,ostonehou,,,home
+18,,,,,,,rpoloz,1.06,87.25,aturcotte,12.04,87.45,,,,home
+18,,,,,,,aturcotte,12.04,87.45,rpoloz,0.3,87.04,,,,home
+18,,,,,,,rpoloz,0.3,87.04,aodonnell,12.52,82.65,,,,home
+18,,,,,,,aodonnell,12.52,82.65,rpoloz,15.82,79.01,,,,home
+18,,,,,,,rpoloz,15.82,79.01,rcarvalho,0.1,78.74,,,,home
+18,,,,,,,rcarvalho,0.1,78.74,rpoloz,1.47,69.88,,,,home
+18,,,,,,,rpoloz,1.47,69.88,rcarvalho,-2.58,64.05,,,,home
+18,,,,,,,rcarvalho,-2.58,64.05,ckennedy,-14.25,71.32,,,,home
+18,,,,,,,ckennedy,-14.25,71.32,rpoloz,-3.27,64.66,,,,home
+18,,,,,,,rpoloz,-3.27,64.66,ckennedy,4.35,69.88,,,,home
+18,,,,,,,ckennedy,4.35,69.88,rpoloz,9.09,77.09,,,,home
+18,,,,,,,rpoloz,9.09,77.09,ostonehou,14.58,89.72,,,,home
+19,,,,,,,ostonehou,14.58,89.72,gmckee,17.46,103.86,,,,home
+1,"['zarmstron', 'ktong', 'tpuckrin', 'khuang', 'orobinson', 'jmcclean', 'cchan']",231.0,,,,,,,,,,,,,,home
+7,,,unknown,10.67,108.05,4910.0,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,orobinson,0.1,64.18,cchan,3.94,68.03,,,,home
+17,,,,,,,,,,,,,,,,home
+18,,,,,,,cchan,3.94,78.03,khuang,9.36,84.3,,,,home
+18,,,,,,,khuang,9.36,84.3,orobinson,11.56,91.51,,,,home
+18,,,,,,,orobinson,11.56,91.51,jmcclean,4.83,82.03,,,,home
+22,,,,,,,jmcclean,4.83,82.03,,,,,13.96,76.2,home
+13,,,,,,,,,,,,,,,,home
+20,,,,,,,orobinson,-10.47,20.59,cchan,-6.83,61.23,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",358.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,-2.44,11.87,aturcotte,1.33,23.27,,,,home
+18,,,,,,,aturcotte,1.33,23.27,rpoloz,16.43,31.71,,,,home
+18,,,,,,,rpoloz,16.43,31.71,ostonehou,16.57,52.65,,,,home
+18,,,,,,,ostonehou,16.57,52.65,gmckee,12.59,68.03,,,,home
+19,,,,,,,gmckee,12.59,68.03,ckennedy,2.77,110.11,,,,home
+1,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",384.0,,,,,,,,,,,,,,home
+7,,,amuraoka,-7.66,109.08,5692.0,,,,,,,,,,home
+11,,,,,,,,,,,,,amuraoka,,,home
+18,,,,,,,lcomire,23.78,20.38,dmiller2,22.96,30.61,,,,home
+18,,,,,,,dmiller2,22.96,30.61,lcomire,15.34,22.03,,,,home
+18,,,,,,,lcomire,15.34,22.03,kjay,-6.01,26.22,,,,home
+18,,,,,,,kjay,-6.01,26.22,amuraoka,-16.1,41.67,,,,home
+18,,,,,,,amuraoka,-16.1,41.67,dmiller2,-16.38,65.21,,,,home
+20,,,,,,,dmiller2,-16.38,65.21,asehgal,-9.17,74.96,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",461.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,-24.27,11.94,aturcotte,-9.24,17.64,,,,home
+18,,,,,,,aturcotte,-9.24,17.64,aodonnell,-4.3,13.79,,,,home
+18,,,,,,,aodonnell,-4.3,13.79,rpoloz,0.1,21.83,,,,home
+18,,,,,,,rpoloz,0.1,21.83,ostonehou,5.38,32.4,,,,home
+18,,,,,,,ostonehou,5.38,32.4,rpoloz,2.36,40.36,,,,home
+18,,,,,,,rpoloz,2.36,40.36,gmckee,-1.07,53.13,,,,home
+18,,,,,,,gmckee,-1.07,53.13,aturcotte,-0.45,63.91,,,,home
+18,,,,,,,aturcotte,-0.45,63.91,gmckee,-5.87,55.88,,,,home
+18,,,,,,,gmckee,-5.87,55.88,rcarvalho,-9.92,70.29,,,,home
+18,,,,,,,rcarvalho,-9.92,70.29,gmckee,-7.18,62.88,,,,home
+18,,,,,,,gmckee,-7.18,62.88,rcarvalho,-17.68,67.27,,,,home
+18,,,,,,,rcarvalho,-17.68,67.27,aturcotte,-9.72,58.62,,,,home
+19,,,,,,,aturcotte,-9.72,58.62,gmckee,17.19,106.4,,,,home
+1,"['zarmstron', 'ktong', 'tpuckrin', 'khuang', 'orobinson', 'jmcclean', 'cchan']",520.0,,,,,,,,,,,,,,home
+7,,,zarmstron,9.57,104.07,6079.0,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",579.0,,,,,,,,,,,,,,home
+18,,,,,,,aturcotte,0.0,40.0,aodonnell,-9.85,38.23,,,,home
+18,,,,,,,aodonnell,-9.85,38.23,rpoloz,-6.63,33.29,,,,home
+18,,,,,,,rpoloz,-6.63,33.29,aodonnell,-16.03,34.32,,,,home
+18,,,,,,,aodonnell,-16.03,34.32,rpoloz,-14.25,44.96,,,,home
+18,,,,,,,rpoloz,-14.25,44.96,ckennedy,-21.39,63.77,,,,home
+18,,,,,,,ckennedy,-21.39,63.77,aodonnell,-10.54,64.94,,,,home
+18,,,,,,,aodonnell,-10.54,64.94,aturcotte,-15.35,72.76,,,,home
+18,,,,,,,aturcotte,-15.35,72.76,ostonehou,-10.27,64.66,,,,home
+18,,,,,,,ostonehou,-10.27,64.66,aturcotte,-17.41,71.12,,,,home
+18,,,,,,,aturcotte,-17.41,71.12,rcarvalho,-2.58,67.41,,,,home
+22,,,,,,,rcarvalho,-2.58,67.41,,,,,6.41,91.02,home
+16,,,,,,,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,aturcotte,0.78,19.77,ostonehou,8.95,38.64,,,,home
+18,,,,,,,ostonehou,8.95,38.64,rcarvalho,1.88,43.93,,,,home
+18,,,,,,,rcarvalho,1.88,43.93,rpoloz,0.3,37.62,,,,home
+18,,,,,,,rpoloz,0.3,37.62,aturcotte,-12.6,41.05,,,,home
+18,,,,,,,aturcotte,-12.6,41.05,ckennedy,-10.54,49.97,,,,home
+17,,,,,,,,,,,,,,,,home
+18,,,,,,,ckennedy,-10.54,59.97,rpoloz,-9.92,68.78,,,,home
+18,,,,,,,rpoloz,-9.92,68.78,ostonehou,-13.42,76.61,,,,home
+18,,,,,,,ostonehou,-13.42,76.61,rpoloz,-17.27,84.02,,,,home
+18,,,,,,,rpoloz,-17.27,84.02,ostonehou,-19.6,91.02,,,,home
+24,,,,,,,ostonehou,-19.6,91.02,,,,,,,home
+5,"['ostonehou', 'zarmstron', 'dmiller2', 'khuang', 'bklar', 'aturcotte', 'amuraoka']",709.0,,,,,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+28,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",0.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,1.06,9.74,aturcotte,0.65,23.89,,,,home
+18,,,,,,,aturcotte,0.65,23.89,rpoloz,-18.57,34.11,,,,home
+18,,,,,,,rpoloz,-18.57,34.11,ostonehou,-19.88,60.68,,,,home
+18,,,,,,,ostonehou,-19.88,60.68,aodonnell,-9.92,35.28,,,,home
+18,,,,,,,aodonnell,-9.92,35.28,rcarvalho,-17.06,46.68,,,,home
+18,,,,,,,rcarvalho,-17.06,46.68,gmckee,-21.66,54.3,,,,home
+18,,,,,,,gmckee,-21.66,54.3,ostonehou,-12.6,65.42,,,,home
+22,,,,,,,ostonehou,-12.6,65.42,,,,,-12.33,66.38,home
+13,,,,,,,,,,,,,,,,home
+3,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",70.0,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,-22.14,19.83,amuraoka,-20.84,34.94,,,,home
+18,,,,,,,amuraoka,-20.84,34.94,kjay,-11.23,31.71,,,,home
+18,,,,,,,kjay,-11.23,31.71,amuraoka,14.58,45.51,,,,home
+18,,,,,,,amuraoka,14.58,45.51,lcomire,3.67,48.67,,,,home
+18,,,,,,,lcomire,3.67,48.67,asehgal,7.44,59.1,,,,home
+19,,,,,,,asehgal,7.44,59.1,amuraoka,19.11,114.85,,,,home
+1,"['zarmstron', 'ktong', 'tpuckrin', 'khuang', 'orobinson', 'jmcclean', 'cchan']",98.0,,,,,,,,,,,,,,home
+8,,,zarmstron,,,,,,,,,,,,,home
+16,,,,,,,,,,,,,,,,home
+17,,,,,,,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",183.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,3.53,2.12,aturcotte,-7.32,6.79,,,,home
+18,,,,,,,aturcotte,-7.32,6.79,aodonnell,-0.04,7.96,,,,home
+18,,,,,,,aodonnell,-0.04,7.96,rpoloz,-15.62,9.06,,,,home
+18,,,,,,,rpoloz,-15.62,9.06,ckennedy,-5.81,18.32,,,,home
+18,,,,,,,ckennedy,-5.81,18.32,rpoloz,1.47,12.9,,,,home
+18,,,,,,,rpoloz,1.47,12.9,aodonnell,8.2,21.83,,,,home
+18,,,,,,,aodonnell,8.2,21.83,aturcotte,3.6,30.27,,,,home
+22,,,,,,,aturcotte,3.6,30.27,,,,,5.25,78.81,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,11.63,73.04,ostonehou,-2.99,72.9,,,,home
+18,,,,,,,ostonehou,-2.99,72.9,rpoloz,-14.25,76.13,,,,home
+19,,,,,,,rpoloz,-14.25,76.13,aturcotte,-18.37,111.55,,,,home
+1,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",244.0,,,,,,,,,,,,,,home
+9,,,amuraoka,,,,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",256.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,-0.11,20.0,aturcotte,-0.45,16.75,,,,home
+18,,,,,,,aturcotte,-0.45,16.75,ostonehou,9.02,25.6,,,,home
+22,,,,,,,ostonehou,9.02,25.6,,,,,26.66,47.98,home
+5,"['zarmstron', 'ktong', 'tpuckrin', 'khuang', 'orobinson', 'jmcclean', 'cchan']",304.0,,,,,,,,,,,,,,home
+11,,,,,,,,,,,,,jmcclean,,,home
+18,,,,,,,tpuckrin,15.82,20.11,cchan,20.14,33.29,,,,home
+3,"['amuraoka', 'kjay', 'ostonehou', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",340.0,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,20.14,33.29,kjay,20.76,24.16,,,,home
+18,,,,,,,kjay,20.76,24.16,amuraoka,12.04,7.96,,,,home
+18,,,,,,,amuraoka,12.04,7.96,dmiller2,16.43,19.29,,,,home
+18,,,,,,,dmiller2,16.43,19.29,amuraoka,18.01,34.87,,,,home
+22,,,,,,,amuraoka,18.01,34.87,,,,,21.1,97.34,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,amuraoka,22.47,19.42,kjay,21.93,34.66,,,,home
+18,,,,,,,kjay,21.93,34.66,amuraoka,17.12,37.13,,,,home
+18,,,,,,,amuraoka,17.12,37.13,kjay,10.87,26.63,,,,home
+18,,,,,,,kjay,10.87,26.63,bklar,-17.34,44.75,,,,home
+18,,,,,,,bklar,-17.34,44.75,kjay,-8.55,32.81,,,,home
+18,,,,,,,kjay,-8.55,32.81,lcomire,-3.68,25.26,,,,home
+18,,,,,,,lcomire,-3.68,25.26,dmiller2,4.42,36.31,,,,home
+18,,,,,,,dmiller2,4.42,36.31,amuraoka,6.55,50.25,,,,home
+18,,,,,,,amuraoka,6.55,50.25,ostonehou,7.99,18.46,,,,home
+18,,,,,,,ostonehou,7.99,18.46,amuraoka,6.69,46.2,,,,home
+18,,,,,,,amuraoka,6.69,46.2,lcomire,14.44,51.62,,,,home
+18,,,,,,,lcomire,14.44,51.62,amuraoka,4.9,62.26,,,,home
+18,,,,,,,amuraoka,4.9,62.26,dmiller2,4.42,65.01,,,,home
+18,,,,,,,dmiller2,4.42,65.01,ostonehou,15.61,69.13,,,,home
+18,,,,,,,ostonehou,15.61,69.13,dmiller2,14.65,76.88,,,,home
+22,,,,,,,dmiller2,14.65,76.88,,,,,13.28,114.09,home
+16,,,,,,,,,,,,,,,,home
+11,,,,,,,,,,,,,kjay,,,home
+22,,,,,,,lcomire,-20.49,19.83,,,,,-25.09,43.11,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,23.78,26.7,amuraoka,9.78,22.72,,,,home
+18,,,,,,,amuraoka,9.78,22.72,ostonehou,17.6,33.15,,,,home
+18,,,,,,,ostonehou,17.6,33.15,asehgal,19.39,53.34,,,,home
+18,,,,,,,asehgal,19.39,53.34,amuraoka,12.11,34.32,,,,home
+18,,,,,,,amuraoka,12.11,34.32,lcomire,19.18,59.31,,,,home
+22,,,,,,,lcomire,19.18,59.31,,,,,0.78,113.34,home
+11,,,,,,,,,,,,,bklar,,,home
+22,,,,,,,lcomire,5.31,100.0,,,,,14.92,108.46,home
+13,,,,,,,,,,,,,,,,home
+25,"['amuraoka', 'kjay', 'ostonehou', 'lcomire', 'dmiller2', 'bklar', 'aturcotte']",662.0,,,,,,,,,,,,,,home
+18,,,,,,,kjay,-25.57,77.16,amuraoka,-15.62,67.34,,,,home
+18,,,,,,,amuraoka,-15.62,67.34,lcomire,-7.52,51.96,,,,home
+18,,,,,,,lcomire,-7.52,51.96,ostonehou,-16.86,80.11,,,,home
+18,,,,,,,ostonehou,-16.86,80.11,lcomire,-0.79,76.33,,,,home
+18,,,,,,,lcomire,-0.79,76.33,aturcotte,7.31,82.72,,,,home
+18,,,,,,,aturcotte,7.31,82.72,amuraoka,18.77,79.15,,,,home
+19,,,,,,,amuraoka,18.77,79.15,ostonehou,21.31,107.71,,,,home
+1,"['zarmstron', 'ktong', 'tpuckrin', 'khuang', 'jmcclean', 'cchan', 'aturcotte']",686.0,,,,,,,,,,,,,,home
+7,,,zarmstron,0.37,58.97,7067.0,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['amuraoka', 'ostonehou', 'zarmstron', 'lcomire', 'rcarvalho', 'dmiller2', 'aturcotte']",704.0,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,0.37,16.68,aturcotte,8.4,29.58,,,,home
+18,,,,,,,aturcotte,8.4,29.58,amuraoka,14.51,31.23,,,,home
+18,,,,,,,amuraoka,14.51,31.23,rcarvalho,19.8,42.83,,,,home
+18,,,,,,,rcarvalho,19.8,42.83,aturcotte,5.52,28.62,,,,home
+18,,,,,,,aturcotte,5.52,28.62,lcomire,-11.02,45.1,,,,home
+22,,,,,,,lcomire,-11.02,45.1,,,,,1.61,100.0,home
+29,,,,,,,,,,,,,,,,home
+1,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",0.0,,,,,,,,,,,,,,home
+7,,,amuraoka,-1.21,100.0,6052.0,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",59.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,9.78,13.72,aturcotte,2.29,20.0,,,,home
+18,,,,,,,aturcotte,2.29,20.0,ostonehou,17.4,35.28,,,,home
+18,,,,,,,ostonehou,17.4,35.28,rpoloz,10.05,24.57,,,,home
+18,,,,,,,rpoloz,10.05,24.57,aturcotte,-2.37,31.64,,,,home
+22,,,,,,,aturcotte,-2.37,31.64,,,,,-25.5,33.91,home
+16,,,,,,,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",147.0,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,0.24,9.74,asehgal,-0.79,22.92,,,,home
+18,,,,,,,asehgal,-0.79,22.92,lcomire,-9.1,28.69,,,,home
+18,,,,,,,lcomire,-9.1,28.69,dmiller2,-24.48,33.98,,,,home
+18,,,,,,,dmiller2,-24.48,33.98,lcomire,-24.41,59.38,,,,home
+20,,,,,,,lcomire,-24.41,59.38,amuraoka,-5.6,109.49,,,,home
+13,,,,,,,,,,,,,,,,home
+22,,,,,,,amuraoka,-3.13,69.26,,,,,-24.34,98.3,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,14.86,26.15,asehgal,20.21,41.94,,,,home
+22,,,,,,,asehgal,20.21,41.94,,,,,15.54,106.4,home
+16,,,,,,,,,,,,,,,,home
+5,"['zarmstron', 'tpuckrin', 'khuang', 'orobinson', 'jmcclean', 'cchan', 'lcomire']",309.0,,,,,,,,,,,,,,home
+11,,,,,,,,,,,,,tpuckrin,,,home
+18,,,,,,,cchan,-6.29,52.1,khuang,-21.66,63.43,,,,home
+18,,,,,,,khuang,-21.66,63.43,cchan,-14.39,47.43,,,,home
+18,,,,,,,cchan,-14.39,47.43,orobinson,15.89,37.96,,,,home
+18,,,,,,,orobinson,15.89,37.96,tpuckrin,20.9,65.9,,,,home
+18,,,,,,,tpuckrin,20.9,65.9,orobinson,12.04,54.23,,,,home
+18,,,,,,,orobinson,12.04,54.23,lcomire,19.25,65.42,,,,home
+19,,,,,,,lcomire,19.25,65.42,cchan,19.32,104.41,,,,home
+1,"['amuraoka', 'kjay', 'ostonehou', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",357.0,,,,,,,,,,,,,,home
+7,,,amuraoka,-5.19,89.86,6663.0,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,kjay,-4.91,49.63,lcomire,-11.23,48.87,,,,home
+18,,,,,,,lcomire,-11.23,48.87,kjay,-2.78,50.73,,,,home
+18,,,,,,,kjay,-2.78,50.73,dmiller2,2.91,49.29,,,,home
+18,,,,,,,dmiller2,2.91,49.29,amuraoka,-0.79,42.76,,,,home
+18,,,,,,,amuraoka,-0.79,42.76,lcomire,-13.77,71.67,,,,home
+18,,,,,,,lcomire,-13.77,71.67,dmiller2,-11.57,85.33,,,,home
+19,,,,,,,dmiller2,-11.57,85.33,amuraoka,-8.21,107.57,,,,home
+1,"['zarmstron', 'ktong', 'tpuckrin', 'khuang', 'orobinson', 'jmcclean', 'cchan']",398.0,,,,,,,,,,,,,,home
+7,,,zarmstron,-4.5,107.36,3319.0,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,jmcclean,-5.94,60.48,orobinson,0.44,50.93,,,,home
+18,,,,,,,orobinson,0.44,50.93,jmcclean,5.8,49.35,,,,home
+18,,,,,,,jmcclean,5.8,49.35,khuang,24.53,48.67,,,,home
+18,,,,,,,khuang,24.53,48.67,cchan,1.88,54.85,,,,home
+18,,,,,,,cchan,1.88,54.85,ktong,7.72,67.55,,,,home
+18,,,,,,,ktong,7.72,67.55,orobinson,-6.56,61.23,,,,home
+18,,,,,,,orobinson,-6.56,61.23,zarmstron,-21.18,73.31,,,,home
+18,,,,,,,zarmstron,-21.18,73.31,khuang,-13.15,79.7,,,,home
+22,,,,,,,khuang,-13.15,79.7,,,,,-4.78,82.31,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,orobinson,-3.13,19.49,khuang,-4.43,39.33,,,,home
+18,,,,,,,khuang,-4.43,39.33,tpuckrin,-11.43,51.48,,,,home
+22,,,,,,,tpuckrin,-11.43,51.48,,,,,4.15,53.68,home
+17,,,,,,,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",548.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,-4.71,12.42,aturcotte,0.3,21.07,,,,home
+18,,,,,,,aturcotte,0.3,21.07,rcarvalho,5.18,30.82,,,,home
+18,,,,,,,rcarvalho,5.18,30.82,gmckee,9.78,44.82,,,,home
+18,,,,,,,gmckee,9.78,44.82,rpoloz,19.18,46.75,,,,home
+18,,,,,,,rpoloz,19.18,46.75,ostonehou,25.15,59.93,,,,home
+18,,,,,,,ostonehou,25.15,59.93,aturcotte,20.21,40.98,,,,home
+18,,,,,,,aturcotte,20.21,40.98,aodonnell,1.81,28.0,,,,home
+18,,,,,,,aodonnell,1.81,28.0,gmckee,-10.06,44.0,,,,home
+18,,,,,,,gmckee,-10.06,44.0,ostonehou,-22.9,59.31,,,,home
+3,"['ostonehou', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee', 'lcomire']",603.0,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,-22.9,59.31,aturcotte,-16.51,77.5,,,,home
+18,,,,,,,aturcotte,-16.51,77.5,ostonehou,-24.54,93.43,,,,home
+19,,,,,,,ostonehou,-24.54,93.43,aturcotte,-19.6,111.76,,,,home
+1,"['amuraoka', 'kjay', 'lcomire', 'dmiller2', 'bklar', 'asehgal', 'ktong']",613.0,,,,,,,,,,,,,,home
+7,,,amuraoka,0.24,105.78,5880.0,,,,,,,,,,home
+11,,,,,,,,,,,,,dmiller2,,,home
+18,,,,,,,lcomire,26.66,19.77,dmiller2,19.73,70.29,,,,home
+18,,,,,,,dmiller2,19.73,70.29,kjay,13.35,64.66,,,,home
+18,,,,,,,kjay,13.35,64.66,asehgal,11.97,59.31,,,,home
+22,,,,,,,asehgal,11.97,59.31,,,,,16.91,82.72,home
+11,,,,,,,,,,,,,kjay,,,home
+30,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",0.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,-12.81,11.87,aturcotte,-3.06,20.11,,,,home
+18,,,,,,,aturcotte,-3.06,20.11,rpoloz,-11.71,32.6,,,,home
+18,,,,,,,rpoloz,-11.71,32.6,aodonnell,-16.17,33.98,,,,home
+18,,,,,,,aodonnell,-16.17,33.98,aturcotte,-23.17,44.48,,,,home
+18,,,,,,,aturcotte,-23.17,44.48,gmckee,-7.8,47.78,,,,home
+18,,,,,,,gmckee,-7.8,47.78,rcarvalho,1.68,54.3,,,,home
+18,,,,,,,rcarvalho,1.68,54.3,aturcotte,-2.3,57.39,,,,home
+18,,,,,,,aturcotte,-2.3,57.39,ostonehou,-19.26,65.62,,,,home
+18,,,,,,,ostonehou,-19.26,65.62,aodonnell,-5.87,63.56,,,,home
+18,,,,,,,aodonnell,-5.87,63.56,aturcotte,-15.55,74.55,,,,home
+18,,,,,,,aturcotte,-15.55,74.55,rcarvalho,0.44,74.27,,,,home
+18,,,,,,,rcarvalho,0.44,74.27,rpoloz,11.01,81.0,,,,home
+19,,,,,,,rpoloz,11.01,81.0,ckennedy,11.56,104.27,,,,home
+1,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",64.0,,,,,,,,,,,,,,home
+7,,,amuraoka,9.5,106.61,4095.0,,,,,,,,,,home
+16,,,,,,,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",124.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,-11.57,11.87,aturcotte,-5.26,21.28,,,,home
+18,,,,,,,aturcotte,-5.26,21.28,ostonehou,6.48,29.93,,,,home
+18,,,,,,,ostonehou,6.48,29.93,aturcotte,10.33,42.35,,,,home
+18,,,,,,,aturcotte,10.33,42.35,ostonehou,-0.31,38.3,,,,home
+18,,,,,,,ostonehou,-0.31,38.3,gmckee,-17.2,40.98,,,,home
+22,,,,,,,gmckee,-17.2,40.98,,,,,-26.26,52.44,home
+17,,,,,,,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'dmiller2', 'bklar', 'asehgal']",199.0,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,-10.61,20.18,asehgal,1.54,23.61,,,,home
+18,,,,,,,asehgal,1.54,23.61,lcomire,-13.7,28.42,,,,home
+18,,,,,,,lcomire,-13.7,28.42,amuraoka,-16.38,54.3,,,,home
+18,,,,,,,amuraoka,-16.38,54.3,kjay,-0.11,44.21,,,,home
+18,,,,,,,kjay,-0.11,44.21,lcomire,19.52,44.0,,,,home
+18,,,,,,,lcomire,19.52,44.0,asehgal,12.8,68.99,,,,home
+18,,,,,,,asehgal,12.8,68.99,dmiller2,21.24,78.05,,,,home
+18,,,,,,,dmiller2,21.24,78.05,asehgal,18.56,89.1,,,,home
+24,,,,,,,asehgal,18.56,89.1,,,,,,,home
+11,,,,,,,,,,,,,lcomire,,,home
+18,,,,,,,lcomire,-1.27,70.36,dmiller2,0.65,76.68,,,,home
+18,,,,,,,dmiller2,0.65,76.68,asehgal,9.23,91.57,,,,home
+25,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'bklar', 'asehgal', 'ostonehou']",284.0,,,,,,,,,,,,,,home
+18,,,,,,,asehgal,9.23,91.57,amuraoka,-5.46,86.7,,,,home
+18,,,,,,,amuraoka,-5.46,86.7,ostonehou,-14.87,94.66,,,,home
+18,,,,,,,ostonehou,-14.87,94.66,kjay,-1.48,82.44,,,,home
+18,,,,,,,kjay,-1.48,82.44,amuraoka,-3.61,94.11,,,,home
+20,,,,,,,amuraoka,-3.61,94.11,ktong,-3.47,101.87,,,,home
+16,,,,,,,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",369.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,10.46,11.94,aturcotte,1.75,19.15,,,,home
+18,,,,,,,aturcotte,1.75,19.15,gmckee,-10.47,15.37,,,,home
+18,,,,,,,gmckee,-10.47,15.37,ckennedy,-21.8,35.56,,,,home
+18,,,,,,,ckennedy,-21.8,35.56,aturcotte,-23.65,51.21,,,,home
+18,,,,,,,aturcotte,-23.65,51.21,gmckee,-2.3,46.54,,,,home
+18,,,,,,,gmckee,-2.3,46.54,aturcotte,0.85,58.42,,,,home
+18,,,,,,,aturcotte,0.85,58.42,gmckee,10.81,67.68,,,,home
+18,,,,,,,gmckee,10.81,67.68,rpoloz,19.11,71.12,,,,home
+18,,,,,,,rpoloz,19.11,71.12,aodonnell,12.25,68.23,,,,home
+18,,,,,,,aodonnell,12.25,68.23,rcarvalho,13.83,72.7,,,,home
+18,,,,,,,rcarvalho,13.83,72.7,aodonnell,10.81,65.69,,,,home
+18,,,,,,,aodonnell,10.81,65.69,ckennedy,18.15,79.29,,,,home
+18,,,,,,,ckennedy,18.15,79.29,rpoloz,-0.59,91.51,,,,home
+19,,,,,,,rpoloz,-0.59,91.51,aodonnell,8.2,103.45,,,,home
+1,"['amuraoka', 'kjay', 'ktong', 'lcomire', 'bklar', 'zarmstron', 'orobinson']",449.0,,,,,,,,,,,,,,home
+7,,,zarmstron,-11.85,106.06,3404.0,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,lcomire,-23.86,20.66,orobinson,-6.97,13.18,,,,home
+18,,,,,,,orobinson,-6.97,13.18,amuraoka,1.2,20.66,,,,home
+18,,,,,,,amuraoka,1.2,20.66,kjay,15.34,26.15,,,,home
+18,,,,,,,kjay,15.34,26.15,amuraoka,18.08,40.09,,,,home
+18,,,,,,,amuraoka,18.08,40.09,orobinson,19.45,67.34,,,,home
+20,,,,,,,orobinson,19.45,67.34,bklar,22.54,84.43,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'aturcotte', 'gmckee']",530.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,1.47,11.87,aturcotte,-0.31,19.63,,,,home
+18,,,,,,,aturcotte,-0.31,19.63,aodonnell,-11.16,17.57,,,,home
+18,,,,,,,aodonnell,-11.16,17.57,aturcotte,-2.44,17.91,,,,home
+18,,,,,,,aturcotte,-2.44,17.91,aodonnell,9.91,15.37,,,,home
+18,,,,,,,aodonnell,9.91,15.37,aturcotte,14.99,19.01,,,,home
+18,,,,,,,aturcotte,14.99,19.01,ostonehou,6.82,30.96,,,,home
+18,,,,,,,ostonehou,6.82,30.96,aodonnell,-2.03,19.77,,,,home
+18,,,,,,,aodonnell,-2.03,19.77,rpoloz,-6.29,26.63,,,,home
+18,,,,,,,rpoloz,-6.29,26.63,aturcotte,-14.04,24.16,,,,home
+18,,,,,,,aturcotte,-14.04,24.16,gmckee,7.58,30.61,,,,home
+18,,,,,,,gmckee,7.58,30.61,rpoloz,5.66,37.62,,,,home
+18,,,,,,,rpoloz,5.66,37.62,rcarvalho,-2.1,40.36,,,,home
+18,,,,,,,rcarvalho,-2.1,40.36,aturcotte,5.45,52.65,,,,home
+20,,,,,,,aturcotte,5.45,52.65,rpoloz,-0.25,57.8,,,,home
+25,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'gmckee', 'lcomire']",606.0,,,,,,,,,,,,,,home
+13,,,,,,,,,,,,,,,,home
+18,,,,,,,rpoloz,24.81,20.59,gmckee,12.45,11.39,,,,home
+18,,,,,,,gmckee,12.45,11.39,lcomire,2.57,12.28,,,,home
+18,,,,,,,lcomire,2.57,12.28,ckennedy,8.75,20.93,,,,home
+18,,,,,,,ckennedy,8.75,20.93,gmckee,19.39,22.72,,,,home
+18,,,,,,,gmckee,19.39,22.72,lcomire,19.45,30.06,,,,home
+18,,,,,,,lcomire,19.45,30.06,rpoloz,-11.3,34.66,,,,home
+18,,,,,,,rpoloz,-11.3,34.66,rcarvalho,-3.4,39.06,,,,home
+18,,,,,,,rcarvalho,-3.4,39.06,lcomire,3.6,50.8,,,,home
+18,,,,,,,lcomire,3.6,50.8,ostonehou,11.97,72.15,,,,home
+18,,,,,,,ostonehou,11.97,72.15,rcarvalho,9.09,79.7,,,,home
+18,,,,,,,rcarvalho,9.09,79.7,aodonnell,14.03,75.24,,,,home
+19,,,,,,,aodonnell,14.03,75.24,ostonehou,15.61,101.67,,,,home
+1,"['zarmstron', 'ktong', 'tpuckrin', 'khuang', 'orobinson', 'jmcclean', 'cchan']",670.0,,,,,,,,,,,,,,home
+7,,,zarmstron,-11.98,109.77,4094.0,,,,,,,,,,home
+15,,,,,,,,,,,,,,,,home
+2,"['ostonehou', 'rcarvalho', 'rpoloz', 'aodonnell', 'ckennedy', 'gmckee', 'lcomire']",707.0,,,,,,,,,,,,,,home
+18,,,,,,,aodonnell,-9.85,14.96,lcomire,0.78,21.55,,,,home
+18,,,,,,,lcomire,0.78,21.55,aodonnell,-8.21,16.13,,,,home
+18,,,,,,,aodonnell,-8.21,16.13,lcomire,1.68,20.59,,,,home
+18,,,,,,,lcomire,1.68,20.59,aodonnell,-6.08,16.47,,,,home
+18,,,,,,,aodonnell,-6.08,16.47,lcomire,8.47,27.45,,,,home
+18,,,,,,,lcomire,8.47,27.45,aodonnell,0.17,19.9,,,,home
+31,,,,,,,,,,,,,,,,home
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",0.0,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,21.2,17.33,arousseau,2.84,23.0,,,,away
+18,,,,,,,arousseau,2.84,23.0,jbrissett,17.34,18.93,,,,away
+22,,,,,,,jbrissett,17.34,18.93,,,,,17.34,18.93,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,-16.11,19.95,qbonnaud,-0.15,20.46,,,,away
+18,,,,,,,qbonnaud,-0.15,20.46,kgroulx,11.58,29.12,,,,away
+18,,,,,,,kgroulx,11.58,29.12,wstpierre,18.65,38.95,,,,away
+18,,,,,,,wstpierre,18.65,38.95,tdecraene,22.95,49.15,,,,away
+22,,,,,,,tdecraene,22.95,49.15,,,,,22.95,49.15,away
+11,,,,,,,,,,,,,tdecraene,,,away
+18,,,,,,,tdecraene,-17.42,25.77,jbrissett,-2.12,20.89,,,,away
+18,,,,,,,jbrissett,-2.12,20.89,arousseau,-13.92,31.23,,,,away
+18,,,,,,,arousseau,-13.92,31.23,qbonnaud,-2.12,29.34,,,,away
+18,,,,,,,qbonnaud,-2.12,29.34,jbrissett,10.63,24.9,,,,away
+18,,,,,,,jbrissett,10.63,24.9,kgroulx,21.34,35.89,,,,away
+19,,,,,,,kgroulx,21.34,35.89,tdecraene,19.38,107.76,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'rlalondel', 'jduquette', 'ctremblay', 'mbrichet']",131.0,,,,,,,,,,,,,,away
+8,,,unknown,,,,,,,,,,,,,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,cguay,4.15,20.75,rlalondel,12.82,28.83,,,,away
+18,,,,,,,rlalondel,12.82,28.83,ctremblay,-2.85,22.93,,,,away
+18,,,,,,,ctremblay,-2.85,22.93,rlalondel,-14.65,30.58,,,,away
+22,,,,,,,rlalondel,-14.65,30.58,,,,,-14.65,30.58,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",231.0,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,-11.08,9.1,jbrissett,-1.54,19.95,,,,away
+18,,,,,,,jbrissett,-1.54,19.95,tdecraene,-10.79,27.01,,,,away
+18,,,,,,,tdecraene,-10.79,27.01,arousseau,-4.38,17.83,,,,away
+18,,,,,,,arousseau,-4.38,17.83,jbrissett,7.94,21.33,,,,away
+18,,,,,,,jbrissett,7.94,21.33,kgroulx,17.41,38.0,,,,away
+22,,,,,,,kgroulx,17.41,38.0,,,,,17.41,38.0,away
+16,,,,,,,,,,,,,,,,away
+11,,,,,,,,,,,,,arousseau,,,away
+18,,,,,,,jbrissett,-11.59,45.36,tdecraene,-16.33,37.79,,,,away
+18,,,,,,,tdecraene,-16.33,37.79,jbrissett,-18.22,52.86,,,,away
+22,,,,,,,jbrissett,-18.22,52.86,,,,,19.67,116.43,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,17.77,83.95,tdecraene,10.92,74.49,,,,away
+18,,,,,,,tdecraene,10.92,74.49,jbrissett,0.43,67.13,,,,away
+18,,,,,,,jbrissett,0.43,67.13,tdecraene,-11.95,79.51,,,,away
+18,,,,,,,tdecraene,-11.95,79.51,jbrissett,-17.56,91.45,,,,away
+19,,,,,,,jbrissett,-17.56,91.45,plebourda,-16.33,113.3,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'ycohonner', 'rlalondel', 'jduquette', 'ctremblay']",358.0,,,,,,,,,,,,,,away
+7,,,unknown,-15.52,83.66,2173.0,,,,,,,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'ccoulbury', 'qbonnaud', 'kgroulx', 'dlacombeb']",384.0,,,,,,,,,,,,,,away
+18,,,,,,,ccoulbury,9.9,17.11,dlacombeb,1.96,24.17,,,,away
+18,,,,,,,dlacombeb,1.96,24.17,tdecraene,21.12,45.58,,,,away
+22,,,,,,,tdecraene,21.12,45.58,,,,,3.27,115.12,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,dlacombeb,6.19,23.66,ccoulbury,-13.78,36.55,,,,away
+18,,,,,,,ccoulbury,-13.78,36.55,kgroulx,-22.01,52.64,,,,away
+19,,,,,,,kgroulx,-22.01,52.64,tdecraene,-16.84,107.18,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'ycohonner', 'jduquette', 'ctremblay', 'mbrichet']",461.0,,,,,,,,,,,,,,away
+7,,,ctremblay,20.83,114.61,8895.0,,,,,,,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",520.0,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,-14.43,17.91,kgroulx,-16.18,31.96,,,,away
+18,,,,,,,kgroulx,-16.18,31.96,wstpierre,-13.19,57.88,,,,away
+18,,,,,,,wstpierre,-13.19,57.88,jbrissett,-1.46,37.2,,,,away
+18,,,,,,,jbrissett,-1.46,37.2,tdecraene,16.61,48.05,,,,away
+18,,,,,,,tdecraene,16.61,48.05,kgroulx,16.24,63.27,,,,away
+18,,,,,,,kgroulx,16.24,63.27,tdecraene,12.45,50.09,,,,away
+18,,,,,,,tdecraene,12.45,50.09,wstpierre,-15.96,39.75,,,,away
+18,,,,,,,wstpierre,-15.96,39.75,arousseau,-0.73,43.54,,,,away
+18,,,,,,,arousseau,-0.73,43.54,qbonnaud,-13.19,43.68,,,,away
+18,,,,,,,qbonnaud,-13.19,43.68,wstpierre,13.55,68.73,,,,away
+18,,,,,,,wstpierre,13.55,68.73,tdecraene,11.87,76.96,,,,away
+18,,,,,,,tdecraene,11.87,76.96,qbonnaud,-0.08,95.53,,,,away
+19,,,,,,,qbonnaud,-0.08,95.53,plebourda,8.3,113.51,,,,away
+1,"['jgiard', 'ycohonner', 'rlalondel', 'jduquette', 'ctremblay', 'lmckeown', 'jbrissett']",579.0,,,,,,,,,,,,,,away
+8,,,ctremblay,,,,,,,,,,,,,away
+11,,,,,,,,,,,,,jbrissett,,,away
+17,,,,,,,,,,,,,,,,away
+22,,,,,,,jbrissett,-9.99,34.239999999999995,,,,,-9.99,34.23,away
+14,,,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,14.79,20.0,lmckeown,21.34,31.89,,,,away
+18,,,,,,,lmckeown,21.34,31.89,jbrissett,-2.99,23.22,,,,away
+3,"['swarrick', 'tdecraene', 'arousseau', 'ctremblay', 'qbonnaud', 'kgroulx', 'jbrissett']",709.0,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,2.91,22.71,jbrissett,-10.06,29.63,,,,away
+20,,,,,,,jbrissett,-10.06,29.63,kgroulx,15.0,110.24,,,,away
+28,,,,,,,,,,,,,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'rlalondel', 'jduquette', 'ctremblay', 'mbrichet']",0.0,,,,,,,,,,,,,,away
+7,,,ctremblay,-7.87,107.76,5458.0,,,,,,,,,,away
+11,,,,,,,,,,,,,mbrichet,,,away
+18,,,,,,,ctremblay,7.72,50.09,cguay,9.54,30.65,,,,away
+18,,,,,,,cguay,9.54,30.65,mbrichet,19.59,57.37,,,,away
+18,,,,,,,mbrichet,19.59,57.37,cguay,9.9,61.16,,,,away
+22,,,,,,,cguay,9.9,61.16,,,,,16.39,107.47,away
+5,"['cguay', 'swarrick', 'jbernat', 'ycohonner', 'jduquette', 'ctremblay', 'mbrichet']",70.0,,,,,,,,,,,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",98.0,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,0.0,40.0,arousseau,-6.85,29.63,,,,away
+17,,,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,-6.85,39.629999999999995,tdecraene,7.43,52.93,,,,away
+18,,,,,,,tdecraene,7.43,52.93,wstpierre,-2.26,61.45,,,,away
+18,,,,,,,wstpierre,-2.26,61.45,jbrissett,-3.72,53.22,,,,away
+18,,,,,,,jbrissett,-3.72,53.22,tdecraene,9.98,52.5,,,,away
+16,,,,,,,,,,,,,,,,away
+18,,,,,,,tdecraene,9.98,42.5,qbonnaud,18.72,66.26,,,,away
+18,,,,,,,qbonnaud,18.72,66.26,tdecraene,10.49,54.32,,,,away
+18,,,,,,,tdecraene,10.49,54.32,jbrissett,19.23,66.84,,,,away
+18,,,,,,,jbrissett,19.23,66.84,wstpierre,6.84,82.06,,,,away
+18,,,,,,,wstpierre,6.84,82.06,jbrissett,-1.97,79.36,,,,away
+18,,,,,,,jbrissett,-1.97,79.36,tdecraene,17.63,85.99,,,,away
+19,,,,,,,tdecraene,17.63,85.99,qbonnaud,21.2,107.18,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'ctremblay', 'mbrichet', 'jgiard', 'jduquette']",183.0,,,,,,,,,,,,,,away
+7,,,ctremblay,8.96,109.22,5069.0,,,,,,,,,,away
+13,,,,,,,,,,,,,,,,away
+20,,,,,,,ctremblay,0.0,40.0,cguay,-12.25,59.19,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'ccoulbury', 'qbonnaud', 'kgroulx', 'dlacombeb']",244.0,,,,,,,,,,,,,,away
+18,,,,,,,dlacombeb,0.0,60.0,kgroulx,0.14,78.27,,,,away
+18,,,,,,,kgroulx,0.14,78.27,wstpierre,0.87,91.38,,,,away
+18,,,,,,,wstpierre,0.87,91.38,dlacombeb,-18.07,89.34,,,,away
+19,,,,,,,dlacombeb,-18.07,89.34,plebourda,-18.22,107.25,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'ycohonner', 'jduquette', 'ctremblay', 'mbrichet']",256.0,,,,,,,,,,,,,,away
+7,,,ctremblay,-3.14,106.67,7995.0,,,,,,,,,,away
+11,,,,,,,,,,,,,jbernat,,,away
+18,,,,,,,jbernat,-16.03,65.02,ctremblay,-21.94,63.71,,,,away
+18,,,,,,,ctremblay,-21.94,63.71,jbernat,-22.66,86.94,,,,away
+18,,,,,,,jbernat,-22.66,86.94,jduquette,-22.37,75.5,,,,away
+3,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",304.0,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,-22.37,75.5,qbonnaud,-3.28,84.75,,,,away
+18,,,,,,,qbonnaud,-3.28,84.75,jbrissett,1.38,74.05,,,,away
+18,,,,,,,jbrissett,1.38,74.05,kgroulx,13.26,35.46,,,,away
+22,,,,,,,kgroulx,13.26,35.46,,,,,6.99,81.33,away
+5,"['cguay', 'swarrick', 'jbernat', 'ycohonner', 'jduquette', 'ctremblay', 'mbrichet']",340.0,,,,,,,,,,,,,,away
+11,,,,,,,,,,,,,swarrick,,,away
+18,,,,,,,cguay,-15.38,33.27,swarrick,1.09,33.93,,,,away
+18,,,,,,,swarrick,1.09,33.93,ctremblay,-19.97,41.06,,,,away
+18,,,,,,,ctremblay,-19.97,41.06,jbernat,-16.54,50.02,,,,away
+22,,,,,,,jbernat,-16.54,50.02,,,,,-17.49,95.82,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,ctremblay,-0.95,23.66,jduquette,11.73,28.25,,,,away
+18,,,,,,,jduquette,11.73,28.25,jbernat,18.65,39.17,,,,away
+18,,,,,,,jbernat,18.65,39.17,ctremblay,6.84,39.53,,,,away
+18,,,,,,,ctremblay,6.84,39.53,jduquette,9.25,14.63,,,,away
+17,,,,,,,,,,,,,,,,away
+18,,,,,,,jduquette,9.25,24.630000000000003,ctremblay,21.63,67.35,,,,away
+22,,,,,,,ctremblay,21.63,67.35,,,,,15.88,102.16,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,cguay,22.29,63.85,ycohonner,1.74,64.07,,,,away
+18,,,,,,,ycohonner,1.74,64.07,mbrichet,-13.34,68.59,,,,away
+17,,,,,,,,,,,,,,,,away
+22,,,,,,,mbrichet,-13.34,78.59,,,,,-23.68,92.54,away
+11,,,,,,,,,,,,,cguay,,,away
+22,,,,,,,cguay,18.14,23.95,,,,,18.14,23.95,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,ctremblay,5.9,24.75,mbrichet,16.24,27.59,,,,away
+22,,,,,,,mbrichet,16.24,27.59,,,,,16.23,27.59,away
+25,"['cguay', 'swarrick', 'jbernat', 'jduquette', 'ctremblay', 'mbrichet', 'tdecraene']",680.0,,,,,,,,,,,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['swarrick', 'tdecraene', 'arousseau', 'ctremblay', 'qbonnaud', 'kgroulx', 'jbrissett']",686.0,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,0.0,40.0,tdecraene,-16.18,79.36,,,,away
+19,,,,,,,tdecraene,-16.18,79.36,qbonnaud,15.73,104.19,,,,away
+1,"['jbernat', 'ctremblay', 'tdecraene', 'swarrick', 'jduquette', 'cguay', 'kgroulx']",704.0,,,,,,,,,,,,,,away
+7,,,unknown,-2.7,104.7,3145.0,,,,,,,,,,away
+11,,,,,,,,,,,,,tdecraene,,,away
+29,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",0.0,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,1.67,12.74,arousseau,1.89,25.99,,,,away
+18,,,,,,,arousseau,1.89,25.99,tdecraene,14.71,37.13,,,,away
+18,,,,,,,tdecraene,14.71,37.13,arousseau,-5.18,30.29,,,,away
+18,,,,,,,arousseau,-5.18,30.29,qbonnaud,-22.96,41.21,,,,away
+18,,,,,,,qbonnaud,-22.96,41.21,plebourda,10.92,40.12,,,,away
+18,,,,,,,plebourda,10.92,40.12,arousseau,19.23,48.85,,,,away
+18,,,,,,,arousseau,19.23,48.85,tdecraene,19.01,65.82,,,,away
+18,,,,,,,tdecraene,19.01,65.82,jbrissett,4.22,43.83,,,,away
+18,,,,,,,jbrissett,4.22,43.83,tdecraene,21.63,52.06,,,,away
+18,,,,,,,tdecraene,21.63,52.06,jbrissett,20.91,73.61,,,,away
+18,,,,,,,jbrissett,20.91,73.61,wstpierre,20.83,89.34,,,,away
+19,,,,,,,wstpierre,20.83,89.34,plebourda,19.89,109.66,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'rlalondel', 'jduquette', 'ctremblay', 'mbrichet']",59.0,,,,,,,,,,,,,,away
+7,,,ctremblay,1.16,90.0,4693.0,,,,,,,,,,away
+11,,,,,,,,,,,,,cguay,,,away
+18,,,,,,,rlalondel,23.02,69.97,cguay,16.1,86.28,,,,away
+18,,,,,,,cguay,16.1,86.28,rlalondel,14.49,66.11,,,,away
+18,,,,,,,rlalondel,14.49,66.11,mbrichet,-0.95,61.01,,,,away
+18,,,,,,,mbrichet,-0.95,61.01,ctremblay,-14.8,68.81,,,,away
+18,,,,,,,ctremblay,-14.8,68.81,jbernat,-4.16,75.29,,,,away
+18,,,,,,,jbernat,-4.16,75.29,rlalondel,11.73,72.74,,,,away
+18,,,,,,,rlalondel,11.73,72.74,jbernat,-4.09,68.08,,,,away
+18,,,,,,,jbernat,-4.09,68.08,swarrick,-16.69,81.99,,,,away
+17,,,,,,,,,,,,,,,,away
+18,,,,,,,swarrick,-16.69,91.99,rlalondel,-4.23,87.59,,,,away
+18,,,,,,,rlalondel,-4.23,87.59,cguay,-19.31,96.33,,,,away
+19,,,,,,,cguay,-19.31,96.33,jduquette,-16.03,106.89,,,,away
+1,"['jduquette', 'cguay', 'dlacombeb', 'phooley', 'mbrichet', 'jbernat', 'ctremblay']",147.0,,,,,,,,,,,,,,away
+7,,,ctremblay,-9.7,105.07,5158.0,,,,,,,,,,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,ctremblay,0.07,28.39,dlacombeb,-14.07,25.92,,,,away
+18,,,,,,,dlacombeb,-14.07,25.92,mbrichet,-0.88,32.11,,,,away
+18,,,,,,,mbrichet,-0.88,32.11,ctremblay,4.88,28.9,,,,away
+18,,,,,,,ctremblay,4.88,28.9,mbrichet,2.33,39.46,,,,away
+22,,,,,,,mbrichet,2.33,39.46,,,,,17.12,32.83,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,phooley,25.13,20.24,ctremblay,21.05,32.18,,,,away
+18,,,,,,,ctremblay,21.05,32.18,phooley,3.13,33.71,,,,away
+18,,,,,,,phooley,3.13,33.71,dlacombeb,-15.74,36.84,,,,away
+18,,,,,,,dlacombeb,-15.74,36.84,jbernat,-20.33,50.02,,,,away
+18,,,,,,,jbernat,-20.33,50.02,ctremblay,-1.24,51.77,,,,away
+18,,,,,,,ctremblay,-1.24,51.77,jbernat,5.31,60.21,,,,away
+24,,,,,,,jbernat,5.31,60.21,,,,,,,away
+22,,,,,,,jbernat,5.31,60.21,,,,,-15.38,63.56,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,phooley,-1.9,14.41,jbernat,8.88,23.66,,,,away
+17,,,,,,,,,,,,,,,,away
+18,,,,,,,jbernat,8.88,33.66,jduquette,-20.11,75.43,,,,away
+18,,,,,,,jduquette,-20.11,75.43,jbernat,-2.63,28.83,,,,away
+3,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",309.0,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,-15.09,20.6,wstpierre,13.18,31.38,,,,away
+18,,,,,,,wstpierre,13.18,31.38,kgroulx,13.55,40.84,,,,away
+22,,,,,,,kgroulx,13.55,40.84,,,,,5.53,82.42,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'ccoulbury', 'qbonnaud', 'dlacombeb', 'jbrissett']",357.0,,,,,,,,,,,,,,away
+22,,,,,,,jbrissett,11.8,33.49,,,,,10.92,63.85,away
+15,,,,,,,,,,,,,,,,away
+2,"['tdecraene', 'qbonnaud', 'kgroulx', 'jbrissett', 'ctremblay', 'jgiard', 'swarrick']",398.0,,,,,,,,,,,,,,away
+18,,,,,,,jgiard,11.07,12.81,kgroulx,24.55,17.98,,,,away
+22,,,,,,,kgroulx,24.55,17.98,,,,,12.6,31.6,away
+11,,,,,,,,,,,,,tdecraene,,,away
+18,,,,,,,jgiard,0.0,40.0,tdecraene,9.54,56.28,,,,away
+18,,,,,,,tdecraene,9.54,56.28,qbonnaud,14.2,42.96,,,,away
+18,,,,,,,qbonnaud,14.2,42.96,tdecraene,18.5,54.24,,,,away
+22,,,,,,,tdecraene,18.5,54.24,,,,,-0.88,111.4,away
+25,"['plebourda', 'tdecraene', 'qbonnaud', 'kgroulx', 'jbrissett', 'ctremblay', 'cguay']",472.0,,,,,,,,,,,,,,away
+11,,,,,,,,,,,,,ctremblay,,,away
+18,,,,,,,ctremblay,-8.02,67.79,jbrissett,-17.13,73.17,,,,away
+18,,,,,,,jbrissett,-17.13,73.17,tdecraene,-14.43,83.88,,,,away
+18,,,,,,,tdecraene,-14.43,83.88,jbrissett,-12.9,70.48,,,,away
+18,,,,,,,jbrissett,-12.9,70.48,tdecraene,-13.05,76.74,,,,away
+16,,,,,,,,,,,,,,,,away
+18,,,,,,,tdecraene,-13.05,66.74,jbrissett,-13.05,66.73,,,,away
+18,,,,,,,jbrissett,-13.05,66.73,ctremblay,8.96,69.97,,,,away
+18,,,,,,,ctremblay,8.96,69.97,tdecraene,18.36,80.6,,,,away
+19,,,,,,,tdecraene,18.36,80.6,plebourda,19.3,109.36,,,,away
+1,"['swarrick', 'jbernat', 'ycohonner', 'jduquette', 'mbrichet', 'tdecraene', 'rlalondel']",548.0,,,,,,,,,,,,,,away
+7,,,jduquette,-8.68,104.05,4049.0,,,,,,,,,,away
+5,"['jbernat', 'rlalondel', 'jduquette', 'ctremblay', 'jgiard', 'dlacombeb', 'cguay']",603.0,,,,,,,,,,,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",613.0,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,0.51,15.5,jbrissett,10.27,26.94,,,,away
+18,,,,,,,jbrissett,10.27,26.94,tdecraene,19.89,41.28,,,,away
+18,,,,,,,tdecraene,19.89,41.28,jbrissett,20.54,53.3,,,,away
+18,,,,,,,jbrissett,20.54,53.3,wstpierre,2.11,64.15,,,,away
+18,,,,,,,wstpierre,2.11,64.15,tdecraene,-9.99,66.04,,,,away
+22,,,,,,,tdecraene,-9.99,66.04,,,,,-16.25,114.1,away
+11,,,,,,,,,,,,,wstpierre,,,away
+18,,,,,,,arousseau,-9.26,43.54,jbrissett,-1.1,34.95,,,,away
+18,,,,,,,jbrissett,-1.1,34.95,qbonnaud,5.53,45.94,,,,away
+18,,,,,,,qbonnaud,5.53,45.94,jbrissett,8.96,50.97,,,,away
+18,,,,,,,jbrissett,8.96,50.97,tdecraene,19.08,60.36,,,,away
+18,,,,,,,tdecraene,19.08,60.36,jbrissett,6.33,46.67,,,,away
+18,,,,,,,jbrissett,6.33,46.67,kgroulx,7.57,67.2,,,,away
+18,,,,,,,kgroulx,7.57,67.2,tdecraene,20.1,65.38,,,,away
+18,,,,,,,tdecraene,20.1,65.38,kgroulx,23.16,81.69,,,,away
+22,,,,,,,kgroulx,23.16,81.69,,,,,4.88,110.75,away
+30,,,,,,,,,,,,,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'jduquette', 'ctremblay', 'mbrichet', 'dlacombeb']",0.0,,,,,,,,,,,,,,away
+7,,,ctremblay,7.28,108.27,6079.0,,,,,,,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'jbrissett', 'dlacombeb']",64.0,,,,,,,,,,,,,,away
+18,,,,,,,arousseau,8.08,8.66,jbrissett,8.59,24.68,,,,away
+18,,,,,,,jbrissett,8.59,24.68,qbonnaud,16.39,38.15,,,,away
+18,,,,,,,qbonnaud,16.39,38.15,jbrissett,-7.22,24.39,,,,away
+18,,,,,,,jbrissett,-7.22,24.39,tdecraene,-13.41,33.49,,,,away
+18,,,,,,,tdecraene,-13.41,33.49,wstpierre,-3.72,50.89,,,,away
+18,,,,,,,wstpierre,-3.72,50.89,jbrissett,7.06,37.79,,,,away
+17,,,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,7.06,47.79,arousseau,9.61,72.45,,,,away
+18,,,,,,,arousseau,9.61,72.45,tdecraene,-4.09,69.83,,,,away
+18,,,,,,,tdecraene,-4.09,69.83,jbrissett,-13.92,66.11,,,,away
+18,,,,,,,jbrissett,-13.92,66.11,dlacombeb,-18.51,75.72,,,,away
+18,,,,,,,dlacombeb,-18.51,75.72,jbrissett,-4.81,76.82,,,,away
+18,,,,,,,jbrissett,-4.81,76.82,qbonnaud,9.47,72.66,,,,away
+18,,,,,,,qbonnaud,9.47,72.66,jbrissett,-4.96,67.79,,,,away
+18,,,,,,,jbrissett,-4.96,67.79,qbonnaud,-10.64,74.05,,,,away
+18,,,,,,,qbonnaud,-10.64,74.05,tdecraene,-17.71,84.39,,,,away
+19,,,,,,,tdecraene,-17.71,84.39,wstpierre,-20.77,113.08,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'ycohonner', 'jduquette', 'ctremblay', 'mbrichet']",124.0,,,,,,,,,,,,,,away
+7,,,ctremblay,-7.66,110.02,3242.0,,,,,,,,,,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,ctremblay,21.56,65.97,mbrichet,3.71,56.94,,,,away
+18,,,,,,,mbrichet,3.71,56.94,jbernat,15.15,66.11,,,,away
+18,,,,,,,jbernat,15.15,66.11,jduquette,15.73,80.16,,,,away
+16,,,,,,,,,,,,,,,,away
+18,,,,,,,jduquette,15.73,70.16,jbernat,15.73,70.16,,,,away
+18,,,,,,,jbernat,15.73,70.16,ycohonner,-3.79,63.93,,,,away
+18,,,,,,,ycohonner,-3.79,63.93,cguay,-8.46,78.49,,,,away
+18,,,,,,,cguay,-8.46,78.49,jduquette,-10.13,88.47,,,,away
+19,,,,,,,jduquette,-10.13,88.47,mbrichet,-16.54,104.63,,,,away
+1,"['dlacombeb', 'swarrick', 'ctremblay', 'jgiard', 'jbernat', 'rlalondel', 'jduquette']",199.0,,,,,,,,,,,,,,away
+7,,,ctremblay,-8.75,109.51,3027.0,,,,,,,,,,away
+14,,,,,,,,,,,,,,,,away
+18,,,,,,,dlacombeb,-20.19,30.07,ctremblay,1.09,34.22,,,,away
+18,,,,,,,ctremblay,1.09,34.22,jgiard,0.29,45.5,,,,away
+22,,,,,,,jgiard,0.29,45.5,,,,,0.28,45.5,away
+25,"['dlacombeb', 'swarrick', 'ctremblay', 'jbernat', 'rlalondel', 'jduquette', 'mbrichet']",284.0,,,,,,,,,,,,,,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,dlacombeb,7.79,25.33,ctremblay,-11.95,28.83,,,,away
+18,,,,,,,ctremblay,-11.95,28.83,rlalondel,-18.0,43.1,,,,away
+18,,,,,,,rlalondel,-18.0,43.1,dlacombeb,-22.66,56.14,,,,away
+18,,,,,,,dlacombeb,-22.66,56.14,ctremblay,-1.03,48.05,,,,away
+18,,,,,,,ctremblay,-1.03,48.05,dlacombeb,-18.51,60.5,,,,away
+18,,,,,,,dlacombeb,-18.51,60.5,ctremblay,-21.57,73.47,,,,away
+18,,,,,,,ctremblay,-21.57,73.47,dlacombeb,-8.75,76.82,,,,away
+18,,,,,,,dlacombeb,-8.75,76.82,ctremblay,-16.62,72.52,,,,away
+18,,,,,,,ctremblay,-16.62,72.52,rlalondel,-20.48,81.55,,,,away
+17,,,,,,,,,,,,,,,,away
+18,,,,,,,rlalondel,-20.48,91.55,dlacombeb,-12.1,81.33,,,,away
+18,,,,,,,dlacombeb,-12.1,81.33,rlalondel,-20.84,85.7,,,,away
+18,,,,,,,rlalondel,-20.84,85.7,dlacombeb,-10.64,70.26,,,,away
+18,,,,,,,dlacombeb,-10.64,70.26,mbrichet,5.24,78.13,,,,away
+18,,,,,,,mbrichet,5.24,78.13,ctremblay,10.92,93.13,,,,away
+19,,,,,,,ctremblay,10.92,93.13,rlalondel,12.82,108.13,,,,away
+1,"['cguay', 'jbernat', 'phooley', 'lmckeown', 'mbrichet', 'dlacombeb', 'ycohonner']",369.0,,,,,,,,,,,,,,away
+7,,,phooley,0.29,108.2,2721.0,,,,,,,,,,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",449.0,,,,,,,,,,,,,,away
+18,,,,,,,tdecraene,18.72,20.0,jbrissett,-7.29,27.3,,,,away
+18,,,,,,,jbrissett,-7.29,27.3,tdecraene,16.1,42.52,,,,away
+18,,,,,,,tdecraene,16.1,42.52,jbrissett,13.84,52.42,,,,away
+18,,,,,,,jbrissett,13.84,52.42,tdecraene,19.67,76.16,,,,away
+22,,,,,,,tdecraene,19.67,76.16,,,,,21.2,117.08,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,-14.87,38.37,tdecraene,-1.32,45.43,,,,away
+18,,,,,,,tdecraene,-1.32,45.43,wstpierre,-0.95,55.77,,,,away
+18,,,,,,,wstpierre,-0.95,55.77,tdecraene,9.98,63.34,,,,away
+18,,,,,,,tdecraene,9.98,63.34,kgroulx,21.05,71.94,,,,away
+18,,,,,,,kgroulx,21.05,71.94,arousseau,19.23,83.51,,,,away
+18,,,,,,,arousseau,19.23,83.51,qbonnaud,21.93,92.76,,,,away
+19,,,,,,,qbonnaud,21.93,92.76,jbrissett,20.98,113.08,,,,away
+1,"['cguay', 'swarrick', 'jbernat', 'rlalondel', 'jduquette', 'ctremblay', 'dlacombeb']",530.0,,,,,,,,,,,,,,away
+7,,,ctremblay,-9.91,109.0,6552.0,,,,,,,,,,away
+13,,,,,,,,,,,,,,,,away
+18,,,,,,,cguay,-0.66,48.78,dlacombeb,-0.66,58.25,,,,away
+25,"['swarrick', 'jbernat', 'rlalondel', 'jduquette', 'ctremblay', 'dlacombeb', 'tdecraene']",606.0,,,,,,,,,,,,,,away
+18,,,,,,,dlacombeb,-0.66,58.25,tdecraene,17.7,64.8,,,,away
+18,,,,,,,tdecraene,17.7,64.8,dlacombeb,20.32,79.07,,,,away
+18,,,,,,,dlacombeb,20.32,79.07,tdecraene,9.47,69.9,,,,away
+18,,,,,,,tdecraene,9.47,69.9,dlacombeb,-1.39,69.68,,,,away
+22,,,,,,,dlacombeb,-1.39,69.68,,,,,-17.49,92.91,away
+15,,,,,,,,,,,,,,,,away
+2,"['wstpierre', 'plebourda', 'tdecraene', 'arousseau', 'qbonnaud', 'kgroulx', 'jbrissett']",671.0,,,,,,,,,,,,,,away
+18,,,,,,,jbrissett,11.65,13.32,tdecraene,0.43,24.24,,,,away
+18,,,,,,,tdecraene,0.43,24.24,jbrissett,9.25,31.82,,,,away
+18,,,,,,,jbrissett,9.25,31.82,tdecraene,6.63,21.48,,,,away
+18,,,,,,,tdecraene,6.63,21.48,jbrissett,-2.99,29.78,,,,away
+18,,,,,,,jbrissett,-2.99,29.78,tdecraene,0.07,18.85,,,,away
+18,,,,,,,tdecraene,0.07,18.85,jbrissett,4.51,31.01,,,,away
+18,,,,,,,jbrissett,4.51,31.01,tdecraene,13.98,34.58,,,,away
+18,,,,,,,tdecraene,13.98,34.58,jbrissett,17.34,42.74,,,,away
+18,,,,,,,jbrissett,17.34,42.74,plebourda,20.61,90.36,,,,away
+18,,,,,,,plebourda,20.61,90.36,tdecraene,12.89,84.24,,,,away
+19,,,,,,,tdecraene,12.89,84.24,plebourda,20.91,106.89,,,,away
+1,"['phooley', 'jgiard', 'ycohonner', 'rlalondel', 'jduquette', 'ctremblay', 'lmckeown']",707.0,,,,,,,,,,,,,,away
+7,,,jduquette,13.33,98.37,7333.0,,,,,,,,,,away
+31,,,,,,,,,,,,,,,,away
