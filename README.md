@@ -55,6 +55,46 @@ from ufa import build_date_throws
 results = build_date_throws("2024-06-08")
 ```
 
+Fetch the current UFA data window from 2024 through today:
+
+```python
+from ufa import get_games_since_2024
+
+games = get_games_since_2024()
+```
+
+Search for games before choosing one to process:
+
+```python
+from ufa import search_games
+
+games = search_games("2024-06-01", "2024-06-30", team="breeze")
+games[["gameID", "awayTeamID", "homeTeamID", "awayScore", "homeScore"]]
+```
+
+Then use one of the returned IDs:
+
+```python
+from ufa import build_game_throws
+
+game_id = games.loc[0, "gameID"]
+result = build_game_throws(game_id=game_id)
+```
+
+## Expected Throwing Value
+
+The package has an adapter for CP/FV models trained from Braden Eberhard's
+Expected Throwing Value project. Pass fitted model dictionaries with `model`,
+`scaler`, and `features` keys into `ExpectedThrowingValueModel`, then pass the
+model to the pipeline.
+
+```python
+from ufa import ExpectedThrowingValueModel, build_game_throws
+
+etv_model = ExpectedThrowingValueModel(cp_model=cp_model, fv_model=fv_model)
+result = build_game_throws(game_id="2024-06-08-LA-POR", etv_model=etv_model)
+```
+
 ## Core Modules
 
 - `src/ufa/client.py`: API calls for games and game events

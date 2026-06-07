@@ -3,9 +3,24 @@ from pathlib import Path
 
 import pandas as pd
 
-from .clean import clean_game_events
-from .client import get_game_events, get_games
-from .metrics import calculate_receiver_stats, calculate_team_stats, calculate_thrower_stats
+try:
+    from .clean import clean_game_events
+    from .client import get_game_events, get_games
+    from .etv import add_expected_throwing_value
+    from .metrics import (
+        calculate_receiver_stats,
+        calculate_team_stats,
+        calculate_thrower_stats,
+    )
+except ImportError:
+    from clean import clean_game_events
+    from client import get_game_events, get_games
+    from etv import add_expected_throwing_value
+    from metrics import (
+        calculate_receiver_stats,
+        calculate_team_stats,
+        calculate_thrower_stats,
+    )
 
 
 @dataclass
@@ -37,10 +52,12 @@ def resolve_game_id(date=None, game_id=None, game_index=0):
     return games.loc[game_index, "gameID"]
 
 
-def build_game_throws(date=None, game_id=None, game_index=0):
+def build_game_throws(date=None, game_id=None, game_index=0, etv_model=None):
     game_id = resolve_game_id(date=date, game_id=game_id, game_index=game_index)
     events = get_game_events(game_id)
     throws = clean_game_events(events)
+    if etv_model is not None:
+        throws = add_expected_throwing_value(throws, etv_model)
 
     return GamePipelineResult(
         game_id=game_id,
@@ -52,13 +69,13 @@ def build_game_throws(date=None, game_id=None, game_index=0):
     )
 
 
-def build_date_throws(date):
+def build_date_throws(date, etv_model=None):
     games = get_games(date)
     if games.empty:
         raise ValueError(f"No games found for date {date}.")
 
     return [
-        build_game_throws(game_id=game_id)
+        build_game_throws(game_id=game_id, etv_model=etv_model)
         for game_id in games["gameID"]
     ]
 
