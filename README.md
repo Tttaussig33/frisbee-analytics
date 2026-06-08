@@ -28,6 +28,7 @@ from ufa import build_game_throws, save_game_pipeline_outputs
 result = build_game_throws(game_id="2024-06-08-LA-POR")
 
 throws = result.throws
+box_score_stats = result.box_score_stats
 thrower_stats = result.thrower_stats
 team_stats = result.team_stats
 
@@ -95,9 +96,32 @@ etv_model = ExpectedThrowingValueModel(cp_model=cp_model, fv_model=fv_model)
 result = build_game_throws(game_id="2024-06-08-LA-POR", etv_model=etv_model)
 ```
 
+You can also train simple baseline CP/FV models from cleaned throws:
+
+```python
+from ufa import build_etv_model, train_etv_models
+
+model_bundle = train_etv_models(throws)
+etv_model = build_etv_model(model_bundle)
+```
+
+## Validation
+
+Compare generated stats to a Shown Space-style reference CSV:
+
+```python
+from ufa import compare_metric_tables, load_reference_stats, summarize_metric_comparison
+
+reference = load_reference_stats("data/reference/shown_space_box_score.csv")
+comparison = compare_metric_tables(result.box_score_stats, reference)
+summary = summarize_metric_comparison(comparison)
+```
+
 ## Core Modules
 
 - `src/ufa/client.py`: API calls for games and game events
 - `src/ufa/clean.py`: raw events to throw-level rows
 - `src/ufa/metrics.py`: player and team throwing summaries
 - `src/ufa/pipeline.py`: end-to-end orchestration helpers
+- `src/ufa/models.py`: baseline CP/FV model training and loading helpers
+- `src/ufa/validation.py`: compare generated metrics to reference tables

@@ -8,6 +8,7 @@ try:
     from .client import get_game_events, get_games
     from .etv import add_expected_throwing_value
     from .metrics import (
+        calculate_box_score_stats,
         calculate_receiver_stats,
         calculate_team_stats,
         calculate_thrower_stats,
@@ -17,6 +18,7 @@ except ImportError:
     from client import get_game_events, get_games
     from etv import add_expected_throwing_value
     from metrics import (
+        calculate_box_score_stats,
         calculate_receiver_stats,
         calculate_team_stats,
         calculate_thrower_stats,
@@ -28,6 +30,7 @@ class GamePipelineResult:
     game_id: str
     events: pd.DataFrame
     throws: pd.DataFrame
+    box_score_stats: pd.DataFrame
     thrower_stats: pd.DataFrame
     receiver_stats: pd.DataFrame
     team_stats: pd.DataFrame
@@ -63,6 +66,7 @@ def build_game_throws(date=None, game_id=None, game_index=0, etv_model=None):
         game_id=game_id,
         events=events,
         throws=throws,
+        box_score_stats=calculate_box_score_stats(throws),
         thrower_stats=calculate_thrower_stats(throws),
         receiver_stats=calculate_receiver_stats(throws),
         team_stats=calculate_team_stats(throws),
@@ -87,6 +91,7 @@ def save_game_pipeline_outputs(result, output_dir):
     paths = {
         "events": output_dir / f"game_{result.game_id}_events.csv",
         "throws": output_dir / f"game_{result.game_id}_throws.csv",
+        "box_score_stats": output_dir / f"game_{result.game_id}_box_score_stats.csv",
         "thrower_stats": output_dir / f"game_{result.game_id}_thrower_stats.csv",
         "receiver_stats": output_dir / f"game_{result.game_id}_receiver_stats.csv",
         "team_stats": output_dir / f"game_{result.game_id}_team_stats.csv",
@@ -94,6 +99,7 @@ def save_game_pipeline_outputs(result, output_dir):
 
     result.events.to_csv(paths["events"], index=False)
     result.throws.to_csv(paths["throws"], index=False)
+    result.box_score_stats.to_csv(paths["box_score_stats"], index=False)
     result.thrower_stats.to_csv(paths["thrower_stats"], index=False)
     result.receiver_stats.to_csv(paths["receiver_stats"], index=False)
     result.team_stats.to_csv(paths["team_stats"], index=False)
