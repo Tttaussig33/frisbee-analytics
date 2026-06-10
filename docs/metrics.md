@@ -54,6 +54,15 @@ project trains:
 - Logistic regression and XGBoost candidates through Optuna, saving the selected
   CP/FV models into an ETV wrapper.
 
+The local `data/raw/all_games_1024.csv` file is already close to this processed
+training table. It has the field, time, score, possession, and player columns.
+The project derives:
+
+- `completion = 1 - turnover`
+- `point_outcome` by checking whether any completed throw in the same
+  `gameID` / `total_points` / `possession_num` group reaches the scoring end
+  zone.
+
 The adapter in `src/ufa/etv.py` expects fitted model dictionaries with:
 
 ```python

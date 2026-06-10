@@ -19,12 +19,15 @@ from ufa.metrics import (
     calculate_thrower_stats,
 )
 from ufa.models import (
+    add_point_outcome,
     build_etv_model,
     load_model_bundle,
+    prepare_all_games_training_data,
     prepare_model_training_frame,
     save_model_bundle,
     train_completion_probability_model,
     train_etv_models,
+    train_etv_models_from_all_games,
     train_field_value_model,
 )
 from ufa.validation import (
@@ -47,6 +50,7 @@ __all__ = [
     "build_game_throws",
     "add_throw_metric_columns",
     "add_expected_throwing_value",
+    "add_point_outcome",
     "calculate_box_score_stats",
     "calculate_receiver_stats",
     "calculate_team_stats",
@@ -60,12 +64,14 @@ __all__ = [
     "get_games_since_2024",
     "load_model_bundle",
     "load_reference_stats",
+    "prepare_all_games_training_data",
     "prepare_model_training_frame",
     "search_games",
     "save_model_bundle",
     "summarize_metric_comparison",
     "train_completion_probability_model",
     "train_etv_models",
+    "train_etv_models_from_all_games",
     "train_field_value_model",
     "prepare_etv_features",
     "resolve_game_id",

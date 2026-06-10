@@ -99,9 +99,19 @@ result = build_game_throws(game_id="2024-06-08-LA-POR", etv_model=etv_model)
 You can also train simple baseline CP/FV models from cleaned throws:
 
 ```python
-from ufa import build_etv_model, train_etv_models
+from ufa import build_etv_model, prepare_all_games_training_data, train_etv_models
 
+throws = prepare_all_games_training_data("data/raw/all_games_1024.csv")
 model_bundle = train_etv_models(throws)
+etv_model = build_etv_model(model_bundle)
+```
+
+Or use the convenience wrapper:
+
+```python
+from ufa import build_etv_model, train_etv_models_from_all_games
+
+model_bundle = train_etv_models_from_all_games("data/raw/all_games_1024.csv")
 etv_model = build_etv_model(model_bundle)
 ```
 

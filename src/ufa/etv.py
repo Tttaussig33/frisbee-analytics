@@ -11,20 +11,38 @@ DEFAULT_FV_FEATURES = [
 ]
 
 
+def _first_existing(frame, names):
+    for name in names:
+        if name in frame.columns:
+            return frame[name]
+
+    raise KeyError(f"Missing required columns. Tried: {names}")
+
+
 def prepare_etv_features(throws):
     features = throws.copy()
 
-    features["thrower_x"] = features["throwerX"]
-    features["thrower_y"] = features["throwerY"]
-    features["receiver_x"] = features["receiverX"].fillna(features["endX"])
-    features["receiver_y"] = features["receiverY"].fillna(features["endY"])
+    features["thrower_x"] = _first_existing(features, ["thrower_x", "throwerX"])
+    features["thrower_y"] = _first_existing(features, ["thrower_y", "throwerY"])
+
+    receiver_x = _first_existing(features, ["receiver_x", "receiverX"])
+    receiver_y = _first_existing(features, ["receiver_y", "receiverY"])
+    if "endX" in features.columns:
+        receiver_x = receiver_x.fillna(features["endX"])
+    if "endY" in features.columns:
+        receiver_y = receiver_y.fillna(features["endY"])
+
+    features["receiver_x"] = receiver_x
+    features["receiver_y"] = receiver_y
 
     features["x_diff"] = features["receiver_x"] - features["thrower_x"]
     features["y_diff"] = features["receiver_y"] - features["thrower_y"]
     features["throw_distance"] = np.sqrt(
         features["x_diff"] ** 2 + features["y_diff"] ** 2
     )
-    features["throw_angle"] = np.arctan2(features["y_diff"], features["x_diff"])
+    features["throw_angle"] = np.degrees(
+        np.arctan2(features["y_diff"], features["x_diff"])
+    )
 
     if "times" not in features.columns:
         features["times"] = features["time"].fillna(0) if "time" in features else 0
@@ -137,8 +155,41 @@ def add_expected_throwing_value(throws, model):
         throws[column] = values
 
     throws["cpoe"] = throws["completion"] - throws["xcp"]
-    throws["t_ec"] = throws["etv"] - throws["fv_start"]
-    throws["r_ec"] = np.where(throws["completion"].astype(bool), throws["fv_end"], 0)
-    throws["total_ec"] = throws["t_ec"] + throws["r_ec"]
+
+    completion = throws["completion"].astype(bool)
+    throws["ec"] = np.where(
+        completion,
+        throws["fv_end"] - throws["fv_start"],
+        -throws["fv_opponent"],
+    )
+
+    group_keys = [
+        column
+        for column in ["gameID", "total_points", "possession_num"]
+        if column in throws.columns
+    ]
+    if group_keys:
+        throws["fv_possession_start"] = throws.groupby(group_keys)["fv_start"].transform(
+            "first"
+        )
+    else:
+        throws["fv_possession_start"] = throws["fv_start"]
+
+    denominator = 1 - throws["fv_possession_start"]
+    denominator = denominator.where(denominator != 0, np.nan)
+    throws["aec"] = np.where(
+        completion,
+        (throws["fv_end"] - throws["fv_start"]) / denominator,
+        -throws["fv_opponent"],
+    )
+
+    throws["expected_ec"] = throws["etv"] - throws["fv_start"]
+    throws["t_ec"] = throws["expected_ec"]
+    throws["r_ec"] = throws["ec"] - throws["t_ec"]
+    throws["total_ec"] = throws["ec"]
+
+    throws["t_aec"] = throws["t_ec"] / denominator
+    throws["r_aec"] = throws["aec"] - throws["t_aec"]
+    throws["total_aec"] = throws["aec"]
 
     return throws
