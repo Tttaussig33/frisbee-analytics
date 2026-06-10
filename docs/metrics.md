@@ -12,7 +12,7 @@ public Shown Space tables as validation references.
 | Contribution | Tot-aEC | Total adjusted expected contribution | Needs model | Sum of throwing and receiving adjusted expected contribution. |
 | Contribution | T-aEC | Throwing adjusted expected contribution | Needs model | Requires CP/FV/ETV outputs and adjustment layer. |
 | Contribution | R-aEC | Receiving adjusted expected contribution | Needs model | Requires CP/FV/ETV outputs and receiver allocation. |
-| Contribution | LC | Linear contribution | Unknown | Needs exact Shown Space definition/tooltip. |
+| Contribution | LC | Lag contribution | Unknown | Needs exact Shown Space definition/tooltip. |
 | Contribution | WPA | Win probability added | Needs model | Requires a win probability model by game state. |
 | Box Score | G | Goals | Implemented | Completed catch with receiver end Y beyond the goal line. |
 | Box Score | A | Assists | Implemented | Thrower on a goal. |
@@ -43,6 +43,16 @@ The Expected Throwing Value flow has three pieces:
 1. CP model: predicts completion probability for a throw.
 2. FV model: predicts field value/scoring probability from a field location.
 3. ETV calculation: combines CP and FV into expected throwing value.
+
+The reference training notebook in Braden Eberhard's Expected Throwing Value
+project trains:
+
+- CP on `thrower_x`, `thrower_y`, `receiver_x`, `receiver_y`,
+  `throw_distance`, `throw_angle`, `y_diff`, `x_diff`, and `times`, with very
+  short throws filtered out at `throw_distance >= 1.5`.
+- FV on `thrower_x`, `thrower_y`, and `times`.
+- Logistic regression and XGBoost candidates through Optuna, saving the selected
+  CP/FV models into an ETV wrapper.
 
 The adapter in `src/ufa/etv.py` expects fitted model dictionaries with:
 

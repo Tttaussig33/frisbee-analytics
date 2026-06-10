@@ -15,6 +15,12 @@ DEFAULT_CP_FEATURES = [
     "times",
 ]
 
+DEFAULT_FV_TRAINING_FEATURES = [
+    "thrower_x",
+    "thrower_y",
+    "times",
+]
+
 
 def _fit_classifier_model(frame, features, target, model=None, scaler=None):
     from sklearn.linear_model import LogisticRegression
@@ -51,8 +57,10 @@ def train_completion_probability_model(
     features=None,
     model=None,
     scaler=None,
+    min_throw_distance=1.5,
 ):
     frame = prepare_model_training_frame(throws)
+    frame = frame[frame["throw_distance"] >= min_throw_distance].copy()
     features = features or DEFAULT_CP_FEATURES
     return _fit_classifier_model(
         frame,
@@ -70,7 +78,7 @@ def train_field_value_model(
     scaler=None,
 ):
     frame = prepare_model_training_frame(throws)
-    features = features or DEFAULT_FV_FEATURES
+    features = features or DEFAULT_FV_TRAINING_FEATURES
     return _fit_classifier_model(
         frame,
         features=features,
