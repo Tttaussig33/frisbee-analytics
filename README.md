@@ -115,6 +115,30 @@ model_bundle = train_etv_models_from_all_games("data/raw/all_games_1024.csv")
 etv_model = build_etv_model(model_bundle)
 ```
 
+For shownspace-style validation, split the historical throws into train,
+validation, temporal holdout, and player holdout sets before training:
+
+```python
+from ufa import (
+    compare_model_bundles,
+    evaluate_etv_model_bundle,
+    split_training_data,
+    train_etv_models_from_split,
+    train_xgboost_etv_models_from_split,
+)
+
+splits = split_training_data("data/raw/all_games_1024.csv")
+
+baseline_bundle = train_etv_models_from_split(splits)
+baseline_results = evaluate_etv_model_bundle(baseline_bundle, splits)
+
+xgb_bundle = train_xgboost_etv_models_from_split(splits)
+comparison = compare_model_bundles(
+    {"logistic": baseline_bundle, "xgboost": xgb_bundle},
+    splits,
+)
+```
+
 ## Validation
 
 Compare generated stats to a Shown Space-style reference CSV:
