@@ -288,6 +288,205 @@ def evaluate_etv_model_bundle(model_bundle, datasets):
     return pd.DataFrame(rows)
 
 
+def format_model_performance_table(
+    results,
+    bundle_labels=None,
+    dataset_labels=None,
+    dataset_order=None,
+    decimals=3,
+):
+    table_source = results.copy()
+    if "bundle" not in table_source.columns:
+        table_source["bundle"] = "model"
+
+    bundle_labels = {
+        "model": "Model",
+        "logistic": "Baseline",
+        "baseline": "Baseline",
+        "xgboost": "Model",
+        **(bundle_labels or {}),
+    }
+    dataset_labels = {
+        "validation": "Random",
+        "temporal_test": "Temporal",
+        "player_test": "Player",
+        "train": "Train",
+        **(dataset_labels or {}),
+    }
+    dataset_order = dataset_order or [
+        "validation",
+        "temporal_test",
+        "player_test",
+        "train",
+    ]
+
+    metric_order = ["accuracy", "auc", "ppv", "npv"]
+    metric_labels = {
+        "accuracy": "Accuracy",
+        "auc": "AUC",
+        "ppv": "PPV",
+        "npv": "NPV",
+    }
+    model_labels = {
+        "fv": "FV",
+        "cp": "CP",
+    }
+
+    rows = []
+    for _, result in table_source.iterrows():
+        dataset = result["dataset"]
+        model = result["model"]
+        bundle = result["bundle"]
+        column_name = (
+            f"{model_labels.get(model, str(model).upper())} "
+            f"{bundle_labels.get(bundle, str(bundle).title())}"
+        )
+
+        for metric in metric_order:
+            rows.append(
+                {
+                    "Dataset": dataset_labels.get(dataset, dataset),
+                    "Metric": metric_labels[metric],
+                    "Column": column_name,
+                    "Value": result[metric],
+                    "_dataset_order": (
+                        dataset_order.index(dataset)
+                        if dataset in dataset_order
+                        else len(dataset_order)
+                    ),
+                    "_metric_order": metric_order.index(metric),
+                }
+            )
+
+    long_table = pd.DataFrame(rows)
+    if long_table.empty:
+        return pd.DataFrame()
+
+    column_order = [
+        "FV Baseline",
+        "FV Model",
+        "CP Baseline",
+        "CP Model",
+    ]
+    available_columns = list(long_table["Column"].drop_duplicates())
+    column_order = [
+        column for column in column_order if column in available_columns
+    ] + [column for column in available_columns if column not in column_order]
+
+    long_table = long_table.sort_values(["_dataset_order", "_metric_order"])
+    index_order = pd.MultiIndex.from_frame(
+        long_table[["Dataset", "Metric"]].drop_duplicates()
+    )
+    formatted = long_table.pivot_table(
+        index=["Dataset", "Metric"],
+        columns="Column",
+        values="Value",
+        aggfunc="first",
+    )
+    formatted = formatted.reindex(index_order)
+    formatted = formatted.reindex(columns=column_order)
+    return formatted.round(decimals)
+
+
+def model_performance_table_to_latex(
+    table,
+    caption="CP and FV Model performance compared to baseline.",
+    label=None,
+    use_multirow=True,
+):
+    def latex_escape(value):
+        return str(value).replace("_", "\\_").replace("%", "\\%")
+
+    lines = [
+        "\\begin{table}",
+        "\\centering",
+        f"\\caption{{{latex_escape(caption)}}}",
+    ]
+    if label:
+        lines.append(f"\\label{{{latex_escape(label)}}}")
+
+    lines.extend(
+        [
+            f"\\begin{{tabular}}{{ll{'r' * len(table.columns)}}}",
+            "\\toprule",
+            " & ".join(["", "Metric", *[latex_escape(column) for column in table.columns]])
+            + " \\\\",
+            "\\midrule",
+        ]
+    )
+
+    for dataset, dataset_table in table.groupby(level=0, sort=False):
+        row_count = len(dataset_table)
+        for row_index, ((_, metric), row) in enumerate(dataset_table.iterrows()):
+            if row_index == 0:
+                dataset_text = (
+                    f"\\multirow{{{row_count}}}{{*}}{{{latex_escape(dataset)}}}"
+                    if use_multirow
+                    else latex_escape(dataset)
+                )
+            else:
+                dataset_text = ""
+
+            values = [
+                "" if pd.isna(value) else f"{value:.3f}"
+                for value in row.to_list()
+            ]
+            lines.append(
+                " & ".join([dataset_text, latex_escape(metric), *values]) + " \\\\"
+            )
+        if dataset != table.index.get_level_values(0)[-1]:
+            lines.append("\\midrule")
+
+    lines.extend(
+        [
+            "\\bottomrule",
+            "\\end{tabular}",
+            "\\end{table}",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def write_model_performance_latex_document(
+    table,
+    path,
+    caption="CP and FV Model performance compared to baseline.",
+    label="tab:cp-fv-performance",
+):
+    table_latex = model_performance_table_to_latex(
+        table,
+        caption=caption,
+        label=label,
+    )
+    document = "\n".join(
+        [
+            "\\documentclass[11pt]{article}",
+            "",
+            "\\usepackage[margin=1in]{geometry}",
+            "\\usepackage{booktabs}",
+            "\\usepackage{multirow}",
+            "\\usepackage{caption}",
+            "",
+            "\\captionsetup{",
+            "  font=small,",
+            "  labelfont=bf",
+            "}",
+            "",
+            "\\begin{document}",
+            "",
+            table_latex,
+            "",
+            "\\end{document}",
+            "",
+        ]
+    )
+
+    with open(path, "w", encoding="utf-8") as output_file:
+        output_file.write(document)
+
+    return path
+
+
 def train_etv_models_from_split(
     splits,
     cp_features=None,

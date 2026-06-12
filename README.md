@@ -122,6 +122,8 @@ validation, temporal holdout, and player holdout sets before training:
 from ufa import (
     compare_model_bundles,
     evaluate_etv_model_bundle,
+    format_model_performance_table,
+    model_performance_table_to_latex,
     split_training_data,
     train_etv_models_from_split,
     train_xgboost_etv_models_from_split,
@@ -137,6 +139,8 @@ comparison = compare_model_bundles(
     {"logistic": baseline_bundle, "xgboost": xgb_bundle},
     splits,
 )
+paper_table = format_model_performance_table(comparison)
+latex = model_performance_table_to_latex(paper_table)
 ```
 
 ## Validation

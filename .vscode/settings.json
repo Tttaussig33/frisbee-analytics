@@ -1,0 +1,23 @@
+{
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex-direct",
+      "command": "C:/Users/htaus/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex.exe",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex direct",
+      "tools": [
+        "pdflatex-direct"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipe.default": "pdflatex direct"
+}
