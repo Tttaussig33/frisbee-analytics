@@ -158,6 +158,13 @@ def _player_metric(frame, player_column, metric_column, metric_name, agg_func="s
     )
 
 
+def _sum_player_metric(frame, player_column, metric_column, metric_name):
+    if metric_column not in frame.columns:
+        return None
+
+    return _player_metric(frame, player_column, metric_column, metric_name)
+
+
 def calculate_box_score_stats(throws, huck_distance=40):
     throws = add_throw_metric_columns(throws, huck_distance=huck_distance)
 
@@ -186,6 +193,10 @@ def calculate_box_score_stats(throws, huck_distance=40):
         "receiving_yards",
     )
     hockey_assists = _calculate_hockey_assists(throws)
+    throwing_aec = _sum_player_metric(throws, "thrower", "t_aec", "T-aEC")
+    receiving_aec = _sum_player_metric(throws, "receiver", "r_aec", "R-aEC")
+    throwing_ec = _sum_player_metric(throws, "thrower", "t_ec", "T-EC")
+    receiving_ec = _sum_player_metric(throws, "receiver", "r_ec", "R-EC")
 
     if "defender" in throws.columns:
         blocks = _player_metric(
@@ -198,7 +209,16 @@ def calculate_box_score_stats(throws, huck_distance=40):
         blocks = None
 
     box_score = thrower_stats
-    for metric in [goals, receiving_yards, hockey_assists, blocks]:
+    for metric in [
+        goals,
+        receiving_yards,
+        hockey_assists,
+        throwing_aec,
+        receiving_aec,
+        throwing_ec,
+        receiving_ec,
+        blocks,
+    ]:
         if metric is not None:
             box_score = box_score.merge(metric, on="player", how="outer")
 
@@ -230,13 +250,29 @@ def calculate_box_score_stats(throws, huck_distance=40):
     box_score["plus_minus"] = box_score["G"] + box_score["A"] - box_score["T"]
 
     if "expected_completions" in box_score.columns:
+        box_score["xCP"] = _safe_divide(
+            box_score["expected_completions"],
+            box_score["attempts"],
+        )
         box_score["CPOE"] = _safe_divide(
             box_score["C"] - box_score["expected_completions"],
             box_score["attempts"],
         )
 
+    if {"T-aEC", "R-aEC"}.issubset(box_score.columns):
+        box_score["Tot-aEC"] = box_score["T-aEC"].fillna(0) + box_score["R-aEC"].fillna(0)
+
+    if {"T-EC", "R-EC"}.issubset(box_score.columns):
+        box_score["Tot-EC"] = box_score["T-EC"].fillna(0) + box_score["R-EC"].fillna(0)
+
     ordered_columns = [
         "player",
+        "Tot-aEC",
+        "T-aEC",
+        "R-aEC",
+        "Tot-EC",
+        "T-EC",
+        "R-EC",
         "G",
         "A",
         "HA",
@@ -244,6 +280,8 @@ def calculate_box_score_stats(throws, huck_distance=40):
         "B",
         "C",
         "CP%",
+        "xCP",
+        "CPOE",
         "HuR",
         "HuCP%",
         "attempts",
@@ -254,14 +292,15 @@ def calculate_box_score_stats(throws, huck_distance=40):
         "total_yards",
         "plus_minus",
     ]
-    if "CPOE" in box_score.columns:
-        ordered_columns.append("CPOE")
-
     remaining_columns = [
         column for column in box_score.columns if column not in ordered_columns
     ]
 
-    return box_score[ordered_columns + remaining_columns].sort_values(
+    available_ordered_columns = [
+        column for column in ordered_columns if column in box_score.columns
+    ]
+
+    return box_score[available_ordered_columns + remaining_columns].sort_values(
         ["plus_minus", "C", "G"],
         ascending=False,
     ).reset_index(drop=True)
