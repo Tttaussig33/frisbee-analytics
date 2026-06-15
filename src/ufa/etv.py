@@ -1,4 +1,5 @@
 import numpy as np
+import warnings
 
 
 DEFAULT_FV_FEATURES = [
@@ -163,25 +164,39 @@ def add_expected_throwing_value(throws, model):
         -throws["fv_opponent"],
     )
 
-    group_keys = [
-        column
-        for column in ["gameID", "total_points", "possession_num"]
-        if column in throws.columns
-    ]
+    group_keys = []
+    for candidate_keys in [
+        ["gameID", "total_points", "possession_num"],
+        ["gameID", "home_team_score", "away_team_score", "possession_num", "game_quarter"],
+        ["gameID", "possession_id"],
+        ["possession_id"],
+    ]:
+        if all(column in throws.columns for column in candidate_keys):
+            group_keys = candidate_keys
+            break
+
     if group_keys:
         throws["fv_possession_start"] = throws.groupby(group_keys)["fv_start"].transform(
             "first"
         )
+        denominator = 1 - throws["fv_possession_start"]
+        denominator = denominator.where(denominator != 0, np.nan)
+        throws["aec"] = np.where(
+            completion,
+            (throws["fv_end"] - throws["fv_start"]) / denominator,
+            -throws["fv_opponent"],
+        )
     else:
-        throws["fv_possession_start"] = throws["fv_start"]
-
-    denominator = 1 - throws["fv_possession_start"]
-    denominator = denominator.where(denominator != 0, np.nan)
-    throws["aec"] = np.where(
-        completion,
-        (throws["fv_end"] - throws["fv_start"]) / denominator,
-        -throws["fv_opponent"],
-    )
+        warnings.warn(
+            "Cannot compute aEC without possession identifiers. "
+            "Add possession_num or possession_id before calling "
+            "add_expected_throwing_value.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        throws["fv_possession_start"] = np.nan
+        denominator = np.nan
+        throws["aec"] = np.nan
 
     throws["expected_ec"] = throws["etv"] - throws["fv_start"]
     throws["t_ec"] = throws["expected_ec"]

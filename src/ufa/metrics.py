@@ -26,7 +26,10 @@ def add_throw_metric_columns(throws, huck_distance=40):
     throws["abs_field_y_delta"] = throws["field_y_delta"].abs()
     throws["huck_attempt"] = throws["throw_distance"] >= huck_distance
     throws["huck_completion"] = throws["huck_attempt"] & throws["completion"].astype(bool)
-    throws["is_goal"] = throws["completion"].astype(bool) & (throws["receiverY"] > 100)
+    goal_by_type = throws["type"].eq(19) if "type" in throws.columns else False
+    throws["is_goal"] = throws["completion"].astype(bool) & (
+        goal_by_type | (throws["receiverY"] > 100)
+    )
     throws["throwing_yards"] = np.where(
         throws["completion"].astype(bool),
         throws["receiverY"].clip(0, 100) - throws["throwerY"].clip(0, 100),
@@ -162,7 +165,13 @@ def _sum_player_metric(frame, player_column, metric_column, metric_name):
     if metric_column not in frame.columns:
         return None
 
-    return _player_metric(frame, player_column, metric_column, metric_name)
+    return _player_metric(
+        frame,
+        player_column,
+        metric_column,
+        metric_name,
+        agg_func=lambda values: values.sum(min_count=1),
+    )
 
 
 def calculate_box_score_stats(throws, huck_distance=40):
@@ -193,10 +202,10 @@ def calculate_box_score_stats(throws, huck_distance=40):
         "receiving_yards",
     )
     hockey_assists = _calculate_hockey_assists(throws)
-    throwing_aec = _sum_player_metric(throws, "thrower", "t_aec", "T-aEC")
-    receiving_aec = _sum_player_metric(throws, "receiver", "r_aec", "R-aEC")
-    throwing_ec = _sum_player_metric(throws, "thrower", "t_ec", "T-EC")
-    receiving_ec = _sum_player_metric(throws, "receiver", "r_ec", "R-EC")
+    throwing_aec = _sum_player_metric(throws, "thrower", "aec", "T-aEC")
+    receiving_aec = _sum_player_metric(throws, "receiver", "aec", "R-aEC")
+    throwing_ec = _sum_player_metric(throws, "thrower", "ec", "T-EC")
+    receiving_ec = _sum_player_metric(throws, "receiver", "ec", "R-EC")
 
     if "defender" in throws.columns:
         blocks = _player_metric(

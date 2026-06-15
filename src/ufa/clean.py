@@ -16,6 +16,8 @@ THROW_COLUMNS = [
     "turnoverX",
     "turnoverY",
     "team_side",
+    "possession_id",
+    "possession_throw",
     "completion",
     "turnover",
     "endX",
@@ -82,5 +84,11 @@ def clean_game_events(events):
         (throws["endX"] - throws["throwerX"]) ** 2
         + (throws["endY"] - throws["throwerY"]) ** 2
     )
+    is_goal = throws["completion"].astype(bool) & (
+        throws["type"].eq(19) | (throws["receiverY"] > 100)
+    )
+    terminal_throw = throws["turnover"].astype(bool) | is_goal
+    throws["possession_id"] = terminal_throw.shift(fill_value=False).cumsum() + 1
+    throws["possession_throw"] = throws.groupby("possession_id").cumcount() + 1
 
     return throws[[column for column in THROW_COLUMNS if column in throws.columns]]
