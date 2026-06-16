@@ -48,6 +48,49 @@ def _fit_classifier_model(frame, features, target, model=None, scaler=None):
     }
 
 
+def _augment_training_frame(frame, features, mirror=True, noise_factor=0.0, random_state=0):
+    augmented = frame.copy()
+
+    if mirror:
+        mirrored = augmented.copy()
+        mirror_columns = [
+            column
+            for column in features
+            if "_x" in column or "x_diff" in column or "throw_angle" in column
+        ]
+        for column in mirror_columns:
+            mirrored[column] = -mirrored[column]
+        augmented = pd.concat([augmented, mirrored], ignore_index=True)
+
+    if noise_factor > 0:
+        jitter_columns = [
+            column
+            for column in features
+            if pd.api.types.is_numeric_dtype(augmented[column])
+            and augmented[column].nunique(dropna=True) > 2
+        ]
+        if jitter_columns:
+            rng = np.random.default_rng(random_state)
+            noisy = augmented.copy()
+            feature_ranges = (
+                augmented[jitter_columns].max() - augmented[jitter_columns].min()
+            )
+            jitter = rng.uniform(
+                -noise_factor,
+                noise_factor,
+                size=noisy[jitter_columns].shape,
+            ) * feature_ranges.to_numpy()
+            noisy[jitter_columns] = noisy[jitter_columns] + jitter
+            for column in jitter_columns:
+                noisy[column] = noisy[column].clip(
+                    lower=augmented[column].min(),
+                    upper=augmented[column].max(),
+                )
+            augmented = pd.concat([augmented, noisy], ignore_index=True)
+
+    return augmented
+
+
 def _predict_classifier_probability(model_bundle, frame):
     features = model_bundle["features"]
     x = _clean_feature_frame(frame, features)
@@ -558,6 +601,7 @@ def tune_xgboost_classifier(
     n_trials=15,
     cv=5,
     random_state=0,
+    mirror=True,
 ):
     import optuna
     from sklearn.model_selection import cross_val_score
@@ -565,32 +609,49 @@ def tune_xgboost_classifier(
     from sklearn.preprocessing import StandardScaler
     from xgboost import XGBClassifier
 
-    x = _clean_feature_frame(frame, features)
-    y = frame[target].astype(int)
-
     def objective(trial):
+        noise_factor = trial.suggest_float("noise_factor", 0.0, 0.05)
+        trial_frame = _augment_training_frame(
+            frame,
+            features,
+            mirror=mirror,
+            noise_factor=noise_factor,
+            random_state=random_state,
+        )
+        trial_x = _clean_feature_frame(trial_frame, features)
+        trial_y = trial_frame[target].astype(int)
         model = XGBClassifier(
-            n_estimators=trial.suggest_int("n_estimators", 25, 200),
+            n_estimators=trial.suggest_int("n_estimators", 10, 200),
             max_depth=trial.suggest_int("max_depth", 2, 8),
-            learning_rate=trial.suggest_float("learning_rate", 1e-4, 0.5, log=True),
-            subsample=trial.suggest_float("subsample", 0.7, 1.0),
-            colsample_bytree=trial.suggest_float("colsample_bytree", 0.7, 1.0),
+            learning_rate=trial.suggest_float("learning_rate", 1e-4, 1.0, log=True),
             eval_metric="logloss",
             random_state=random_state,
         )
         pipeline = make_pipeline(StandardScaler(), model)
-        return cross_val_score(pipeline, x, y, cv=cv, scoring="roc_auc").mean()
+        return cross_val_score(pipeline, trial_x, trial_y, cv=cv, scoring="roc_auc").mean()
 
     study = optuna.create_study(direction="maximize")
     study.optimize(objective, n_trials=n_trials)
 
+    best_frame = _augment_training_frame(
+        frame,
+        features,
+        mirror=mirror,
+        noise_factor=study.best_params.get("noise_factor", 0.0),
+        random_state=random_state,
+    )
+    best_params = {
+        key: value
+        for key, value in study.best_params.items()
+        if key != "noise_factor"
+    }
     best_model = XGBClassifier(
-        **study.best_params,
+        **best_params,
         eval_metric="logloss",
         random_state=random_state,
     )
     return _fit_classifier_model(
-        frame,
+        best_frame,
         features=features,
         target=target,
         model=best_model,

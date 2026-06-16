@@ -59,6 +59,7 @@ def build_game_throws(date=None, game_id=None, game_index=0, etv_model=None):
     game_id = resolve_game_id(date=date, game_id=game_id, game_index=game_index)
     events = get_game_events(game_id)
     throws = clean_game_events(events)
+    throws["gameID"] = game_id
     if etv_model is not None:
         throws = add_expected_throwing_value(throws, etv_model)
 

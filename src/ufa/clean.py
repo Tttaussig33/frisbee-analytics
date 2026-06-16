@@ -16,6 +16,14 @@ THROW_COLUMNS = [
     "turnoverX",
     "turnoverY",
     "team_side",
+    "game_quarter",
+    "times",
+    "current_line",
+    "is_home_team",
+    "home_team_score",
+    "away_team_score",
+    "total_points",
+    "possession_num",
     "possession_id",
     "possession_throw",
     "completion",
@@ -54,6 +62,17 @@ def clean_game_events(events):
     events = events.copy()
     events["event_index"] = np.arange(len(events))
 
+    if "time" in events.columns:
+        events["event_time"] = events["time"].astype(float)
+        events["times"] = events["event_time"].ffill().fillna(0)
+    else:
+        events["times"] = 0
+
+    events["game_quarter"] = 1
+
+    if "line" in events.columns:
+        events["current_line"] = events["line"].replace("", np.nan).ffill()
+
     coordinate_columns = [
         "throwerX",
         "throwerY",
@@ -80,6 +99,8 @@ def clean_game_events(events):
     throws["turnover"] = (throws["completion"] == 0).astype(int)
     throws = _attach_block_defenders(events, throws)
 
+    throws["is_home_team"] = throws["team_side"].eq("home")
+
     throws["throw_distance"] = np.sqrt(
         (throws["endX"] - throws["throwerX"]) ** 2
         + (throws["endY"] - throws["throwerY"]) ** 2
@@ -87,6 +108,31 @@ def clean_game_events(events):
     is_goal = throws["completion"].astype(bool) & (
         throws["type"].eq(19) | (throws["receiverY"] > 100)
     )
+
+    throws["home_team_score"] = (
+        (is_goal & throws["team_side"].eq("home"))
+        .shift(fill_value=False)
+        .cumsum()
+        .astype(int)
+    )
+    throws["away_team_score"] = (
+        (is_goal & throws["team_side"].eq("away"))
+        .shift(fill_value=False)
+        .cumsum()
+        .astype(int)
+    )
+    throws["total_points"] = throws["home_team_score"] + throws["away_team_score"]
+
+    point_id = is_goal.shift(fill_value=False).cumsum()
+    turnovers_before_throw = (
+        throws["turnover"]
+        .astype(bool)
+        .shift(fill_value=False)
+        .groupby(point_id)
+        .cumsum()
+    )
+    throws["possession_num"] = turnovers_before_throw + 1
+
     terminal_throw = throws["turnover"].astype(bool) | is_goal
     throws["possession_id"] = terminal_throw.shift(fill_value=False).cumsum() + 1
     throws["possession_throw"] = throws.groupby("possession_id").cumcount() + 1
