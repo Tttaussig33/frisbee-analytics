@@ -64,7 +64,10 @@ def clean_game_events(events):
 
     if "time" in events.columns:
         events["event_time"] = events["time"].astype(float)
-        events["times"] = events["event_time"].ffill().fillna(0)
+        events["times"] = (12 - events["event_time"].ffill().fillna(0) / 60).clip(
+            lower=0,
+            upper=12,
+        )
     else:
         events["times"] = 0
 

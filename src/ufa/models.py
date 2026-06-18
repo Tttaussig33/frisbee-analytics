@@ -23,6 +23,22 @@ DEFAULT_FV_TRAINING_FEATURES = [
 ]
 
 
+def normalize_processed_game_times(times):
+    normalized = pd.to_numeric(times, errors="coerce") / 60
+    normalized = normalized.mask(normalized < 0, normalized + 5)
+    while normalized.gt(12).any():
+        normalized = normalized.mask(normalized > 12, normalized - 12)
+    return normalized
+
+
+def _sort_like_processed_games(frame):
+    time_column = "_sort_times" if "_sort_times" in frame.columns else "times"
+    sort_columns = ["gameID", "game_quarter", time_column]
+    if all(column in frame.columns for column in sort_columns):
+        return frame.sort_values(sort_columns, ascending=[True, True, False])
+    return frame
+
+
 def _clean_feature_frame(frame, features):
     x = frame[features].replace([np.inf, -np.inf], np.nan)
     return x.fillna(x.median(numeric_only=True))
@@ -121,7 +137,10 @@ def add_point_outcome(frame):
     if "receiver_y" not in frame.columns:
         frame = prepare_etv_features(frame)
 
-    scoring_throw = frame["completion"].astype(bool) & (frame["receiver_y"] > 100)
+    sorted_frame = _sort_like_processed_games(frame)
+    scoring_throw = sorted_frame["completion"].astype(bool) & (
+        sorted_frame["receiver_y"] > 100
+    )
 
     point_keys = [
         column
@@ -129,9 +148,17 @@ def add_point_outcome(frame):
         if column in frame.columns
     ]
     if len(point_keys) == 4 and "is_home_team" in frame.columns:
+        final_throws = (
+            sorted_frame
+            .groupby(point_keys, sort=False)
+            .tail(1)
+        )
         scoring_teams = (
-            frame.loc[scoring_throw, point_keys + ["is_home_team"]]
-            .drop_duplicates(point_keys, keep="last")
+            final_throws.loc[
+                final_throws["completion"].astype(bool)
+                & (final_throws["receiver_y"] > 100),
+                point_keys + ["is_home_team"],
+            ]
             .rename(columns={"is_home_team": "scoring_is_home_team"})
         )
         frame = frame.merge(scoring_teams, on=point_keys, how="left")
@@ -153,9 +180,22 @@ def add_point_outcome(frame):
         if column in frame.columns
     ]
     if len(possession_keys) == 5:
-        frame["point_outcome"] = scoring_throw.groupby(
-            [frame[column] for column in possession_keys]
-        ).transform("max").astype(int)
+        final_throws = (
+            sorted_frame
+            .groupby(possession_keys, sort=False)
+            .tail(1)
+        )
+        scoring_possessions = final_throws.loc[
+            final_throws["completion"].astype(bool)
+            & (final_throws["receiver_y"] > 100),
+            possession_keys,
+        ].drop_duplicates()
+        frame = frame.merge(
+            scoring_possessions.assign(point_outcome=1),
+            on=possession_keys,
+            how="left",
+        )
+        frame["point_outcome"] = frame["point_outcome"].fillna(0).astype(int)
         return frame
 
     fallback_keys = [
@@ -167,7 +207,10 @@ def add_point_outcome(frame):
         frame["point_outcome"] = scoring_throw.astype(int)
         return frame
 
-    frame["point_outcome"] = scoring_throw.groupby(
+    frame["point_outcome"] = (
+        frame["completion"].astype(bool)
+        & (frame["receiver_y"] > 100)
+    ).groupby(
         [frame[column] for column in fallback_keys]
     ).transform("max").astype(int)
 
@@ -183,8 +226,15 @@ def prepare_all_games_training_data(data):
     if "completion" not in frame.columns:
         frame["completion"] = 1 - frame["turnover"].astype(int)
 
+    if "times" in frame.columns:
+        frame["_sort_times"] = pd.to_numeric(frame["times"], errors="coerce")
+        frame["times"] = normalize_processed_game_times(frame["times"])
+        if "game_quarter" in frame.columns:
+            frame.loc[frame["game_quarter"].eq(6), "times"] = 12
+
     frame = prepare_etv_features(frame)
     frame = add_point_outcome(frame)
+    frame = _sort_like_processed_games(frame)
 
     frame["completion_target"] = frame["completion"].astype(int)
     frame["eventual_score_target"] = frame["point_outcome"].astype(int)
@@ -194,7 +244,7 @@ def prepare_all_games_training_data(data):
 
 def split_training_data(
     throws,
-    random_test_size=0.2,
+    random_test_size=0.4,
     temporal_game_count=75,
     player_holdout_count=50,
     player_min_throws=200,
@@ -210,8 +260,6 @@ def split_training_data(
     if "year" not in frame.columns and "gameDate" in frame.columns:
         frame["year"] = frame["gameDate"].dt.year
 
-    rng = np.random.default_rng(random_state)
-
     player_test = frame.iloc[0:0].copy()
     model_pool = frame
     if "thrower" in frame.columns:
@@ -219,40 +267,49 @@ def split_training_data(
         candidates = thrower_counts[thrower_counts > player_min_throws].index.to_numpy()
         if len(candidates) > 0 and player_holdout_count > 0:
             holdout_count = min(player_holdout_count, len(candidates))
+            rng = np.random.RandomState(random_state)
             holdout_throwers = rng.choice(candidates, size=holdout_count, replace=False)
             player_test = frame[frame["thrower"].isin(holdout_throwers)].copy()
             model_pool = frame[~frame["thrower"].isin(holdout_throwers)].copy()
 
     temporal_test = model_pool.iloc[0:0].copy()
     split_pool = model_pool
+    validation_pool = split_pool
     if "gameID" in model_pool.columns and "gameDate" in model_pool.columns:
-        game_dates = (
-            model_pool[["gameID", "gameDate"]]
-            .drop_duplicates("gameID")
-            .sort_values("gameDate")
-        )
-        if temporal_game_count > 0 and len(game_dates) > temporal_game_count:
-            temporal_ids = game_dates["gameID"].tail(temporal_game_count)
+        sorted_pool = model_pool.sort_values("gameDate")
+        game_ids = pd.Series(sorted_pool["gameID"].unique())
+        if temporal_game_count > 0 and len(game_ids) > temporal_game_count:
+            temporal_ids = game_ids.tail(temporal_game_count)
+            remaining_ids = game_ids.iloc[:-temporal_game_count]
             temporal_test = model_pool[model_pool["gameID"].isin(temporal_ids)].copy()
             split_pool = model_pool[~model_pool["gameID"].isin(temporal_ids)].copy()
+            validation_pool = sorted_pool[
+                sorted_pool["gameID"].isin(remaining_ids)
+            ].copy()
 
     validation = split_pool.iloc[0:0].copy()
     train = split_pool
     if "gameID" in split_pool.columns and random_test_size > 0:
         if "year" in split_pool.columns and split_pool["year"].notna().any():
             validation_ids = []
-            for _, year_games in split_pool.groupby("year")["gameID"]:
-                game_ids = pd.Series(year_games.unique())
-                sample_size = int(round(len(game_ids) * random_test_size))
-                if sample_size > 0 and len(game_ids) > sample_size:
-                    validation_ids.extend(
-                        rng.choice(game_ids.to_numpy(), size=sample_size, replace=False)
+            game_count = validation_pool["gameID"].nunique()
+            sample_size = int(game_count * random_test_size / 4)
+            for _, year_group in validation_pool.groupby("year"):
+                if sample_size > 0 and len(year_group) >= sample_size:
+                    sampled = year_group.sample(
+                        n=sample_size,
+                        random_state=random_state,
                     )
+                    validation_ids.extend(sampled["gameID"].unique())
         else:
             game_ids = pd.Series(split_pool["gameID"].unique())
             sample_size = int(round(len(game_ids) * random_test_size))
             validation_ids = (
-                rng.choice(game_ids.to_numpy(), size=sample_size, replace=False)
+                np.random.RandomState(random_state).choice(
+                    game_ids.to_numpy(),
+                    size=sample_size,
+                    replace=False,
+                )
                 if sample_size > 0 and len(game_ids) > sample_size
                 else []
             )
@@ -602,6 +659,7 @@ def tune_xgboost_classifier(
     cv=5,
     random_state=0,
     mirror=True,
+    apply_noise=False,
 ):
     import optuna
     from sklearn.model_selection import cross_val_score
@@ -615,7 +673,7 @@ def tune_xgboost_classifier(
             frame,
             features,
             mirror=mirror,
-            noise_factor=noise_factor,
+            noise_factor=noise_factor if apply_noise else 0.0,
             random_state=random_state,
         )
         trial_x = _clean_feature_frame(trial_frame, features)
@@ -637,7 +695,7 @@ def tune_xgboost_classifier(
         frame,
         features,
         mirror=mirror,
-        noise_factor=study.best_params.get("noise_factor", 0.0),
+        noise_factor=study.best_params.get("noise_factor", 0.0) if apply_noise else 0.0,
         random_state=random_state,
     )
     best_params = {
@@ -665,6 +723,7 @@ def train_tuned_xgboost_etv_models_from_split(
     n_trials=15,
     cv=5,
     random_state=0,
+    apply_noise=False,
 ):
     train = prepare_model_training_frame(splits["train"])
     cp_features = cp_features or DEFAULT_CP_FEATURES
@@ -678,6 +737,7 @@ def train_tuned_xgboost_etv_models_from_split(
         n_trials=n_trials,
         cv=cv,
         random_state=random_state,
+        apply_noise=apply_noise,
     )
     fv_model, fv_study = tune_xgboost_classifier(
         train,
@@ -686,6 +746,7 @@ def train_tuned_xgboost_etv_models_from_split(
         n_trials=n_trials,
         cv=cv,
         random_state=random_state,
+        apply_noise=apply_noise,
     )
 
     return {
