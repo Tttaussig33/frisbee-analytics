@@ -7,3 +7,5 @@ xgboost
 optuna
 imbalanced-learn
 shap
+plotly
+nbformat

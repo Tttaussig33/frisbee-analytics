@@ -54,6 +54,15 @@ from ufa.pipeline import (
     resolve_game_id,
     save_game_pipeline_outputs,
 )
+from ufa.shownspace_paths import (
+    average_scoring_path,
+    build_scoring_possessions,
+    fetch_shownspace_games,
+    fetch_shownspace_season_throws,
+    fetch_shownspace_throws_for_games,
+    plot_average_scoring_path,
+    plot_scoring_heatmap,
+)
 
 __all__ = [
     "GamePipelineResult",
@@ -100,4 +109,11 @@ __all__ = [
     "prepare_etv_features",
     "resolve_game_id",
     "save_game_pipeline_outputs",
+    "average_scoring_path",
+    "build_scoring_possessions",
+    "fetch_shownspace_games",
+    "fetch_shownspace_season_throws",
+    "fetch_shownspace_throws_for_games",
+    "plot_average_scoring_path",
+    "plot_scoring_heatmap",
 ]
