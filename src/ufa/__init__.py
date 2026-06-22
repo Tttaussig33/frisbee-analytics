@@ -55,13 +55,20 @@ from ufa.pipeline import (
     save_game_pipeline_outputs,
 )
 from ufa.shownspace_paths import (
+    add_possession_style_labels,
     average_scoring_path,
     build_scoring_possessions,
+    cluster_scoring_possessions,
     fetch_shownspace_games,
     fetch_shownspace_season_throws,
     fetch_shownspace_throws_for_games,
     plot_average_scoring_path,
+    plot_possession_path,
+    plot_representative_paths,
     plot_scoring_heatmap,
+    select_representative_paths,
+    select_top_paths,
+    summarize_path_clusters,
 )
 
 __all__ = [
@@ -109,11 +116,18 @@ __all__ = [
     "prepare_etv_features",
     "resolve_game_id",
     "save_game_pipeline_outputs",
+    "add_possession_style_labels",
     "average_scoring_path",
     "build_scoring_possessions",
+    "cluster_scoring_possessions",
     "fetch_shownspace_games",
     "fetch_shownspace_season_throws",
     "fetch_shownspace_throws_for_games",
     "plot_average_scoring_path",
+    "plot_possession_path",
+    "plot_representative_paths",
     "plot_scoring_heatmap",
+    "select_representative_paths",
+    "select_top_paths",
+    "summarize_path_clusters",
 ]

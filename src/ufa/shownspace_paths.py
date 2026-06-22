@@ -155,7 +155,7 @@ def _resample_path(points, checkpoints):
         {
             "checkpoint": checkpoints,
             "x": x_values,
-        "y": y_values,
+            "y": y_values,
             "cumulative_aec": np.interp(
                 checkpoints,
                 dedup["progress"],
@@ -172,6 +172,29 @@ def _resample_path(points, checkpoints):
                 dedup["win_prob"].ffill().bfill(),
             ),
         }
+    )
+
+
+def _path_lookup(paths):
+    return {path["possession_id"].iloc[0]: path for path in paths if not path.empty}
+
+
+def _style_features(possessions):
+    feature_columns = [
+        "throw_count",
+        "aec_per_throw",
+        "mean_cp",
+        "yards_per_throw",
+        "max_throw_distance",
+        "huck_count",
+        "reset_count",
+        "lateral_yards",
+    ]
+    return (
+        possessions.reindex(columns=feature_columns)
+        .apply(pd.to_numeric, errors="coerce")
+        .replace([np.inf, -np.inf], np.nan)
+        .fillna(0)
     )
 
 
@@ -205,6 +228,10 @@ def build_scoring_possessions(throws, team_id=None):
 
         total_aec = pd.to_numeric(path.get("aec"), errors="coerce").sum()
         throw_count = len(path)
+        start_x = pd.to_numeric(path["ThrowerX"], errors="coerce").iloc[0]
+        start_y = pd.to_numeric(path["ThrowerY"], errors="coerce").iloc[0]
+        end_x = pd.to_numeric(path["ReceiverX"], errors="coerce").iloc[-1]
+        end_y = pd.to_numeric(path["ReceiverY"], errors="coerce").iloc[-1]
         x_diff = pd.to_numeric(path.get("x_diff"), errors="coerce")
         y_diff = pd.to_numeric(path.get("y_diff"), errors="coerce")
         throw_distance = pd.to_numeric(path.get("throw_distance"), errors="coerce")
@@ -220,6 +247,11 @@ def build_scoring_possessions(throws, team_id=None):
                 "quarter_point": key[2],
                 "possession_num": key[3],
                 "is_home_team": key[4],
+                "start_x": start_x,
+                "start_y": start_y,
+                "end_x": end_x,
+                "end_y": end_y,
+                "field_progress": end_y - start_y,
                 "throw_count": throw_count,
                 "total_aec": total_aec,
                 "aec_per_throw": total_aec / throw_count if throw_count else np.nan,
@@ -241,6 +273,121 @@ def build_scoring_possessions(throws, team_id=None):
 
     possessions = pd.DataFrame(possession_rows)
     return possessions, paths
+
+
+def add_possession_style_labels(possessions):
+    """Add simple, readable style labels to scoring possessions."""
+    if possessions.empty:
+        return possessions.copy()
+
+    labeled = possessions.copy()
+    conditions = [
+        labeled["huck_count"].fillna(0).ge(1),
+        labeled["throw_count"].fillna(0).le(3),
+        labeled["reset_count"].fillna(0).ge(3),
+        labeled["throw_count"].fillna(0).ge(8),
+    ]
+    choices = ["huck score", "quick strike", "reset-heavy", "methodical"]
+    labeled["style"] = np.select(conditions, choices, default="balanced")
+    return labeled
+
+
+def cluster_scoring_possessions(possessions, n_clusters=4, random_state=0):
+    """Cluster scoring possessions by shape and efficiency features."""
+    if possessions.empty:
+        return possessions.copy()
+
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+
+    clustered = add_possession_style_labels(possessions)
+    features = _style_features(clustered)
+    cluster_count = min(n_clusters, len(clustered))
+    if cluster_count <= 1:
+        clustered["path_cluster"] = 0
+        return clustered
+
+    scaled = StandardScaler().fit_transform(features)
+    model = KMeans(n_clusters=cluster_count, random_state=random_state, n_init="auto")
+    clustered["path_cluster"] = model.fit_predict(scaled)
+    return clustered
+
+
+def summarize_path_clusters(possessions):
+    if possessions.empty:
+        return pd.DataFrame()
+
+    summary = (
+        possessions.groupby(["path_cluster", "style"], dropna=False)
+        .agg(
+            possessions=("possession_id", "count"),
+            avg_throws=("throw_count", "mean"),
+            avg_aec_per_throw=("aec_per_throw", "mean"),
+            avg_cp=("mean_cp", "mean"),
+            avg_yards_per_throw=("yards_per_throw", "mean"),
+            avg_max_throw_distance=("max_throw_distance", "mean"),
+            avg_resets=("reset_count", "mean"),
+            avg_lateral_yards=("lateral_yards", "mean"),
+        )
+        .reset_index()
+        .sort_values(["possessions", "avg_aec_per_throw"], ascending=[False, False])
+    )
+    return summary
+
+
+def select_top_paths(possessions, paths, metric="aec_per_throw", n=5, ascending=False):
+    """Return real possession paths ranked by a possession-level metric."""
+    if possessions.empty:
+        return []
+
+    lookup = _path_lookup(paths)
+    ranked = possessions.sort_values(metric, ascending=ascending).head(n)
+    return [
+        lookup[possession_id]
+        for possession_id in ranked["possession_id"]
+        if possession_id in lookup
+    ]
+
+
+def select_representative_paths(
+    possessions,
+    paths,
+    group_column="path_cluster",
+    unique_games=False,
+):
+    """Pick one real possession nearest each group's feature median."""
+    if possessions.empty or group_column not in possessions:
+        return {}
+
+    lookup = _path_lookup(paths)
+    features = _style_features(possessions)
+    normalized = (features - features.mean()) / features.std(ddof=0).replace(0, 1)
+    normalized = normalized.fillna(0)
+
+    representatives = {}
+    used_games = set()
+    for group_value, group in possessions.groupby(group_column, dropna=False):
+        group_features = normalized.loc[group.index]
+        center = group_features.median()
+        distances = ((group_features - center) ** 2).sum(axis=1)
+        ranked_indices = distances.sort_values().index
+        chosen_index = ranked_indices[0]
+        if unique_games and "GameID" in possessions:
+            for candidate_index in ranked_indices:
+                candidate_game = possessions.loc[candidate_index, "GameID"]
+                if candidate_game not in used_games:
+                    chosen_index = candidate_index
+                    break
+        chosen = possessions.loc[chosen_index]
+        possession_id = chosen["possession_id"]
+        if possession_id in lookup:
+            if unique_games and "GameID" in chosen:
+                used_games.add(chosen["GameID"])
+            label = f"{group_column} {group_value}"
+            if "style" in chosen:
+                label = f"{chosen['style']} ({label})"
+            representatives[label] = lookup[possession_id]
+    return representatives
 
 
 def average_scoring_path(paths, checkpoints=None):
@@ -272,6 +419,109 @@ def average_scoring_path(paths, checkpoints=None):
         )
         .reset_index()
     )
+
+
+def _path_hover_text(path):
+    thrower = path.get("thrower")
+    receiver = path.get("receiver")
+    thrower = thrower if thrower is not None else pd.Series("", index=path.index)
+    receiver = receiver if receiver is not None else pd.Series("", index=path.index)
+    aec = pd.to_numeric(path.get("aec"), errors="coerce")
+    cp = pd.to_numeric(path.get("cp"), errors="coerce")
+    yards = pd.to_numeric(path.get("throw_distance"), errors="coerce")
+
+    text = []
+    for i, (_, row) in enumerate(path.iterrows(), start=1):
+        parts = [f"Throw {i}"]
+        if thrower.loc[row.name] or receiver.loc[row.name]:
+            parts.append(f"{thrower.loc[row.name]} -> {receiver.loc[row.name]}")
+        if pd.notna(aec.loc[row.name]):
+            parts.append(f"aEC: {aec.loc[row.name]:.3f}")
+        if pd.notna(cp.loc[row.name]):
+            parts.append(f"CP: {cp.loc[row.name]:.1%}")
+        if pd.notna(yards.loc[row.name]):
+            parts.append(f"Distance: {yards.loc[row.name]:.1f}")
+        text.append("<br>".join(parts))
+    return text
+
+
+def _add_path_arrows(fig, points, color, every=1, opacity=0.85):
+    for index, (start, end) in enumerate(zip(points.iloc[:-1].itertuples(), points.iloc[1:].itertuples())):
+        if index % every != 0:
+            continue
+        fig.add_annotation(
+            x=end.x,
+            y=end.y,
+            ax=start.x,
+            ay=start.y,
+            xref="x",
+            yref="y",
+            axref="x",
+            ayref="y",
+            showarrow=True,
+            arrowhead=3,
+            arrowsize=1,
+            arrowwidth=1.8,
+            arrowcolor=color,
+            opacity=opacity,
+        )
+
+
+def plot_possession_path(path, title="Scoring possession path", color="#b74126"):
+    """Plot one real scoring possession, preserving its actual zig-zag shape."""
+    import plotly.graph_objects as go
+
+    points = _path_points(path)
+    fig = go.Figure()
+    _add_field_shapes(fig)
+    fig.add_trace(
+        go.Scatter(
+            x=points["x"],
+            y=points["y"],
+            mode="lines+markers",
+            line={"color": color, "width": 4},
+            marker={"size": 8, "color": color},
+            text=["Start"] + _path_hover_text(path),
+            hovertemplate="%{text}<extra></extra>",
+            name="Real possession",
+        )
+    )
+    _add_path_arrows(fig, points, color)
+    _apply_field_layout(fig, title)
+    return fig
+
+
+def plot_representative_paths(
+    representative_paths,
+    title="Representative scoring path styles",
+):
+    """Overlay one real representative possession for each style or cluster."""
+    import plotly.graph_objects as go
+
+    colors = ["#b74126", "#164e87", "#7a3db8", "#2f7d32", "#d97706", "#0f766e"]
+    fig = go.Figure()
+    _add_field_shapes(fig)
+
+    items = representative_paths.items()
+    for index, (label, path) in enumerate(items):
+        color = colors[index % len(colors)]
+        points = _path_points(path)
+        fig.add_trace(
+            go.Scatter(
+                x=points["x"],
+                y=points["y"],
+                mode="lines+markers",
+                line={"color": color, "width": 3},
+                marker={"size": 7, "color": color},
+                text=["Start"] + _path_hover_text(path),
+                hovertemplate=f"{label}<br>%{{text}}<extra></extra>",
+                name=label,
+            )
+        )
+        _add_path_arrows(fig, points, color, every=2, opacity=0.65)
+
+    _apply_field_layout(fig, title, width=680)
+    return fig
 
 
 def _add_field_shapes(fig):
@@ -385,10 +635,15 @@ def plot_average_scoring_path(
             opacity=0.8,
         )
 
+    _apply_field_layout(fig, title)
+    return fig
+
+
+def _apply_field_layout(fig, title, width=560, height=780):
     fig.update_layout(
         title=title,
-        width=560,
-        height=780,
+        width=width,
+        height=height,
         plot_bgcolor="#f6faf5",
         paper_bgcolor="white",
         margin={"l": 20, "r": 20, "t": 60, "b": 20},
@@ -407,7 +662,6 @@ def plot_average_scoring_path(
             "visible": False,
         },
     )
-    return fig
 
 
 def plot_scoring_heatmap(paths, title="Scoring possession catch-location heatmap"):
@@ -434,19 +688,5 @@ def plot_scoring_heatmap(paths, title="Scoring possession catch-location heatmap
                 name="Catch density",
             )
         )
-    fig.update_layout(
-        title=title,
-        width=560,
-        height=780,
-        plot_bgcolor="#f6faf5",
-        paper_bgcolor="white",
-        margin={"l": 20, "r": 20, "t": 60, "b": 20},
-        xaxis={
-            "range": [FIELD_X_MIN - 5, FIELD_X_MAX + 5],
-            "visible": False,
-            "scaleanchor": "y",
-            "scaleratio": 1,
-        },
-        yaxis={"range": [FIELD_Y_MIN - 3, FIELD_Y_MAX + 3], "visible": False},
-    )
+    _apply_field_layout(fig, title)
     return fig
