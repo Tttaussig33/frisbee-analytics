@@ -449,21 +449,44 @@ def _add_path_arrows(fig, points, color, every=1, opacity=0.85):
     for index, (start, end) in enumerate(zip(points.iloc[:-1].itertuples(), points.iloc[1:].itertuples())):
         if index % every != 0:
             continue
+        annotation = {
+            "x": end.x,
+            "y": end.y,
+            "ax": start.x,
+            "ay": start.y,
+            "showarrow": True,
+            "arrowhead": 3,
+            "arrowsize": 1,
+            "arrowwidth": 1.8,
+            "arrowcolor": color,
+            "opacity": opacity,
+        }
+        fig.add_annotation(
+            **annotation,
+            xref="x",
+            yref="y",
+            axref="x",
+            ayref="y",
+        )
+
+
+def _add_path_arrows_to_subplot(fig, points, color, row, col, every=1, opacity=0.85):
+    for index, (start, end) in enumerate(zip(points.iloc[:-1].itertuples(), points.iloc[1:].itertuples())):
+        if index % every != 0:
+            continue
         fig.add_annotation(
             x=end.x,
             y=end.y,
             ax=start.x,
             ay=start.y,
-            xref="x",
-            yref="y",
-            axref="x",
-            ayref="y",
             showarrow=True,
             arrowhead=3,
             arrowsize=1,
             arrowwidth=1.8,
             arrowcolor=color,
             opacity=opacity,
+            row=row,
+            col=col,
         )
 
 
@@ -524,9 +547,127 @@ def plot_representative_paths(
     return fig
 
 
-def _add_field_shapes(fig):
+def _style_color(label, index):
+    label_lower = str(label).lower()
+    if "huck" in label_lower:
+        return "#b74126"
+    if "reset" in label_lower:
+        return "#164e87"
+    if "quick" in label_lower:
+        return "#7a3db8"
+    if "methodical" in label_lower:
+        return "#2f7d32"
+    if "balanced" in label_lower:
+        return "#d97706"
+    colors = ["#b74126", "#164e87", "#7a3db8", "#2f7d32", "#d97706", "#0f766e"]
+    return colors[index % len(colors)]
+
+
+def plot_team_representative_path_grid(
+    team_representative_paths,
+    title="Representative scoring path styles by team",
+    style_filter=None,
+    show_arrows=False,
+):
+    """Plot representative scoring paths for multiple teams side by side."""
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+
+    teams = list(team_representative_paths.keys())
+    fig = make_subplots(
+        rows=1,
+        cols=len(teams),
+        subplot_titles=[team.title() for team in teams],
+        horizontal_spacing=0.04,
+    )
+
+    for col, team in enumerate(teams, start=1):
+        _add_field_shapes(fig, row=1, col=col)
+        representatives = team_representative_paths[team]
+        if style_filter is not None:
+            representatives = {
+                label: path
+                for label, path in representatives.items()
+                if style_filter.lower() in str(label).lower()
+            }
+        for index, (label, path) in enumerate(representatives.items()):
+            color = _style_color(label, index)
+            points = _path_points(path)
+            fig.add_trace(
+                go.Scatter(
+                    x=points["x"],
+                    y=points["y"],
+                    mode="lines+markers",
+                    line={"color": color, "width": 2.5},
+                    marker={"size": 6, "color": color},
+                    text=["Start"] + _path_hover_text(path),
+                    hovertemplate=(
+                        f"{team.title()}<br>{label}<br>%{{text}}<extra></extra>"
+                    ),
+                    name=f"{team.title()} - {label}",
+                    showlegend=False,
+                ),
+                row=1,
+                col=col,
+            )
+            if show_arrows:
+                _add_path_arrows_to_subplot(
+                    fig,
+                    points,
+                    color,
+                    row=1,
+                    col=col,
+                    every=3,
+                    opacity=0.45,
+                )
+
+        if not representatives:
+            fig.add_annotation(
+                x=0,
+                y=60,
+                text=f"No {style_filter} path",
+                showarrow=False,
+                font={"size": 12, "color": "#526173"},
+                row=1,
+                col=col,
+            )
+
+        fig.update_xaxes(
+            range=[FIELD_X_MIN - 5, FIELD_X_MAX + 5],
+            showgrid=False,
+            zeroline=False,
+            visible=False,
+            scaleanchor=f"y{col if col > 1 else ''}",
+            scaleratio=1,
+            row=1,
+            col=col,
+        )
+        fig.update_yaxes(
+            range=[FIELD_Y_MIN - 3, FIELD_Y_MAX + 3],
+            showgrid=False,
+            zeroline=False,
+            visible=False,
+            row=1,
+            col=col,
+        )
+
+    fig.update_layout(
+        title=title,
+        width=max(380 * len(teams), 560),
+        height=720,
+        plot_bgcolor="#f6faf5",
+        paper_bgcolor="white",
+        margin={"l": 20, "r": 20, "t": 70, "b": 20},
+    )
+    return fig
+
+
+def _add_field_shapes(fig, row=None, col=None):
     line_color = "#1B1E26"
     fill_color = "#86d973"
+    shape_kwargs = {"row": row, "col": col} if row is not None and col is not None else {}
+    trace_kwargs = {"row": row, "col": col} if row is not None and col is not None else {}
+
     fig.add_shape(
         type="rect",
         x0=FIELD_X_MIN,
@@ -536,6 +677,7 @@ def _add_field_shapes(fig):
         line={"color": line_color, "width": 2},
         fillcolor=fill_color,
         layer="below",
+        **shape_kwargs,
     )
     for y in [ENDZONE_LOW_Y, ENDZONE_HIGH_Y]:
         fig.add_shape(
@@ -546,6 +688,7 @@ def _add_field_shapes(fig):
             y1=y,
             line={"color": line_color, "width": 1.5},
             layer="below",
+            **shape_kwargs,
         )
     for y in [40, 80]:
         fig.add_trace(
@@ -556,7 +699,8 @@ def _add_field_shapes(fig):
                 marker={"size": 5, "color": line_color},
                 hoverinfo="skip",
                 showlegend=False,
-            )
+            ),
+            **trace_kwargs,
         )
 
 
