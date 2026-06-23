@@ -1,4 +1,6 @@
 import time
+import json
+from html import escape
 
 import numpy as np
 import pandas as pd
@@ -228,6 +230,7 @@ def build_scoring_possessions(throws, team_id=None):
 
         total_aec = pd.to_numeric(path.get("aec"), errors="coerce").sum()
         throw_count = len(path)
+        start_timestamp = path["start_timestamp"].iloc[0] if "start_timestamp" in path else None
         start_x = pd.to_numeric(path["ThrowerX"], errors="coerce").iloc[0]
         start_y = pd.to_numeric(path["ThrowerY"], errors="coerce").iloc[0]
         end_x = pd.to_numeric(path["ReceiverX"], errors="coerce").iloc[-1]
@@ -243,6 +246,7 @@ def build_scoring_possessions(throws, team_id=None):
                 "possession_id": possession_id,
                 "GameID": key[0],
                 "team_id": offense_team,
+                "start_timestamp": start_timestamp,
                 "game_quarter": key[1],
                 "quarter_point": key[2],
                 "possession_num": key[3],
@@ -261,6 +265,8 @@ def build_scoring_possessions(throws, team_id=None):
                 ),
                 "total_yards": y_diff.sum(),
                 "yards_per_throw": y_diff.mean(),
+                "total_throw_distance": throw_distance.sum(),
+                "avg_throw_distance": throw_distance.mean(),
                 "max_throw_distance": throw_distance.max(),
                 "huck_count": (throw_distance >= 40).sum(),
                 "reset_count": (y_diff < 0).sum(),
@@ -443,6 +449,333 @@ def _path_hover_text(path):
             parts.append(f"Distance: {yards.loc[row.name]:.1f}")
         text.append("<br>".join(parts))
     return text
+
+
+def _format_browser_number(value, digits=2):
+    if value is None or pd.isna(value):
+        return "-"
+    return f"{float(value):.{digits}f}"
+
+
+def _format_browser_percent(value):
+    if value is None or pd.isna(value):
+        return "-"
+    return f"{float(value):.1%}"
+
+
+def _browser_path_lookup(paths):
+    return {path["possession_id"].iloc[0]: path for path in paths if not path.empty}
+
+
+def _sort_browser_possessions(possessions):
+    sort_columns = [
+        column
+        for column in [
+            "start_timestamp",
+            "GameID",
+            "game_quarter",
+            "quarter_point",
+            "possession_num",
+            "is_home_team",
+        ]
+        if column in possessions
+    ]
+    return possessions.sort_values(sort_columns).reset_index(drop=True)
+
+
+def render_shownspace_possession_svg(path, width=260, height=560):
+    """Return a Shown Space-style SVG field for one scoring possession."""
+    path = path.sort_values("possession_throw").copy()
+    possession_id = str(path["possession_id"].iloc[0]) if "possession_id" in path else "path"
+    detail_id = f"ufa-throw-detail-{abs(hash(possession_id))}"
+    field_width = width - 34
+    field_height = height - 34
+    left = (width - field_width) / 2
+    top = 17
+
+    def sx(value):
+        value = float(value)
+        scale = (value - FIELD_X_MIN) / (FIELD_X_MAX - FIELD_X_MIN)
+        return left + scale * field_width
+
+    def sy(value):
+        value = float(value)
+        scale = (FIELD_Y_MAX - value) / (FIELD_Y_MAX - FIELD_Y_MIN)
+        return top + scale * field_height
+
+    def throw_detail_html(index, throw):
+        thrower = throw.get("thrower") or throw.get("Thrower") or ""
+        receiver = throw.get("receiver") or throw.get("Receiver") or ""
+        distance = _format_browser_number(throw.get("throw_distance"), digits=1)
+        cp = _format_browser_percent(throw.get("cp"))
+        aec = _format_browser_number(throw.get("aec"), digits=3)
+        quarter = throw.get("game_quarter", "-")
+        quarter_point = throw.get("quarter_point", "-")
+        return f"""
+        <div class="ufa-detail-kicker">Throw {index}</div>
+        <div class="ufa-detail-title">{escape(str(thrower))} -> {escape(str(receiver))}</div>
+        <div class="ufa-detail-row"><span>Distance</span><b>{distance}</b></div>
+        <div class="ufa-detail-row"><span>CP</span><b>{cp}</b></div>
+        <div class="ufa-detail-row"><span>aEC</span><b>{aec}</b></div>
+        <div class="ufa-detail-row"><span>Context</span><b>Q{quarter}, point {quarter_point}</b></div>
+        """
+
+    shapes = [
+        f'<rect class="ufa-field" x="{left:.2f}" y="{top:.2f}" '
+        f'width="{field_width:.2f}" height="{field_height:.2f}" />'
+    ]
+    for y_value in [ENDZONE_LOW_Y, ENDZONE_HIGH_Y]:
+        shapes.append(
+            f'<line class="ufa-yard-line" x1="{left:.2f}" y1="{sy(y_value):.2f}" '
+            f'x2="{left + field_width:.2f}" y2="{sy(y_value):.2f}" />'
+        )
+    for y_value in [40, 80]:
+        shapes.append(
+            f'<circle class="ufa-center-dot" cx="{sx(0):.2f}" '
+            f'cy="{sy(y_value):.2f}" r="2.5" />'
+        )
+
+    throw_shapes = []
+    for index, (_, throw) in enumerate(path.iterrows(), start=1):
+        x1 = sx(throw["ThrowerX"])
+        y1 = sy(throw["ThrowerY"])
+        x2 = sx(throw["ReceiverX"])
+        y2 = sy(throw["ReceiverY"])
+        goal_class = " goal-throw" if bool(float(throw["ReceiverY"]) > ENDZONE_HIGH_Y) else ""
+        detail_html = json.dumps(throw_detail_html(index, throw))
+        update_detail = (
+            f"document.getElementById({json.dumps(detail_id)}).innerHTML = "
+            f"{detail_html};"
+        )
+        throw_shapes.append(
+            f'<g class="ufa-throw{goal_class}" '
+            f'onmouseover="{escape(update_detail, quote=True)}" '
+            f'onclick="{escape(update_detail, quote=True)}">'
+            f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" />'
+            f'<circle class="throw-start" cx="{x1:.2f}" cy="{y1:.2f}" r="2.8" />'
+            f'<circle class="throw-end" cx="{x2:.2f}" cy="{y2:.2f}" r="3.1" />'
+            "</g>"
+        )
+
+    css = """
+    <style>
+      .ufa-browser-svg { background: #f7faf7; display: block; }
+      .ufa-field { fill: #86d973; stroke: #071019; stroke-width: 2.2; }
+      .ufa-yard-line { stroke: #071019; stroke-width: 1.6; }
+      .ufa-center-dot { fill: #071019; stroke: none; }
+      .ufa-throw line { stroke: #071019; stroke-width: 2.2; stroke-linecap: round; }
+      .ufa-throw circle { fill: #071019; stroke: #071019; stroke-width: 1.2; }
+      .ufa-throw.goal-throw line { stroke: #c3482b; }
+      .ufa-throw.goal-throw .throw-end { fill: #c3482b; stroke: #071019; stroke-width: 1.8; }
+      .ufa-throw:hover line { stroke: #c3482b; stroke-width: 3.2; }
+      .ufa-throw:hover circle { fill: #c3482b; stroke: #071019; stroke-width: 1.8; }
+      .ufa-throw { cursor: pointer; }
+      .ufa-browser-field-wrap {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .ufa-throw-detail {
+        box-sizing: border-box;
+        width: 205px;
+        min-height: 150px;
+        border-left: 1px solid #d8e0e8;
+        padding: 8px 0 8px 12px;
+        color: #0b1a33;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      .ufa-detail-placeholder {
+        color: #637188;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .ufa-detail-kicker {
+        color: #637188;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .ufa-detail-title {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .ufa-detail-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        border-bottom: 1px solid #edf1f5;
+        padding: 3px 0;
+      }
+      .ufa-detail-row span { color: #637188; }
+    </style>
+    """
+    return (
+        f'<div class="ufa-browser-field-wrap">'
+        f"{css}"
+        f'<svg class="ufa-browser-svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" role="img">'
+        f"{''.join(shapes)}{''.join(throw_shapes)}</svg>"
+        f'<div id="{detail_id}" class="ufa-throw-detail">'
+        f'<div class="ufa-detail-placeholder">Hover or click a throw on the field.</div>'
+        f"</div></div>"
+    )
+
+
+def render_possession_browser_summary(possession, path):
+    game_id = escape(str(possession.get("GameID", "-")))
+    team_id = escape(str(possession.get("team_id", "-")).title())
+    side = "Home" if bool(possession.get("is_home_team", False)) else "Away"
+    quarter = possession.get("game_quarter", "-")
+    quarter_point = possession.get("quarter_point", "-")
+    possession_num = possession.get("possession_num", "-")
+    start_y = _format_browser_number(possession.get("start_y"), digits=1)
+    end_y = _format_browser_number(possession.get("end_y"), digits=1)
+    field_progress = _format_browser_number(possession.get("field_progress"), digits=1)
+    total_yards = _format_browser_number(possession.get("total_yards"), digits=1)
+    total_throw_distance = _format_browser_number(
+        possession.get("total_throw_distance"),
+        digits=1,
+    )
+    throw_count = int(possession.get("throw_count", len(path)))
+    total_aec = _format_browser_number(possession.get("total_aec"), digits=3)
+    aec_per_throw = _format_browser_number(possession.get("aec_per_throw"), digits=3)
+    huck_count = int(possession.get("huck_count", 0))
+    reset_count = int(possession.get("reset_count", 0))
+
+    return f"""
+    <div class="ufa-browser-summary">
+      <style>
+        .ufa-browser-summary {{
+          color: #0b1a33;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+          font-size: 13px;
+          line-height: 1.45;
+          width: 315px;
+        }}
+        .ufa-browser-summary h3 {{
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 18px;
+          margin: 0 0 8px;
+          color: #0b1a33;
+        }}
+        .ufa-browser-summary .meta {{
+          border-top: 1px solid #d9e1ea;
+          margin-top: 10px;
+          padding-top: 10px;
+        }}
+        .ufa-browser-summary .row {{
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          border-bottom: 1px solid #edf1f5;
+          padding: 3px 0;
+        }}
+        .ufa-browser-summary .label {{ color: #637188; }}
+        .ufa-browser-summary .value {{ font-weight: 700; text-align: right; }}
+      </style>
+      <h3>{team_id}</h3>
+      <div>{game_id}</div>
+      <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side}</div>
+      <div class="meta">
+        <div class="row"><span class="label">Throws</span><span class="value">{throw_count}</span></div>
+        <div class="row"><span class="label">Start Y</span><span class="value">{start_y}</span></div>
+        <div class="row"><span class="label">End Y</span><span class="value">{end_y}</span></div>
+        <div class="row"><span class="label">Net Y progress</span><span class="value">{field_progress}</span></div>
+        <div class="row"><span class="label">Field yards</span><span class="value">{total_yards}</span></div>
+        <div class="row"><span class="label">Total pass distance</span><span class="value">{total_throw_distance}</span></div>
+        <div class="row"><span class="label">Total aEC</span><span class="value">{total_aec}</span></div>
+        <div class="row"><span class="label">aEC / throw</span><span class="value">{aec_per_throw}</span></div>
+        <div class="row"><span class="label">Hucks</span><span class="value">{huck_count}</span></div>
+        <div class="row"><span class="label">Resets</span><span class="value">{reset_count}</span></div>
+      </div>
+    </div>
+    """
+
+
+def create_scoring_possession_browser(possessions, paths, title="Scoring possessions"):
+    """Create an ipywidgets browser for Shown Space-style possession SVGs."""
+    try:
+        import ipywidgets as widgets
+    except ImportError as exc:
+        raise ImportError(
+            "ipywidgets is required for create_scoring_possession_browser. "
+            "Install it with `pip install ipywidgets` and restart the notebook kernel."
+        ) from exc
+
+    if possessions.empty:
+        return widgets.HTML("<b>No scoring possessions available.</b>")
+
+    browser_possessions = _sort_browser_possessions(possessions)
+    lookup = _browser_path_lookup(paths)
+    browser_possessions = browser_possessions[
+        browser_possessions["possession_id"].isin(lookup)
+    ].reset_index(drop=True)
+    if browser_possessions.empty:
+        return widgets.HTML("<b>No matching possession paths available.</b>")
+
+    options = []
+    for index, row in browser_possessions.iterrows():
+        label = (
+            f"{index + 1}. {row['GameID']} | Q{row['game_quarter']} "
+            f"P{row['quarter_point']} | poss {row['possession_num']} | "
+            f"{int(row['throw_count'])} throws"
+        )
+        options.append((label, index))
+
+    header = widgets.HTML(
+        f"<h2 style='margin:0 0 8px;color:#223a5e;font-family:system-ui'>{escape(title)}</h2>"
+    )
+    dropdown = widgets.Dropdown(
+        options=options,
+        value=0,
+        description="Possession",
+        layout=widgets.Layout(width="430px"),
+        style={"description_width": "85px"},
+    )
+    previous_button = widgets.Button(description="Previous", layout=widgets.Layout(width="95px"))
+    next_button = widgets.Button(description="Next", layout=widgets.Layout(width="95px"))
+    count_label = widgets.HTML()
+    summary_html = widgets.HTML()
+    field_html = widgets.HTML()
+
+    def update(index):
+        row = browser_possessions.iloc[index]
+        path = lookup[row["possession_id"]]
+        count_label.value = f"<b>{index + 1}</b> of <b>{len(browser_possessions)}</b>"
+        summary_html.value = render_possession_browser_summary(row, path)
+        field_html.value = render_shownspace_possession_svg(path)
+
+    def on_dropdown_change(change):
+        if change["name"] == "value" and change["new"] is not None:
+            update(change["new"])
+
+    def on_previous(_):
+        dropdown.value = max(0, dropdown.value - 1)
+
+    def on_next(_):
+        dropdown.value = min(len(browser_possessions) - 1, dropdown.value + 1)
+
+    dropdown.observe(on_dropdown_change, names="value")
+    previous_button.on_click(on_previous)
+    next_button.on_click(on_next)
+    update(0)
+
+    controls = widgets.VBox(
+        [
+            header,
+            dropdown,
+            widgets.HBox([previous_button, next_button, count_label]),
+            summary_html,
+        ],
+        layout=widgets.Layout(width="450px"),
+    )
+    return widgets.HBox(
+        [controls, field_html],
+        layout=widgets.Layout(align_items="flex-start", gap="18px"),
+    )
 
 
 def _add_path_arrows(fig, points, color, every=1, opacity=0.85):

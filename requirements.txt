@@ -9,3 +9,4 @@ imbalanced-learn
 shap
 plotly
 nbformat
+ipywidgets
