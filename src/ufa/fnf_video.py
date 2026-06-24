@@ -433,7 +433,7 @@ def _render_html_document(payload):
     }}
     .controls {{
       display: grid;
-      grid-template-columns: 1fr auto auto auto;
+      grid-template-columns: 155px 1fr auto auto auto;
       gap: 8px;
       align-items: center;
       margin: 12px 0;
@@ -522,6 +522,11 @@ def _render_html_document(payload):
           </div>
         </div>
         <div class="controls">
+          <select id="lineFilter" aria-label="Line filter">
+            <option value="all">All lines</option>
+            <option value="o_line">O-line scores</option>
+            <option value="d_line">D-line scores</option>
+          </select>
           <select id="possessionSelect" aria-label="Possession selector"></select>
           <button id="previousPossession" type="button">Previous</button>
           <button id="nextPossession" type="button">Next</button>
@@ -539,6 +544,7 @@ def _render_html_document(payload):
   <script>
     const DATA = {payload_json};
     let player = null;
+    let filteredPossessions = [];
     let selectedPossessionIndex = 0;
     let selectedThrowIndex = 0;
 
@@ -583,6 +589,12 @@ def _render_html_document(payload):
 
     function pathFor(possession) {{
       return DATA.paths[String(possession.possession_id)] || [];
+    }}
+
+    function lineLabel(value) {{
+      if (value === "o_line") return "O-line";
+      if (value === "d_line") return "D-line";
+      return "Unknown";
     }}
 
     function sx(value) {{
@@ -677,7 +689,7 @@ def _render_html_document(payload):
       return `
         <h2 style="margin:0 0 8px;font:800 18px system-ui;color:#0b1a33">${{team}}</h2>
         <div>${{escapeHtml(possession.GameID)}}</div>
-        <div>Q${{possession.game_quarter}} - point ${{possession.quarter_point}} - possession ${{possession.possession_num}} - ${{side}}</div>
+        <div>Q${{possession.game_quarter}} - point ${{possession.quarter_point}} - possession ${{possession.possession_num}} - ${{side}} - ${{lineLabel(possession.line_type)}}</div>
         <div class="meta">
           <div class="row"><span class="label">Throws</span><span class="value">${{path.length}}</span></div>
           <div class="row"><span class="label">Start Y</span><span class="value">${{fmt(possession.start_y, 1)}}</span></div>
@@ -690,25 +702,49 @@ def _render_html_document(payload):
     }}
 
     function renderPossession(index) {{
-      selectedPossessionIndex = Math.max(0, Math.min(DATA.possessions.length - 1, index));
+      if (!filteredPossessions.length) {{
+        selectedPossessionIndex = 0;
+        selectedThrowIndex = 0;
+        document.getElementById("possessionCount").innerHTML = "<b>0</b> of <b>0</b>";
+        document.getElementById("possessionSummary").innerHTML = "<b>No scoring possessions match this line filter.</b>";
+        document.getElementById("throwDetail").innerHTML = '<div class="placeholder">Click a throw on the field.</div>';
+        renderField([]);
+        return;
+      }}
+      selectedPossessionIndex = Math.max(0, Math.min(filteredPossessions.length - 1, index));
       selectedThrowIndex = 0;
-      const possession = DATA.possessions[selectedPossessionIndex];
+      const possession = filteredPossessions[selectedPossessionIndex];
       const path = pathFor(possession);
       document.getElementById("possessionSelect").value = String(selectedPossessionIndex);
-      document.getElementById("possessionCount").innerHTML = `<b>${{selectedPossessionIndex + 1}}</b> of <b>${{DATA.possessions.length}}</b>`;
+      document.getElementById("possessionCount").innerHTML = `<b>${{selectedPossessionIndex + 1}}</b> of <b>${{filteredPossessions.length}}</b>`;
       document.getElementById("possessionSummary").innerHTML = renderSummary(possession, path);
-      document.getElementById("throwDetail").innerHTML = '<div class="placeholder">Click a throw on the field.</div>';
       renderField(path);
+      if (path.length) {{
+        selectThrow(1, false);
+      }} else {{
+        document.getElementById("throwDetail").innerHTML = '<div class="placeholder">Click a throw on the field.</div>';
+      }}
+    }}
+
+    function refreshPossessionOptions() {{
+      const lineValue = document.getElementById("lineFilter").value;
+      filteredPossessions = DATA.possessions.filter((possession) => {{
+        return lineValue === "all" || possession.line_type === lineValue;
+      }});
+      const select = document.getElementById("possessionSelect");
+      select.innerHTML = "";
+      filteredPossessions.forEach((possession, index) => {{
+        const option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = `${{index + 1}}. ${{lineLabel(possession.line_type)}} | ${{possession.GameID}} | Q${{possession.game_quarter}} P${{possession.quarter_point}} | poss ${{possession.possession_num}} | ${{possession.throw_count}} throws`;
+        select.appendChild(option);
+      }});
+      renderPossession(0);
     }}
 
     function init() {{
+      document.getElementById("lineFilter").addEventListener("change", refreshPossessionOptions);
       const select = document.getElementById("possessionSelect");
-      DATA.possessions.forEach((possession, index) => {{
-        const option = document.createElement("option");
-        option.value = String(index);
-        option.textContent = `${{index + 1}}. ${{possession.GameID}} | Q${{possession.game_quarter}} P${{possession.quarter_point}} | poss ${{possession.possession_num}} | ${{possession.throw_count}} throws`;
-        select.appendChild(option);
-      }});
       select.addEventListener("change", () => renderPossession(Number(select.value)));
       document.getElementById("previousPossession").addEventListener("click", () => renderPossession(selectedPossessionIndex - 1));
       document.getElementById("nextPossession").addEventListener("click", () => renderPossession(selectedPossessionIndex + 1));
@@ -718,11 +754,7 @@ def _render_html_document(payload):
         const direction = event.key === "ArrowRight" ? 1 : -1;
         selectThrow((selectedThrowIndex || 0) + direction, true);
       }});
-      if (DATA.possessions.length) {{
-        renderPossession(0);
-      }} else {{
-        document.getElementById("possessionSummary").innerHTML = "<b>No scoring possessions available.</b>";
-      }}
+      refreshPossessionOptions();
     }}
 
     init();

@@ -88,6 +88,22 @@ def _offense_team_id(frame):
     return home_team_id if is_home else away_team_id
 
 
+def _possession_line_type(frame):
+    if "o_line" not in frame:
+        return "unknown"
+
+    values = frame["o_line"].dropna()
+    if values.empty:
+        return "unknown"
+
+    value = values.iloc[0]
+    if isinstance(value, str):
+        is_o_line = value.strip().lower() in {"true", "1", "yes", "o_line"}
+    else:
+        is_o_line = bool(value)
+    return "o_line" if is_o_line else "d_line"
+
+
 def _path_points(path):
     path = path.sort_values("possession_throw")
     if path.empty:
@@ -229,6 +245,7 @@ def build_scoring_possessions(throws, team_id=None):
         if team_id is not None and offense_team.lower() != team_id.lower():
             continue
 
+        line_type = _possession_line_type(path)
         total_aec = pd.to_numeric(path.get("aec"), errors="coerce").sum()
         throw_count = len(path)
         start_timestamp = path["start_timestamp"].iloc[0] if "start_timestamp" in path else None
@@ -252,6 +269,7 @@ def build_scoring_possessions(throws, team_id=None):
                 "quarter_point": key[2],
                 "possession_num": key[3],
                 "is_home_team": key[4],
+                "line_type": line_type,
                 "start_x": start_x,
                 "start_y": start_y,
                 "end_x": end_x,
@@ -276,6 +294,7 @@ def build_scoring_possessions(throws, team_id=None):
         )
         path["possession_id"] = possession_id
         path["team_id"] = offense_team
+        path["line_type"] = line_type
         paths.append(path)
 
     possessions = pd.DataFrame(possession_rows)
@@ -484,6 +503,14 @@ def _sort_browser_possessions(possessions):
     return possessions.sort_values(sort_columns).reset_index(drop=True)
 
 
+def _line_type_label(value):
+    if value == "o_line":
+        return "O-line"
+    if value == "d_line":
+        return "D-line"
+    return "Unknown"
+
+
 def render_shownspace_possession_svg(path, width=260, height=560):
     """Return a Shown Space-style SVG field for one scoring possession."""
     path = path.sort_values("possession_throw").copy()
@@ -539,12 +566,15 @@ def render_shownspace_possession_svg(path, width=260, height=560):
         )
 
     throw_shapes = []
+    first_throw_detail_html = None
     for index, (_, throw) in enumerate(path.iterrows(), start=1):
         x1 = sx(throw["ThrowerX"])
         y1 = sy(throw["ThrowerY"])
         x2 = sx(throw["ReceiverX"])
         y2 = sy(throw["ReceiverY"])
         detail_html = throw_detail_html(index, throw)
+        if first_throw_detail_html is None:
+            first_throw_detail_html = detail_html
         update_detail = (
             f"document.getElementById({json.dumps(detail_id)}).innerHTML = "
             "this.getAttribute('data-detail-html');"
@@ -559,8 +589,9 @@ def render_shownspace_possession_svg(path, width=260, height=560):
             "wrapper.dataset.selectedThrow = this.dataset.throwIndex;"
             f"{update_detail}"
         )
+        selected_class = " selected" if index == 1 else ""
         throw_shapes.append(
-            f'<g class="ufa-throw" '
+            f'<g class="ufa-throw{selected_class}" '
             f'data-throw-index="{index}" '
             f'data-detail-html="{escape(detail_html, quote=True)}" '
             f'onmouseover="{escape(update_detail, quote=True)}" '
@@ -652,8 +683,14 @@ def render_shownspace_possession_svg(path, width=260, height=560):
       .ufa-detail-row span { color: #637188; }
     </style>
     """
+    detail_content = (
+        first_throw_detail_html
+        if first_throw_detail_html is not None
+        else '<div class="ufa-detail-placeholder">Hover or click a throw on the field.</div>'
+    )
     return (
         f'<div id="{wrapper_id}" class="ufa-browser-field-wrap" tabindex="0" '
+        f'data-selected-throw="1" '
         f'aria-label="Possession throw browser" '
         f'onclick="this.focus()" '
         f'onkeydown="{escape(keydown_handler, quote=True)}">'
@@ -662,7 +699,7 @@ def render_shownspace_possession_svg(path, width=260, height=560):
         f'viewBox="0 0 {width} {height}" role="img">'
         f"{''.join(shapes)}{''.join(throw_shapes)}</svg>"
         f'<div id="{detail_id}" class="ufa-throw-detail">'
-        f'<div class="ufa-detail-placeholder">Hover or click a throw on the field.</div>'
+        f"{detail_content}"
         f"</div></div>"
     )
 
@@ -671,6 +708,7 @@ def render_possession_browser_summary(possession, path):
     game_id = escape(str(possession.get("GameID", "-")))
     team_id = escape(str(possession.get("team_id", "-")).title())
     side = "Home" if bool(possession.get("is_home_team", False)) else "Away"
+    line_type = escape(_line_type_label(possession.get("line_type")))
     quarter = possession.get("game_quarter", "-")
     quarter_point = possession.get("quarter_point", "-")
     possession_num = possession.get("possession_num", "-")
@@ -721,7 +759,7 @@ def render_possession_browser_summary(possession, path):
       </style>
       <h3>{team_id}</h3>
       <div>{game_id}</div>
-      <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side}</div>
+      <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side} - {line_type}</div>
       <div class="meta">
         <div class="row"><span class="label">Throws</span><span class="value">{throw_count}</span></div>
         <div class="row"><span class="label">Start Y</span><span class="value">{start_y}</span></div>
@@ -751,29 +789,36 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
     if possessions.empty:
         return widgets.HTML("<b>No scoring possessions available.</b>")
 
-    browser_possessions = _sort_browser_possessions(possessions)
     lookup = _browser_path_lookup(paths)
-    browser_possessions = browser_possessions[
-        browser_possessions["possession_id"].isin(lookup)
+    base_possessions = _sort_browser_possessions(possessions)
+    base_possessions = base_possessions[
+        base_possessions["possession_id"].isin(lookup)
     ].reset_index(drop=True)
-    if browser_possessions.empty:
+    if base_possessions.empty:
         return widgets.HTML("<b>No matching possession paths available.</b>")
 
-    options = []
-    for index, row in browser_possessions.iterrows():
-        label = (
-            f"{index + 1}. {row['GameID']} | Q{row['game_quarter']} "
-            f"P{row['quarter_point']} | poss {row['possession_num']} | "
-            f"{int(row['throw_count'])} throws"
+    if "line_type" not in base_possessions:
+        base_possessions["line_type"] = base_possessions["possession_id"].map(
+            lambda possession_id: _possession_line_type(lookup[possession_id])
         )
-        options.append((label, index))
 
     header = widgets.HTML(
         f"<h2 style='margin:0 0 8px;color:#223a5e;font-family:system-ui'>{escape(title)}</h2>"
     )
+    line_filter = widgets.Dropdown(
+        options=[
+            ("All lines", "all"),
+            ("O-line scores", "o_line"),
+            ("D-line scores", "d_line"),
+        ],
+        value="all",
+        description="Line",
+        layout=widgets.Layout(width="430px"),
+        style={"description_width": "85px"},
+    )
     dropdown = widgets.Dropdown(
-        options=options,
-        value=0,
+        options=[],
+        value=None,
         description="Possession",
         layout=widgets.Layout(width="430px"),
         style={"description_width": "85px"},
@@ -783,32 +828,78 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
     count_label = widgets.HTML()
     summary_html = widgets.HTML()
     field_html = widgets.HTML()
+    state = {"possessions": base_possessions}
+
+    def make_options(frame):
+        options = []
+        for index, row in frame.iterrows():
+            label = (
+                f"{index + 1}. {_line_type_label(row.get('line_type'))} | "
+                f"{row['GameID']} | Q{row['game_quarter']} "
+                f"P{row['quarter_point']} | poss {row['possession_num']} | "
+                f"{int(row['throw_count'])} throws"
+            )
+            options.append((label, index))
+        return options
 
     def update(index):
+        browser_possessions = state["possessions"]
+        if index is None or browser_possessions.empty:
+            count_label.value = "<b>0</b> of <b>0</b>"
+            summary_html.value = "<b>No scoring possessions match this line filter.</b>"
+            field_html.value = ""
+            return
+
         row = browser_possessions.iloc[index]
         path = lookup[row["possession_id"]]
         count_label.value = f"<b>{index + 1}</b> of <b>{len(browser_possessions)}</b>"
         summary_html.value = render_possession_browser_summary(row, path)
         field_html.value = render_shownspace_possession_svg(path)
 
+    def apply_line_filter(_=None):
+        selected_line = line_filter.value
+        if selected_line == "all":
+            filtered = base_possessions.copy()
+        else:
+            filtered = base_possessions[
+                base_possessions["line_type"].eq(selected_line)
+            ].reset_index(drop=True)
+        state["possessions"] = filtered
+        if filtered.empty:
+            dropdown.options = [("No possessions for this filter", None)]
+            dropdown.value = None
+            update(None)
+            return
+
+        dropdown.options = make_options(filtered)
+        dropdown.value = 0
+        update(0)
+
     def on_dropdown_change(change):
         if change["name"] == "value" and change["new"] is not None:
             update(change["new"])
 
     def on_previous(_):
+        if dropdown.value is None:
+            return
         dropdown.value = max(0, dropdown.value - 1)
 
     def on_next(_):
+        if dropdown.value is None:
+            return
+        browser_possessions = state["possessions"]
         dropdown.value = min(len(browser_possessions) - 1, dropdown.value + 1)
 
     dropdown.observe(on_dropdown_change, names="value")
+    line_filter.observe(apply_line_filter, names="value")
     previous_button.on_click(on_previous)
     next_button.on_click(on_next)
-    update(0)
+    apply_line_filter()
 
     controls = widgets.VBox(
         [
             header,
+            line_filter,
             dropdown,
             widgets.HBox([previous_button, next_button, count_label]),
             summary_html,
