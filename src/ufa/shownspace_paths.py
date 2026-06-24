@@ -1,4 +1,5 @@
 import time
+import hashlib
 import json
 from html import escape
 
@@ -487,7 +488,9 @@ def render_shownspace_possession_svg(path, width=260, height=560):
     """Return a Shown Space-style SVG field for one scoring possession."""
     path = path.sort_values("possession_throw").copy()
     possession_id = str(path["possession_id"].iloc[0]) if "possession_id" in path else "path"
-    detail_id = f"ufa-throw-detail-{abs(hash(possession_id))}"
+    possession_key = hashlib.sha1(possession_id.encode("utf-8")).hexdigest()[:12]
+    wrapper_id = f"ufa-browser-field-{possession_key}"
+    detail_id = f"ufa-throw-detail-{possession_key}"
     field_width = width - 34
     field_height = height - 34
     left = (width - field_width) / 2
@@ -541,21 +544,54 @@ def render_shownspace_possession_svg(path, width=260, height=560):
         y1 = sy(throw["ThrowerY"])
         x2 = sx(throw["ReceiverX"])
         y2 = sy(throw["ReceiverY"])
-        goal_class = " goal-throw" if bool(float(throw["ReceiverY"]) > ENDZONE_HIGH_Y) else ""
-        detail_html = json.dumps(throw_detail_html(index, throw))
+        detail_html = throw_detail_html(index, throw)
         update_detail = (
             f"document.getElementById({json.dumps(detail_id)}).innerHTML = "
-            f"{detail_html};"
+            "this.getAttribute('data-detail-html');"
+        )
+        select_throw = (
+            f"const wrapper = document.getElementById({json.dumps(wrapper_id)});"
+            "wrapper.focus();"
+            "wrapper.querySelectorAll('.ufa-throw.selected').forEach(function(node) {"
+            "node.classList.remove('selected');"
+            "});"
+            "this.classList.add('selected');"
+            "wrapper.dataset.selectedThrow = this.dataset.throwIndex;"
+            f"{update_detail}"
         )
         throw_shapes.append(
-            f'<g class="ufa-throw{goal_class}" '
+            f'<g class="ufa-throw" '
+            f'data-throw-index="{index}" '
+            f'data-detail-html="{escape(detail_html, quote=True)}" '
             f'onmouseover="{escape(update_detail, quote=True)}" '
-            f'onclick="{escape(update_detail, quote=True)}">'
+            f'onclick="{escape(select_throw, quote=True)}">'
             f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" />'
             f'<circle class="throw-start" cx="{x1:.2f}" cy="{y1:.2f}" r="2.8" />'
             f'<circle class="throw-end" cx="{x2:.2f}" cy="{y2:.2f}" r="3.1" />'
             "</g>"
         )
+
+    keydown_handler = (
+        "if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') { return; }"
+        "event.preventDefault();"
+        f"const wrapper = document.getElementById({json.dumps(wrapper_id)});"
+        "const throws = Array.from(wrapper.querySelectorAll('.ufa-throw'));"
+        "if (!throws.length) { return; }"
+        "let selected = Number(wrapper.dataset.selectedThrow || 0);"
+        "selected += event.key === 'ArrowRight' ? 1 : -1;"
+        "selected = Math.max(1, Math.min(throws.length, selected));"
+        "const nextThrow = wrapper.querySelector("
+        "'.ufa-throw[data-throw-index=\"' + selected + '\"]'"
+        ");"
+        "if (!nextThrow) { return; }"
+        "wrapper.querySelectorAll('.ufa-throw.selected').forEach(function(node) {"
+        "node.classList.remove('selected');"
+        "});"
+        "nextThrow.classList.add('selected');"
+        "wrapper.dataset.selectedThrow = selected;"
+        f"document.getElementById({json.dumps(detail_id)}).innerHTML = "
+        "nextThrow.getAttribute('data-detail-html');"
+    )
 
     css = """
     <style>
@@ -565,15 +601,19 @@ def render_shownspace_possession_svg(path, width=260, height=560):
       .ufa-center-dot { fill: #071019; stroke: none; }
       .ufa-throw line { stroke: #071019; stroke-width: 2.2; stroke-linecap: round; }
       .ufa-throw circle { fill: #071019; stroke: #071019; stroke-width: 1.2; }
-      .ufa-throw.goal-throw line { stroke: #c3482b; }
-      .ufa-throw.goal-throw .throw-end { fill: #c3482b; stroke: #071019; stroke-width: 1.8; }
       .ufa-throw:hover line { stroke: #c3482b; stroke-width: 3.2; }
       .ufa-throw:hover circle { fill: #c3482b; stroke: #071019; stroke-width: 1.8; }
+      .ufa-throw.selected line { stroke: #c3482b; stroke-width: 3.4; }
+      .ufa-throw.selected circle { fill: #c3482b; stroke: #071019; stroke-width: 1.9; }
       .ufa-throw { cursor: pointer; }
       .ufa-browser-field-wrap {
         display: flex;
         align-items: flex-start;
         gap: 12px;
+      }
+      .ufa-browser-field-wrap:focus {
+        outline: 2px solid #91a7c2;
+        outline-offset: 4px;
       }
       .ufa-throw-detail {
         box-sizing: border-box;
@@ -613,7 +653,10 @@ def render_shownspace_possession_svg(path, width=260, height=560):
     </style>
     """
     return (
-        f'<div class="ufa-browser-field-wrap">'
+        f'<div id="{wrapper_id}" class="ufa-browser-field-wrap" tabindex="0" '
+        f'aria-label="Possession throw browser" '
+        f'onclick="this.focus()" '
+        f'onkeydown="{escape(keydown_handler, quote=True)}">'
         f"{css}"
         f'<svg class="ufa-browser-svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}" role="img">'

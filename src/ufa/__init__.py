@@ -73,6 +73,18 @@ from ufa.shownspace_paths import (
     select_top_paths,
     summarize_path_clusters,
 )
+from ufa.fnf_video import (
+    add_estimated_video_seconds,
+    build_fnf_browser_data,
+    build_fnf_game_table,
+    extract_youtube_video_id,
+    find_friday_night_frisbee_games,
+    find_youtube_url_for_game,
+    is_youtube_url,
+    load_fnf_game_schedule,
+    load_fnf_point_anchors,
+    write_fnf_video_browser_html,
+)
 
 __all__ = [
     "GamePipelineResult",
@@ -136,4 +148,14 @@ __all__ = [
     "select_representative_paths",
     "select_top_paths",
     "summarize_path_clusters",
+    "add_estimated_video_seconds",
+    "build_fnf_browser_data",
+    "build_fnf_game_table",
+    "extract_youtube_video_id",
+    "find_friday_night_frisbee_games",
+    "find_youtube_url_for_game",
+    "is_youtube_url",
+    "load_fnf_game_schedule",
+    "load_fnf_point_anchors",
+    "write_fnf_video_browser_html",
 ]
