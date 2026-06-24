@@ -373,6 +373,7 @@ def _render_html_document(payload):
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="referrer" content="origin" />
   <title>{escape(title)}</title>
   <style>
     :root {{
@@ -401,6 +402,7 @@ def _render_html_document(payload):
       box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
     }}
     .video-wrap {{
+      position: relative;
       aspect-ratio: 16 / 9;
       width: 100%;
       background: #071019;
@@ -408,6 +410,27 @@ def _render_html_document(payload):
       overflow: hidden;
     }}
     #player {{ width: 100%; height: 100%; }}
+    .file-warning {{
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      background: #1f2933;
+      color: #fff;
+      font: 700 18px/1.35 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      text-align: center;
+    }}
+    .file-warning code {{
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      background: #0b1a33;
+      color: #dbeafe;
+      font-size: 14px;
+    }}
     .controls {{
       display: grid;
       grid-template-columns: 1fr auto auto auto;
@@ -490,7 +513,14 @@ def _render_html_document(payload):
     <h1>{escape(title)}</h1>
     <div class="browser">
       <section class="panel">
-        <div class="video-wrap"><div id="player"></div></div>
+        <div class="video-wrap">
+          <div id="player"></div>
+          <div id="fileWarning" class="file-warning">
+            YouTube blocks this embed when opened as a local file.<br />
+            Serve the project folder and open this page through localhost.<br />
+            <code>python -m http.server 8000</code>
+          </div>
+        </div>
         <div class="controls">
           <select id="possessionSelect" aria-label="Possession selector"></select>
           <button id="previousPossession" type="button">Previous</button>
@@ -513,9 +543,18 @@ def _render_html_document(payload):
     let selectedThrowIndex = 0;
 
     window.onYouTubeIframeAPIReady = function() {{
+      if (window.location.protocol === "file:") {{
+        document.getElementById("fileWarning").style.display = "flex";
+        return;
+      }}
       player = new YT.Player("player", {{
         videoId: DATA.youtubeVideoId,
-        playerVars: {{ rel: 0, modestbranding: 1 }}
+        playerVars: {{
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          origin: window.location.origin
+        }}
       }});
     }};
 
