@@ -433,12 +433,12 @@ def _render_html_document(payload):
     }}
     .controls {{
       display: grid;
-      grid-template-columns: 155px 1fr auto auto auto;
+      grid-template-columns: 155px 90px 90px 1fr auto auto auto;
       gap: 8px;
       align-items: center;
       margin: 12px 0;
     }}
-    select, button {{
+    select, input, button {{
       border: 1px solid #c9d3df;
       border-radius: 4px;
       background: #fff;
@@ -447,6 +447,7 @@ def _render_html_document(payload):
       padding: 5px 8px;
       font: inherit;
     }}
+    input {{ min-width: 0; }}
     button {{ cursor: pointer; background: #f2f5f8; }}
     button:hover {{ background: #e8edf3; }}
     .count {{ white-space: nowrap; font-weight: 800; }}
@@ -527,6 +528,8 @@ def _render_html_document(payload):
             <option value="o_line">O-line scores</option>
             <option value="d_line">D-line scores</option>
           </select>
+          <input id="minThrowsFilter" type="number" min="0" step="1" aria-label="Minimum throws" title="Minimum throws" />
+          <input id="maxThrowsFilter" type="number" min="0" step="1" aria-label="Maximum throws" title="Maximum throws" />
           <select id="possessionSelect" aria-label="Possession selector"></select>
           <button id="previousPossession" type="button">Previous</button>
           <button id="nextPossession" type="button">Next</button>
@@ -636,7 +639,8 @@ def _render_html_document(payload):
     }}
 
     function selectThrow(index, shouldSeek = false) {{
-      const possession = DATA.possessions[selectedPossessionIndex];
+      const possession = filteredPossessions[selectedPossessionIndex];
+      if (!possession) return;
       const path = pathFor(possession);
       if (!path.length) return;
       selectedThrowIndex = Math.max(1, Math.min(path.length, index));
@@ -728,8 +732,14 @@ def _render_html_document(payload):
 
     function refreshPossessionOptions() {{
       const lineValue = document.getElementById("lineFilter").value;
+      const minThrows = numberValue(document.getElementById("minThrowsFilter").value);
+      const maxThrows = numberValue(document.getElementById("maxThrowsFilter").value);
       filteredPossessions = DATA.possessions.filter((possession) => {{
-        return lineValue === "all" || possession.line_type === lineValue;
+        const lineMatches = lineValue === "all" || possession.line_type === lineValue;
+        const throwCount = numberValue(possession.throw_count);
+        const minMatches = minThrows === null || throwCount === null || throwCount >= minThrows;
+        const maxMatches = maxThrows === null || throwCount === null || throwCount <= maxThrows;
+        return lineMatches && minMatches && maxMatches;
       }});
       const select = document.getElementById("possessionSelect");
       select.innerHTML = "";
@@ -743,7 +753,22 @@ def _render_html_document(payload):
     }}
 
     function init() {{
+      const throwCounts = DATA.possessions
+        .map((possession) => numberValue(possession.throw_count))
+        .filter((value) => value !== null);
+      const minThrows = throwCounts.length ? Math.min(...throwCounts) : 0;
+      const maxThrows = throwCounts.length ? Math.max(...throwCounts) : 0;
+      const minThrowsInput = document.getElementById("minThrowsFilter");
+      const maxThrowsInput = document.getElementById("maxThrowsFilter");
+      minThrowsInput.value = minThrows;
+      minThrowsInput.min = minThrows;
+      minThrowsInput.max = maxThrows;
+      maxThrowsInput.value = maxThrows;
+      maxThrowsInput.min = minThrows;
+      maxThrowsInput.max = maxThrows;
       document.getElementById("lineFilter").addEventListener("change", refreshPossessionOptions);
+      minThrowsInput.addEventListener("change", refreshPossessionOptions);
+      maxThrowsInput.addEventListener("change", refreshPossessionOptions);
       const select = document.getElementById("possessionSelect");
       select.addEventListener("change", () => renderPossession(Number(select.value)));
       document.getElementById("previousPossession").addEventListener("click", () => renderPossession(selectedPossessionIndex - 1));

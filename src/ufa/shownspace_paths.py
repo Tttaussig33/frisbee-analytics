@@ -816,6 +816,18 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         layout=widgets.Layout(width="430px"),
         style={"description_width": "85px"},
     )
+    min_throws = int(pd.to_numeric(base_possessions["throw_count"], errors="coerce").min())
+    max_throws = int(pd.to_numeric(base_possessions["throw_count"], errors="coerce").max())
+    throw_count_filter = widgets.IntRangeSlider(
+        value=[min_throws, max_throws],
+        min=min_throws,
+        max=max_throws,
+        step=1,
+        description="Throws",
+        continuous_update=False,
+        layout=widgets.Layout(width="430px"),
+        style={"description_width": "85px"},
+    )
     dropdown = widgets.Dropdown(
         options=[],
         value=None,
@@ -858,12 +870,17 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
 
     def apply_line_filter(_=None):
         selected_line = line_filter.value
+        min_throw_count, max_throw_count = throw_count_filter.value
         if selected_line == "all":
             filtered = base_possessions.copy()
         else:
             filtered = base_possessions[
                 base_possessions["line_type"].eq(selected_line)
             ].reset_index(drop=True)
+        throw_counts = pd.to_numeric(filtered["throw_count"], errors="coerce")
+        filtered = filtered[
+            throw_counts.ge(min_throw_count) & throw_counts.le(max_throw_count)
+        ].reset_index(drop=True)
         state["possessions"] = filtered
         if filtered.empty:
             dropdown.options = [("No possessions for this filter", None)]
@@ -892,6 +909,7 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
 
     dropdown.observe(on_dropdown_change, names="value")
     line_filter.observe(apply_line_filter, names="value")
+    throw_count_filter.observe(apply_line_filter, names="value")
     previous_button.on_click(on_previous)
     next_button.on_click(on_next)
     apply_line_filter()
@@ -900,6 +918,7 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         [
             header,
             line_filter,
+            throw_count_filter,
             dropdown,
             widgets.HBox([previous_button, next_button, count_label]),
             summary_html,
