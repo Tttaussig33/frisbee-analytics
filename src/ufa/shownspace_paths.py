@@ -217,6 +217,129 @@ def _style_features(possessions):
     )
 
 
+def _path_shape_feature_row(path, checkpoints):
+    path = path.sort_values("possession_throw").copy()
+    points = _path_points(path).dropna(subset=["x", "y"])
+    if points.empty:
+        return {}
+
+    sampled = _resample_path(points, checkpoints)
+    if sampled.empty:
+        return {}
+
+    x_values = points["x"].to_numpy(dtype=float)
+    y_values = points["y"].to_numpy(dtype=float)
+    thrower_x = pd.to_numeric(path["ThrowerX"], errors="coerce")
+    receiver_x = pd.to_numeric(path["ReceiverX"], errors="coerce")
+    receiver_y = pd.to_numeric(path["ReceiverY"], errors="coerce")
+    x_diff = pd.to_numeric(path.get("x_diff"), errors="coerce")
+    y_diff = pd.to_numeric(path.get("y_diff"), errors="coerce")
+    throw_distance = pd.to_numeric(path.get("throw_distance"), errors="coerce")
+
+    total_distance = throw_distance.sum()
+    net_distance = float(
+        np.hypot(x_values[-1] - x_values[0], y_values[-1] - y_values[0])
+    )
+    directness = net_distance / total_distance if total_distance else np.nan
+    field_progress = y_values[-1] - y_values[0]
+    lateral_yards = x_diff.abs().sum()
+
+    point_x = pd.Series(np.r_[thrower_x.to_numpy(), receiver_x.to_numpy()])
+    point_y = pd.Series(np.r_[path["ThrowerY"].to_numpy(), receiver_y.to_numpy()])
+    valid_points = pd.DataFrame({"x": point_x, "y": point_y}).dropna()
+    middle_third_share = valid_points["x"].abs().le(8.88).mean()
+    sideline_share = valid_points["x"].abs().ge(17.77).mean()
+    left_side_share = valid_points["x"].lt(-8.88).mean()
+    right_side_share = valid_points["x"].gt(8.88).mean()
+
+    signs = np.sign(x_values)
+    non_zero_signs = signs[signs != 0]
+    side_switches = (
+        np.count_nonzero(non_zero_signs[1:] != non_zero_signs[:-1])
+        if len(non_zero_signs) > 1
+        else 0
+    )
+
+    red_zone_rows = path[receiver_y.ge(ENDZONE_HIGH_Y - 20)]
+    red_zone_entry_x = (
+        pd.to_numeric(red_zone_rows["ReceiverX"], errors="coerce").iloc[0]
+        if not red_zone_rows.empty
+        else np.nan
+    )
+
+    features = {
+        "shape_start_x": x_values[0],
+        "shape_start_y": y_values[0],
+        "shape_end_x": x_values[-1],
+        "shape_end_y": y_values[-1],
+        "shape_width": np.nanmax(x_values) - np.nanmin(x_values),
+        "shape_directness": directness,
+        "shape_lateral_per_yard": lateral_yards / abs(field_progress)
+        if field_progress
+        else np.nan,
+        "shape_side_switches": side_switches,
+        "shape_middle_third_share": middle_third_share,
+        "shape_sideline_share": sideline_share,
+        "shape_left_side_share": left_side_share,
+        "shape_right_side_share": right_side_share,
+        "shape_red_zone_entry_x": red_zone_entry_x,
+        "shape_red_zone_throws": receiver_y.ge(ENDZONE_HIGH_Y - 20).sum(),
+        "shape_backwards_share": y_diff.lt(0).mean(),
+        "shape_large_gain_share": throw_distance.ge(25).mean(),
+    }
+    for _, point in sampled.iterrows():
+        label = int(round(point["checkpoint"] * 100))
+        features[f"shape_x_{label:03d}"] = point["x"]
+        features[f"shape_y_{label:03d}"] = point["y"]
+
+    return features
+
+
+def calculate_possession_shape_features(possessions, paths, checkpoints=None):
+    """Return one row of geometry-first features per scoring possession."""
+    if possessions.empty:
+        return pd.DataFrame()
+
+    checkpoints = np.asarray(
+        checkpoints if checkpoints is not None else np.linspace(0, 1, 8),
+        dtype=float,
+    )
+    rows = []
+    for path in paths:
+        if path.empty or "possession_id" not in path:
+            continue
+        possession_id = path["possession_id"].iloc[0]
+        feature_row = _path_shape_feature_row(path, checkpoints)
+        if feature_row:
+            feature_row["possession_id"] = possession_id
+            rows.append(feature_row)
+
+    if not rows:
+        return pd.DataFrame(index=possessions.index)
+
+    shape_features = pd.DataFrame(rows).set_index("possession_id")
+    aligned = possessions[["possession_id"]].join(shape_features, on="possession_id")
+    return (
+        aligned.drop(columns=["possession_id"])
+        .apply(pd.to_numeric, errors="coerce")
+        .replace([np.inf, -np.inf], np.nan)
+    )
+
+
+def add_possession_shape_features(possessions, paths, checkpoints=None):
+    """Attach geometry-first possession features to the possession table."""
+    if possessions.empty:
+        return possessions.copy()
+
+    enriched = possessions.copy()
+    shape_features = calculate_possession_shape_features(
+        enriched, paths, checkpoints=checkpoints
+    )
+    for column in shape_features:
+        enriched[column] = shape_features[column].to_numpy()
+    return enriched
+
+
 def build_scoring_possessions(throws, team_id=None):
     if throws.empty:
         return pd.DataFrame(), []
@@ -318,8 +441,35 @@ def add_possession_style_labels(possessions):
     return labeled
 
 
-def cluster_scoring_possessions(possessions, n_clusters=4, random_state=0):
-    """Cluster scoring possessions by shape and efficiency features."""
+def _shape_cluster_features(possessions):
+    shape_columns = [column for column in possessions if column.startswith("shape_")]
+    if not shape_columns:
+        return _style_features(possessions)
+    support_columns = [
+        "huck_count",
+        "reset_count",
+        "lateral_yards",
+        "max_throw_distance",
+        "yards_per_throw",
+    ]
+    feature_columns = shape_columns + [
+        column for column in support_columns if column in possessions
+    ]
+    return (
+        possessions.reindex(columns=feature_columns)
+        .apply(pd.to_numeric, errors="coerce")
+        .replace([np.inf, -np.inf], np.nan)
+        .fillna(0)
+    )
+
+
+def cluster_scoring_possessions(
+    possessions,
+    paths=None,
+    n_clusters=4,
+    random_state=0,
+):
+    """Cluster scoring possessions by geometry-first path shape features."""
     if possessions.empty:
         return possessions.copy()
 
@@ -327,7 +477,9 @@ def cluster_scoring_possessions(possessions, n_clusters=4, random_state=0):
     from sklearn.preprocessing import StandardScaler
 
     clustered = add_possession_style_labels(possessions)
-    features = _style_features(clustered)
+    if paths is not None:
+        clustered = add_possession_shape_features_if_available(clustered, paths)
+    features = _shape_cluster_features(clustered)
     cluster_count = min(n_clusters, len(clustered))
     if cluster_count <= 1:
         clustered["path_cluster"] = 0
@@ -339,22 +491,46 @@ def cluster_scoring_possessions(possessions, n_clusters=4, random_state=0):
     return clustered
 
 
+def add_possession_shape_features_if_available(possessions, paths):
+    """Add path-shape features, preserving clustering if paths are unavailable."""
+    if paths is None:
+        return possessions.copy()
+    enriched = add_possession_shape_features(possessions, paths)
+    shape_columns = [column for column in enriched if column.startswith("shape_")]
+    if not shape_columns:
+        return possessions.copy()
+    return enriched
+
+
 def summarize_path_clusters(possessions):
     if possessions.empty:
         return pd.DataFrame()
 
+    aggregations = {
+        "possessions": ("possession_id", "count"),
+        "avg_throws": ("throw_count", "mean"),
+        "avg_aec_per_throw": ("aec_per_throw", "mean"),
+        "avg_cp": ("mean_cp", "mean"),
+        "avg_yards_per_throw": ("yards_per_throw", "mean"),
+        "avg_max_throw_distance": ("max_throw_distance", "mean"),
+        "avg_resets": ("reset_count", "mean"),
+        "avg_lateral_yards": ("lateral_yards", "mean"),
+    }
+    optional_shape_aggs = {
+        "avg_width": ("shape_width", "mean"),
+        "avg_directness": ("shape_directness", "mean"),
+        "avg_side_switches": ("shape_side_switches", "mean"),
+        "avg_middle_third_share": ("shape_middle_third_share", "mean"),
+        "avg_sideline_share": ("shape_sideline_share", "mean"),
+        "avg_red_zone_entry_x": ("shape_red_zone_entry_x", "mean"),
+    }
+    for output_column, (input_column, function_name) in optional_shape_aggs.items():
+        if input_column in possessions:
+            aggregations[output_column] = (input_column, function_name)
+
     summary = (
         possessions.groupby(["path_cluster", "style"], dropna=False)
-        .agg(
-            possessions=("possession_id", "count"),
-            avg_throws=("throw_count", "mean"),
-            avg_aec_per_throw=("aec_per_throw", "mean"),
-            avg_cp=("mean_cp", "mean"),
-            avg_yards_per_throw=("yards_per_throw", "mean"),
-            avg_max_throw_distance=("max_throw_distance", "mean"),
-            avg_resets=("reset_count", "mean"),
-            avg_lateral_yards=("lateral_yards", "mean"),
-        )
+        .agg(**aggregations)
         .reset_index()
         .sort_values(["possessions", "avg_aec_per_throw"], ascending=[False, False])
     )
@@ -386,7 +562,7 @@ def select_representative_paths(
         return {}
 
     lookup = _path_lookup(paths)
-    features = _style_features(possessions)
+    features = _shape_cluster_features(add_possession_shape_features_if_available(possessions, paths))
     normalized = (features - features.mean()) / features.std(ddof=0).replace(0, 1)
     normalized = normalized.fillna(0)
 
@@ -509,6 +685,289 @@ def _line_type_label(value):
     if value == "d_line":
         return "D-line"
     return "Unknown"
+
+
+def _shape_cluster_label(row):
+    browser_label = row.get("shape_cluster_label")
+    if browser_label is not None and not pd.isna(browser_label):
+        return str(browser_label)
+    if "path_cluster" not in row or pd.isna(row.get("path_cluster")):
+        return "Unclustered"
+    cluster = int(row["path_cluster"])
+    style = str(row.get("style", "shape")).strip()
+    if not style or style.lower() == "nan":
+        return f"Shape {cluster}"
+    return f"Shape {cluster}: {style}"
+
+
+def _cluster_average(group, column):
+    if column not in group:
+        return np.nan
+    values = pd.to_numeric(group[column], errors="coerce")
+    return values.mean()
+
+
+def _cluster_primary_style(group):
+    avg_hucks = _cluster_average(group, "huck_count")
+    avg_resets = _cluster_average(group, "reset_count")
+    avg_throws = _cluster_average(group, "throw_count")
+
+    if pd.notna(avg_hucks) and avg_hucks >= 0.5:
+        return "huck"
+    if pd.notna(avg_resets) and avg_resets >= 3:
+        return "reset-heavy"
+    if pd.notna(avg_throws) and avg_throws <= 3:
+        return "quick strike"
+    if pd.notna(avg_throws) and avg_throws >= 10:
+        return "methodical"
+    return "balanced"
+
+
+def _cluster_geometry_descriptors(group):
+    width = _cluster_average(group, "shape_width")
+    directness = _cluster_average(group, "shape_directness")
+    side_switches = _cluster_average(group, "shape_side_switches")
+    middle_usage = _cluster_average(group, "shape_middle_third_share")
+    sideline_usage = _cluster_average(group, "shape_sideline_share")
+
+    lane_descriptor = None
+    if pd.notna(middle_usage) and middle_usage >= 0.55:
+        lane_descriptor = "middle-lane"
+    elif pd.notna(sideline_usage) and sideline_usage >= 0.25:
+        lane_descriptor = "sideline"
+
+    movement_descriptor = None
+    if pd.notna(width):
+        if width <= 25:
+            movement_descriptor = "narrow"
+        elif width >= 40:
+            movement_descriptor = "wide"
+
+    if pd.notna(side_switches) and side_switches >= 3:
+        movement_descriptor = (
+            f"{movement_descriptor}/switch-heavy"
+            if movement_descriptor
+            else "switch-heavy"
+        )
+
+    directness_descriptor = None
+    if pd.notna(directness):
+        if directness >= 0.75:
+            directness_descriptor = "direct"
+        elif directness <= 0.50:
+            directness_descriptor = "indirect"
+
+    descriptors = []
+    if lane_descriptor is not None:
+        descriptors.append(lane_descriptor)
+    if movement_descriptor is not None:
+        descriptors.append(movement_descriptor)
+    if directness_descriptor is not None:
+        descriptors.append(directness_descriptor)
+    return descriptors[:2]
+
+
+def _describe_shape_cluster(cluster, group):
+    cluster_id = int(cluster)
+    primary_style = _cluster_primary_style(group)
+    descriptors = _cluster_geometry_descriptors(group)
+    descriptor_text = f", {'/'.join(descriptors)}" if descriptors else ""
+    return f"Shape {cluster_id}: {primary_style}{descriptor_text}"
+
+
+def _add_browser_shape_cluster_labels(possessions):
+    """Add one stable readable label per shape cluster for browser filters."""
+    if possessions.empty or "path_cluster" not in possessions:
+        return possessions.copy()
+
+    labeled = possessions.copy()
+    label_by_cluster = {}
+    for cluster, group in labeled.groupby("path_cluster", dropna=False):
+        if pd.isna(cluster):
+            continue
+        label_by_cluster[cluster] = _describe_shape_cluster(cluster, group)
+
+    labeled["shape_cluster_label"] = labeled["path_cluster"].map(label_by_cluster)
+    return labeled
+
+
+def _format_overview_number(value, digits=1, percent=False):
+    if value is None or pd.isna(value):
+        return "-"
+    if percent:
+        return f"{float(value):.{digits}%}"
+    return f"{float(value):.{digits}f}"
+
+
+def render_shape_cluster_overview(possessions, selected_shape="all"):
+    """Return a compact HTML summary of the current browser shape groups."""
+    if possessions.empty or "path_cluster" not in possessions:
+        return """
+        <div style="font-family:system-ui;color:#637188;font-size:12px">
+          No shape groups are available for the current filters.
+        </div>
+        """
+
+    possessions = possessions.copy()
+    for column in [
+        "shape_width",
+        "shape_side_switches",
+        "shape_directness",
+        "shape_middle_third_share",
+        "shape_sideline_share",
+        "huck_count",
+        "reset_count",
+        "aec_per_throw",
+    ]:
+        if column not in possessions:
+            possessions[column] = np.nan
+
+    summary = (
+        possessions.groupby(["path_cluster", "shape_cluster_label"], dropna=False)
+        .agg(
+            possessions=("possession_id", "count"),
+            avg_throws=("throw_count", "mean"),
+            avg_width=("shape_width", "mean"),
+            avg_side_switches=("shape_side_switches", "mean"),
+            avg_directness=("shape_directness", "mean"),
+            avg_middle_usage=("shape_middle_third_share", "mean"),
+            avg_sideline_usage=("shape_sideline_share", "mean"),
+            avg_hucks=("huck_count", "mean"),
+            avg_resets=("reset_count", "mean"),
+            avg_aec_per_throw=("aec_per_throw", "mean"),
+        )
+        .reset_index()
+        .sort_values(["possessions", "path_cluster"], ascending=[False, True])
+    )
+
+    rows = []
+    for _, row in summary.iterrows():
+        selected = selected_shape != "all" and int(row["path_cluster"]) == selected_shape
+        row_style = "background:#eef5ff;" if selected else ""
+        rows.append(
+            f"<tr style='{row_style}'>"
+            f"<td>{escape(str(row['shape_cluster_label']))}</td>"
+            f"<td>{int(row['possessions'])}</td>"
+            f"<td>{_format_overview_number(row['avg_throws'])}</td>"
+            f"<td>{_format_overview_number(row['avg_width'])}</td>"
+            f"<td>{_format_overview_number(row['avg_side_switches'])}</td>"
+            f"<td>{_format_overview_number(row['avg_directness'], percent=True)}</td>"
+            f"<td>{_format_overview_number(row['avg_middle_usage'], percent=True)}</td>"
+            f"<td>{_format_overview_number(row['avg_sideline_usage'], percent=True)}</td>"
+            f"<td>{_format_overview_number(row['avg_hucks'])}</td>"
+            f"<td>{_format_overview_number(row['avg_resets'])}</td>"
+            f"<td>{_format_overview_number(row['avg_aec_per_throw'], digits=3)}</td>"
+            "</tr>"
+        )
+
+    return f"""
+    <div class="ufa-shape-overview">
+      <style>
+        .ufa-shape-overview {{
+          width: 430px;
+          margin: 6px 0 8px;
+          color: #0b1a33;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          font-size: 11px;
+        }}
+        .ufa-shape-overview details {{
+          border: 1px solid #d9e1ea;
+          border-radius: 4px;
+          padding: 6px 8px;
+          background: #fbfdff;
+        }}
+        .ufa-shape-overview summary {{
+          cursor: pointer;
+          font-weight: 700;
+          color: #223a5e;
+        }}
+        .ufa-shape-overview p {{
+          margin: 6px 0;
+          color: #506078;
+          line-height: 1.35;
+        }}
+        .ufa-shape-overview .guide {{
+          margin-top: 8px;
+          color: #506078;
+          line-height: 1.35;
+        }}
+        .ufa-shape-overview .guide b {{
+          color: #223a5e;
+        }}
+        .ufa-shape-overview .scroll {{
+          max-height: 180px;
+          overflow: auto;
+          border-top: 1px solid #edf1f5;
+          margin-top: 6px;
+        }}
+        .ufa-shape-overview table {{
+          border-collapse: collapse;
+          width: 100%;
+          font-variant-numeric: tabular-nums;
+        }}
+        .ufa-shape-overview th,
+        .ufa-shape-overview td {{
+          border-bottom: 1px solid #edf1f5;
+          padding: 4px 5px;
+          text-align: right;
+          white-space: nowrap;
+        }}
+        .ufa-shape-overview th:first-child,
+        .ufa-shape-overview td:first-child {{
+          text-align: left;
+          min-width: 150px;
+        }}
+      </style>
+      <details>
+        <summary>Shape grouping overview</summary>
+        <p>
+          Groups are made from the possession geometry: resampled x/y path checkpoints,
+          width used, side switches, middle/sideline usage, directness, red-zone entry,
+          hucks, resets, and yardage style.
+        </p>
+        <div class="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Shape</th><th>N</th><th>Thr</th><th>Width</th>
+                <th>Sw</th><th>Dir</th><th>Mid</th><th>Side</th>
+                <th>Hu</th><th>Re</th><th>aEC/T</th>
+              </tr>
+            </thead>
+            <tbody>{''.join(rows)}</tbody>
+          </table>
+        </div>
+        <div class="guide">
+          <b>Shape names:</b>
+          huck = average at least 0.5 hucks per possession;
+          reset-heavy = average at least 3 resets;
+          quick strike = average 3 or fewer throws;
+          methodical = average 10 or more throws;
+          balanced = none of those dominates.
+          narrow = average width used is 25 yards or less;
+          wide = 40 yards or more;
+          switch-heavy = average at least 3 side switches;
+          direct = directness is 75% or higher;
+          indirect = directness is 50% or lower;
+          middle-lane = at least 55% of touch points are in the middle third;
+          sideline = at least 25% are near either sideline.
+        </div>
+        <div class="guide">
+          <b>Columns:</b>
+          N = possessions;
+          Thr = average throws;
+          Width = average field width used;
+          Sw = average side switches;
+          Dir = directness;
+          Mid = middle-third usage;
+          Side = sideline usage;
+          Hu = average hucks;
+          Re = average resets;
+          aEC/T = average aEC per throw.
+        </div>
+      </details>
+    </div>
+    """
 
 
 def render_shownspace_possession_svg(path, width=260, height=560):
@@ -725,6 +1184,15 @@ def render_possession_browser_summary(possession, path):
     aec_per_throw = _format_browser_number(possession.get("aec_per_throw"), digits=3)
     huck_count = int(possession.get("huck_count", 0))
     reset_count = int(possession.get("reset_count", 0))
+    shape_label = escape(_shape_cluster_label(possession))
+    width_used = _format_browser_number(possession.get("shape_width"), digits=1)
+    side_switches = _format_browser_number(
+        possession.get("shape_side_switches"),
+        digits=0,
+    )
+    directness = _format_browser_percent(possession.get("shape_directness"))
+    middle_usage = _format_browser_percent(possession.get("shape_middle_third_share"))
+    sideline_usage = _format_browser_percent(possession.get("shape_sideline_share"))
 
     return f"""
     <div class="ufa-browser-summary">
@@ -760,6 +1228,7 @@ def render_possession_browser_summary(possession, path):
       <h3>{team_id}</h3>
       <div>{game_id}</div>
       <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side} - {line_type}</div>
+      <div>{shape_label}</div>
       <div class="meta">
         <div class="row"><span class="label">Throws</span><span class="value">{throw_count}</span></div>
         <div class="row"><span class="label">Start Y</span><span class="value">{start_y}</span></div>
@@ -771,12 +1240,22 @@ def render_possession_browser_summary(possession, path):
         <div class="row"><span class="label">aEC / throw</span><span class="value">{aec_per_throw}</span></div>
         <div class="row"><span class="label">Hucks</span><span class="value">{huck_count}</span></div>
         <div class="row"><span class="label">Resets</span><span class="value">{reset_count}</span></div>
+        <div class="row"><span class="label">Width used</span><span class="value">{width_used}</span></div>
+        <div class="row"><span class="label">Side switches</span><span class="value">{side_switches}</span></div>
+        <div class="row"><span class="label">Directness</span><span class="value">{directness}</span></div>
+        <div class="row"><span class="label">Middle usage</span><span class="value">{middle_usage}</span></div>
+        <div class="row"><span class="label">Sideline usage</span><span class="value">{sideline_usage}</span></div>
       </div>
     </div>
     """
 
 
-def create_scoring_possession_browser(possessions, paths, title="Scoring possessions"):
+def create_scoring_possession_browser(
+    possessions,
+    paths,
+    title="Scoring possessions",
+    n_shape_clusters=6,
+):
     """Create an ipywidgets browser for Shown Space-style possession SVGs."""
     try:
         import ipywidgets as widgets
@@ -801,6 +1280,20 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         base_possessions["line_type"] = base_possessions["possession_id"].map(
             lambda possession_id: _possession_line_type(lookup[possession_id])
         )
+    if "path_cluster" not in base_possessions:
+        try:
+            base_possessions = cluster_scoring_possessions(
+                base_possessions,
+                paths,
+                n_clusters=n_shape_clusters,
+            )
+            base_possessions = _sort_browser_possessions(base_possessions)
+        except Exception:
+            base_possessions = add_possession_style_labels(base_possessions)
+
+    if "style" not in base_possessions:
+        base_possessions = add_possession_style_labels(base_possessions)
+    base_possessions = _add_browser_shape_cluster_labels(base_possessions)
 
     header = widgets.HTML(
         f"<h2 style='margin:0 0 8px;color:#223a5e;font-family:system-ui'>{escape(title)}</h2>"
@@ -813,6 +1306,34 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         ],
         value="all",
         description="Line",
+        layout=widgets.Layout(width="430px"),
+        style={"description_width": "85px"},
+    )
+    def make_shape_options(frame):
+        shape_options = [("All shapes", "all")]
+        if "path_cluster" not in frame or frame.empty:
+            return shape_options
+        shape_counts = (
+            frame
+            .groupby(["path_cluster", "shape_cluster_label"], dropna=False)
+            .size()
+            .reset_index(name="count")
+            .sort_values(["count", "path_cluster"], ascending=[False, True])
+        )
+        shape_options.extend(
+            (
+                f"{row['shape_cluster_label']} ({int(row['count'])})",
+                int(row["path_cluster"]),
+            )
+            for _, row in shape_counts.iterrows()
+        )
+        return shape_options
+
+    shape_options = make_shape_options(base_possessions)
+    shape_filter = widgets.Dropdown(
+        options=shape_options,
+        value="all",
+        description="Shape",
         layout=widgets.Layout(width="430px"),
         style={"description_width": "85px"},
     )
@@ -839,6 +1360,7 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
     next_button = widgets.Button(description="Next", layout=widgets.Layout(width="95px"))
     count_label = widgets.HTML()
     summary_html = widgets.HTML()
+    shape_overview_html = widgets.HTML()
     field_html = widgets.HTML()
     state = {"possessions": base_possessions}
 
@@ -847,6 +1369,7 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         for index, row in frame.iterrows():
             label = (
                 f"{index + 1}. {_line_type_label(row.get('line_type'))} | "
+                f"{_shape_cluster_label(row)} | "
                 f"{row['GameID']} | Q{row['game_quarter']} "
                 f"P{row['quarter_point']} | poss {row['possession_num']} | "
                 f"{int(row['throw_count'])} throws"
@@ -858,7 +1381,7 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         browser_possessions = state["possessions"]
         if index is None or browser_possessions.empty:
             count_label.value = "<b>0</b> of <b>0</b>"
-            summary_html.value = "<b>No scoring possessions match this line filter.</b>"
+            summary_html.value = "<b>No scoring possessions match these filters.</b>"
             field_html.value = ""
             return
 
@@ -868,7 +1391,7 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         summary_html.value = render_possession_browser_summary(row, path)
         field_html.value = render_shownspace_possession_svg(path)
 
-    def apply_line_filter(_=None):
+    def apply_filters(_=None):
         selected_line = line_filter.value
         min_throw_count, max_throw_count = throw_count_filter.value
         if selected_line == "all":
@@ -881,6 +1404,27 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         filtered = filtered[
             throw_counts.ge(min_throw_count) & throw_counts.le(max_throw_count)
         ].reset_index(drop=True)
+
+        current_shape = shape_filter.value
+        shape_options = make_shape_options(filtered)
+        shape_values = [value for _, value in shape_options]
+        if current_shape not in shape_values:
+            current_shape = "all"
+        if tuple(shape_filter.options) != tuple(shape_options):
+            shape_filter.options = shape_options
+        if shape_filter.value != current_shape:
+            shape_filter.value = current_shape
+        selected_shape = shape_filter.value
+
+        shape_overview_html.value = render_shape_cluster_overview(
+            filtered,
+            selected_shape=selected_shape,
+        )
+        if selected_shape != "all" and "path_cluster" in filtered:
+            filtered = filtered[
+                filtered["path_cluster"].eq(selected_shape)
+            ].reset_index(drop=True)
+
         state["possessions"] = filtered
         if filtered.empty:
             dropdown.options = [("No possessions for this filter", None)]
@@ -908,16 +1452,19 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         dropdown.value = min(len(browser_possessions) - 1, dropdown.value + 1)
 
     dropdown.observe(on_dropdown_change, names="value")
-    line_filter.observe(apply_line_filter, names="value")
-    throw_count_filter.observe(apply_line_filter, names="value")
+    line_filter.observe(apply_filters, names="value")
+    shape_filter.observe(apply_filters, names="value")
+    throw_count_filter.observe(apply_filters, names="value")
     previous_button.on_click(on_previous)
     next_button.on_click(on_next)
-    apply_line_filter()
+    apply_filters()
 
     controls = widgets.VBox(
         [
             header,
             line_filter,
+            shape_filter,
+            shape_overview_html,
             throw_count_filter,
             dropdown,
             widgets.HBox([previous_button, next_button, count_label]),
@@ -929,6 +1476,135 @@ def create_scoring_possession_browser(possessions, paths, title="Scoring possess
         [controls, field_html],
         layout=widgets.Layout(align_items="flex-start", gap="18px"),
     )
+
+
+def create_team_scoring_possession_browser(
+    season=2026,
+    default_team_id="glory",
+    final_only=True,
+    max_games=None,
+    pull_receive_scores_only=False,
+    long_field_only=False,
+    max_start_y=45,
+    min_field_progress=50,
+    exclude_hucks=False,
+    n_shape_clusters=8,
+    delay=0.15,
+):
+    """Create a notebook browser with a team selector and cached team data."""
+    try:
+        import ipywidgets as widgets
+        from IPython.display import display
+    except ImportError as exc:
+        raise ImportError(
+            "ipywidgets and IPython are required for create_team_scoring_possession_browser."
+        ) from exc
+
+    status = widgets.HTML("Loading game list...")
+    output = widgets.Output()
+
+    games = fetch_shownspace_games(season=season, final_only=final_only)
+    if games.empty:
+        return widgets.VBox([widgets.HTML("<b>No Shown Space games found.</b>")])
+
+    team_ids = sorted(
+        set(games["HomeTeamID"].dropna().str.lower())
+        | set(games["AwayTeamID"].dropna().str.lower())
+    )
+    if default_team_id.lower() not in team_ids and team_ids:
+        default_team_id = team_ids[0]
+
+    team_dropdown = widgets.Dropdown(
+        options=[(team_id.title(), team_id) for team_id in team_ids],
+        value=default_team_id.lower(),
+        description="Team",
+        layout=widgets.Layout(width="320px"),
+        style={"description_width": "70px"},
+    )
+    load_button = widgets.Button(
+        description="Load team",
+        button_style="primary",
+        layout=widgets.Layout(width="110px"),
+    )
+    cache = {}
+
+    def _team_games(team_id):
+        selected = games[
+            games["HomeTeamID"].str.lower().eq(team_id)
+            | games["AwayTeamID"].str.lower().eq(team_id)
+        ].sort_values("StartTimestamp")
+        if max_games is not None:
+            selected = selected.head(max_games)
+        return selected.reset_index(drop=True)
+
+    def _filtered_team_data(team_id):
+        if team_id in cache:
+            return cache[team_id]
+
+        selected_games = _team_games(team_id)
+        if selected_games.empty:
+            possessions = pd.DataFrame()
+            paths = []
+        else:
+            throws = fetch_shownspace_throws_for_games(
+                selected_games["GameID"].tolist(),
+                delay=delay,
+            )
+            possessions, paths = build_scoring_possessions(throws, team_id=team_id)
+
+        if not possessions.empty and pull_receive_scores_only:
+            possessions = possessions[possessions["possession_num"].eq(1)].copy()
+        if not possessions.empty and long_field_only:
+            possessions = possessions[
+                possessions["start_y"].le(max_start_y)
+                & possessions["field_progress"].ge(min_field_progress)
+            ].copy()
+        if not possessions.empty and exclude_hucks:
+            possessions = possessions[possessions["huck_count"].fillna(0).eq(0)].copy()
+
+        if not possessions.empty:
+            possession_ids = set(possessions["possession_id"])
+            paths = [
+                path
+                for path in paths
+                if not path.empty and path["possession_id"].iloc[0] in possession_ids
+            ]
+
+        cache[team_id] = (selected_games, possessions.reset_index(drop=True), paths)
+        return cache[team_id]
+
+    def _render_team(team_id):
+        load_button.disabled = True
+        status.value = f"Loading {escape(team_id.title())}..."
+        with output:
+            output.clear_output(wait=True)
+        try:
+            selected_games, possessions, paths = _filtered_team_data(team_id)
+            title = f"{team_id.title()} scoring possessions, {season}"
+            browser = create_scoring_possession_browser(
+                possessions,
+                paths,
+                title=title,
+                n_shape_clusters=n_shape_clusters,
+            )
+            status.value = (
+                f"<b>{escape(team_id.title())}</b>: "
+                f"{len(possessions):,} scoring possessions from "
+                f"{len(selected_games):,} games"
+            )
+            with output:
+                output.clear_output(wait=True)
+                display(browser)
+        finally:
+            load_button.disabled = False
+
+    def _on_load(_):
+        _render_team(team_dropdown.value)
+
+    load_button.on_click(_on_load)
+    controls = widgets.HBox([team_dropdown, load_button])
+    _render_team(team_dropdown.value)
+    return widgets.VBox([controls, status, output])
 
 
 def _add_path_arrows(fig, points, color, every=1, opacity=0.85):
