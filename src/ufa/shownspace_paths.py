@@ -738,9 +738,9 @@ def _cluster_geometry_descriptors(group):
 
     movement_descriptor = None
     if pd.notna(width):
-        if width <= 25:
+        if width <= 18:
             movement_descriptor = "narrow"
-        elif width >= 40:
+        elif width >= 34:
             movement_descriptor = "wide"
 
     if pd.notna(side_switches) and side_switches >= 3:
@@ -924,6 +924,8 @@ def render_shape_cluster_overview(possessions, selected_shape="all"):
           Groups are made from the possession geometry: resampled x/y path checkpoints,
           width used, side switches, middle/sideline usage, directness, red-zone entry,
           hucks, resets, and yardage style.
+          Shape names describe the group average, so individual possessions inside a
+          group can still look wider, narrower, cleaner, or messier than the label.
         </p>
         <div class="scroll">
           <table>
@@ -944,8 +946,8 @@ def render_shape_cluster_overview(possessions, selected_shape="all"):
           quick strike = average 3 or fewer throws;
           methodical = average 10 or more throws;
           balanced = none of those dominates.
-          narrow = average width used is 25 yards or less;
-          wide = 40 yards or more;
+          narrow = average width used is 18 yards or less;
+          wide = 34 yards or more;
           switch-heavy = average at least 3 side switches;
           direct = directness is 75% or higher;
           indirect = directness is 50% or lower;
