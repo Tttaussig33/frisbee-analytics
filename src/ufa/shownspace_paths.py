@@ -437,7 +437,7 @@ def add_possession_style_labels(possessions):
         labeled["throw_count"].fillna(0).ge(8),
     ]
     choices = ["huck score", "quick strike", "reset-heavy", "methodical"]
-    labeled["style"] = np.select(conditions, choices, default="balanced")
+    labeled["style"] = np.select(conditions, choices, default="mixed")
     return labeled
 
 
@@ -711,6 +711,7 @@ def _cluster_primary_style(group):
     avg_hucks = _cluster_average(group, "huck_count")
     avg_resets = _cluster_average(group, "reset_count")
     avg_throws = _cluster_average(group, "throw_count")
+    cluster_size = len(group)
 
     if pd.notna(avg_hucks) and avg_hucks >= 0.5:
         return "huck"
@@ -720,7 +721,9 @@ def _cluster_primary_style(group):
         return "quick strike"
     if pd.notna(avg_throws) and avg_throws >= 10:
         return "methodical"
-    return "balanced"
+    if cluster_size <= 5:
+        return "outlier"
+    return "mixed"
 
 
 def _cluster_geometry_descriptors(group):
@@ -755,7 +758,7 @@ def _cluster_geometry_descriptors(group):
         if directness >= 0.75:
             directness_descriptor = "direct"
         elif directness <= 0.50:
-            directness_descriptor = "indirect"
+            directness_descriptor = "winding"
 
     descriptors = []
     if lane_descriptor is not None:
@@ -945,12 +948,13 @@ def render_shape_cluster_overview(possessions, selected_shape="all"):
           reset-heavy = average at least 3 resets;
           quick strike = average 3 or fewer throws;
           methodical = average 10 or more throws;
-          balanced = none of those dominates.
+          mixed = no single simple style dominates;
+          outlier = a small mixed group that does not fit a common style cleanly.
           narrow = average width used is 18 yards or less;
           wide = 34 yards or more;
           switch-heavy = average at least 3 side switches;
           direct = directness is 75% or higher;
-          indirect = directness is 50% or lower;
+          winding = directness is 50% or lower;
           middle-lane = at least 55% of touch points are in the middle third;
           sideline = at least 25% are near either sideline.
         </div>
@@ -1721,7 +1725,9 @@ def _style_color(label, index):
         return "#7a3db8"
     if "methodical" in label_lower:
         return "#2f7d32"
-    if "balanced" in label_lower:
+    if "outlier" in label_lower:
+        return "#6b7280"
+    if "mixed" in label_lower:
         return "#d97706"
     colors = ["#b74126", "#164e87", "#7a3db8", "#2f7d32", "#d97706", "#0f766e"]
     return colors[index % len(colors)]
