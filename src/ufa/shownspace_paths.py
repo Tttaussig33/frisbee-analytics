@@ -778,6 +778,46 @@ def _describe_shape_cluster(cluster, group):
     return f"Shape {cluster_id}: {primary_style}{descriptor_text}"
 
 
+def _describe_single_possession_shape(possession):
+    width = pd.to_numeric(pd.Series([possession.get("shape_width")]), errors="coerce").iloc[0]
+    directness = pd.to_numeric(
+        pd.Series([possession.get("shape_directness")]),
+        errors="coerce",
+    ).iloc[0]
+    side_switches = pd.to_numeric(
+        pd.Series([possession.get("shape_side_switches")]),
+        errors="coerce",
+    ).iloc[0]
+    hucks = pd.to_numeric(pd.Series([possession.get("huck_count")]), errors="coerce").iloc[0]
+    resets = pd.to_numeric(pd.Series([possession.get("reset_count")]), errors="coerce").iloc[0]
+    throws = pd.to_numeric(pd.Series([possession.get("throw_count")]), errors="coerce").iloc[0]
+
+    tags = []
+    if pd.notna(hucks) and hucks >= 1:
+        tags.append("huck")
+    elif pd.notna(resets) and resets >= 3:
+        tags.append("reset-heavy")
+    elif pd.notna(throws) and throws <= 3:
+        tags.append("quick strike")
+    elif pd.notna(throws) and throws >= 10:
+        tags.append("methodical")
+
+    if pd.notna(width):
+        if width <= 18:
+            tags.append("narrow")
+        elif width >= 34:
+            tags.append("wide")
+    if pd.notna(side_switches) and side_switches >= 3:
+        tags.append("switch-heavy")
+    if pd.notna(directness):
+        if directness >= 0.75:
+            tags.append("direct")
+        elif directness <= 0.50:
+            tags.append("winding")
+
+    return ", ".join(tags) if tags else "mixed"
+
+
 def _add_browser_shape_cluster_labels(possessions):
     """Add one stable readable label per shape cluster for browser filters."""
     if possessions.empty or "path_cluster" not in possessions:
@@ -1191,6 +1231,7 @@ def render_possession_browser_summary(possession, path):
     huck_count = int(possession.get("huck_count", 0))
     reset_count = int(possession.get("reset_count", 0))
     shape_label = escape(_shape_cluster_label(possession))
+    possession_shape_label = escape(_describe_single_possession_shape(possession))
     width_used = _format_browser_number(possession.get("shape_width"), digits=1)
     side_switches = _format_browser_number(
         possession.get("shape_side_switches"),
@@ -1234,7 +1275,8 @@ def render_possession_browser_summary(possession, path):
       <h3>{team_id}</h3>
       <div>{game_id}</div>
       <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side} - {line_type}</div>
-      <div>{shape_label}</div>
+      <div>Group: {shape_label}</div>
+      <div>This possession: {possession_shape_label}</div>
       <div class="meta">
         <div class="row"><span class="label">Throws</span><span class="value">{throw_count}</span></div>
         <div class="row"><span class="label">Start Y</span><span class="value">{start_y}</span></div>
