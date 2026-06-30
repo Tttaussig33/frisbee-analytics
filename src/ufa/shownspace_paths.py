@@ -537,6 +537,328 @@ def summarize_path_clusters(possessions):
     return summary
 
 
+PLAYSTYLE_SUMMARY_COLUMNS = [
+    "team_id",
+    "possessions",
+    "primary_shapes",
+    "attack_spaces",
+    "pace_style",
+    "field_width_style",
+    "huck_usage",
+    "reset_usage",
+    "efficiency_note",
+    "playstyle_summary",
+]
+
+
+def _mean_numeric(frame, column):
+    if column not in frame:
+        return np.nan
+    return pd.to_numeric(frame[column], errors="coerce").replace(
+        [np.inf, -np.inf],
+        np.nan,
+    ).mean()
+
+
+def _count_numeric(frame, column):
+    if column not in frame:
+        return 0
+    return pd.to_numeric(frame[column], errors="coerce").notna().sum()
+
+
+def _prepare_playstyle_possessions(
+    possessions,
+    paths=None,
+    n_shape_clusters=8,
+    random_state=0,
+):
+    if possessions.empty:
+        return possessions.copy()
+
+    prepared = possessions.copy()
+    if paths is not None:
+        prepared = add_possession_shape_features_if_available(prepared, paths)
+
+    if "path_cluster" not in prepared:
+        prepared = cluster_scoring_possessions(
+            prepared,
+            paths,
+            n_clusters=n_shape_clusters,
+            random_state=random_state,
+        )
+    elif "style" not in prepared:
+        prepared = add_possession_style_labels(prepared)
+
+    if "style" not in prepared:
+        prepared = add_possession_style_labels(prepared)
+
+    return _add_browser_shape_cluster_labels(prepared)
+
+
+def _top_shape_text(possessions, limit=3):
+    if possessions.empty:
+        return "no scoring shapes"
+
+    label_column = "shape_cluster_label" if "shape_cluster_label" in possessions else "style"
+    if label_column not in possessions:
+        return "unlabeled scoring shapes"
+
+    counts = (
+        possessions[label_column]
+        .fillna("Unlabeled")
+        .astype(str)
+        .value_counts()
+        .head(limit)
+    )
+    return ", ".join(f"{label} ({int(count)})" for label, count in counts.items())
+
+
+def _attack_spaces_text(stats):
+    middle = stats["avg_middle_usage"]
+    sideline = stats["avg_sideline_usage"]
+    left = stats["avg_left_usage"]
+    right = stats["avg_right_usage"]
+
+    if pd.notna(middle) and middle >= 0.55 and (
+        pd.isna(sideline) or sideline < 0.25
+    ):
+        lane_text = "attack the middle third often"
+    elif pd.notna(sideline) and sideline >= 0.25 and (
+        pd.isna(middle) or middle < 0.55
+    ):
+        lane_text = "work through sideline channels often"
+    elif (
+        pd.notna(middle)
+        and pd.notna(sideline)
+        and middle >= 0.50
+        and sideline >= 0.22
+    ):
+        lane_text = "mix middle-lane attacks with sideline channels"
+    else:
+        lane_text = "use a balanced mix of field spaces"
+
+    side_text = ""
+    if pd.notna(left) and pd.notna(right):
+        if left > right + 0.12:
+            side_text = " with a left-side lean"
+        elif right > left + 0.12:
+            side_text = " with a right-side lean"
+
+    return f"{lane_text}{side_text}"
+
+
+def _pace_style_text(stats):
+    avg_throws = stats["avg_throws"]
+    directness = stats["avg_directness"]
+
+    if pd.notna(avg_throws) and avg_throws <= 4:
+        tempo = "quick-strike"
+    elif pd.notna(avg_throws) and avg_throws >= 10:
+        tempo = "methodical"
+    else:
+        tempo = "moderate-tempo"
+
+    if pd.notna(directness) and directness >= 0.75:
+        shape = "direct"
+    elif pd.notna(directness) and directness <= 0.50:
+        shape = "winding"
+    else:
+        shape = "mixed-directness"
+
+    return f"{tempo}, {shape}"
+
+
+def _field_width_style_text(stats):
+    width = stats["avg_width"]
+    side_switches = stats["avg_side_switches"]
+
+    if pd.notna(width) and width <= 18:
+        return "narrow field usage"
+    if pd.notna(width) and width >= 34:
+        if pd.notna(side_switches) and side_switches >= 3:
+            return "wide and switch-heavy"
+        return "wide field usage"
+    if pd.notna(side_switches) and side_switches >= 3:
+        return "switch-heavy with moderate width"
+    return "moderate field width"
+
+
+def _huck_usage_text(stats):
+    hucks = stats["avg_hucks"]
+    huck_rate = stats["huck_possession_rate"]
+    if pd.notna(hucks) and (hucks >= 0.5 or huck_rate >= 0.35):
+        return "lean on huck or large-gain scoring patterns"
+    if pd.notna(hucks) and (hucks >= 0.25 or huck_rate >= 0.18):
+        return "use hucks as a regular scoring option"
+    return "do not rely heavily on hucks"
+
+
+def _reset_usage_text(stats):
+    resets = stats["avg_resets"]
+    if pd.notna(resets) and resets >= 3:
+        return "are comfortable extending possessions with resets"
+    if pd.notna(resets) and resets >= 1.5:
+        return "use resets at a moderate rate"
+    return "keep reset volume relatively low"
+
+
+def _efficiency_note_text(stats):
+    aec_per_throw = stats["avg_aec_per_throw"]
+    if pd.isna(aec_per_throw):
+        return "aEC per throw is unavailable"
+    if aec_per_throw >= 0.14:
+        return "high-value scoring possessions by aEC per throw"
+    if aec_per_throw >= 0.09:
+        return "solid scoring value by aEC per throw"
+    if aec_per_throw >= 0.05:
+        return "moderate scoring value by aEC per throw"
+    return "lower aEC per throw despite scoring"
+
+
+def _team_name(team_id):
+    if team_id is None or pd.isna(team_id):
+        return "This team"
+    return str(team_id).strip().title()
+
+
+def summarize_team_playstyle(
+    possessions,
+    paths=None,
+    team_id=None,
+    n_shape_clusters=8,
+    random_state=0,
+):
+    """Summarize one team's scoring-possession playstyle with rule-based text."""
+    if possessions.empty:
+        return pd.Series(
+            {
+                "team_id": team_id,
+                "possessions": 0,
+                "primary_shapes": "no scoring possessions",
+                "attack_spaces": "no scoring possessions",
+                "pace_style": "no scoring possessions",
+                "field_width_style": "no scoring possessions",
+                "huck_usage": "no scoring possessions",
+                "reset_usage": "no scoring possessions",
+                "efficiency_note": "no scoring possessions",
+                "playstyle_summary": "No scoring possessions are available for this team.",
+            }
+        )
+
+    frame = possessions.copy()
+    if team_id is not None and "team_id" in frame:
+        frame = frame[frame["team_id"].str.lower().eq(str(team_id).lower())].copy()
+    if frame.empty:
+        return summarize_team_playstyle(pd.DataFrame(), team_id=team_id)
+
+    if team_id is None and "team_id" in frame and frame["team_id"].nunique() == 1:
+        team_id = frame["team_id"].iloc[0]
+
+    team_paths = paths
+    if paths is not None:
+        possession_ids = set(frame["possession_id"])
+        team_paths = [
+            path
+            for path in paths
+            if not path.empty and path["possession_id"].iloc[0] in possession_ids
+        ]
+
+    prepared = _prepare_playstyle_possessions(
+        frame,
+        team_paths,
+        n_shape_clusters=n_shape_clusters,
+        random_state=random_state,
+    )
+
+    huck_counts = pd.to_numeric(
+        prepared.get("huck_count", pd.Series(dtype=float)),
+        errors="coerce",
+    ).fillna(0)
+    stats = {
+        "team_id": team_id,
+        "possessions": int(len(prepared)),
+        "avg_throws": _mean_numeric(prepared, "throw_count"),
+        "avg_width": _mean_numeric(prepared, "shape_width"),
+        "avg_side_switches": _mean_numeric(prepared, "shape_side_switches"),
+        "avg_directness": _mean_numeric(prepared, "shape_directness"),
+        "avg_middle_usage": _mean_numeric(prepared, "shape_middle_third_share"),
+        "avg_sideline_usage": _mean_numeric(prepared, "shape_sideline_share"),
+        "avg_left_usage": _mean_numeric(prepared, "shape_left_side_share"),
+        "avg_right_usage": _mean_numeric(prepared, "shape_right_side_share"),
+        "avg_hucks": _mean_numeric(prepared, "huck_count"),
+        "avg_resets": _mean_numeric(prepared, "reset_count"),
+        "avg_aec_per_throw": _mean_numeric(prepared, "aec_per_throw"),
+        "avg_cp": _mean_numeric(prepared, "mean_cp"),
+        "huck_possession_rate": huck_counts.gt(0).mean() if len(prepared) else np.nan,
+        "shape_metric_possessions": _count_numeric(prepared, "shape_directness"),
+    }
+
+    primary_shapes = _top_shape_text(prepared)
+    attack_spaces = _attack_spaces_text(stats)
+    pace_style = _pace_style_text(stats)
+    field_width_style = _field_width_style_text(stats)
+    huck_usage = _huck_usage_text(stats)
+    reset_usage = _reset_usage_text(stats)
+    efficiency_note = _efficiency_note_text(stats)
+
+    name = _team_name(team_id)
+    summary = (
+        f"{name}'s scoring possessions are generally {pace_style}. "
+        f"They {attack_spaces}. Their most common shape groups are {primary_shapes}. "
+        f"They {huck_usage} and {reset_usage}, with {field_width_style}. "
+        f"Overall, the scoring possessions grade as {efficiency_note}."
+    )
+
+    stats.update(
+        {
+            "primary_shapes": primary_shapes,
+            "attack_spaces": attack_spaces,
+            "pace_style": pace_style,
+            "field_width_style": field_width_style,
+            "huck_usage": huck_usage,
+            "reset_usage": reset_usage,
+            "efficiency_note": efficiency_note,
+            "playstyle_summary": summary,
+        }
+    )
+    return pd.Series(stats)
+
+
+def summarize_team_playstyles(
+    possessions,
+    paths=None,
+    team_ids=None,
+    n_shape_clusters=8,
+    random_state=0,
+):
+    """Return one rule-based playstyle summary row per team."""
+    if possessions.empty:
+        return pd.DataFrame(columns=PLAYSTYLE_SUMMARY_COLUMNS)
+
+    if team_ids is None:
+        if "team_id" in possessions:
+            team_ids = sorted(
+                team for team in possessions["team_id"].dropna().astype(str).unique()
+            )
+        else:
+            team_ids = [None]
+
+    rows = [
+        summarize_team_playstyle(
+            possessions,
+            paths=paths,
+            team_id=team,
+            n_shape_clusters=n_shape_clusters,
+            random_state=random_state,
+        )
+        for team in team_ids
+    ]
+    table = pd.DataFrame(rows)
+    requested = [column for column in PLAYSTYLE_SUMMARY_COLUMNS if column in table]
+    remaining = [column for column in table.columns if column not in requested]
+    return table[requested + remaining]
+
+
 def select_top_paths(possessions, paths, metric="aec_per_throw", n=5, ascending=False):
     """Return real possession paths ranked by a possession-level metric."""
     if possessions.empty:

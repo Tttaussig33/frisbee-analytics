@@ -76,6 +76,8 @@ from ufa.shownspace_paths import (
     select_representative_paths,
     select_top_paths,
     summarize_path_clusters,
+    summarize_team_playstyle,
+    summarize_team_playstyles,
 )
 from ufa.fnf_video import (
     add_estimated_video_seconds,
@@ -156,6 +158,8 @@ __all__ = [
     "select_representative_paths",
     "select_top_paths",
     "summarize_path_clusters",
+    "summarize_team_playstyle",
+    "summarize_team_playstyles",
     "add_estimated_video_seconds",
     "build_fnf_browser_data",
     "build_fnf_game_table",
