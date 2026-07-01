@@ -28,6 +28,22 @@ ANCHOR_COLUMNS = [
     "video_seconds",
     "note",
 ]
+POSSESSION_ANCHOR_COLUMNS = [
+    "game_id",
+    "game_quarter",
+    "quarter_point",
+    "possession_num",
+    "is_home_team",
+    "team_id",
+    "video_seconds",
+    "note",
+]
+CLOCK_ANCHOR_COLUMNS = [
+    "game_id",
+    "source_timestamp",
+    "video_seconds",
+    "note",
+]
 FNF_GAME_COLUMNS = [
     "season",
     "week",
@@ -251,6 +267,60 @@ def load_fnf_point_anchors(path, game_id):
     return anchors
 
 
+def _coerce_anchor_bool(value):
+    if isinstance(value, bool):
+        return value
+    if pd.isna(value):
+        return np.nan
+    text = str(value).strip().lower()
+    if text in {"true", "1", "yes", "y", "home"}:
+        return True
+    if text in {"false", "0", "no", "n", "away"}:
+        return False
+    return np.nan
+
+
+def load_fnf_possession_anchors(path, game_id):
+    """Load manual possession-start video anchors for one game."""
+    path = Path(path)
+    if not path.exists():
+        return pd.DataFrame(columns=POSSESSION_ANCHOR_COLUMNS)
+
+    anchors = pd.read_csv(path)
+    for column in POSSESSION_ANCHOR_COLUMNS:
+        if column not in anchors:
+            anchors[column] = np.nan
+
+    anchors = anchors[POSSESSION_ANCHOR_COLUMNS].copy()
+    anchors = anchors[anchors["game_id"].astype(str).eq(str(game_id))].reset_index(drop=True)
+    for column in ["game_quarter", "quarter_point", "possession_num", "video_seconds"]:
+        anchors[column] = pd.to_numeric(anchors[column], errors="coerce")
+    anchors["is_home_team"] = anchors["is_home_team"].apply(_coerce_anchor_bool)
+    anchors["team_id"] = anchors["team_id"].fillna("").astype(str).str.lower()
+    return anchors
+
+
+def load_fnf_clock_anchors(path, game_id):
+    """Load game-level source-clock to YouTube-clock calibration anchors."""
+    path = Path(path)
+    if not path.exists():
+        return pd.DataFrame(columns=CLOCK_ANCHOR_COLUMNS)
+
+    anchors = pd.read_csv(path)
+    for column in CLOCK_ANCHOR_COLUMNS:
+        if column not in anchors:
+            anchors[column] = np.nan
+
+    anchors = anchors[CLOCK_ANCHOR_COLUMNS].copy()
+    anchors = anchors[anchors["game_id"].astype(str).eq(str(game_id))].reset_index(drop=True)
+    anchors["source_timestamp"] = pd.to_numeric(
+        anchors["source_timestamp"],
+        errors="coerce",
+    )
+    anchors["video_seconds"] = pd.to_numeric(anchors["video_seconds"], errors="coerce")
+    return anchors
+
+
 def build_fnf_browser_data(game_id, team_id=None):
     """Fetch Shown Space throws and build scoring possessions for one game."""
     throws = fetch_shownspace_throws_for_games([game_id], delay=0)
@@ -299,6 +369,166 @@ def add_estimated_video_seconds(paths, anchors, seconds_per_throw=3.0):
     return estimated_paths
 
 
+def _possession_anchor_lookup(anchors):
+    if anchors is None or anchors.empty:
+        return {}
+
+    clean = anchors.dropna(
+        subset=[
+            "game_quarter",
+            "quarter_point",
+            "possession_num",
+            "is_home_team",
+            "video_seconds",
+        ]
+    ).copy()
+    lookup = {}
+    for row in clean.itertuples(index=False):
+        base_key = (
+            int(row.game_quarter),
+            int(row.quarter_point),
+            int(row.possession_num),
+            bool(row.is_home_team),
+        )
+        team_id = str(row.team_id).lower() if not pd.isna(row.team_id) else ""
+        payload = {
+            "video_seconds": float(row.video_seconds),
+            "note": row.note,
+        }
+        lookup[base_key + (team_id,)] = payload
+        if not team_id:
+            lookup[base_key + ("",)] = payload
+    return lookup
+
+
+def _point_anchor_lookup(anchors):
+    if anchors is None or anchors.empty:
+        return {}
+
+    clean = anchors.dropna(
+        subset=["game_quarter", "quarter_point", "video_seconds"]
+    ).copy()
+    return {
+        (int(row.game_quarter), int(row.quarter_point)): float(row.video_seconds)
+        for row in clean.itertuples(index=False)
+    }
+
+
+def _clock_anchor_offset(clock_anchors):
+    if clock_anchors is None or clock_anchors.empty:
+        return np.nan
+
+    clean = clock_anchors.dropna(subset=["source_timestamp", "video_seconds"]).copy()
+    if clean.empty:
+        return np.nan
+
+    first_anchor = clean.sort_values("source_timestamp").iloc[0]
+    return float(first_anchor["source_timestamp"]) - float(first_anchor["video_seconds"])
+
+
+def add_possession_video_seconds(
+    possessions,
+    paths,
+    anchors,
+    point_anchors=None,
+    clock_anchors=None,
+    seconds_per_throw=3.0,
+):
+    """Attach possession-start video timestamps, preferring exact possession anchors."""
+    if possessions is None or possessions.empty:
+        return possessions.copy(), paths
+
+    synced_possessions = _sort_possessions(possessions).copy()
+    possession_lookup = _possession_anchor_lookup(anchors)
+    point_lookup = _point_anchor_lookup(point_anchors)
+    clock_offset = _clock_anchor_offset(clock_anchors)
+
+    path_lookup = {
+        str(path["possession_id"].iloc[0]): path.sort_values("possession_throw").copy()
+        for path in paths
+        if not path.empty and "possession_id" in path
+    }
+    fallback_offsets = {}
+    running_throw_counts = {}
+    rows = []
+
+    for row in synced_possessions.itertuples(index=False):
+        quarter = pd.to_numeric(getattr(row, "game_quarter", np.nan), errors="coerce")
+        point = pd.to_numeric(getattr(row, "quarter_point", np.nan), errors="coerce")
+        possession_num = pd.to_numeric(getattr(row, "possession_num", np.nan), errors="coerce")
+        is_home_team = bool(getattr(row, "is_home_team", False))
+        team_id = str(getattr(row, "team_id", "")).lower()
+        possession_id = str(getattr(row, "possession_id"))
+        path = path_lookup.get(possession_id, pd.DataFrame())
+        throw_count = len(path) if not path.empty else int(getattr(row, "throw_count", 0) or 0)
+        first_source_timestamp = np.nan
+        if not path.empty and "source_timestamp" in path:
+            source_timestamp = pd.to_numeric(path["source_timestamp"], errors="coerce")
+            if source_timestamp.notna().any():
+                first_source_timestamp = source_timestamp.min()
+
+        video_seconds = np.nan
+        sync_status = "missing"
+        sync_note = ""
+        if not pd.isna(quarter) and not pd.isna(point) and not pd.isna(possession_num):
+            point_key = (int(quarter), int(point))
+            base_key = (int(quarter), int(point), int(possession_num), is_home_team)
+            exact = possession_lookup.get(base_key + (team_id,)) or possession_lookup.get(
+                base_key + ("",)
+            )
+            if exact is not None:
+                video_seconds = exact["video_seconds"]
+                sync_status = "possession_anchor"
+                sync_note = exact.get("note") or ""
+            elif not pd.isna(clock_offset) and not pd.isna(first_source_timestamp):
+                video_seconds = first_source_timestamp - clock_offset
+                sync_status = "source_timestamp_estimate"
+                sync_note = "Estimated from game-level source timestamp calibration."
+            else:
+                if point_key in point_lookup:
+                    offset = running_throw_counts.get(point_key, 0) * seconds_per_throw
+                    video_seconds = point_lookup[point_key] + offset
+                    sync_status = "point_estimate"
+                    sync_note = "Estimated from point-start anchor."
+            running_throw_counts[point_key] = (
+                running_throw_counts.get(point_key, 0) + max(throw_count, 1)
+            )
+
+        fallback_offsets[possession_id] = (video_seconds, sync_status, sync_note)
+        rows.append((video_seconds, sync_status, sync_note))
+
+    synced_possessions["video_seconds"] = [row[0] for row in rows]
+    synced_possessions["video_sync_status"] = [row[1] for row in rows]
+    synced_possessions["video_sync_note"] = [row[2] for row in rows]
+
+    synced_paths = []
+    for path in paths:
+        if path.empty or "possession_id" not in path:
+            synced_paths.append(path)
+            continue
+
+        possession_id = str(path["possession_id"].iloc[0])
+        video_seconds, sync_status, sync_note = fallback_offsets.get(
+            possession_id,
+            (np.nan, "missing", ""),
+        )
+        synced = path.sort_values("possession_throw").copy()
+        possession_throw = pd.to_numeric(
+            synced["possession_throw"],
+            errors="coerce",
+        ).fillna(1)
+        if pd.isna(video_seconds):
+            synced["video_seconds"] = np.nan
+        else:
+            synced["video_seconds"] = video_seconds + (possession_throw - 1) * seconds_per_throw
+        synced["possession_video_seconds"] = video_seconds
+        synced["video_sync_status"] = sync_status
+        synced["video_sync_note"] = sync_note
+        synced_paths.append(synced)
+
+    return synced_possessions, synced_paths
+
+
 def write_fnf_video_browser_html(game_id, youtube_url, possessions, paths, output_path):
     """Write a standalone Friday Night Frisbee video + field browser HTML file."""
     output_path = Path(output_path)
@@ -335,6 +565,134 @@ def write_fnf_video_browser_html(game_id, youtube_url, possessions, paths, outpu
     }
 
     html = _render_html_document(payload)
+    output_path.write_text(html, encoding="utf-8")
+    return output_path
+
+
+def write_fnf_index_html(fnf_games, output_path):
+    """Write a local index page linking to generated Friday Night Frisbee browsers."""
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    games = pd.DataFrame(fnf_games).copy()
+    if games.empty:
+        games = pd.DataFrame(columns=["gameID", "youtube_url", "is_fnf_youtube"])
+
+    rows = []
+    for _, game in games.iterrows():
+        game_id = game.get("gameID", game.get("game_id", ""))
+        game_id = "" if pd.isna(game_id) else str(game_id)
+        youtube_url = game.get("youtube_url", "")
+        youtube_url = "" if pd.isna(youtube_url) else str(youtube_url)
+        browser_path = output_path.parent / f"{game_id}.html"
+        browser_exists = browser_path.exists()
+        browser_link = (
+            f'<a href="{escape(browser_path.name)}">Open browser</a>'
+            if browser_exists
+            else "<span class=\"missing\">Not generated</span>"
+        )
+        youtube_link = (
+            f'<a href="{escape(youtube_url)}" target="_blank" rel="noopener">YouTube</a>'
+            if youtube_url
+            else "<span class=\"missing\">Missing</span>"
+        )
+        matchup = " vs ".join(
+            str(game.get(column, "")).upper()
+            for column in ["awayTeamID", "homeTeamID"]
+            if not pd.isna(game.get(column, np.nan)) and str(game.get(column, "")).strip()
+        )
+        rows.append(
+            "<tr>"
+            f"<td>{escape(game_id)}</td>"
+            f"<td>{escape(matchup)}</td>"
+            f"<td>{escape(str(game.get('startTimestamp', '')))}</td>"
+            f"<td>{escape(str(game.get('week', '')))}</td>"
+            f"<td>{youtube_link}</td>"
+            f"<td>{browser_link}</td>"
+            f"<td>{escape(str(game.get('fnf_source', game.get('source', ''))))}</td>"
+            "</tr>"
+        )
+
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Friday Night Frisbee browsers</title>
+  <style>
+    body {{
+      margin: 0;
+      padding: 18px;
+      background: #f5f7fa;
+      color: #0b1a33;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }}
+    h1 {{
+      margin: 0 0 14px;
+      color: #223a5e;
+      font-size: 24px;
+    }}
+    .panel {{
+      background: #fff;
+      border: 1px solid #d9e1ea;
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+      overflow-x: auto;
+    }}
+    table {{
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 860px;
+      font-size: 14px;
+    }}
+    th {{
+      text-align: left;
+      color: #223a5e;
+      background: #e9eef5;
+      border-bottom: 1px solid #d9e1ea;
+      padding: 9px 10px;
+    }}
+    td {{
+      border-bottom: 1px solid #edf1f5;
+      padding: 9px 10px;
+      vertical-align: top;
+    }}
+    tr:nth-child(even) td {{ background: #f8fbfe; }}
+    a {{ color: #0b4f8a; font-weight: 700; text-decoration: none; }}
+    a:hover {{ text-decoration: underline; }}
+    .missing {{ color: #8a4b00; font-weight: 700; }}
+    .hint {{
+      margin: 0 0 12px;
+      color: #506078;
+      line-height: 1.4;
+    }}
+    code {{
+      background: #eef2f7;
+      border-radius: 4px;
+      padding: 2px 5px;
+    }}
+  </style>
+</head>
+<body>
+  <h1>Friday Night Frisbee browsers</h1>
+  <p class="hint">
+    Serve the project folder with <code>python -m http.server 8000</code>,
+    then open this page through localhost so YouTube embeds can load.
+  </p>
+  <div class="panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Game ID</th><th>Matchup</th><th>Start</th><th>Week</th>
+          <th>YouTube</th><th>Browser</th><th>Source</th>
+        </tr>
+      </thead>
+      <tbody>{''.join(rows)}</tbody>
+    </table>
+  </div>
+</body>
+</html>
+"""
     output_path.write_text(html, encoding="utf-8")
     return output_path
 
@@ -483,6 +841,19 @@ def _render_html_document(payload):
     .throw.selected line {{ stroke: #c3482b; stroke-width: 3.4; }}
     .throw.selected circle {{ fill: #c3482b; stroke: #071019; stroke-width: 1.9; }}
     .throw {{ cursor: pointer; }}
+    .sync-status {{
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 7px;
+      border-radius: 4px;
+      font: 700 12px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #eef5ff;
+      color: #223a5e;
+    }}
+    .sync-status.missing {{ background: #fff4e5; color: #8a4b00; }}
+    .sync-status.point_estimate {{ background: #eef5ff; color: #223a5e; }}
+    .sync-status.source_timestamp_estimate {{ background: #eef5ff; color: #223a5e; }}
+    .sync-status.possession_anchor {{ background: #e8f8ef; color: #17633a; }}
     #throwDetail {{
       box-sizing: border-box;
       width: 230px;
@@ -563,11 +934,17 @@ def _render_html_document(payload):
           modestbranding: 1,
           playsinline: 1,
           origin: window.location.origin
+        }},
+        events: {{
+          onReady: function() {{
+            seekToPossession(filteredPossessions[selectedPossessionIndex]);
+          }}
         }}
       }});
     }};
 
     function numberValue(value) {{
+      if (value === null || value === undefined || value === "") return null;
       const numeric = Number(value);
       return Number.isFinite(numeric) ? numeric : null;
     }}
@@ -598,6 +975,13 @@ def _render_html_document(payload):
       if (value === "o_line") return "O-line";
       if (value === "d_line") return "D-line";
       return "Unknown";
+    }}
+
+    function syncStatusLabel(value) {{
+      if (value === "possession_anchor") return "Exact possession anchor";
+      if (value === "source_timestamp_estimate") return "Source-clock estimate";
+      if (value === "point_estimate") return "Point-estimated timestamp";
+      return "No timestamp anchor";
     }}
 
     function sx(value) {{
@@ -631,14 +1015,15 @@ def _render_html_document(payload):
       `;
     }}
 
-    function seekToThrow(throwRow) {{
-      const seconds = numberValue(throwRow.video_seconds);
+    function seekToPossession(possession) {{
+      if (!possession) return;
+      const seconds = numberValue(possession.video_seconds);
       if (seconds !== null && player && typeof player.seekTo === "function") {{
         player.seekTo(seconds, true);
       }}
     }}
 
-    function selectThrow(index, shouldSeek = false) {{
+    function selectThrow(index) {{
       const possession = filteredPossessions[selectedPossessionIndex];
       if (!possession) return;
       const path = pathFor(possession);
@@ -651,7 +1036,6 @@ def _render_html_document(payload):
       if (node) node.classList.add("selected");
       const throwRow = path[selectedThrowIndex - 1];
       document.getElementById("throwDetail").innerHTML = detailHtml(throwRow, selectedThrowIndex);
-      if (shouldSeek) seekToThrow(throwRow);
     }}
 
     function renderField(path) {{
@@ -681,7 +1065,7 @@ def _render_html_document(payload):
         }});
         group.addEventListener("click", () => {{
           svg.focus();
-          selectThrow(index, true);
+          selectThrow(index);
         }});
         svg.appendChild(group);
       }});
@@ -690,15 +1074,19 @@ def _render_html_document(payload):
     function renderSummary(possession, path) {{
       const team = escapeHtml(possession.team_id ?? "-");
       const side = possession.is_home_team ? "Home" : "Away";
+      const syncStatus = possession.video_sync_status || "missing";
+      const syncNote = possession.video_sync_note ? ` - ${{escapeHtml(possession.video_sync_note)}}` : "";
       return `
         <h2 style="margin:0 0 8px;font:800 18px system-ui;color:#0b1a33">${{team}}</h2>
         <div>${{escapeHtml(possession.GameID)}}</div>
         <div>Q${{possession.game_quarter}} - point ${{possession.quarter_point}} - possession ${{possession.possession_num}} - ${{side}} - ${{lineLabel(possession.line_type)}}</div>
+        <div class="sync-status ${{escapeHtml(syncStatus)}}">${{syncStatusLabel(syncStatus)}}${{syncNote}}</div>
         <div class="meta">
           <div class="row"><span class="label">Throws</span><span class="value">${{path.length}}</span></div>
           <div class="row"><span class="label">Start Y</span><span class="value">${{fmt(possession.start_y, 1)}}</span></div>
           <div class="row"><span class="label">End Y</span><span class="value">${{fmt(possession.end_y, 1)}}</span></div>
           <div class="row"><span class="label">Net Y progress</span><span class="value">${{fmt(possession.field_progress, 1)}}</span></div>
+          <div class="row"><span class="label">Video time</span><span class="value">${{fmt(possession.video_seconds, 1)}}s</span></div>
           <div class="row"><span class="label">Total aEC</span><span class="value">${{fmt(possession.total_aec, 3)}}</span></div>
           <div class="row"><span class="label">aEC / throw</span><span class="value">${{fmt(possession.aec_per_throw, 3)}}</span></div>
         </div>
@@ -724,10 +1112,11 @@ def _render_html_document(payload):
       document.getElementById("possessionSummary").innerHTML = renderSummary(possession, path);
       renderField(path);
       if (path.length) {{
-        selectThrow(1, false);
+        selectThrow(1);
       }} else {{
         document.getElementById("throwDetail").innerHTML = '<div class="placeholder">Click a throw on the field.</div>';
       }}
+      seekToPossession(possession);
     }}
 
     function refreshPossessionOptions() {{
@@ -777,7 +1166,7 @@ def _render_html_document(payload):
         if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
         event.preventDefault();
         const direction = event.key === "ArrowRight" ? 1 : -1;
-        selectThrow((selectedThrowIndex || 0) + direction, true);
+        selectThrow((selectedThrowIndex || 0) + direction);
       }});
       refreshPossessionOptions();
     }}

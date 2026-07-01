@@ -89,9 +89,13 @@ from ufa.fnf_video import (
     find_friday_night_frisbee_games,
     find_youtube_url_for_game,
     is_youtube_url,
+    load_fnf_clock_anchors,
     load_fnf_game_schedule,
     load_fnf_point_anchors,
+    load_fnf_possession_anchors,
+    add_possession_video_seconds,
     write_fnf_video_browser_html,
+    write_fnf_index_html,
 )
 
 __all__ = [
@@ -171,7 +175,11 @@ __all__ = [
     "find_friday_night_frisbee_games",
     "find_youtube_url_for_game",
     "is_youtube_url",
+    "load_fnf_clock_anchors",
     "load_fnf_game_schedule",
     "load_fnf_point_anchors",
+    "load_fnf_possession_anchors",
+    "add_possession_video_seconds",
     "write_fnf_video_browser_html",
+    "write_fnf_index_html",
 ]
