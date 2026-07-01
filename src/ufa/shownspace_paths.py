@@ -859,6 +859,219 @@ def summarize_team_playstyles(
     return table[requested + remaining]
 
 
+def _format_playstyle_metric(value, digits=1, percent=False):
+    if value is None or pd.isna(value):
+        return "-"
+    if percent:
+        return f"{float(value):.{digits}%}"
+    return f"{float(value):.{digits}f}"
+
+
+def _shorten_text(value, max_length=96):
+    text = "" if value is None or pd.isna(value) else str(value)
+    if len(text) <= max_length:
+        return text
+    return f"{text[: max_length - 1]}..."
+
+
+def render_team_playstyle_report(
+    team_playstyle,
+    team_playstyle_table=None,
+    title="Team playstyle report",
+):
+    """Return browser-style HTML for one-team and comparison playstyle summaries."""
+    row = (
+        team_playstyle.to_dict()
+        if hasattr(team_playstyle, "to_dict")
+        else dict(team_playstyle)
+    )
+    team_name = _team_name(row.get("team_id"))
+    possessions = int(row.get("possessions", 0) or 0)
+    summary = escape(str(row.get("playstyle_summary", "")))
+
+    metric_rows = [
+        ("Possessions", f"{possessions:,}"),
+        ("Primary shapes", escape(str(row.get("primary_shapes", "-")))),
+        ("Attack spaces", escape(str(row.get("attack_spaces", "-")))),
+        ("Pace", escape(str(row.get("pace_style", "-")))),
+        ("Width", escape(str(row.get("field_width_style", "-")))),
+        ("Hucks", escape(str(row.get("huck_usage", "-")))),
+        ("Resets", escape(str(row.get("reset_usage", "-")))),
+        ("Efficiency", escape(str(row.get("efficiency_note", "-")))),
+        ("Avg throws", _format_playstyle_metric(row.get("avg_throws"))),
+        ("Avg width", _format_playstyle_metric(row.get("avg_width"))),
+        ("Side switches", _format_playstyle_metric(row.get("avg_side_switches"))),
+        ("Directness", _format_playstyle_metric(row.get("avg_directness"), percent=True)),
+        ("Middle usage", _format_playstyle_metric(row.get("avg_middle_usage"), percent=True)),
+        ("Sideline usage", _format_playstyle_metric(row.get("avg_sideline_usage"), percent=True)),
+        ("Avg hucks", _format_playstyle_metric(row.get("avg_hucks"))),
+        ("Avg resets", _format_playstyle_metric(row.get("avg_resets"))),
+        ("aEC / throw", _format_playstyle_metric(row.get("avg_aec_per_throw"), digits=3)),
+        ("Avg CP", _format_playstyle_metric(row.get("avg_cp"), percent=True)),
+    ]
+
+    metric_html = "".join(
+        "<div class='ufa-playstyle-row'>"
+        f"<span>{label}</span><b>{value}</b>"
+        "</div>"
+        for label, value in metric_rows
+    )
+
+    comparison_html = ""
+    if team_playstyle_table is not None and not pd.DataFrame(team_playstyle_table).empty:
+        table = pd.DataFrame(team_playstyle_table).copy()
+        table_rows = []
+        for _, table_row in table.iterrows():
+            table_rows.append(
+                "<tr>"
+                f"<td>{escape(_team_name(table_row.get('team_id')))}</td>"
+                f"<td>{int(table_row.get('possessions', 0) or 0):,}</td>"
+                f"<td>{escape(_shorten_text(table_row.get('primary_shapes'), 90))}</td>"
+                f"<td>{escape(_shorten_text(table_row.get('attack_spaces'), 75))}</td>"
+                f"<td>{escape(str(table_row.get('pace_style', '-')))}</td>"
+                f"<td>{escape(str(table_row.get('field_width_style', '-')))}</td>"
+                f"<td>{_format_playstyle_metric(table_row.get('avg_aec_per_throw'), digits=3)}</td>"
+                f"<td>{_format_playstyle_metric(table_row.get('avg_directness'), percent=True)}</td>"
+                f"<td>{_format_playstyle_metric(table_row.get('avg_middle_usage'), percent=True)}</td>"
+                "</tr>"
+            )
+
+        comparison_html = f"""
+        <div class="ufa-playstyle-panel ufa-playstyle-comparison">
+          <h3>Team comparison</h3>
+          <div class="ufa-playstyle-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Team</th><th>N</th><th>Primary shapes</th>
+                  <th>Attack spaces</th><th>Pace</th><th>Width</th>
+                  <th>aEC/T</th><th>Dir</th><th>Mid</th>
+                </tr>
+              </thead>
+              <tbody>{''.join(table_rows)}</tbody>
+            </table>
+          </div>
+        </div>
+        """
+
+    return f"""
+    <div class="ufa-playstyle-browser">
+      <style>
+        .ufa-playstyle-browser {{
+          color: #0b1a33;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          max-width: 1180px;
+        }}
+        .ufa-playstyle-browser h2 {{
+          margin: 0 0 12px;
+          color: #223a5e;
+          font-size: 22px;
+        }}
+        .ufa-playstyle-layout {{
+          display: grid;
+          grid-template-columns: minmax(320px, 420px) minmax(520px, 1fr);
+          gap: 18px;
+          align-items: start;
+        }}
+        .ufa-playstyle-panel {{
+          border: 1px solid #d9e1ea;
+          background: #fbfdff;
+          border-radius: 4px;
+          padding: 14px;
+          box-sizing: border-box;
+        }}
+        .ufa-playstyle-panel h3 {{
+          margin: 0 0 8px;
+          color: #0b1a33;
+          font-size: 18px;
+        }}
+        .ufa-playstyle-summary {{
+          color: #263a58;
+          line-height: 1.45;
+          margin: 8px 0 12px;
+        }}
+        .ufa-playstyle-metrics {{
+          border-top: 1px solid #d9e1ea;
+          padding-top: 8px;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+          font-size: 12px;
+        }}
+        .ufa-playstyle-row {{
+          display: flex;
+          justify-content: space-between;
+          gap: 18px;
+          border-bottom: 1px solid #edf1f5;
+          padding: 4px 0;
+        }}
+        .ufa-playstyle-row span {{ color: #637188; }}
+        .ufa-playstyle-row b {{ text-align: right; }}
+        .ufa-playstyle-comparison {{
+          overflow: hidden;
+        }}
+        .ufa-playstyle-table-wrap {{
+          overflow-x: auto;
+          max-height: 520px;
+        }}
+        .ufa-playstyle-comparison table {{
+          border-collapse: collapse;
+          min-width: 920px;
+          width: 100%;
+          font-size: 12px;
+        }}
+        .ufa-playstyle-comparison th {{
+          position: sticky;
+          top: 0;
+          background: #e9eef5;
+          color: #223a5e;
+          text-align: left;
+          padding: 7px 8px;
+          border-bottom: 1px solid #d9e1ea;
+        }}
+        .ufa-playstyle-comparison td {{
+          padding: 7px 8px;
+          border-bottom: 1px solid #edf1f5;
+          vertical-align: top;
+        }}
+        .ufa-playstyle-comparison tr:nth-child(even) td {{
+          background: #f6f9fc;
+        }}
+      </style>
+      <h2>{escape(str(title))}</h2>
+      <div class="ufa-playstyle-layout">
+        <div class="ufa-playstyle-panel">
+          <h3>{escape(team_name)} scoring profile</h3>
+          <div class="ufa-playstyle-summary">{summary}</div>
+          <div class="ufa-playstyle-metrics">{metric_html}</div>
+        </div>
+        {comparison_html}
+      </div>
+    </div>
+    """
+
+
+def create_team_playstyle_report_browser(
+    team_playstyle,
+    team_playstyle_table=None,
+    title="Team playstyle report",
+):
+    """Create a notebook HTML widget for rule-based team playstyle summaries."""
+    try:
+        import ipywidgets as widgets
+    except ImportError as exc:
+        raise ImportError(
+            "ipywidgets is required for create_team_playstyle_report_browser. "
+            "Install it with `pip install ipywidgets` and restart the notebook kernel."
+        ) from exc
+
+    return widgets.HTML(
+        render_team_playstyle_report(
+            team_playstyle,
+            team_playstyle_table=team_playstyle_table,
+            title=title,
+        )
+    )
+
+
 def select_top_paths(possessions, paths, metric="aec_per_throw", n=5, ascending=False):
     """Return real possession paths ranked by a possession-level metric."""
     if possessions.empty:
