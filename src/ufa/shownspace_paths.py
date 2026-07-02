@@ -1245,72 +1245,72 @@ def _cluster_average(group, column):
 def _cluster_primary_style(group):
     avg_hucks = _cluster_average(group, "huck_count")
     avg_resets = _cluster_average(group, "reset_count")
-    avg_throws = _cluster_average(group, "throw_count")
-    cluster_size = len(group)
+    avg_side_switches = _cluster_average(group, "shape_side_switches")
 
     if pd.notna(avg_hucks) and avg_hucks >= 0.5:
-        return "huck"
+        return "huck-heavy"
     if pd.notna(avg_resets) and avg_resets >= 3:
         return "reset-heavy"
-    if pd.notna(avg_throws) and avg_throws <= 3:
-        return "quick strike"
-    if pd.notna(avg_throws) and avg_throws >= 10:
-        return "methodical"
-    if cluster_size <= 5:
-        return "outlier"
-    return "mixed"
+    if pd.notna(avg_side_switches) and avg_side_switches >= 3:
+        return "switch-heavy"
+    return "balanced"
 
 
-def _cluster_geometry_descriptors(group):
+def _cluster_field_usage(group):
     width = _cluster_average(group, "shape_width")
-    directness = _cluster_average(group, "shape_directness")
-    side_switches = _cluster_average(group, "shape_side_switches")
     middle_usage = _cluster_average(group, "shape_middle_third_share")
     sideline_usage = _cluster_average(group, "shape_sideline_share")
 
-    lane_descriptor = None
+    if pd.notna(width) and width >= 34:
+        return "full-width"
     if pd.notna(middle_usage) and middle_usage >= 0.55:
-        lane_descriptor = "middle-lane"
-    elif pd.notna(sideline_usage) and sideline_usage >= 0.25:
-        lane_descriptor = "sideline"
+        return "middle"
+    if pd.notna(sideline_usage) and sideline_usage >= 0.25:
+        return "sideline"
+    return None
 
-    movement_descriptor = None
-    if pd.notna(width):
-        if width <= 18:
-            movement_descriptor = "narrow"
-        elif width >= 34:
-            movement_descriptor = "wide"
 
-    if pd.notna(side_switches) and side_switches >= 3:
-        movement_descriptor = (
-            f"{movement_descriptor}/switch-heavy"
-            if movement_descriptor
-            else "switch-heavy"
-        )
-
-    directness_descriptor = None
+def _cluster_route_shape(group):
+    directness = _cluster_average(group, "shape_directness")
     if pd.notna(directness):
         if directness >= 0.75:
-            directness_descriptor = "direct"
+            return "direct"
         elif directness <= 0.50:
-            directness_descriptor = "winding"
+            return "circuitous"
+    return "neutral"
 
+
+def _cluster_progress_quality(group):
+    avg_throws = _cluster_average(group, "throw_count")
+    avg_yards_per_throw = _cluster_average(group, "yards_per_throw")
+    if (
+        pd.notna(avg_throws)
+        and pd.notna(avg_yards_per_throw)
+        and avg_throws >= 6
+        and avg_yards_per_throw <= 5
+    ):
+        return "low-progress"
+    return "flowing"
+
+
+def _cluster_shape_components(group):
     descriptors = []
-    if lane_descriptor is not None:
-        descriptors.append(lane_descriptor)
-    if movement_descriptor is not None:
-        descriptors.append(movement_descriptor)
-    if directness_descriptor is not None:
-        descriptors.append(directness_descriptor)
-    return descriptors[:2]
+    primary_style = _cluster_primary_style(group)
+    if primary_style:
+        descriptors.append(primary_style)
+    field_usage = _cluster_field_usage(group)
+    if field_usage:
+        descriptors.append(field_usage)
+    descriptors.append(_cluster_route_shape(group))
+    descriptors.append(_cluster_progress_quality(group))
+    return descriptors
 
 
 def _describe_shape_cluster(cluster, group):
     cluster_id = int(cluster)
-    primary_style = _cluster_primary_style(group)
-    descriptors = _cluster_geometry_descriptors(group)
-    descriptor_text = f", {'/'.join(descriptors)}" if descriptors else ""
-    return f"Shape {cluster_id}: {primary_style}{descriptor_text}"
+    descriptors = _cluster_shape_components(group)
+    descriptor_text = " | ".join(descriptors)
+    return f"Shape {cluster_id}: {descriptor_text}"
 
 
 def _describe_single_possession_shape(possession):
@@ -1326,31 +1326,57 @@ def _describe_single_possession_shape(possession):
     hucks = pd.to_numeric(pd.Series([possession.get("huck_count")]), errors="coerce").iloc[0]
     resets = pd.to_numeric(pd.Series([possession.get("reset_count")]), errors="coerce").iloc[0]
     throws = pd.to_numeric(pd.Series([possession.get("throw_count")]), errors="coerce").iloc[0]
+    middle_usage = pd.to_numeric(
+        pd.Series([possession.get("shape_middle_third_share")]),
+        errors="coerce",
+    ).iloc[0]
+    sideline_usage = pd.to_numeric(
+        pd.Series([possession.get("shape_sideline_share")]),
+        errors="coerce",
+    ).iloc[0]
+    yards_per_throw = pd.to_numeric(
+        pd.Series([possession.get("yards_per_throw")]),
+        errors="coerce",
+    ).iloc[0]
 
     tags = []
     if pd.notna(hucks) and hucks >= 1:
-        tags.append("huck")
+        tags.append("huck-heavy")
     elif pd.notna(resets) and resets >= 3:
         tags.append("reset-heavy")
-    elif pd.notna(throws) and throws <= 3:
-        tags.append("quick strike")
-    elif pd.notna(throws) and throws >= 10:
-        tags.append("methodical")
-
-    if pd.notna(width):
-        if width <= 18:
-            tags.append("narrow")
-        elif width >= 34:
-            tags.append("wide")
-    if pd.notna(side_switches) and side_switches >= 3:
+    elif pd.notna(side_switches) and side_switches >= 3:
         tags.append("switch-heavy")
+    else:
+        tags.append("balanced")
+
+    if pd.notna(width) and width >= 34:
+        tags.append("full-width")
+    elif pd.notna(middle_usage) and middle_usage >= 0.55:
+        tags.append("middle")
+    elif pd.notna(sideline_usage) and sideline_usage >= 0.25:
+        tags.append("sideline")
+
     if pd.notna(directness):
         if directness >= 0.75:
             tags.append("direct")
         elif directness <= 0.50:
-            tags.append("winding")
+            tags.append("circuitous")
+        else:
+            tags.append("neutral")
+    else:
+        tags.append("neutral")
 
-    return ", ".join(tags) if tags else "mixed"
+    if (
+        pd.notna(throws)
+        and pd.notna(yards_per_throw)
+        and throws >= 6
+        and yards_per_throw <= 5
+    ):
+        tags.append("low-progress")
+    else:
+        tags.append("flowing")
+
+    return " | ".join(tags)
 
 
 def _add_browser_shape_cluster_labels(possessions):
@@ -1503,7 +1529,7 @@ def render_shape_cluster_overview(possessions, selected_shape="all"):
           width used, side switches, middle/sideline usage, directness, red-zone entry,
           hucks, resets, and yardage style.
           Shape names describe the group average, so individual possessions inside a
-          group can still look wider, narrower, cleaner, or messier than the label.
+          group can still look more central, wider, cleaner, or messier than the label.
         </p>
         <div class="scroll">
           <table>
@@ -1519,19 +1545,18 @@ def render_shape_cluster_overview(possessions, selected_shape="all"):
         </div>
         <div class="guide">
           <b>Shape names:</b>
-          huck = average at least 0.5 hucks per possession;
+          huck-heavy = average at least 0.5 hucks per possession;
           reset-heavy = average at least 3 resets;
-          quick strike = average 3 or fewer throws;
-          methodical = average 10 or more throws;
-          mixed = no single simple style dominates;
-          outlier = a small mixed group that does not fit a common style cleanly.
-          narrow = average width used is 18 yards or less;
-          wide = 34 yards or more;
-          switch-heavy = average at least 3 side switches;
+          switch-heavy = average at least 3 side switches when hucks/resets do not dominate;
+          balanced = no huck/reset/switch profile dominates;
+          full-width = average width used is 34 yards or more;
+          middle = at least 55% of touch points are in the middle third;
+          sideline = at least 25% are near either sideline;
           direct = directness is 75% or higher;
-          winding = directness is 50% or lower;
-          middle-lane = at least 55% of touch points are in the middle third;
-          sideline = at least 25% are near either sideline.
+          circuitous = directness is 50% or lower;
+          neutral = neither direct nor circuitous;
+          low-progress = average at least 6 throws and 5 or fewer net yards per throw;
+          flowing = not low-progress.
         </div>
         <div class="guide">
           <b>Columns:</b>
@@ -2298,13 +2323,13 @@ def _style_color(label, index):
         return "#b74126"
     if "reset" in label_lower:
         return "#164e87"
-    if "quick" in label_lower:
+    if "switch" in label_lower:
         return "#7a3db8"
-    if "methodical" in label_lower:
+    if "circuitous" in label_lower:
         return "#2f7d32"
-    if "outlier" in label_lower:
+    if "low-progress" in label_lower:
         return "#6b7280"
-    if "mixed" in label_lower:
+    if "balanced" in label_lower:
         return "#d97706"
     colors = ["#b74126", "#164e87", "#7a3db8", "#2f7d32", "#d97706", "#0f766e"]
     return colors[index % len(colors)]
