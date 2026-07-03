@@ -104,6 +104,52 @@ def _possession_line_type(frame):
     return "o_line" if is_o_line else "d_line"
 
 
+def _truthy_value(value):
+    if pd.isna(value):
+        return False
+    if isinstance(value, str):
+        return value.strip().lower() in {"true", "1", "yes", "y"}
+    return bool(value)
+
+
+def _has_text_value(value):
+    if pd.isna(value):
+        return False
+    return bool(str(value).strip())
+
+
+def _throw_receiver_value(throw):
+    for column in ["Receiver", "receiver", "receiver_id"]:
+        if column in throw:
+            return throw.get(column)
+    return None
+
+
+def _is_turnover_throw(throw):
+    if "turnover" in throw:
+        return _truthy_value(throw.get("turnover"))
+    if "Turnover" in throw:
+        return _truthy_value(throw.get("Turnover"))
+
+    receiver = _throw_receiver_value(throw)
+    return not _has_text_value(receiver)
+
+
+def _possession_outcome(path):
+    if path.empty:
+        return "unknown"
+
+    final_throw = path.iloc[-1]
+    if _is_turnover_throw(final_throw):
+        return "turnover"
+
+    final_y = pd.to_numeric(pd.Series([final_throw.get("ReceiverY")]), errors="coerce").iloc[0]
+    if pd.notna(final_y) and final_y > ENDZONE_HIGH_Y:
+        return "goal"
+
+    return "unknown"
+
+
 def _path_points(path):
     path = path.sort_values("possession_throw")
     if path.empty:
@@ -340,11 +386,40 @@ def add_possession_shape_features(possessions, paths, checkpoints=None):
     return enriched
 
 
-def build_scoring_possessions(throws, team_id=None):
+def build_possessions(throws, team_id=None, outcomes=None):
+    """Build possession-level rows and paths from Shown Space throw data.
+
+    Parameters
+    ----------
+    throws:
+        Throw-level Shown Space data.
+    team_id:
+        Optional offensive team id filter.
+    outcomes:
+        Optional iterable of outcomes to keep. Supported labels are
+        ``goal``, ``turnover``, and ``unknown``. ``None`` keeps all outcomes.
+    """
     if throws.empty:
         return pd.DataFrame(), []
 
+    outcome_filter = None
+    if outcomes is not None:
+        outcome_filter = {str(outcome).lower() for outcome in outcomes}
+
     throws = throws.copy()
+    for receiver_column, turnover_candidates in {
+        "ReceiverX": ["TurnoverX", "turnoverX", "turnover_x"],
+        "ReceiverY": ["TurnoverY", "turnoverY", "turnover_y"],
+    }.items():
+        if receiver_column not in throws:
+            continue
+        for turnover_column in turnover_candidates:
+            if turnover_column in throws:
+                throws[receiver_column] = throws[receiver_column].fillna(
+                    throws[turnover_column]
+                )
+                break
+
     throws = throws.dropna(
         subset=["ThrowerX", "ThrowerY", "ReceiverX", "ReceiverY", "possession_throw"]
     )
@@ -360,8 +435,8 @@ def build_scoring_possessions(throws, team_id=None):
     paths = []
     for key, group in throws.groupby(group_columns, dropna=False):
         path = group.sort_values("possession_throw").copy()
-        final_throw = path.iloc[-1]
-        if not bool(final_throw.get("ReceiverY", 0) > ENDZONE_HIGH_Y):
+        outcome = _possession_outcome(path)
+        if outcome_filter is not None and outcome not in outcome_filter:
             continue
 
         offense_team = _offense_team_id(path)
@@ -393,6 +468,9 @@ def build_scoring_possessions(throws, team_id=None):
                 "possession_num": key[3],
                 "is_home_team": key[4],
                 "line_type": line_type,
+                "outcome": outcome,
+                "is_goal": outcome == "goal",
+                "is_turnover": outcome == "turnover",
                 "start_x": start_x,
                 "start_y": start_y,
                 "end_x": end_x,
@@ -418,10 +496,15 @@ def build_scoring_possessions(throws, team_id=None):
         path["possession_id"] = possession_id
         path["team_id"] = offense_team
         path["line_type"] = line_type
+        path["outcome"] = outcome
         paths.append(path)
 
     possessions = pd.DataFrame(possession_rows)
     return possessions, paths
+
+
+def build_scoring_possessions(throws, team_id=None):
+    return build_possessions(throws, team_id=team_id, outcomes=("goal",))
 
 
 def add_possession_style_labels(possessions):
@@ -1498,9 +1581,38 @@ def render_shape_cluster_overview(possessions, selected_shape="all"):
         .ufa-shape-overview .guide b {{
           color: #223a5e;
         }}
+        .ufa-shape-overview .guide-title {{
+          margin: 8px 0 4px;
+          color: #223a5e;
+          font-weight: 700;
+        }}
+        .ufa-shape-overview .guide-grid {{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px 12px;
+          margin-top: 6px;
+        }}
+        .ufa-shape-overview .guide-section {{
+          padding: 6px 7px;
+          border: 1px solid #edf1f5;
+          border-radius: 4px;
+          background: #ffffff;
+        }}
+        .ufa-shape-overview .guide-section h5 {{
+          margin: 0 0 4px;
+          color: #223a5e;
+          font-size: 11px;
+        }}
+        .ufa-shape-overview .guide ul {{
+          margin: 0;
+          padding-left: 15px;
+        }}
+        .ufa-shape-overview .guide li {{
+          margin: 2px 0;
+        }}
         .ufa-shape-overview .scroll {{
-          max-height: 180px;
-          overflow: auto;
+          overflow-x: auto;
+          overflow-y: visible;
           border-top: 1px solid #edf1f5;
           margin-top: 6px;
         }}
@@ -1544,32 +1656,60 @@ def render_shape_cluster_overview(possessions, selected_shape="all"):
           </table>
         </div>
         <div class="guide">
-          <b>Shape names:</b>
-          huck-heavy = average at least 0.5 hucks per possession;
-          reset-heavy = average at least 3 resets;
-          switch-heavy = average at least 3 side switches when hucks/resets do not dominate;
-          balanced = no huck/reset/switch profile dominates;
-          full-width = average width used is 34 yards or more;
-          middle = at least 55% of touch points are in the middle third;
-          sideline = at least 25% are near either sideline;
-          direct = directness is 75% or higher;
-          circuitous = directness is 50% or lower;
-          neutral = neither direct nor circuitous;
-          low-progress = average at least 6 throws and 5 or fewer net yards per throw;
-          flowing = not low-progress.
+          <div class="guide-title">Column guide</div>
+          <ul>
+            <li><b>N:</b> number of possessions in the shape group</li>
+            <li><b>Thr:</b> average throws per possession</li>
+            <li><b>Width:</b> average field width used</li>
+            <li><b>Sw:</b> average side switches</li>
+            <li><b>Dir:</b> directness</li>
+            <li><b>Mid:</b> middle-third usage</li>
+            <li><b>Side:</b> sideline usage</li>
+            <li><b>Hu:</b> average hucks</li>
+            <li><b>Re:</b> average resets</li>
+            <li><b>aEC/T:</b> average aEC per throw</li>
+          </ul>
         </div>
         <div class="guide">
-          <b>Columns:</b>
-          N = possessions;
-          Thr = average throws;
-          Width = average field width used;
-          Sw = average side switches;
-          Dir = directness;
-          Mid = middle-third usage;
-          Side = sideline usage;
-          Hu = average hucks;
-          Re = average resets;
-          aEC/T = average aEC per throw.
+          <div class="guide-title">How to read shape names</div>
+          <p>
+            Each label summarizes the average possession in that group using throw
+            profile, field area, route shape, and progress quality.
+          </p>
+          <div class="guide-grid">
+            <div class="guide-section">
+              <h5>Throw profile</h5>
+              <ul>
+                <li><b>huck-heavy:</b> uses hucks often</li>
+                <li><b>reset-heavy:</b> uses several resets</li>
+                <li><b>switch-heavy:</b> changes sides often</li>
+                <li><b>balanced:</b> no throw pattern dominates</li>
+              </ul>
+            </div>
+            <div class="guide-section">
+              <h5>Field area</h5>
+              <ul>
+                <li><b>middle:</b> attacks the middle third often</li>
+                <li><b>sideline:</b> works near the sideline often</li>
+                <li><b>full-width:</b> uses a large amount of field width</li>
+              </ul>
+            </div>
+            <div class="guide-section">
+              <h5>Route shape</h5>
+              <ul>
+                <li><b>direct:</b> moves upfield efficiently</li>
+                <li><b>neutral:</b> neither clearly direct nor circuitous</li>
+                <li><b>circuitous:</b> takes a less direct route upfield</li>
+              </ul>
+            </div>
+            <div class="guide-section">
+              <h5>Progress quality</h5>
+              <ul>
+                <li><b>flowing:</b> keeps gaining useful yardage</li>
+                <li><b>low-progress:</b> uses several throws without much net gain</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </details>
     </div>
@@ -1774,6 +1914,7 @@ def render_possession_browser_summary(possession, path):
     team_id = escape(str(possession.get("team_id", "-")).title())
     side = "Home" if bool(possession.get("is_home_team", False)) else "Away"
     line_type = escape(_line_type_label(possession.get("line_type")))
+    outcome = escape(str(possession.get("outcome", "unknown")).title())
     quarter = possession.get("game_quarter", "-")
     quarter_point = possession.get("quarter_point", "-")
     possession_num = possession.get("possession_num", "-")
@@ -1834,7 +1975,7 @@ def render_possession_browser_summary(possession, path):
       </style>
       <h3>{team_id}</h3>
       <div>{game_id}</div>
-      <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side} - {line_type}</div>
+      <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side} - {line_type} - {outcome}</div>
       <div>Group: {shape_label}</div>
       <div>This possession: {possession_shape_label}</div>
       <div class="meta">
@@ -1861,7 +2002,7 @@ def render_possession_browser_summary(possession, path):
 def create_scoring_possession_browser(
     possessions,
     paths,
-    title="Scoring possessions",
+    title="Possessions",
     n_shape_clusters=6,
 ):
     """Create an ipywidgets browser for Shown Space-style possession SVGs."""
@@ -1874,7 +2015,7 @@ def create_scoring_possession_browser(
         ) from exc
 
     if possessions.empty:
-        return widgets.HTML("<b>No scoring possessions available.</b>")
+        return widgets.HTML("<b>No possessions available.</b>")
 
     lookup = _browser_path_lookup(paths)
     base_possessions = _sort_browser_possessions(possessions)
@@ -1909,14 +2050,39 @@ def create_scoring_possession_browser(
     line_filter = widgets.Dropdown(
         options=[
             ("All lines", "all"),
-            ("O-line scores", "o_line"),
-            ("D-line scores", "d_line"),
+            ("O-line possessions", "o_line"),
+            ("D-line possessions", "d_line"),
         ],
         value="all",
         description="Line",
         layout=widgets.Layout(width="430px"),
         style={"description_width": "85px"},
     )
+    outcome_options = [("All outcomes", "all")]
+    if "outcome" in base_possessions:
+        outcome_counts = (
+            base_possessions["outcome"]
+            .fillna("unknown")
+            .astype(str)
+            .str.lower()
+            .value_counts()
+        )
+        for outcome_name in ["goal", "turnover", "unknown"]:
+            if outcome_name in outcome_counts:
+                outcome_options.append(
+                    (
+                        f"{outcome_name.title()} ({int(outcome_counts[outcome_name])})",
+                        outcome_name,
+                    )
+                )
+    outcome_filter = widgets.Dropdown(
+        options=outcome_options,
+        value="all",
+        description="Outcome",
+        layout=widgets.Layout(width="430px"),
+        style={"description_width": "85px"},
+    )
+
     def make_shape_options(frame):
         shape_options = [("All shapes", "all")]
         if "path_cluster" not in frame or frame.empty:
@@ -1977,6 +2143,7 @@ def create_scoring_possession_browser(
         for index, row in frame.iterrows():
             label = (
                 f"{index + 1}. {_line_type_label(row.get('line_type'))} | "
+                f"{str(row.get('outcome', 'unknown')).title()} | "
                 f"{_shape_cluster_label(row)} | "
                 f"{row['GameID']} | Q{row['game_quarter']} "
                 f"P{row['quarter_point']} | poss {row['possession_num']} | "
@@ -1989,7 +2156,7 @@ def create_scoring_possession_browser(
         browser_possessions = state["possessions"]
         if index is None or browser_possessions.empty:
             count_label.value = "<b>0</b> of <b>0</b>"
-            summary_html.value = "<b>No scoring possessions match these filters.</b>"
+            summary_html.value = "<b>No possessions match these filters.</b>"
             field_html.value = ""
             return
 
@@ -2001,6 +2168,7 @@ def create_scoring_possession_browser(
 
     def apply_filters(_=None):
         selected_line = line_filter.value
+        selected_outcome = outcome_filter.value
         min_throw_count, max_throw_count = throw_count_filter.value
         if selected_line == "all":
             filtered = base_possessions.copy()
@@ -2008,6 +2176,16 @@ def create_scoring_possession_browser(
             filtered = base_possessions[
                 base_possessions["line_type"].eq(selected_line)
             ].reset_index(drop=True)
+
+        if selected_outcome != "all" and "outcome" in filtered:
+            filtered = filtered[
+                filtered["outcome"]
+                .fillna("unknown")
+                .astype(str)
+                .str.lower()
+                .eq(selected_outcome)
+            ].reset_index(drop=True)
+
         throw_counts = pd.to_numeric(filtered["throw_count"], errors="coerce")
         filtered = filtered[
             throw_counts.ge(min_throw_count) & throw_counts.le(max_throw_count)
@@ -2061,6 +2239,7 @@ def create_scoring_possession_browser(
 
     dropdown.observe(on_dropdown_change, names="value")
     line_filter.observe(apply_filters, names="value")
+    outcome_filter.observe(apply_filters, names="value")
     shape_filter.observe(apply_filters, names="value")
     throw_count_filter.observe(apply_filters, names="value")
     previous_button.on_click(on_previous)
@@ -2071,6 +2250,7 @@ def create_scoring_possession_browser(
         [
             header,
             line_filter,
+            outcome_filter,
             shape_filter,
             shape_overview_html,
             throw_count_filter,
@@ -2091,6 +2271,7 @@ def create_team_scoring_possession_browser(
     default_team_id="glory",
     final_only=True,
     max_games=None,
+    outcomes=("goal", "turnover"),
     pull_receive_scores_only=False,
     long_field_only=False,
     max_start_y=45,
@@ -2158,7 +2339,11 @@ def create_team_scoring_possession_browser(
                 selected_games["GameID"].tolist(),
                 delay=delay,
             )
-            possessions, paths = build_scoring_possessions(throws, team_id=team_id)
+            possessions, paths = build_possessions(
+                throws,
+                team_id=team_id,
+                outcomes=outcomes,
+            )
 
         if not possessions.empty and pull_receive_scores_only:
             possessions = possessions[possessions["possession_num"].eq(1)].copy()
@@ -2188,7 +2373,12 @@ def create_team_scoring_possession_browser(
             output.clear_output(wait=True)
         try:
             selected_games, possessions, paths = _filtered_team_data(team_id)
-            title = f"{team_id.title()} scoring possessions, {season}"
+            if set(outcomes or []) == {"goal"}:
+                title = f"{team_id.title()} scoring possessions, {season}"
+                possession_word = "scoring possessions"
+            else:
+                title = f"{team_id.title()} offensive possessions, {season}"
+                possession_word = "possessions"
             browser = create_scoring_possession_browser(
                 possessions,
                 paths,
@@ -2197,7 +2387,7 @@ def create_team_scoring_possession_browser(
             )
             status.value = (
                 f"<b>{escape(team_id.title())}</b>: "
-                f"{len(possessions):,} scoring possessions from "
+                f"{len(possessions):,} {possession_word} from "
                 f"{len(selected_games):,} games"
             )
             with output:
