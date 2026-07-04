@@ -1831,7 +1831,11 @@ def render_shownspace_possession_svg(path, width=260, height=560):
 
     css = """
     <style>
-      .ufa-browser-svg { background: #f7faf7; display: block; }
+      .ufa-browser-svg {
+        background: #f5f8f5;
+        display: block;
+        border-radius: 4px;
+      }
       .ufa-field { fill: #86d973; stroke: #071019; stroke-width: 2.2; }
       .ufa-yard-line { stroke: #071019; stroke-width: 1.6; }
       .ufa-center-dot { fill: #071019; stroke: none; }
@@ -1845,18 +1849,23 @@ def render_shownspace_possession_svg(path, width=260, height=560):
       .ufa-browser-field-wrap {
         display: flex;
         align-items: flex-start;
-        gap: 12px;
+        gap: 18px;
+        border: 1px solid #d9e1ea;
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+        padding: 16px;
       }
       .ufa-browser-field-wrap:focus {
-        outline: 2px solid #91a7c2;
+        outline: 2px solid #9fc0e8;
         outline-offset: 4px;
       }
       .ufa-throw-detail {
         box-sizing: border-box;
-        width: 205px;
+        width: 220px;
         min-height: 150px;
         border-left: 1px solid #d8e0e8;
-        padding: 8px 0 8px 12px;
+        padding: 10px 0 8px 16px;
         color: #0b1a33;
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
         font-size: 12px;
@@ -1876,14 +1885,15 @@ def render_shownspace_possession_svg(path, width=260, height=560):
       .ufa-detail-title {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         font-weight: 800;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
+        color: #10233f;
       }
       .ufa-detail-row {
         display: flex;
         justify-content: space-between;
         gap: 10px;
         border-bottom: 1px solid #edf1f5;
-        padding: 3px 0;
+        padding: 5px 0;
       }
       .ufa-detail-row span { color: #637188; }
     </style>
@@ -1914,7 +1924,9 @@ def render_possession_browser_summary(possession, path):
     team_id = escape(str(possession.get("team_id", "-")).title())
     side = "Home" if bool(possession.get("is_home_team", False)) else "Away"
     line_type = escape(_line_type_label(possession.get("line_type")))
-    outcome = escape(str(possession.get("outcome", "unknown")).title())
+    outcome_raw = str(possession.get("outcome", "unknown")).lower()
+    outcome = escape(outcome_raw.title())
+    outcome_class = f"outcome-{escape(outcome_raw)}"
     quarter = possession.get("game_quarter", "-")
     quarter_point = possession.get("quarter_point", "-")
     possession_num = possession.get("possession_num", "-")
@@ -1947,37 +1959,79 @@ def render_possession_browser_summary(possession, path):
       <style>
         .ufa-browser-summary {{
           color: #0b1a33;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
           font-size: 13px;
           line-height: 1.45;
-          width: 315px;
+          width: 100%;
         }}
         .ufa-browser-summary h3 {{
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-          font-size: 18px;
-          margin: 0 0 8px;
+          font-size: 20px;
+          margin: 0 0 6px;
           color: #0b1a33;
+          letter-spacing: 0;
+        }}
+        .ufa-browser-summary .summary-subtitle {{
+          color: #52637a;
+          font-size: 12px;
+          margin-bottom: 8px;
+        }}
+        .ufa-browser-summary .chips {{
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          margin: 8px 0;
+        }}
+        .ufa-browser-summary .chip {{
+          display: inline-flex;
+          align-items: center;
+          border: 1px solid #d9e1ea;
+          border-radius: 999px;
+          padding: 2px 8px;
+          background: #f7fafc;
+          color: #253b58;
+          font-size: 11px;
+          font-weight: 700;
+        }}
+        .ufa-browser-summary .outcome-goal {{
+          border-color: #b9dfc6;
+          background: #ecf8f0;
+          color: #196236;
+        }}
+        .ufa-browser-summary .outcome-turnover {{
+          border-color: #f1c2b8;
+          background: #fff1ee;
+          color: #a33b27;
+        }}
+        .ufa-browser-summary .shape-line {{
+          margin: 6px 0;
+          color: #263c58;
+          font-size: 12px;
         }}
         .ufa-browser-summary .meta {{
           border-top: 1px solid #d9e1ea;
-          margin-top: 10px;
-          padding-top: 10px;
+          margin-top: 12px;
+          padding-top: 8px;
         }}
         .ufa-browser-summary .row {{
           display: flex;
           justify-content: space-between;
           gap: 16px;
           border-bottom: 1px solid #edf1f5;
-          padding: 3px 0;
+          padding: 5px 0;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
         }}
         .ufa-browser-summary .label {{ color: #637188; }}
         .ufa-browser-summary .value {{ font-weight: 700; text-align: right; }}
       </style>
       <h3>{team_id}</h3>
-      <div>{game_id}</div>
-      <div>Q{quarter} - point {quarter_point} - possession {possession_num} - {side} - {line_type} - {outcome}</div>
-      <div>Group: {shape_label}</div>
-      <div>This possession: {possession_shape_label}</div>
+      <div class="summary-subtitle">{game_id} - Q{quarter}, point {quarter_point}, possession {possession_num}</div>
+      <div class="chips">
+        <span class="chip {outcome_class}">{outcome}</span>
+        <span class="chip">{side}</span>
+        <span class="chip">{line_type}</span>
+      </div>
+      <div class="shape-line"><b>Group:</b> {shape_label}</div>
+      <div class="shape-line"><b>This possession:</b> {possession_shape_label}</div>
       <div class="meta">
         <div class="row"><span class="label">Throws</span><span class="value">{throw_count}</span></div>
         <div class="row"><span class="label">Start Y</span><span class="value">{start_y}</span></div>
@@ -1996,6 +2050,85 @@ def render_possession_browser_summary(possession, path):
         <div class="row"><span class="label">Sideline usage</span><span class="value">{sideline_usage}</span></div>
       </div>
     </div>
+    """
+
+
+def _possession_browser_css():
+    return """
+    <style>
+      .ufa-possession-browser-shell {
+        box-sizing: border-box;
+        max-width: 1220px;
+        border: 1px solid #d8e1eb;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #f8fbff 0%, #f3f6fa 100%);
+        box-shadow: 0 18px 44px rgba(15, 23, 42, 0.10);
+        padding: 14px;
+      }
+      .ufa-browser-controls {
+        box-sizing: border-box;
+        border: 1px solid #d8e1eb;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        padding: 16px;
+      }
+      .ufa-browser-title {
+        margin-bottom: 10px;
+        color: #10233f;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .ufa-browser-title .kicker {
+        color: #667792;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .ufa-browser-title h2 {
+        margin: 2px 0 2px;
+        color: #10233f;
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+      .ufa-browser-title .subtitle {
+        color: #5a6b82;
+        font-size: 13px;
+      }
+      .ufa-possession-browser-shell .widget-label {
+        color: #42526a;
+        font-weight: 700;
+      }
+      .ufa-possession-browser-shell select,
+      .ufa-possession-browser-shell input {
+        border-color: #cbd6e2;
+        border-radius: 6px;
+      }
+      .ufa-browser-nav {
+        align-items: center;
+        margin: 2px 0 8px;
+      }
+      .ufa-browser-nav .widget-button {
+        border-radius: 6px;
+      }
+      .ufa-browser-count {
+        color: #10233f;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      }
+      .ufa-browser-field-panel {
+        min-width: 540px;
+      }
+      .ufa-browser-status {
+        color: #30435f;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 6px 0 10px;
+      }
+      .ufa-team-browser-controls {
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+    </style>
     """
 
 
@@ -2044,8 +2177,28 @@ def create_scoring_possession_browser(
         base_possessions = add_possession_style_labels(base_possessions)
     base_possessions = _add_browser_shape_cluster_labels(base_possessions)
 
+    outcome_counts = (
+        base_possessions.get("outcome", pd.Series("unknown", index=base_possessions.index))
+        .fillna("unknown")
+        .astype(str)
+        .str.lower()
+        .value_counts()
+    )
+    total_count = len(base_possessions)
+    goal_count = int(outcome_counts.get("goal", 0))
+    turnover_count = int(outcome_counts.get("turnover", 0))
     header = widgets.HTML(
-        f"<h2 style='margin:0 0 8px;color:#223a5e;font-family:system-ui'>{escape(title)}</h2>"
+        f"""
+        <div class="ufa-browser-title">
+          <div class="kicker">Possession Browser</div>
+          <h2>{escape(title)}</h2>
+          <div class="subtitle">
+            {total_count:,} possessions analyzed
+            &middot; {goal_count:,} goals
+            &middot; {turnover_count:,} turnovers
+          </div>
+        </div>
+        """
     )
     line_filter = widgets.Dropdown(
         options=[
@@ -2130,9 +2283,18 @@ def create_scoring_possession_browser(
         layout=widgets.Layout(width="430px"),
         style={"description_width": "85px"},
     )
-    previous_button = widgets.Button(description="Previous", layout=widgets.Layout(width="95px"))
-    next_button = widgets.Button(description="Next", layout=widgets.Layout(width="95px"))
+    previous_button = widgets.Button(
+        description="Previous",
+        icon="chevron-left",
+        layout=widgets.Layout(width="112px"),
+    )
+    next_button = widgets.Button(
+        description="Next",
+        icon="chevron-right",
+        layout=widgets.Layout(width="112px"),
+    )
     count_label = widgets.HTML()
+    count_label.add_class("ufa-browser-count")
     summary_html = widgets.HTML()
     shape_overview_html = widgets.HTML()
     field_html = widgets.HTML()
@@ -2246,6 +2408,8 @@ def create_scoring_possession_browser(
     next_button.on_click(on_next)
     apply_filters()
 
+    nav = widgets.HBox([previous_button, next_button, count_label])
+    nav.add_class("ufa-browser-nav")
     controls = widgets.VBox(
         [
             header,
@@ -2255,15 +2419,20 @@ def create_scoring_possession_browser(
             shape_overview_html,
             throw_count_filter,
             dropdown,
-            widgets.HBox([previous_button, next_button, count_label]),
+            nav,
             summary_html,
         ],
-        layout=widgets.Layout(width="450px"),
+        layout=widgets.Layout(width="470px"),
     )
-    return widgets.HBox(
-        [controls, field_html],
+    controls.add_class("ufa-browser-controls")
+    field_panel = widgets.Box([field_html], layout=widgets.Layout(min_width="560px"))
+    field_panel.add_class("ufa-browser-field-panel")
+    shell = widgets.HBox(
+        [controls, field_panel],
         layout=widgets.Layout(align_items="flex-start", gap="18px"),
     )
+    shell.add_class("ufa-possession-browser-shell")
+    return widgets.VBox([widgets.HTML(_possession_browser_css()), shell])
 
 
 def create_team_scoring_possession_browser(
@@ -2312,6 +2481,7 @@ def create_team_scoring_possession_browser(
     )
     load_button = widgets.Button(
         description="Load team",
+        icon="search",
         button_style="primary",
         layout=widgets.Layout(width="110px"),
     )
@@ -2401,8 +2571,10 @@ def create_team_scoring_possession_browser(
 
     load_button.on_click(_on_load)
     controls = widgets.HBox([team_dropdown, load_button])
+    controls.add_class("ufa-team-browser-controls")
+    status.add_class("ufa-browser-status")
     _render_team(team_dropdown.value)
-    return widgets.VBox([controls, status, output])
+    return widgets.VBox([widgets.HTML(_possession_browser_css()), controls, status, output])
 
 
 def _add_path_arrows(fig, points, color, every=1, opacity=0.85):
