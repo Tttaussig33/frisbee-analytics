@@ -2058,7 +2058,7 @@ def _possession_browser_css():
     <style>
       .ufa-possession-browser-shell {
         box-sizing: border-box;
-        max-width: 1220px;
+        max-width: 1480px;
         border: 1px solid #d8e1eb;
         border-radius: 12px;
         background: linear-gradient(180deg, #f8fbff 0%, #f3f6fa 100%);
@@ -2117,6 +2117,19 @@ def _possession_browser_css():
       }
       .ufa-browser-field-panel {
         min-width: 540px;
+      }
+      .ufa-browser-main-panel {
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .ufa-browser-info-panel {
+        box-sizing: border-box;
+        width: 340px;
+        border: 1px solid #d8e1eb;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        padding: 16px;
       }
       .ufa-browser-status {
         color: #30435f;
@@ -2420,15 +2433,21 @@ def create_scoring_possession_browser(
             throw_count_filter,
             dropdown,
             nav,
-            summary_html,
         ],
-        layout=widgets.Layout(width="470px"),
+        layout=widgets.Layout(width="455px"),
     )
     controls.add_class("ufa-browser-controls")
     field_panel = widgets.Box([field_html], layout=widgets.Layout(min_width="560px"))
     field_panel.add_class("ufa-browser-field-panel")
+    summary_panel = widgets.Box([summary_html])
+    summary_panel.add_class("ufa-browser-info-panel")
+    main_panel = widgets.HBox(
+        [field_panel, summary_panel],
+        layout=widgets.Layout(align_items="flex-start", gap="16px"),
+    )
+    main_panel.add_class("ufa-browser-main-panel")
     shell = widgets.HBox(
-        [controls, field_panel],
+        [controls, main_panel],
         layout=widgets.Layout(align_items="flex-start", gap="18px"),
     )
     shell.add_class("ufa-possession-browser-shell")
