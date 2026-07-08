@@ -2289,6 +2289,17 @@ def create_scoring_possession_browser(
         layout=widgets.Layout(width="430px"),
         style={"description_width": "85px"},
     )
+    order_filter = widgets.Dropdown(
+        options=[
+            ("Game order", "game_order"),
+            ("aEC / throw, high to low", "aec_per_throw_desc"),
+            ("aEC / throw, low to high", "aec_per_throw_asc"),
+        ],
+        value="game_order",
+        description="Order",
+        layout=widgets.Layout(width="430px"),
+        style={"description_width": "85px"},
+    )
     dropdown = widgets.Dropdown(
         options=[],
         value=None,
@@ -2316,16 +2327,53 @@ def create_scoring_possession_browser(
     def make_options(frame):
         options = []
         for index, row in frame.iterrows():
+            aec_per_throw = _format_browser_number(row.get("aec_per_throw"), digits=3)
             label = (
                 f"{index + 1}. {_line_type_label(row.get('line_type'))} | "
                 f"{str(row.get('outcome', 'unknown')).title()} | "
                 f"{_shape_cluster_label(row)} | "
                 f"{row['GameID']} | Q{row['game_quarter']} "
                 f"P{row['quarter_point']} | poss {row['possession_num']} | "
-                f"{int(row['throw_count'])} throws"
+                f"{int(row['throw_count'])} throws | aEC/T {aec_per_throw}"
             )
             options.append((label, index))
         return options
+
+    def order_possessions(frame):
+        if frame.empty:
+            return frame
+
+        order_value = order_filter.value
+        if order_value == "game_order":
+            return _sort_browser_possessions(frame).reset_index(drop=True)
+
+        ordered = frame.copy()
+        ordered["_aec_per_throw_sort"] = pd.to_numeric(
+            ordered.get("aec_per_throw"),
+            errors="coerce",
+        )
+        ascending = order_value == "aec_per_throw_asc"
+        tie_breakers = [
+            column
+            for column in [
+                "GameID",
+                "game_quarter",
+                "quarter_point",
+                "possession_num",
+            ]
+            if column in ordered
+        ]
+        sort_columns = ["_aec_per_throw_sort", *tie_breakers]
+        ascending_values = [ascending, *([True] * len(tie_breakers))]
+        return (
+            ordered.sort_values(
+                sort_columns,
+                ascending=ascending_values,
+                na_position="last",
+            )
+            .drop(columns=["_aec_per_throw_sort"])
+            .reset_index(drop=True)
+        )
 
     def update(index):
         browser_possessions = state["possessions"]
@@ -2386,6 +2434,8 @@ def create_scoring_possession_browser(
                 filtered["path_cluster"].eq(selected_shape)
             ].reset_index(drop=True)
 
+        filtered = order_possessions(filtered)
+
         state["possessions"] = filtered
         if filtered.empty:
             dropdown.options = [("No possessions for this filter", None)]
@@ -2417,6 +2467,7 @@ def create_scoring_possession_browser(
     outcome_filter.observe(apply_filters, names="value")
     shape_filter.observe(apply_filters, names="value")
     throw_count_filter.observe(apply_filters, names="value")
+    order_filter.observe(apply_filters, names="value")
     previous_button.on_click(on_previous)
     next_button.on_click(on_next)
     apply_filters()
@@ -2431,6 +2482,7 @@ def create_scoring_possession_browser(
             shape_filter,
             shape_overview_html,
             throw_count_filter,
+            order_filter,
             dropdown,
             nav,
         ],
