@@ -1919,6 +1919,232 @@ def render_shownspace_possession_svg(path, width=260, height=560):
     )
 
 
+def render_mini_possession_svg(path, width=108, height=230):
+    """Return a compact static field SVG for gallery-style possession scans."""
+    path = path.sort_values("possession_throw").copy()
+    field_width = width - 18
+    field_height = height - 18
+    left = (width - field_width) / 2
+    top = 9
+
+    def sx(value):
+        value = float(value)
+        scale = (value - FIELD_X_MIN) / (FIELD_X_MAX - FIELD_X_MIN)
+        return left + scale * field_width
+
+    def sy(value):
+        value = float(value)
+        scale = (FIELD_Y_MAX - value) / (FIELD_Y_MAX - FIELD_Y_MIN)
+        return top + scale * field_height
+
+    shapes = [
+        f'<rect class="ufa-mini-field" x="{left:.2f}" y="{top:.2f}" '
+        f'width="{field_width:.2f}" height="{field_height:.2f}" />'
+    ]
+    for y_value in [ENDZONE_LOW_Y, ENDZONE_HIGH_Y]:
+        shapes.append(
+            f'<line class="ufa-mini-yard-line" x1="{left:.2f}" y1="{sy(y_value):.2f}" '
+            f'x2="{left + field_width:.2f}" y2="{sy(y_value):.2f}" />'
+        )
+    for y_value in [40, 80]:
+        shapes.append(
+            f'<circle class="ufa-mini-center-dot" cx="{sx(0):.2f}" '
+            f'cy="{sy(y_value):.2f}" r="1.7" />'
+        )
+
+    throw_shapes = []
+    for _, throw in path.iterrows():
+        x1 = sx(throw["ThrowerX"])
+        y1 = sy(throw["ThrowerY"])
+        x2 = sx(throw["ReceiverX"])
+        y2 = sy(throw["ReceiverY"])
+        throw_shapes.append(
+            f'<line class="ufa-mini-throw-line" x1="{x1:.2f}" y1="{y1:.2f}" '
+            f'x2="{x2:.2f}" y2="{y2:.2f}" />'
+            f'<circle class="ufa-mini-dot" cx="{x1:.2f}" cy="{y1:.2f}" r="1.9" />'
+            f'<circle class="ufa-mini-dot" cx="{x2:.2f}" cy="{y2:.2f}" r="2.1" />'
+        )
+
+    return (
+        f'<svg class="ufa-mini-svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" role="img">'
+        f"{''.join(shapes)}{''.join(throw_shapes)}</svg>"
+    )
+
+
+def render_possession_shape_gallery(
+    possessions,
+    path_lookup,
+    max_shapes=6,
+    max_per_shape=4,
+):
+    """Render a grouped mini-field gallery for comparing possession shapes."""
+    if possessions.empty:
+        return """
+        <div class="ufa-shape-gallery">
+          <div class="empty">No possessions match these filters.</div>
+        </div>
+        """
+
+    label_column = (
+        "shape_cluster_label"
+        if "shape_cluster_label" in possessions
+        else "style"
+        if "style" in possessions
+        else None
+    )
+    if label_column is None:
+        possessions = possessions.copy()
+        possessions["shape_gallery_label"] = "All possessions"
+        label_column = "shape_gallery_label"
+
+    groups = (
+        possessions.groupby(label_column, dropna=False)
+        .size()
+        .sort_values(ascending=False)
+        .head(max_shapes)
+    )
+
+    sections = []
+    for shape_label, count in groups.items():
+        group = possessions[possessions[label_column].eq(shape_label)].head(max_per_shape)
+        cards = []
+        for _, row in group.iterrows():
+            path = path_lookup.get(row["possession_id"])
+            if path is None or path.empty:
+                continue
+            aec_per_throw = _format_browser_number(row.get("aec_per_throw"), digits=3)
+            total_aec = _format_browser_number(row.get("total_aec"), digits=3)
+            outcome = escape(str(row.get("outcome", "unknown")).title())
+            line_type = escape(_line_type_label(row.get("line_type")))
+            meta = (
+                f"{escape(str(row.get('GameID', '-')))} | "
+                f"Q{row.get('game_quarter', '-')} P{row.get('quarter_point', '-')} | "
+                f"{int(row.get('throw_count', len(path)))} throws"
+            )
+            cards.append(
+                f"""
+                <div class="ufa-gallery-card">
+                  {render_mini_possession_svg(path)}
+                  <div class="ufa-gallery-card-meta">
+                    <b>{outcome}</b> <span>{line_type}</span>
+                    <div>{escape(meta)}</div>
+                    <div>aEC/T <b>{aec_per_throw}</b> &middot; total <b>{total_aec}</b></div>
+                  </div>
+                </div>
+                """
+            )
+        if not cards:
+            continue
+        sections.append(
+            f"""
+            <section class="ufa-gallery-section">
+              <div class="ufa-gallery-section-title">
+                <h3>{escape(str(shape_label))}</h3>
+                <span>{len(cards)} shown of {int(count)}</span>
+              </div>
+              <div class="ufa-gallery-grid">{''.join(cards)}</div>
+            </section>
+            """
+        )
+
+    return f"""
+    <div class="ufa-shape-gallery">
+      <div class="ufa-gallery-kicker">Shape Gallery</div>
+      {''.join(sections)}
+    </div>
+    """
+
+
+def render_possession_free_board(possessions, path_lookup, max_cards=24):
+    """Render a draggable board of mini possession cards."""
+    if possessions.empty:
+        return """
+        <div class="ufa-free-board-wrap">
+          <div class="empty">No possessions match these filters.</div>
+        </div>
+        """
+
+    frame = possessions.head(max_cards).copy()
+    board_key = hashlib.sha1(
+        "|".join(frame["possession_id"].astype(str).tolist()).encode("utf-8")
+    ).hexdigest()[:12]
+    board_id = f"ufa-free-board-{board_key}"
+
+    cards = []
+    for card_index, (_, row) in enumerate(frame.iterrows(), start=1):
+        path = path_lookup.get(row["possession_id"])
+        if path is None or path.empty:
+            continue
+
+        card_id = f"{board_id}-card-{card_index}"
+        aec_per_throw = _format_browser_number(row.get("aec_per_throw"), digits=3)
+        total_aec = _format_browser_number(row.get("total_aec"), digits=3)
+        outcome = escape(str(row.get("outcome", "unknown")).title())
+        line_type = escape(_line_type_label(row.get("line_type")))
+        shape_label = escape(_shape_cluster_label(row))
+        meta = (
+            f"{escape(str(row.get('GameID', '-')))} | "
+            f"Q{row.get('game_quarter', '-')} P{row.get('quarter_point', '-')} | "
+            f"{int(row.get('throw_count', len(path)))} throws"
+        )
+        drag_start = (
+            "event.dataTransfer.setData('text/plain', this.id);"
+            "event.dataTransfer.effectAllowed = 'move';"
+            "this.classList.add('dragging');"
+        )
+        drag_end = "this.classList.remove('dragging');"
+        drag_over = "event.preventDefault(); this.classList.add('drop-target');"
+        drag_leave = "this.classList.remove('drop-target');"
+        drop = (
+            "event.preventDefault();"
+            "this.classList.remove('drop-target');"
+            f"const board = document.getElementById({json.dumps(board_id)});"
+            "const dragged = document.getElementById("
+            "event.dataTransfer.getData('text/plain')"
+            ");"
+            "if (!board || !dragged || dragged === this) { return; }"
+            "const cards = Array.from(board.querySelectorAll('.ufa-free-card'));"
+            "const fromIndex = cards.indexOf(dragged);"
+            "const toIndex = cards.indexOf(this);"
+            "if (fromIndex < 0 || toIndex < 0) { return; }"
+            "if (fromIndex < toIndex) { this.after(dragged); }"
+            "else { this.before(dragged); }"
+        )
+        cards.append(
+            f"""
+            <div id="{card_id}" class="ufa-free-card" draggable="true"
+              ondragstart="{escape(drag_start, quote=True)}"
+              ondragend="{escape(drag_end, quote=True)}"
+              ondragover="{escape(drag_over, quote=True)}"
+              ondragleave="{escape(drag_leave, quote=True)}"
+              ondrop="{escape(drop, quote=True)}">
+              {render_mini_possession_svg(path)}
+              <div class="ufa-free-card-meta">
+                <div><b>{outcome}</b> <span>{line_type}</span></div>
+                <div>{escape(meta)}</div>
+                <div>aEC/T <b>{aec_per_throw}</b> &middot; total <b>{total_aec}</b></div>
+                <div class="shape">{shape_label}</div>
+              </div>
+            </div>
+            """
+        )
+
+    shown_count = len(cards)
+    return f"""
+    <div class="ufa-free-board-wrap">
+      <div class="ufa-gallery-kicker">Free Arrange</div>
+      <div class="ufa-free-board-meta">
+        {shown_count} cards shown of {len(possessions)} filtered possessions
+      </div>
+      <div id="{board_id}" class="ufa-free-board"
+        ondragover="event.preventDefault();">
+        {''.join(cards)}
+      </div>
+    </div>
+    """
+
+
 def render_possession_browser_summary(possession, path):
     game_id = escape(str(possession.get("GameID", "-")))
     team_id = escape(str(possession.get("team_id", "-")).title())
@@ -2118,6 +2344,9 @@ def _possession_browser_css():
       .ufa-browser-field-panel {
         min-width: 540px;
       }
+      .ufa-browser-field-panel.gallery {
+        min-width: 900px;
+      }
       .ufa-browser-main-panel {
         align-items: flex-start;
         gap: 16px;
@@ -2140,6 +2369,163 @@ def _possession_browser_css():
         align-items: center;
         gap: 10px;
         margin-bottom: 6px;
+      }
+      .ufa-shape-gallery {
+        box-sizing: border-box;
+        border: 1px solid #d8e1eb;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+        padding: 16px;
+        width: 100%;
+        max-width: 900px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #10233f;
+      }
+      .ufa-gallery-kicker {
+        color: #667792;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .ufa-gallery-section {
+        border-top: 1px solid #edf1f5;
+        padding-top: 12px;
+        margin-top: 12px;
+      }
+      .ufa-gallery-section:first-of-type {
+        border-top: none;
+        padding-top: 0;
+      }
+      .ufa-gallery-section-title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 8px;
+      }
+      .ufa-gallery-section-title h3 {
+        margin: 0;
+        font-size: 14px;
+        color: #10233f;
+      }
+      .ufa-gallery-section-title span {
+        color: #667792;
+        font-size: 12px;
+      }
+      .ufa-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .ufa-gallery-card {
+        min-width: 0;
+        border: 1px solid #dfe7ef;
+        border-radius: 8px;
+        background: #f8fbff;
+        padding: 8px;
+      }
+      .ufa-mini-svg {
+        display: block;
+        margin: 0 auto 6px;
+        background: #f5f8f5;
+        border-radius: 4px;
+      }
+      .ufa-mini-field {
+        fill: #86d973;
+        stroke: #071019;
+        stroke-width: 1.8;
+      }
+      .ufa-mini-yard-line {
+        stroke: #071019;
+        stroke-width: 1.2;
+      }
+      .ufa-mini-center-dot,
+      .ufa-mini-dot {
+        fill: #071019;
+      }
+      .ufa-mini-throw-line {
+        stroke: #071019;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+      }
+      .ufa-gallery-card-meta {
+        color: #40516a;
+        font-size: 11px;
+        line-height: 1.35;
+      }
+      .ufa-gallery-card-meta b {
+        color: #10233f;
+      }
+      .ufa-gallery-card-meta span {
+        color: #667792;
+      }
+      .ufa-shape-gallery .empty {
+        color: #667792;
+        padding: 16px;
+      }
+      .ufa-free-board-wrap {
+        box-sizing: border-box;
+        border: 1px solid #d8e1eb;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+        padding: 16px;
+        width: 100%;
+        max-width: 900px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #10233f;
+      }
+      .ufa-free-board-meta {
+        color: #667792;
+        font-size: 12px;
+        margin: -4px 0 12px;
+      }
+      .ufa-free-board {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        align-items: start;
+      }
+      .ufa-free-card {
+        min-width: 0;
+        border: 1px solid #dfe7ef;
+        border-radius: 8px;
+        background: #f8fbff;
+        padding: 8px;
+        cursor: grab;
+        transition: box-shadow 120ms ease, transform 120ms ease, border-color 120ms ease;
+      }
+      .ufa-free-card:active {
+        cursor: grabbing;
+      }
+      .ufa-free-card.dragging {
+        opacity: 0.55;
+        transform: scale(0.98);
+      }
+      .ufa-free-card.drop-target {
+        border-color: #2b8ce6;
+        box-shadow: 0 0 0 3px rgba(43, 140, 230, 0.16);
+      }
+      .ufa-free-card-meta {
+        color: #40516a;
+        font-size: 11px;
+        line-height: 1.35;
+      }
+      .ufa-free-card-meta b {
+        color: #10233f;
+      }
+      .ufa-free-card-meta span,
+      .ufa-free-card-meta .shape {
+        color: #667792;
+      }
+      .ufa-free-card-meta .shape {
+        margin-top: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     </style>
     """
@@ -2212,6 +2598,17 @@ def create_scoring_possession_browser(
           </div>
         </div>
         """
+    )
+    view_filter = widgets.Dropdown(
+        options=[
+            ("Single possession", "single"),
+            ("Shape gallery", "shape_gallery"),
+            ("Free arrange board", "free_board"),
+        ],
+        value="single",
+        description="View",
+        layout=widgets.Layout(width="430px"),
+        style={"description_width": "85px"},
     )
     line_filter = widgets.Dropdown(
         options=[
@@ -2383,6 +2780,36 @@ def create_scoring_possession_browser(
             field_html.value = ""
             return
 
+        if view_filter.value == "shape_gallery":
+            count_label.value = f"<b>{len(browser_possessions)}</b> filtered"
+            summary_html.value = ""
+            summary_panel.layout.display = "none"
+            field_panel.add_class("gallery")
+            gallery_max_shapes = 1 if shape_filter.value != "all" else 6
+            gallery_max_per_shape = 12 if shape_filter.value != "all" else 4
+            field_html.value = render_possession_shape_gallery(
+                browser_possessions,
+                lookup,
+                max_shapes=gallery_max_shapes,
+                max_per_shape=gallery_max_per_shape,
+            )
+            return
+
+        if view_filter.value == "free_board":
+            count_label.value = f"<b>{len(browser_possessions)}</b> filtered"
+            summary_html.value = ""
+            summary_panel.layout.display = "none"
+            field_panel.add_class("gallery")
+            field_html.value = render_possession_free_board(
+                browser_possessions,
+                lookup,
+                max_cards=24,
+            )
+            return
+
+        summary_panel.layout.display = None
+        field_panel.remove_class("gallery")
+
         row = browser_possessions.iloc[index]
         path = lookup[row["possession_id"]]
         count_label.value = f"<b>{index + 1}</b> of <b>{len(browser_possessions)}</b>"
@@ -2468,15 +2895,16 @@ def create_scoring_possession_browser(
     shape_filter.observe(apply_filters, names="value")
     throw_count_filter.observe(apply_filters, names="value")
     order_filter.observe(apply_filters, names="value")
+    view_filter.observe(apply_filters, names="value")
     previous_button.on_click(on_previous)
     next_button.on_click(on_next)
-    apply_filters()
 
     nav = widgets.HBox([previous_button, next_button, count_label])
     nav.add_class("ufa-browser-nav")
     controls = widgets.VBox(
         [
             header,
+            view_filter,
             line_filter,
             outcome_filter,
             shape_filter,
@@ -2503,6 +2931,7 @@ def create_scoring_possession_browser(
         layout=widgets.Layout(align_items="flex-start", gap="18px"),
     )
     shell.add_class("ufa-possession-browser-shell")
+    apply_filters()
     return widgets.VBox([widgets.HTML(_possession_browser_css()), shell])
 
 
