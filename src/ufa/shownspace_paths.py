@@ -1972,6 +1972,153 @@ def render_mini_possession_svg(path, width=108, height=230):
     )
 
 
+def render_possession_overlay_group(
+    path,
+    color="#c3482b",
+    width=260,
+    height=560,
+    group_id=None,
+    hidden=False,
+    anchor_x=0,
+    normalize_shape=False,
+    target_y_low=18,
+    target_y_high=104,
+    max_scale=4,
+):
+    """Return only the throw layers for overlaying one possession on a shared field."""
+    path = path.sort_values("possession_throw").copy()
+    field_width = width - 34
+    field_height = height - 34
+    left = (width - field_width) / 2
+    top = 17
+
+    def sx(value):
+        value = float(value)
+        scale = (value - FIELD_X_MIN) / (FIELD_X_MAX - FIELD_X_MIN)
+        return left + scale * field_width
+
+    def sy(value):
+        value = float(value)
+        scale = (FIELD_Y_MAX - value) / (FIELD_Y_MAX - FIELD_Y_MIN)
+        return top + scale * field_height
+
+    shape_scale = 1
+    x_offset = 0
+    y_offset = 0
+    x_values = pd.Series(dtype="float64")
+    y_values = pd.Series(dtype="float64")
+    if not path.empty:
+        x_values = pd.concat(
+            [
+                pd.to_numeric(path["ThrowerX"], errors="coerce"),
+                pd.to_numeric(path["ReceiverX"], errors="coerce"),
+            ],
+            ignore_index=True,
+        ).dropna()
+        y_values = pd.concat(
+            [
+                pd.to_numeric(path["ThrowerY"], errors="coerce"),
+                pd.to_numeric(path["ReceiverY"], errors="coerce"),
+            ],
+            ignore_index=True,
+        ).dropna()
+
+    if normalize_shape and not x_values.empty and not y_values.empty:
+        x_min = float(x_values.min())
+        x_max = float(x_values.max())
+        y_min = float(y_values.min())
+        y_max = float(y_values.max())
+        x_span = max(x_max - x_min, 1)
+        y_span = max(y_max - y_min, 1)
+        target_y_span = max(target_y_high - target_y_low, 1)
+        shape_scale = min(max_scale, target_y_span / y_span)
+        if x_span * shape_scale > (FIELD_X_MAX - FIELD_X_MIN) * 0.84:
+            shape_scale = ((FIELD_X_MAX - FIELD_X_MIN) * 0.84) / x_span
+        scaled_x_mid = ((x_min + x_max) / 2) * shape_scale
+        scaled_y_mid = ((y_min + y_max) / 2) * shape_scale
+        target_y_mid = (target_y_low + target_y_high) / 2
+        x_offset = anchor_x - scaled_x_mid
+        y_offset = target_y_mid - scaled_y_mid
+    elif not x_values.empty and not y_values.empty:
+        x_offset = 0
+        y_offset = 0
+
+    def overlay_x(value):
+        value = float(value)
+        if not normalize_shape:
+            return value
+        return value * shape_scale + x_offset
+
+    def overlay_y(value):
+        value = float(value)
+        if not normalize_shape:
+            return value
+        return value * shape_scale + y_offset
+
+    throw_shapes = []
+    for _, throw in path.iterrows():
+        x1 = sx(overlay_x(throw["ThrowerX"]))
+        y1 = sy(overlay_y(throw["ThrowerY"]))
+        x2 = sx(overlay_x(throw["ReceiverX"]))
+        y2 = sy(overlay_y(throw["ReceiverY"]))
+        throw_shapes.append(
+            f'<line class="ufa-overlay-throw-line" x1="{x1:.2f}" y1="{y1:.2f}" '
+            f'x2="{x2:.2f}" y2="{y2:.2f}" />'
+            f'<circle class="ufa-overlay-dot" cx="{x1:.2f}" cy="{y1:.2f}" r="2.0" />'
+            f'<circle class="ufa-overlay-dot" cx="{x2:.2f}" cy="{y2:.2f}" r="2.2" />'
+        )
+
+    group_attrs = 'class="ufa-overlay-path"'
+    if group_id is not None:
+        group_attrs += f' id="{escape(str(group_id), quote=True)}"'
+    display_style = "display: none; " if hidden else ""
+    group_attrs += (
+        f' style="{display_style}--overlay-color: {escape(color, quote=True)};"'
+    )
+    return f"<g {group_attrs}>{''.join(throw_shapes)}</g>"
+
+
+def render_empty_overlay_field(layer_id, width=260, height=560, overlay_groups=""):
+    """Return a shared field SVG whose layer group can be filled by selected cards."""
+    field_width = width - 34
+    field_height = height - 34
+    left = (width - field_width) / 2
+    top = 17
+
+    def sx(value):
+        value = float(value)
+        scale = (value - FIELD_X_MIN) / (FIELD_X_MAX - FIELD_X_MIN)
+        return left + scale * field_width
+
+    def sy(value):
+        value = float(value)
+        scale = (FIELD_Y_MAX - value) / (FIELD_Y_MAX - FIELD_Y_MIN)
+        return top + scale * field_height
+
+    shapes = [
+        f'<rect class="ufa-mini-field" x="{left:.2f}" y="{top:.2f}" '
+        f'width="{field_width:.2f}" height="{field_height:.2f}" />'
+    ]
+    for y_value in [ENDZONE_LOW_Y, ENDZONE_HIGH_Y]:
+        shapes.append(
+            f'<line class="ufa-mini-yard-line" x1="{left:.2f}" y1="{sy(y_value):.2f}" '
+            f'x2="{left + field_width:.2f}" y2="{sy(y_value):.2f}" />'
+        )
+    for y_value in [40, 80]:
+        shapes.append(
+            f'<circle class="ufa-mini-center-dot" cx="{sx(0):.2f}" '
+            f'cy="{sy(y_value):.2f}" r="2.5" />'
+        )
+
+    return (
+        f'<svg class="ufa-overlay-svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" role="img">'
+        f"{''.join(shapes)}"
+        f'<g id="{layer_id}" class="ufa-overlay-layers">{overlay_groups}</g>'
+        "</svg>"
+    )
+
+
 def render_possession_shape_gallery(
     possessions,
     path_lookup,
@@ -2070,14 +2217,60 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         "|".join(frame["possession_id"].astype(str).tolist()).encode("utf-8")
     ).hexdigest()[:12]
     board_id = f"ufa-free-board-{board_key}"
+    wrap_id = f"ufa-free-wrap-{board_key}"
+    overlay_layer_id = f"ufa-free-overlay-layer-{board_key}"
+    overlay_count_id = f"ufa-free-overlay-count-{board_key}"
+    overlay_palette = [
+        "#c3482b",
+        "#0d4f94",
+        "#2f7d3b",
+        "#7f3fbf",
+        "#d9891b",
+        "#008c8c",
+        "#b83280",
+        "#57606f",
+    ]
+    overlay_width = 230
+    overlay_height = 496
+    update_overlay = (
+        f"const wrap = document.getElementById({json.dumps(wrap_id)});"
+        f"const count = document.getElementById({json.dumps(overlay_count_id)});"
+        "if (!wrap || !count) { return; }"
+        "wrap.querySelectorAll('.ufa-overlay-path').forEach(function(path) {"
+        "path.style.display = 'none';"
+        "});"
+        "const selected = Array.from(wrap.querySelectorAll('.ufa-free-overlay-check:checked'));"
+        "selected.forEach(function(input) {"
+        "const path = document.getElementById(input.dataset.overlayPath);"
+        "if (path) { path.style.display = ''; }"
+        "});"
+        "count.textContent = selected.length ? selected.length + ' selected' : 'Select cards to overlay';"
+        "wrap.querySelectorAll('.ufa-free-card.overlay-selected').forEach(function(card) {"
+        "card.classList.remove('overlay-selected');"
+        "});"
+        "selected.forEach(function(input) {"
+        "const card = input.closest('.ufa-free-card');"
+        "if (card) { card.classList.add('overlay-selected'); }"
+        "});"
+    )
+    clear_overlay = (
+        f"const clearWrap = document.getElementById({json.dumps(wrap_id)});"
+        "if (!clearWrap) { return; }"
+        "clearWrap.querySelectorAll('.ufa-free-overlay-check').forEach(function(input) {"
+        "input.checked = false;"
+        "});"
+        f"{update_overlay}"
+    )
 
     cards = []
+    overlay_groups = []
     for card_index, (_, row) in enumerate(frame.iterrows(), start=1):
         path = path_lookup.get(row["possession_id"])
         if path is None or path.empty:
             continue
 
         card_id = f"{board_id}-card-{card_index}"
+        overlay_path_id = f"{card_id}-overlay"
         aec_per_throw = _format_browser_number(row.get("aec_per_throw"), digits=3)
         total_aec = _format_browser_number(row.get("total_aec"), digits=3)
         outcome = escape(str(row.get("outcome", "unknown")).title())
@@ -2087,6 +2280,10 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
             f"{escape(str(row.get('GameID', '-')))} | "
             f"Q{row.get('game_quarter', '-')} P{row.get('quarter_point', '-')} | "
             f"{int(row.get('throw_count', len(path)))} throws"
+        )
+        card_title = (
+            f"{outcome} {line_type} - {meta} - "
+            f"aEC/T {aec_per_throw} - total {total_aec} - {shape_label}"
         )
         drag_start = (
             "event.dataTransfer.setData('text/plain', this.id);"
@@ -2111,9 +2308,22 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
             "if (fromIndex < toIndex) { this.after(dragged); }"
             "else { this.before(dragged); }"
         )
+        overlay_color = overlay_palette[(card_index - 1) % len(overlay_palette)]
+        overlay_groups.append(
+            render_possession_overlay_group(
+                path,
+                color=overlay_color,
+                width=overlay_width,
+                height=overlay_height,
+                group_id=overlay_path_id,
+                hidden=True,
+                normalize_shape=False,
+            )
+        )
         cards.append(
             f"""
             <div id="{card_id}" class="ufa-free-card" draggable="true"
+              title="{escape(card_title, quote=True)}"
               ondragstart="{escape(drag_start, quote=True)}"
               ondragend="{escape(drag_end, quote=True)}"
               ondragover="{escape(drag_over, quote=True)}"
@@ -2121,10 +2331,13 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
               ondrop="{escape(drop, quote=True)}">
               {render_mini_possession_svg(path)}
               <div class="ufa-free-card-meta">
-                <div><b>{outcome}</b> <span>{line_type}</span></div>
-                <div>{escape(meta)}</div>
-                <div>aEC/T <b>{aec_per_throw}</b> &middot; total <b>{total_aec}</b></div>
-                <div class="shape">{shape_label}</div>
+                <label class="ufa-free-overlay-toggle"
+                  onclick="event.stopPropagation();">
+                  <input class="ufa-free-overlay-check" type="checkbox"
+                    data-overlay-path="{overlay_path_id}"
+                    onchange="{escape(update_overlay, quote=True)}" />
+                  Overlay
+                </label>
               </div>
             </div>
             """
@@ -2132,14 +2345,38 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
 
     shown_count = len(cards)
     return f"""
-    <div class="ufa-free-board-wrap">
-      <div class="ufa-gallery-kicker">Free Arrange</div>
-      <div class="ufa-free-board-meta">
-        {shown_count} cards shown of {len(possessions)} filtered possessions
-      </div>
-      <div id="{board_id}" class="ufa-free-board"
-        ondragover="event.preventDefault();">
-        {''.join(cards)}
+    <div id="{wrap_id}" class="ufa-free-board-wrap">
+      <div class="ufa-free-board-layout">
+        <div class="ufa-free-board-content">
+          <div class="ufa-gallery-kicker">Free Arrange</div>
+          <div class="ufa-free-board-meta">
+            {shown_count} cards shown of {len(possessions)} filtered possessions
+          </div>
+          <div id="{board_id}" class="ufa-free-board"
+            ondragover="event.preventDefault();">
+            {''.join(cards)}
+          </div>
+        </div>
+        <aside class="ufa-free-overlay-panel">
+          <div class="ufa-gallery-kicker">Selected Overlay</div>
+          <div id="{overlay_count_id}" class="ufa-free-board-meta">
+            Select cards to overlay
+          </div>
+          <div class="ufa-free-overlay-note">
+            Exact field overlay of selected possessions.
+          </div>
+          {render_empty_overlay_field(
+              overlay_layer_id,
+              width=overlay_width,
+              height=overlay_height,
+              overlay_groups=''.join(overlay_groups),
+          )}
+          <button class="ufa-free-overlay-clear"
+            type="button"
+            onclick="{escape(clear_overlay, quote=True)}">
+            Clear overlay
+          </button>
+        </aside>
       </div>
     </div>
     """
@@ -2284,12 +2521,22 @@ def _possession_browser_css():
     <style>
       .ufa-possession-browser-shell {
         box-sizing: border-box;
-        max-width: 1480px;
+        width: 100%;
+        max-width: 1680px;
         border: 1px solid #d8e1eb;
         border-radius: 12px;
         background: linear-gradient(180deg, #f8fbff 0%, #f3f6fa 100%);
         box-shadow: 0 18px 44px rgba(15, 23, 42, 0.10);
         padding: 14px;
+      }
+      .ufa-browser-topbar {
+        box-sizing: border-box;
+        max-width: 1680px;
+        margin: 0 0 8px;
+        justify-content: flex-start;
+      }
+      .ufa-browser-topbar .widget-button {
+        border-radius: 6px;
       }
       .ufa-browser-controls {
         box-sizing: border-box;
@@ -2343,13 +2590,23 @@ def _possession_browser_css():
       }
       .ufa-browser-field-panel {
         min-width: 540px;
+        width: 100%;
+        flex: 1 1 auto;
       }
       .ufa-browser-field-panel.gallery {
         min-width: 900px;
+        width: 100%;
+        flex: 1 1 auto;
+      }
+      .ufa-browser-field-panel .widget-html,
+      .ufa-browser-field-panel .widget-html-content {
+        width: 100%;
       }
       .ufa-browser-main-panel {
         align-items: flex-start;
         gap: 16px;
+        flex: 1 1 auto;
+        min-width: 0;
       }
       .ufa-browser-info-panel {
         box-sizing: border-box;
@@ -2378,7 +2635,7 @@ def _possession_browser_css():
         box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
         padding: 16px;
         width: 100%;
-        max-width: 900px;
+        max-width: 1280px;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         color: #10233f;
       }
@@ -2417,7 +2674,7 @@ def _possession_browser_css():
       }
       .ufa-gallery-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
         gap: 10px;
       }
       .ufa-gallery-card {
@@ -2474,7 +2731,7 @@ def _possession_browser_css():
         box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
         padding: 16px;
         width: 100%;
-        max-width: 900px;
+        max-width: none;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         color: #10233f;
       }
@@ -2483,18 +2740,29 @@ def _possession_browser_css():
         font-size: 12px;
         margin: -4px 0 12px;
       }
+      .ufa-free-board-layout {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        width: 100%;
+      }
+      .ufa-free-board-content {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
       .ufa-free-board {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fill, 126px);
         gap: 10px;
         align-items: start;
+        justify-content: start;
       }
       .ufa-free-card {
         min-width: 0;
         border: 1px solid #dfe7ef;
         border-radius: 8px;
         background: #f8fbff;
-        padding: 8px;
+        padding: 7px;
         cursor: grab;
         transition: box-shadow 120ms ease, transform 120ms ease, border-color 120ms ease;
       }
@@ -2509,10 +2777,15 @@ def _possession_browser_css():
         border-color: #2b8ce6;
         box-shadow: 0 0 0 3px rgba(43, 140, 230, 0.16);
       }
+      .ufa-free-card.overlay-selected {
+        border-color: #c3482b;
+        box-shadow: 0 0 0 3px rgba(195, 72, 43, 0.14);
+      }
       .ufa-free-card-meta {
         color: #40516a;
         font-size: 11px;
         line-height: 1.35;
+        text-align: center;
       }
       .ufa-free-card-meta b {
         color: #10233f;
@@ -2526,6 +2799,75 @@ def _possession_browser_css():
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+      .ufa-free-overlay-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 4px;
+        color: #10233f;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .ufa-free-overlay-toggle input {
+        margin: 0;
+      }
+      .ufa-free-overlay-panel {
+        box-sizing: border-box;
+        flex: 0 0 270px;
+        border: 1px solid #dfe7ef;
+        border-radius: 8px;
+        background: #f8fbff;
+        padding: 10px;
+        position: sticky;
+        top: 8px;
+      }
+      .ufa-overlay-svg {
+        display: block;
+        margin: 0 auto 10px;
+        background: #f5f8f5;
+        border-radius: 4px;
+      }
+      .ufa-free-overlay-note {
+        color: #52637a;
+        font-size: 11px;
+        line-height: 1.35;
+        margin: -6px 0 10px;
+      }
+      .ufa-overlay-path {
+        opacity: 0.72;
+      }
+      .ufa-overlay-throw-line {
+        stroke: var(--overlay-color);
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        fill: none;
+      }
+      .ufa-overlay-dot {
+        fill: var(--overlay-color);
+        stroke: #071019;
+        stroke-width: 0.9;
+      }
+      .ufa-free-overlay-clear {
+        border: 1px solid #cbd6e2;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #10233f;
+        cursor: pointer;
+        font-weight: 700;
+        padding: 6px 10px;
+        width: 100%;
+      }
+      @media (max-width: 1120px) {
+        .ufa-free-board-layout {
+          flex-direction: column-reverse;
+        }
+        .ufa-free-overlay-panel {
+          position: static;
+          width: 100%;
+          flex-basis: auto;
+        }
       }
     </style>
     """
@@ -2714,11 +3056,17 @@ def create_scoring_possession_browser(
         icon="chevron-right",
         layout=widgets.Layout(width="112px"),
     )
+    menu_toggle_button = widgets.Button(
+        description="Hide menu",
+        icon="columns",
+        layout=widgets.Layout(width="126px"),
+        tooltip="Hide or show the browser controls",
+    )
     count_label = widgets.HTML()
     count_label.add_class("ufa-browser-count")
     summary_html = widgets.HTML()
     shape_overview_html = widgets.HTML()
-    field_html = widgets.HTML()
+    field_html = widgets.HTML(layout=widgets.Layout(width="100%"))
     state = {"possessions": base_possessions}
 
     def make_options(frame):
@@ -2917,22 +3265,50 @@ def create_scoring_possession_browser(
         layout=widgets.Layout(width="455px"),
     )
     controls.add_class("ufa-browser-controls")
-    field_panel = widgets.Box([field_html], layout=widgets.Layout(min_width="560px"))
+    field_panel = widgets.Box(
+        [field_html],
+        layout=widgets.Layout(min_width="560px", width="100%", flex="1 1 auto"),
+    )
     field_panel.add_class("ufa-browser-field-panel")
     summary_panel = widgets.Box([summary_html])
     summary_panel.add_class("ufa-browser-info-panel")
     main_panel = widgets.HBox(
         [field_panel, summary_panel],
-        layout=widgets.Layout(align_items="flex-start", gap="16px"),
+        layout=widgets.Layout(
+            align_items="flex-start",
+            gap="16px",
+            width="100%",
+            flex="1 1 auto",
+            min_width="0",
+        ),
     )
     main_panel.add_class("ufa-browser-main-panel")
     shell = widgets.HBox(
         [controls, main_panel],
-        layout=widgets.Layout(align_items="flex-start", gap="18px"),
+        layout=widgets.Layout(
+            align_items="flex-start",
+            gap="18px",
+            width="100%",
+        ),
     )
     shell.add_class("ufa-possession-browser-shell")
+
+    def on_menu_toggle(_):
+        menu_is_hidden = controls.layout.display == "none"
+        if menu_is_hidden:
+            controls.layout.display = None
+            menu_toggle_button.description = "Hide menu"
+            menu_toggle_button.icon = "columns"
+        else:
+            controls.layout.display = "none"
+            menu_toggle_button.description = "Show menu"
+            menu_toggle_button.icon = "bars"
+
+    menu_toggle_button.on_click(on_menu_toggle)
+    topbar = widgets.HBox([menu_toggle_button])
+    topbar.add_class("ufa-browser-topbar")
     apply_filters()
-    return widgets.VBox([widgets.HTML(_possession_browser_css()), shell])
+    return widgets.VBox([widgets.HTML(_possession_browser_css()), topbar, shell])
 
 
 def create_team_scoring_possession_browser(
