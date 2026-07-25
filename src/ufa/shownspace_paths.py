@@ -2261,6 +2261,90 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         "});"
         f"{update_overlay}"
     )
+    drag_start = (
+        "event.dataTransfer.setData('text/plain', this.id);"
+        "event.dataTransfer.effectAllowed = 'move';"
+        "this.classList.add('dragging');"
+    )
+    drag_end = "this.classList.remove('dragging');"
+    drag_over = "event.preventDefault(); this.classList.add('drop-target');"
+    drag_leave = "this.classList.remove('drop-target');"
+    drop = (
+        "event.preventDefault();"
+        "this.classList.remove('drop-target');"
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        "const dragged = document.getElementById("
+        "event.dataTransfer.getData('text/plain')"
+        ");"
+        "if (!board || !dragged || dragged === this) { return; }"
+        "const items = Array.from(board.querySelectorAll('.ufa-free-board-item'));"
+        "const fromIndex = items.indexOf(dragged);"
+        "const toIndex = items.indexOf(this);"
+        "if (fromIndex < 0 || toIndex < 0) { return; }"
+        "if (fromIndex < toIndex) { this.after(dragged); }"
+        "else { this.before(dragged); }"
+    )
+    select_arrange_target = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        "if (!board) { return; }"
+        "board.querySelectorAll('.arrange-target').forEach(function(item) {"
+        "item.classList.remove('arrange-target');"
+        "});"
+        "this.classList.add('arrange-target');"
+    )
+
+    def add_row_break_script(position):
+        if position == "above":
+            insert_break = (
+                "const target = board.querySelector('.ufa-free-board-item.arrange-target');"
+                "if (target) { board.insertBefore(breaker, target); }"
+                "else { board.insertBefore(breaker, board.firstChild); }"
+            )
+        elif position == "below":
+            insert_break = (
+                "const target = board.querySelector('.ufa-free-board-item.arrange-target');"
+                "if (target) { target.after(breaker); }"
+                "else { board.appendChild(breaker); }"
+            )
+        else:
+            insert_break = "board.appendChild(breaker);"
+
+        return (
+            f"const board = document.getElementById({json.dumps(board_id)});"
+            "if (!board) { return; }"
+            "const nextIndex = board.querySelectorAll('.ufa-free-row-break').length + 1;"
+            "const breaker = document.createElement('div');"
+            f"breaker.id = {json.dumps(board_id + '-row-break-')} + nextIndex + '-' + Date.now();"
+            "breaker.className = 'ufa-free-board-item ufa-free-row-break arrange-target';"
+            "board.querySelectorAll('.arrange-target').forEach(function(item) {"
+            "item.classList.remove('arrange-target');"
+            "});"
+            "breaker.draggable = true;"
+            "breaker.title = 'Drag this divider between possession groups';"
+            "breaker.innerHTML = '<span>Row break</span><button type=\"button\" aria-label=\"Remove row break\">Remove</button>';"
+            f"breaker.ondragstart = function(event) {{ {drag_start} }};"
+            f"breaker.ondragend = function() {{ {drag_end} }};"
+            f"breaker.ondragover = function(event) {{ {drag_over} }};"
+            f"breaker.ondragleave = function() {{ {drag_leave} }};"
+            f"breaker.ondrop = function(event) {{ {drop} }};"
+            f"breaker.onclick = function() {{ {select_arrange_target} }};"
+            "breaker.querySelector('button').onclick = function(event) {"
+            "event.stopPropagation();"
+            "breaker.remove();"
+            "};"
+            f"{insert_break}"
+        )
+
+    add_row_break_above = add_row_break_script("above")
+    add_row_break_below = add_row_break_script("below")
+    add_row_break_bottom = add_row_break_script("bottom")
+    clear_row_breaks = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        "if (!board) { return; }"
+        "board.querySelectorAll('.ufa-free-row-break').forEach(function(breaker) {"
+        "breaker.remove();"
+        "});"
+    )
 
     cards = []
     overlay_groups = []
@@ -2285,29 +2369,6 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
             f"{outcome} {line_type} - {meta} - "
             f"aEC/T {aec_per_throw} - total {total_aec} - {shape_label}"
         )
-        drag_start = (
-            "event.dataTransfer.setData('text/plain', this.id);"
-            "event.dataTransfer.effectAllowed = 'move';"
-            "this.classList.add('dragging');"
-        )
-        drag_end = "this.classList.remove('dragging');"
-        drag_over = "event.preventDefault(); this.classList.add('drop-target');"
-        drag_leave = "this.classList.remove('drop-target');"
-        drop = (
-            "event.preventDefault();"
-            "this.classList.remove('drop-target');"
-            f"const board = document.getElementById({json.dumps(board_id)});"
-            "const dragged = document.getElementById("
-            "event.dataTransfer.getData('text/plain')"
-            ");"
-            "if (!board || !dragged || dragged === this) { return; }"
-            "const cards = Array.from(board.querySelectorAll('.ufa-free-card'));"
-            "const fromIndex = cards.indexOf(dragged);"
-            "const toIndex = cards.indexOf(this);"
-            "if (fromIndex < 0 || toIndex < 0) { return; }"
-            "if (fromIndex < toIndex) { this.after(dragged); }"
-            "else { this.before(dragged); }"
-        )
         overlay_color = overlay_palette[(card_index - 1) % len(overlay_palette)]
         overlay_groups.append(
             render_possession_overlay_group(
@@ -2322,13 +2383,14 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         )
         cards.append(
             f"""
-            <div id="{card_id}" class="ufa-free-card" draggable="true"
+            <div id="{card_id}" class="ufa-free-board-item ufa-free-card" draggable="true"
               title="{escape(card_title, quote=True)}"
               ondragstart="{escape(drag_start, quote=True)}"
               ondragend="{escape(drag_end, quote=True)}"
               ondragover="{escape(drag_over, quote=True)}"
               ondragleave="{escape(drag_leave, quote=True)}"
-              ondrop="{escape(drop, quote=True)}">
+              ondrop="{escape(drop, quote=True)}"
+              onclick="{escape(select_arrange_target, quote=True)}">
               {render_mini_possession_svg(path)}
               <div class="ufa-free-card-meta">
                 <label class="ufa-free-overlay-toggle"
@@ -2351,6 +2413,24 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
           <div class="ufa-gallery-kicker">Free Arrange</div>
           <div class="ufa-free-board-meta">
             {shown_count} cards shown of {len(possessions)} filtered possessions
+          </div>
+          <div class="ufa-free-board-actions">
+            <button type="button"
+              onclick="{escape(add_row_break_above, quote=True)}">
+              Add break above
+            </button>
+            <button type="button"
+              onclick="{escape(add_row_break_below, quote=True)}">
+              Add break below
+            </button>
+            <button type="button"
+              onclick="{escape(add_row_break_bottom, quote=True)}">
+              Add break at bottom
+            </button>
+            <button type="button"
+              onclick="{escape(clear_row_breaks, quote=True)}">
+              Clear row breaks
+            </button>
           </div>
           <div id="{board_id}" class="ufa-free-board"
             ondragover="event.preventDefault();">
@@ -2750,14 +2830,29 @@ def _possession_browser_css():
         flex: 1 1 auto;
         min-width: 0;
       }
+      .ufa-free-board-actions {
+        display: flex;
+        gap: 8px;
+        margin: -4px 0 12px;
+      }
+      .ufa-free-board-actions button {
+        border: 1px solid #cbd6e2;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #10233f;
+        cursor: pointer;
+        font-weight: 700;
+        padding: 6px 10px;
+      }
       .ufa-free-board {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 126px);
+        display: flex;
+        flex-wrap: wrap;
         gap: 10px;
         align-items: start;
-        justify-content: start;
+        justify-content: flex-start;
       }
       .ufa-free-card {
+        flex: 0 0 126px;
         min-width: 0;
         border: 1px solid #dfe7ef;
         border-radius: 8px;
@@ -2776,6 +2871,47 @@ def _possession_browser_css():
       .ufa-free-card.drop-target {
         border-color: #2b8ce6;
         box-shadow: 0 0 0 3px rgba(43, 140, 230, 0.16);
+      }
+      .ufa-free-board-item.arrange-target {
+        border-color: #2b8ce6;
+        box-shadow: 0 0 0 3px rgba(43, 140, 230, 0.22);
+      }
+      .ufa-free-row-break {
+        box-sizing: border-box;
+        flex: 1 0 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 22px;
+        border: 1px dashed #9fb2c8;
+        border-radius: 6px;
+        background: #f3f7fb;
+        color: #52637a;
+        cursor: grab;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .ufa-free-row-break:active {
+        cursor: grabbing;
+      }
+      .ufa-free-row-break.drop-target {
+        border-color: #2b8ce6;
+        box-shadow: 0 0 0 3px rgba(43, 140, 230, 0.16);
+      }
+      .ufa-free-row-break button {
+        border: 1px solid #cbd6e2;
+        border-radius: 5px;
+        background: #ffffff;
+        color: #52637a;
+        cursor: pointer;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 2px 7px;
+        text-transform: none;
+        letter-spacing: 0;
       }
       .ufa-free-card.overlay-selected {
         border-color: #c3482b;
