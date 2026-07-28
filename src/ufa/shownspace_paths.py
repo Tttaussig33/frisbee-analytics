@@ -2220,6 +2220,9 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
     wrap_id = f"ufa-free-wrap-{board_key}"
     overlay_layer_id = f"ufa-free-overlay-layer-{board_key}"
     overlay_count_id = f"ufa-free-overlay-count-{board_key}"
+    export_status_id = f"ufa-free-export-status-{board_key}"
+    export_text_id = f"ufa-free-export-text-{board_key}"
+    insert_position_id = f"ufa-free-insert-position-{board_key}"
     overlay_palette = [
         "#c3482b",
         "#0d4f94",
@@ -2293,57 +2296,104 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         "this.classList.add('arrange-target');"
     )
 
-    def add_row_break_script(position):
-        if position == "above":
-            insert_break = (
-                "const target = board.querySelector('.ufa-free-board-item.arrange-target');"
-                "if (target) { board.insertBefore(breaker, target); }"
-                "else { board.insertBefore(breaker, board.firstChild); }"
-            )
-        elif position == "below":
-            insert_break = (
-                "const target = board.querySelector('.ufa-free-board-item.arrange-target');"
-                "if (target) { target.after(breaker); }"
-                "else { board.appendChild(breaker); }"
-            )
-        else:
-            insert_break = "board.appendChild(breaker);"
-
-        return (
-            f"const board = document.getElementById({json.dumps(board_id)});"
-            "if (!board) { return; }"
-            "const nextIndex = board.querySelectorAll('.ufa-free-row-break').length + 1;"
-            "const breaker = document.createElement('div');"
-            f"breaker.id = {json.dumps(board_id + '-row-break-')} + nextIndex + '-' + Date.now();"
-            "breaker.className = 'ufa-free-board-item ufa-free-row-break arrange-target';"
-            "board.querySelectorAll('.arrange-target').forEach(function(item) {"
-            "item.classList.remove('arrange-target');"
-            "});"
-            "breaker.draggable = true;"
-            "breaker.title = 'Drag this divider between possession groups';"
-            "breaker.innerHTML = '<span>Row break</span><button type=\"button\" aria-label=\"Remove row break\">Remove</button>';"
-            f"breaker.ondragstart = function(event) {{ {drag_start} }};"
-            f"breaker.ondragend = function() {{ {drag_end} }};"
-            f"breaker.ondragover = function(event) {{ {drag_over} }};"
-            f"breaker.ondragleave = function() {{ {drag_leave} }};"
-            f"breaker.ondrop = function(event) {{ {drop} }};"
-            f"breaker.onclick = function() {{ {select_arrange_target} }};"
-            "breaker.querySelector('button').onclick = function(event) {"
-            "event.stopPropagation();"
-            "breaker.remove();"
-            "};"
-            f"{insert_break}"
-        )
-
-    add_row_break_above = add_row_break_script("above")
-    add_row_break_below = add_row_break_script("below")
-    add_row_break_bottom = add_row_break_script("bottom")
+    insert_row_break = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        f"const select = document.getElementById({json.dumps(insert_position_id)});"
+        "if (!board || !select) { return; }"
+        "const position = select.value;"
+        "const target = board.querySelector('.ufa-free-board-item.arrange-target');"
+        "const nextIndex = board.querySelectorAll('.ufa-free-row-break').length + 1;"
+        "const breaker = document.createElement('div');"
+        f"breaker.id = {json.dumps(board_id + '-row-break-')} + nextIndex + '-' + Date.now();"
+        "breaker.className = 'ufa-free-board-item ufa-free-row-break arrange-target';"
+        "breaker.dataset.arrangeLabel = 'Row break ' + nextIndex;"
+        "board.querySelectorAll('.arrange-target').forEach(function(item) {"
+        "item.classList.remove('arrange-target');"
+        "});"
+        "breaker.draggable = true;"
+        "breaker.title = 'Drag this divider between possession groups';"
+        "breaker.innerHTML = '<span>Row break</span><button type=\"button\" aria-label=\"Remove row break\">Remove</button>';"
+        f"breaker.ondragstart = function(event) {{ {drag_start} }};"
+        f"breaker.ondragend = function() {{ {drag_end} }};"
+        f"breaker.ondragover = function(event) {{ {drag_over} }};"
+        f"breaker.ondragleave = function() {{ {drag_leave} }};"
+        f"breaker.ondrop = function(event) {{ {drop} }};"
+        f"breaker.onclick = function() {{ {select_arrange_target} }};"
+        "breaker.querySelector('button').onclick = function(event) {"
+        "event.stopPropagation();"
+        "breaker.remove();"
+        "};"
+        "if (position === 'above') {"
+        "if (target) { board.insertBefore(breaker, target); }"
+        "else { board.insertBefore(breaker, board.firstChild); }"
+        "} else if (position === 'below') {"
+        "if (target) { target.after(breaker); }"
+        "else { board.appendChild(breaker); }"
+        "} else {"
+        "board.appendChild(breaker);"
+        "}"
+    )
     clear_row_breaks = (
         f"const board = document.getElementById({json.dumps(board_id)});"
         "if (!board) { return; }"
         "board.querySelectorAll('.ufa-free-row-break').forEach(function(breaker) {"
         "breaker.remove();"
         "});"
+    )
+    save_arrangement = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        f"const status = document.getElementById({json.dumps(export_status_id)});"
+        f"const output = document.getElementById({json.dumps(export_text_id)});"
+        "if (!board) { return; }"
+        "const groups = [[]];"
+        "Array.from(board.children).forEach(function(item) {"
+        "if (item.classList.contains('ufa-free-row-break')) {"
+        "groups.push([]);"
+        "return;"
+        "}"
+        "if (!item.classList.contains('ufa-free-card')) { return; }"
+        "const checkbox = item.querySelector('.ufa-free-overlay-check');"
+        "groups[groups.length - 1].push({"
+        "possession_id: item.dataset.possessionId,"
+        "label: item.dataset.cardLabel,"
+        "overlay_selected: Boolean(checkbox && checkbox.checked)"
+        "});"
+        "});"
+        "const nonEmptyGroups = groups.filter(function(group) { return group.length; });"
+        "const cardCount = nonEmptyGroups.reduce(function(total, group) {"
+        "return total + group.length;"
+        "}, 0);"
+        "const payload = {"
+        "saved_at: new Date().toISOString(),"
+        "cards_shown: cardCount,"
+        f"filtered_possessions: {len(possessions)},"
+        "groups: nonEmptyGroups.map(function(group, index) {"
+        "return {group_index: index + 1, possessions: group};"
+        "})"
+        "};"
+        "const text = JSON.stringify(payload, null, 2);"
+        "if (output) {"
+        "output.value = text;"
+        "output.style.display = 'block';"
+        "}"
+        "if (status) {"
+        "status.textContent = 'Exported ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. JSON shown below; download attempted.';"
+        "}"
+        "try {"
+        "const blob = new Blob([text], {type: 'application/json'});"
+        "const url = URL.createObjectURL(blob);"
+        "const link = document.createElement('a');"
+        "link.href = url;"
+        f"link.download = 'ufa-free-arrange-{board_key}-' + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-') + '.json';"
+        "document.body.appendChild(link);"
+        "link.click();"
+        "link.remove();"
+        "URL.revokeObjectURL(url);"
+        "} catch (error) {"
+        "if (status) {"
+        "status.textContent = 'Exported ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. Download was blocked; JSON shown below.';"
+        "}"
+        "}"
     )
 
     cards = []
@@ -2369,6 +2419,10 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
             f"{outcome} {line_type} - {meta} - "
             f"aEC/T {aec_per_throw} - total {total_aec} - {shape_label}"
         )
+        card_label = (
+            f"{card_index}. {outcome} {line_type} | {meta} | "
+            f"aEC/T {aec_per_throw} | total {total_aec} | {shape_label}"
+        )
         overlay_color = overlay_palette[(card_index - 1) % len(overlay_palette)]
         overlay_groups.append(
             render_possession_overlay_group(
@@ -2385,6 +2439,9 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
             f"""
             <div id="{card_id}" class="ufa-free-board-item ufa-free-card" draggable="true"
               title="{escape(card_title, quote=True)}"
+              data-possession-id="{escape(str(row['possession_id']), quote=True)}"
+              data-card-label="{escape(card_label, quote=True)}"
+              data-arrange-label="{escape(card_label, quote=True)}"
               ondragstart="{escape(drag_start, quote=True)}"
               ondragend="{escape(drag_end, quote=True)}"
               ondragover="{escape(drag_over, quote=True)}"
@@ -2415,23 +2472,31 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
             {shown_count} cards shown of {len(possessions)} filtered possessions
           </div>
           <div class="ufa-free-board-actions">
+            <label>
+              Placement
+              <select id="{insert_position_id}">
+                <option value="above">Above selected</option>
+                <option value="below">Below selected</option>
+                <option value="bottom">At bottom</option>
+              </select>
+            </label>
             <button type="button"
-              onclick="{escape(add_row_break_above, quote=True)}">
-              Add break above
+              onclick="{escape(insert_row_break, quote=True)}">
+              Insert row break
             </button>
-            <button type="button"
-              onclick="{escape(add_row_break_below, quote=True)}">
-              Add break below
-            </button>
-            <button type="button"
-              onclick="{escape(add_row_break_bottom, quote=True)}">
-              Add break at bottom
+            <button class="primary" type="button"
+              onclick="{escape(save_arrangement, quote=True)}">
+              Save arrangement
             </button>
             <button type="button"
               onclick="{escape(clear_row_breaks, quote=True)}">
               Clear row breaks
             </button>
           </div>
+          <div id="{export_status_id}" class="ufa-free-export-status"></div>
+          <textarea id="{export_text_id}" class="ufa-free-export-text"
+            readonly spellcheck="false"
+            aria-label="Saved arrangement JSON"></textarea>
           <div id="{board_id}" class="ufa-free-board"
             ondragover="event.preventDefault();">
             {''.join(cards)}
@@ -2832,8 +2897,30 @@ def _possession_browser_css():
       }
       .ufa-free-board-actions {
         display: flex;
+        align-items: center;
+        flex-wrap: wrap;
         gap: 8px;
         margin: -4px 0 12px;
+      }
+      .ufa-free-board-actions label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #52637a;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .ufa-free-board-actions select {
+        border: 1px solid #cbd6e2;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #10233f;
+        font-size: 12px;
+        letter-spacing: 0;
+        padding: 5px 8px;
+        text-transform: none;
       }
       .ufa-free-board-actions button {
         border: 1px solid #cbd6e2;
@@ -2843,6 +2930,33 @@ def _possession_browser_css():
         cursor: pointer;
         font-weight: 700;
         padding: 6px 10px;
+      }
+      .ufa-free-board-actions button.primary {
+        border-color: #2b8ce6;
+        background: #2b8ce6;
+        color: #ffffff;
+      }
+      .ufa-free-export-status {
+        min-height: 18px;
+        color: #52637a;
+        font-size: 11px;
+        margin: -6px 0 10px;
+      }
+      .ufa-free-export-text {
+        box-sizing: border-box;
+        display: none;
+        width: min(100%, 980px);
+        min-height: 140px;
+        margin: 0 0 12px;
+        border: 1px solid #cbd6e2;
+        border-radius: 6px;
+        background: #f8fbff;
+        color: #10233f;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 11px;
+        line-height: 1.35;
+        padding: 8px;
+        white-space: pre;
       }
       .ufa-free-board {
         display: flex;
@@ -3175,6 +3289,16 @@ def create_scoring_possession_browser(
         layout=widgets.Layout(width="430px"),
         style={"description_width": "85px"},
     )
+    free_board_card_filter = widgets.IntSlider(
+        value=min(24, len(base_possessions)),
+        min=1,
+        max=max(1, min(120, len(base_possessions))),
+        step=1,
+        description="Cards shown",
+        continuous_update=False,
+        layout=widgets.Layout(width="430px", display="none"),
+        style={"description_width": "85px"},
+    )
     dropdown = widgets.Dropdown(
         options=[],
         value=None,
@@ -3287,7 +3411,7 @@ def create_scoring_possession_browser(
             field_html.value = render_possession_free_board(
                 browser_possessions,
                 lookup,
-                max_cards=24,
+                max_cards=int(free_board_card_filter.value),
             )
             return
 
@@ -3301,6 +3425,9 @@ def create_scoring_possession_browser(
         field_html.value = render_shownspace_possession_svg(path)
 
     def apply_filters(_=None):
+        free_board_card_filter.layout.display = (
+            None if view_filter.value == "free_board" else "none"
+        )
         selected_line = line_filter.value
         selected_outcome = outcome_filter.value
         min_throw_count, max_throw_count = throw_count_filter.value
@@ -3347,6 +3474,12 @@ def create_scoring_possession_browser(
 
         filtered = order_possessions(filtered)
 
+        board_card_limit = max(1, min(120, len(filtered)))
+        if free_board_card_filter.max != board_card_limit:
+            free_board_card_filter.max = board_card_limit
+        if free_board_card_filter.value > board_card_limit:
+            free_board_card_filter.value = board_card_limit
+
         state["possessions"] = filtered
         if filtered.empty:
             dropdown.options = [("No possessions for this filter", None)]
@@ -3379,6 +3512,7 @@ def create_scoring_possession_browser(
     shape_filter.observe(apply_filters, names="value")
     throw_count_filter.observe(apply_filters, names="value")
     order_filter.observe(apply_filters, names="value")
+    free_board_card_filter.observe(apply_filters, names="value")
     view_filter.observe(apply_filters, names="value")
     previous_button.on_click(on_previous)
     next_button.on_click(on_next)
@@ -3395,6 +3529,7 @@ def create_scoring_possession_browser(
             shape_overview_html,
             throw_count_filter,
             order_filter,
+            free_board_card_filter,
             dropdown,
             nav,
         ],
