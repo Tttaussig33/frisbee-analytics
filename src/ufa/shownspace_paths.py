@@ -2223,6 +2223,7 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
     export_status_id = f"ufa-free-export-status-{board_key}"
     export_text_id = f"ufa-free-export-text-{board_key}"
     insert_position_id = f"ufa-free-insert-position-{board_key}"
+    storage_key = f"ufa-free-arrange:{board_key}"
     overlay_palette = [
         "#c3482b",
         "#0d4f94",
@@ -2312,13 +2313,16 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         "});"
         "breaker.draggable = true;"
         "breaker.title = 'Drag this divider between possession groups';"
-        "breaker.innerHTML = '<span>Row break</span><button type=\"button\" aria-label=\"Remove row break\">Remove</button>';"
+        "breaker.innerHTML = '<input type=\"text\" value=\"Pattern group ' + nextIndex + '\" aria-label=\"Row title\" />"
+        "<button type=\"button\" aria-label=\"Remove row break\">Remove</button>';"
         f"breaker.ondragstart = function(event) {{ {drag_start} }};"
         f"breaker.ondragend = function() {{ {drag_end} }};"
         f"breaker.ondragover = function(event) {{ {drag_over} }};"
         f"breaker.ondragleave = function() {{ {drag_leave} }};"
         f"breaker.ondrop = function(event) {{ {drop} }};"
         f"breaker.onclick = function() {{ {select_arrange_target} }};"
+        "breaker.querySelector('input').onclick = function(event) { event.stopPropagation(); };"
+        "breaker.querySelector('input').onmousedown = function(event) { event.stopPropagation(); };"
         "breaker.querySelector('button').onclick = function(event) {"
         "event.stopPropagation();"
         "breaker.remove();"
@@ -2345,39 +2349,51 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         f"const status = document.getElementById({json.dumps(export_status_id)});"
         f"const output = document.getElementById({json.dumps(export_text_id)});"
         "if (!board) { return; }"
-        "const groups = [[]];"
+        "const groups = [];"
+        "let currentGroup = {title: 'Group 1', possessions: []};"
         "Array.from(board.children).forEach(function(item) {"
         "if (item.classList.contains('ufa-free-row-break')) {"
-        "groups.push([]);"
+        "if (currentGroup.possessions.length) { groups.push(currentGroup); }"
+        "const titleInput = item.querySelector('input');"
+        "const title = titleInput && titleInput.value.trim() ? titleInput.value.trim() : item.dataset.arrangeLabel;"
+        "currentGroup = {title: title || 'Pattern group ' + (groups.length + 2), possessions: []};"
         "return;"
         "}"
         "if (!item.classList.contains('ufa-free-card')) { return; }"
         "const checkbox = item.querySelector('.ufa-free-overlay-check');"
-        "groups[groups.length - 1].push({"
+        "currentGroup.possessions.push({"
         "possession_id: item.dataset.possessionId,"
         "label: item.dataset.cardLabel,"
         "overlay_selected: Boolean(checkbox && checkbox.checked)"
         "});"
         "});"
-        "const nonEmptyGroups = groups.filter(function(group) { return group.length; });"
+        "if (currentGroup.possessions.length) { groups.push(currentGroup); }"
+        "const nonEmptyGroups = groups.filter(function(group) { return group.possessions.length; });"
         "const cardCount = nonEmptyGroups.reduce(function(total, group) {"
-        "return total + group.length;"
+        "return total + group.possessions.length;"
         "}, 0);"
         "const payload = {"
         "saved_at: new Date().toISOString(),"
         "cards_shown: cardCount,"
         f"filtered_possessions: {len(possessions)},"
         "groups: nonEmptyGroups.map(function(group, index) {"
-        "return {group_index: index + 1, possessions: group};"
+        "return {group_index: index + 1, title: group.title, possessions: group.possessions};"
         "})"
         "};"
         "const text = JSON.stringify(payload, null, 2);"
         "if (output) {"
-        "output.value = text;"
+        "output.textContent = text;"
         "output.style.display = 'block';"
         "}"
+        "let localSaveMessage = 'Saved in this browser';"
+        "try {"
+        f"window.localStorage.setItem({json.dumps(storage_key)}, text);"
+        "} catch (error) {"
+        "localSaveMessage = 'Browser storage blocked; exported JSON';"
+        "}"
         "if (status) {"
-        "status.textContent = 'Exported ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. JSON shown below; download attempted.';"
+        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. JSON shown below.';"
+        "status.scrollIntoView({block: 'nearest'});"
         "}"
         "try {"
         "const blob = new Blob([text], {type: 'application/json'});"
@@ -2391,9 +2407,87 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         "URL.revokeObjectURL(url);"
         "} catch (error) {"
         "if (status) {"
-        "status.textContent = 'Exported ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. Download was blocked; JSON shown below.';"
+        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. Download was blocked; JSON shown below.';"
         "}"
         "}"
+    )
+    load_arrangement = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        f"const status = document.getElementById({json.dumps(export_status_id)});"
+        f"const output = document.getElementById({json.dumps(export_text_id)});"
+        "if (!board) { return; }"
+        "let text = null;"
+        "try {"
+        f"text = window.localStorage.getItem({json.dumps(storage_key)});"
+        "} catch (error) {"
+        "text = null;"
+        "}"
+        "if (!text) {"
+        "if (status) { status.textContent = 'No saved arrangement found for this board.'; }"
+        "return;"
+        "}"
+        "let payload = null;"
+        "try { payload = JSON.parse(text); }"
+        "catch (error) {"
+        "if (status) { status.textContent = 'Saved arrangement could not be read.'; }"
+        "return;"
+        "}"
+        "const cardMap = {};"
+        "board.querySelectorAll('.ufa-free-card').forEach(function(card) {"
+        "cardMap[card.dataset.possessionId] = card;"
+        "card.classList.remove('arrange-target');"
+        "});"
+        "board.innerHTML = '';"
+        "function makeBreak(title, index) {"
+        "const breaker = document.createElement('div');"
+        f"breaker.id = {json.dumps(board_id + '-row-break-')} + index + '-' + Date.now();"
+        "breaker.className = 'ufa-free-board-item ufa-free-row-break';"
+        "breaker.dataset.arrangeLabel = title || ('Pattern group ' + index);"
+        "breaker.draggable = true;"
+        "breaker.title = 'Drag this divider between possession groups';"
+        "breaker.innerHTML = '<input type=\"text\" aria-label=\"Row title\" />"
+        "<button type=\"button\" aria-label=\"Remove row break\">Remove</button>';"
+        "breaker.querySelector('input').value = title || ('Pattern group ' + index);"
+        f"breaker.ondragstart = function(event) {{ {drag_start} }};"
+        f"breaker.ondragend = function() {{ {drag_end} }};"
+        f"breaker.ondragover = function(event) {{ {drag_over} }};"
+        f"breaker.ondragleave = function() {{ {drag_leave} }};"
+        f"breaker.ondrop = function(event) {{ {drop} }};"
+        f"breaker.onclick = function() {{ {select_arrange_target} }};"
+        "breaker.querySelector('input').onclick = function(event) { event.stopPropagation(); };"
+        "breaker.querySelector('input').onmousedown = function(event) { event.stopPropagation(); };"
+        "breaker.querySelector('button').onclick = function(event) {"
+        "event.stopPropagation();"
+        "breaker.remove();"
+        "};"
+        "return breaker;"
+        "}"
+        "const usedIds = new Set();"
+        "(payload.groups || []).forEach(function(group, groupIndex) {"
+        "const title = group.title || ('Pattern group ' + (groupIndex + 1));"
+        "if (groupIndex > 0 || title !== 'Group 1') {"
+        "board.appendChild(makeBreak(title, groupIndex + 1));"
+        "}"
+        "(group.possessions || []).forEach(function(possession) {"
+        "const card = cardMap[possession.possession_id];"
+        "if (!card) { return; }"
+        "const checkbox = card.querySelector('.ufa-free-overlay-check');"
+        "if (checkbox) { checkbox.checked = Boolean(possession.overlay_selected); }"
+        "board.appendChild(card);"
+        "usedIds.add(possession.possession_id);"
+        "});"
+        "});"
+        "Object.keys(cardMap).forEach(function(possessionId) {"
+        "if (!usedIds.has(possessionId)) { board.appendChild(cardMap[possessionId]); }"
+        "});"
+        "if (output) {"
+        "output.textContent = text;"
+        "output.style.display = 'block';"
+        "}"
+        "if (status) {"
+        "status.textContent = 'Loaded saved arrangement from this browser.';"
+        "}"
+        f"{update_overlay}"
     )
 
     cards = []
@@ -2489,14 +2583,17 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
               Save arrangement
             </button>
             <button type="button"
+              onclick="{escape(load_arrangement, quote=True)}">
+              Load saved
+            </button>
+            <button type="button"
               onclick="{escape(clear_row_breaks, quote=True)}">
               Clear row breaks
             </button>
           </div>
           <div id="{export_status_id}" class="ufa-free-export-status"></div>
-          <textarea id="{export_text_id}" class="ufa-free-export-text"
-            readonly spellcheck="false"
-            aria-label="Saved arrangement JSON"></textarea>
+          <pre id="{export_text_id}" class="ufa-free-export-text"
+            aria-label="Saved arrangement JSON"></pre>
           <div id="{board_id}" class="ufa-free-board"
             ondragover="event.preventDefault();">
             {''.join(cards)}
@@ -2955,8 +3052,9 @@ def _possession_browser_css():
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
         font-size: 11px;
         line-height: 1.35;
+        overflow: auto;
         padding: 8px;
-        white-space: pre;
+        white-space: pre-wrap;
       }
       .ufa-free-board {
         display: flex;
@@ -3007,6 +3105,19 @@ def _possession_browser_css():
         font-weight: 800;
         letter-spacing: 0.08em;
         text-transform: uppercase;
+      }
+      .ufa-free-row-break input {
+        min-width: 220px;
+        max-width: min(520px, 70%);
+        border: 1px solid #cbd6e2;
+        border-radius: 5px;
+        background: #ffffff;
+        color: #10233f;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0;
+        padding: 3px 7px;
+        text-transform: none;
       }
       .ufa-free-row-break:active {
         cursor: grabbing;
