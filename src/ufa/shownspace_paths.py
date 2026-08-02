@@ -2203,14 +2203,23 @@ def render_possession_shape_gallery(
     """
 
 
-def render_possession_free_board(possessions, path_lookup, max_cards=24):
+def render_possession_free_board(
+    possessions,
+    path_lookup,
+    max_cards=24,
+    include_overlay=True,
+    return_overlay=False,
+):
     """Render a draggable board of mini possession cards."""
     if possessions.empty:
-        return """
+        board_html = """
         <div class="ufa-free-board-wrap">
           <div class="empty">No possessions match these filters.</div>
         </div>
         """
+        if return_overlay:
+            return board_html, ""
+        return board_html
 
     frame = possessions.head(max_cards).copy()
     board_key = hashlib.sha1(
@@ -2220,7 +2229,6 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
     wrap_id = f"ufa-free-wrap-{board_key}"
     overlay_layer_id = f"ufa-free-overlay-layer-{board_key}"
     overlay_count_id = f"ufa-free-overlay-count-{board_key}"
-    overlay_panel_id = f"ufa-free-overlay-panel-{board_key}"
     export_status_id = f"ufa-free-export-status-{board_key}"
     export_text_id = f"ufa-free-export-text-{board_key}"
     insert_position_id = f"ufa-free-insert-position-{board_key}"
@@ -2266,50 +2274,6 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         "input.checked = false;"
         "});"
         f"{update_overlay}"
-    )
-    follow_overlay = (
-        f"const followWrap = document.getElementById({json.dumps(wrap_id)});"
-        "if (!followWrap || followWrap.dataset.overlayFollowBound === 'true') { return; }"
-        f"const followPanel = document.getElementById({json.dumps(overlay_panel_id)});"
-        "const followLayout = followPanel ? followPanel.closest('.ufa-free-board-layout') : null;"
-        "if (!followPanel || !followLayout) { return; }"
-        "followWrap.dataset.overlayFollowBound = 'true';"
-        "const updateFollow = function() {"
-        "if (window.innerWidth <= 1120) {"
-        "followLayout.classList.remove('overlay-floating');"
-        "followPanel.classList.remove('overlay-floating');"
-        "followPanel.style.left = '';"
-        "followPanel.style.width = '';"
-        "return;"
-        "}"
-        "const wrapRect = followWrap.getBoundingClientRect();"
-        "const layoutRect = followLayout.getBoundingClientRect();"
-        "const panelHeight = followPanel.offsetHeight;"
-        "const top = 12;"
-        "const shouldFloat = wrapRect.top < top && wrapRect.bottom > top + panelHeight;"
-        "if (shouldFloat) {"
-        "const panelWidth = followPanel.getBoundingClientRect().width || 270;"
-        "const maxLeft = Math.max(12, window.innerWidth - panelWidth - 12);"
-        "const desiredLeft = Math.min(layoutRect.right - panelWidth, maxLeft);"
-        "followPanel.style.left = Math.max(12, desiredLeft) + 'px';"
-        "followPanel.style.width = panelWidth + 'px';"
-        "followLayout.classList.add('overlay-floating');"
-        "followPanel.classList.add('overlay-floating');"
-        "} else {"
-        "followLayout.classList.remove('overlay-floating');"
-        "followPanel.classList.remove('overlay-floating');"
-        "followPanel.style.left = '';"
-        "followPanel.style.width = '';"
-        "}"
-        "};"
-        "window.addEventListener('scroll', updateFollow, {passive: true});"
-        "window.addEventListener('resize', updateFollow);"
-        "let scrollNode = followWrap.parentElement;"
-        "while (scrollNode) {"
-        "scrollNode.addEventListener('scroll', updateFollow, {passive: true});"
-        "scrollNode = scrollNode.parentElement;"
-        "}"
-        "updateFollow();"
     )
     drag_start = (
         "event.dataTransfer.setData('text/plain', this.id);"
@@ -2729,9 +2693,31 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
         )
 
     shown_count = len(cards)
-    return f"""
+    overlay_panel = f"""
+      <aside class="ufa-free-overlay-panel">
+        <div class="ufa-gallery-kicker">Selected Overlay</div>
+        <div id="{overlay_count_id}" class="ufa-free-board-meta">
+          Select cards to overlay
+        </div>
+        <div class="ufa-free-overlay-note">
+          Exact field overlay of selected possessions.
+        </div>
+        {render_empty_overlay_field(
+            overlay_layer_id,
+            width=overlay_width,
+            height=overlay_height,
+            overlay_groups=''.join(overlay_groups),
+        )}
+        <button class="ufa-free-overlay-clear"
+          type="button"
+          onclick="{escape(clear_overlay, quote=True)}">
+          Clear overlay
+        </button>
+      </aside>
+    """
+    board_html = f"""
     <div id="{wrap_id}" class="ufa-free-board-wrap">
-      <div class="ufa-free-board-layout">
+      <div class="ufa-free-board-layout{' with-inline-overlay' if include_overlay else ''}">
         <div class="ufa-free-board-content">
           <div class="ufa-gallery-kicker">Free Arrange</div>
           <div class="ufa-free-board-meta">
@@ -2775,34 +2761,13 @@ def render_possession_free_board(possessions, path_lookup, max_cards=24):
             {''.join(cards)}
           </div>
         </div>
-        <aside id="{overlay_panel_id}" class="ufa-free-overlay-panel">
-          <div class="ufa-gallery-kicker">Selected Overlay</div>
-          <div id="{overlay_count_id}" class="ufa-free-board-meta">
-            Select cards to overlay
-          </div>
-          <div class="ufa-free-overlay-note">
-            Exact field overlay of selected possessions.
-          </div>
-          {render_empty_overlay_field(
-              overlay_layer_id,
-              width=overlay_width,
-              height=overlay_height,
-              overlay_groups=''.join(overlay_groups),
-          )}
-          <button class="ufa-free-overlay-clear"
-            type="button"
-            onclick="{escape(clear_overlay, quote=True)}">
-            Clear overlay
-          </button>
-        </aside>
+        {f'<div class="ufa-free-overlay-shell">{overlay_panel}</div>' if include_overlay else ''}
       </div>
-      <script>
-        (function() {{
-          {follow_overlay}
-        }})();
-      </script>
     </div>
     """
+    if return_overlay:
+        return board_html, overlay_panel
+    return board_html
 
 
 def render_possession_browser_summary(possession, path):
@@ -2946,6 +2911,7 @@ def _possession_browser_css():
         box-sizing: border-box;
         width: 100%;
         max-width: 1680px;
+        overflow: visible !important;
         border: 1px solid #d8e1eb;
         border-radius: 12px;
         background: linear-gradient(180deg, #f8fbff 0%, #f3f6fa 100%);
@@ -3015,6 +2981,7 @@ def _possession_browser_css():
         min-width: 540px;
         width: 100%;
         flex: 1 1 auto;
+        overflow: visible !important;
       }
       .ufa-browser-field-panel.gallery {
         min-width: 900px;
@@ -3024,12 +2991,14 @@ def _possession_browser_css():
       .ufa-browser-field-panel .widget-html,
       .ufa-browser-field-panel .widget-html-content {
         width: 100%;
+        overflow: visible !important;
       }
       .ufa-browser-main-panel {
         align-items: flex-start;
         gap: 16px;
         flex: 1 1 auto;
         min-width: 0;
+        overflow: visible !important;
       }
       .ufa-browser-info-panel {
         box-sizing: border-box;
@@ -3155,6 +3124,7 @@ def _possession_browser_css():
         padding: 16px;
         width: 100%;
         max-width: none;
+        overflow: visible;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         color: #10233f;
       }
@@ -3170,8 +3140,9 @@ def _possession_browser_css():
         gap: 14px;
         position: relative;
         width: 100%;
+        overflow: visible;
       }
-      .ufa-free-board-layout.overlay-floating {
+      .ufa-free-board-layout.with-inline-overlay {
         padding-right: 284px;
       }
       .ufa-free-board-content {
@@ -3391,25 +3362,43 @@ def _possession_browser_css():
         font-weight: 700;
         padding: 4px 0;
       }
-      .ufa-free-overlay-panel {
+      .ufa-free-overlay-shell {
         box-sizing: border-box;
         flex: 0 0 270px;
         align-self: flex-start;
+        position: sticky;
+        top: 12px;
+        width: 270px;
+        height: fit-content;
+        max-height: calc(100vh - 24px);
+        overflow: visible;
+      }
+      .ufa-browser-overlay-widget {
+        box-sizing: border-box;
+        flex: 0 0 270px;
+        align-self: flex-start;
+        min-width: 270px;
+        width: 270px;
+        position: sticky !important;
+        top: 12px;
+        z-index: 1000;
+        overflow: visible !important;
+      }
+      .ufa-browser-overlay-widget .widget-html,
+      .ufa-browser-overlay-widget .widget-html-content {
+        width: 100%;
+        overflow: visible !important;
+      }
+      .ufa-free-overlay-panel {
+        box-sizing: border-box;
         border: 1px solid #dfe7ef;
         border-radius: 8px;
         background: #f8fbff;
         padding: 10px;
-        position: sticky !important;
-        top: 12px;
+        position: relative;
+        width: 100%;
         max-height: calc(100vh - 24px);
         overflow-y: auto;
-        z-index: 2;
-      }
-      .ufa-free-overlay-panel.overlay-floating {
-        position: fixed !important;
-        right: auto;
-        top: 12px;
-        z-index: 1000;
       }
       .ufa-overlay-svg {
         display: block;
@@ -3447,18 +3436,29 @@ def _possession_browser_css():
         padding: 6px 10px;
         width: 100%;
       }
-      @media (max-width: 1120px) {
+      @media (max-width: 800px) {
         .ufa-free-board-layout {
           flex-direction: column-reverse;
+          padding-right: 0;
         }
-        .ufa-free-overlay-panel {
-          position: sticky !important;
+        .ufa-free-overlay-shell {
+          position: static !important;
           top: 12px;
           width: 100%;
           flex-basis: auto;
+          max-height: none;
+          overflow: visible;
         }
-        .ufa-free-board-layout.overlay-floating {
-          padding-right: 0;
+        .ufa-browser-overlay-widget {
+          position: static !important;
+          width: 100%;
+          min-width: 0;
+          flex-basis: auto;
+          top: auto;
+        }
+        .ufa-free-overlay-panel {
+          max-height: none;
+          overflow: visible;
         }
       }
     </style>
@@ -3668,7 +3668,19 @@ def create_scoring_possession_browser(
     count_label.add_class("ufa-browser-count")
     summary_html = widgets.HTML()
     shape_overview_html = widgets.HTML()
-    field_html = widgets.HTML(layout=widgets.Layout(width="100%"))
+    field_html = widgets.HTML(
+        layout=widgets.Layout(width="100%", overflow="visible")
+    )
+    overlay_html = widgets.HTML(
+        layout=widgets.Layout(
+            width="270px",
+            min_width="270px",
+            flex="0 0 270px",
+            overflow="visible",
+            display="none",
+        )
+    )
+    overlay_html.add_class("ufa-browser-overlay-widget")
     state = {"possessions": base_possessions}
 
     def make_options(frame):
@@ -3728,12 +3740,16 @@ def create_scoring_possession_browser(
             count_label.value = "<b>0</b> of <b>0</b>"
             summary_html.value = "<b>No possessions match these filters.</b>"
             field_html.value = ""
+            overlay_html.value = ""
+            overlay_html.layout.display = "none"
             return
 
         if view_filter.value == "shape_gallery":
             count_label.value = f"<b>{len(browser_possessions)}</b> filtered"
             summary_html.value = ""
             summary_panel.layout.display = "none"
+            overlay_html.value = ""
+            overlay_html.layout.display = "none"
             field_panel.add_class("gallery")
             gallery_max_shapes = 1 if shape_filter.value != "all" else 6
             gallery_max_per_shape = 12 if shape_filter.value != "all" else 4
@@ -3749,15 +3765,20 @@ def create_scoring_possession_browser(
             count_label.value = f"<b>{len(browser_possessions)}</b> filtered"
             summary_html.value = ""
             summary_panel.layout.display = "none"
+            overlay_html.layout.display = None
             field_panel.add_class("gallery")
-            field_html.value = render_possession_free_board(
+            field_html.value, overlay_html.value = render_possession_free_board(
                 browser_possessions,
                 lookup,
                 max_cards=int(free_board_card_filter.value),
+                include_overlay=False,
+                return_overlay=True,
             )
             return
 
         summary_panel.layout.display = None
+        overlay_html.value = ""
+        overlay_html.layout.display = "none"
         field_panel.remove_class("gallery")
 
         row = browser_possessions.iloc[index]
@@ -3880,19 +3901,25 @@ def create_scoring_possession_browser(
     controls.add_class("ufa-browser-controls")
     field_panel = widgets.Box(
         [field_html],
-        layout=widgets.Layout(min_width="560px", width="100%", flex="1 1 auto"),
+        layout=widgets.Layout(
+            min_width="560px",
+            width="100%",
+            flex="1 1 auto",
+            overflow="visible",
+        ),
     )
     field_panel.add_class("ufa-browser-field-panel")
     summary_panel = widgets.Box([summary_html])
     summary_panel.add_class("ufa-browser-info-panel")
     main_panel = widgets.HBox(
-        [field_panel, summary_panel],
+        [field_panel, overlay_html, summary_panel],
         layout=widgets.Layout(
             align_items="flex-start",
             gap="16px",
             width="100%",
             flex="1 1 auto",
             min_width="0",
+            overflow="visible",
         ),
     )
     main_panel.add_class("ufa-browser-main-panel")
@@ -3902,6 +3929,7 @@ def create_scoring_possession_browser(
             align_items="flex-start",
             gap="18px",
             width="100%",
+            overflow="visible",
         ),
     )
     shell.add_class("ufa-possession-browser-shell")
