@@ -2249,8 +2249,9 @@ def render_possession_free_board(
     update_overlay = (
         f"const wrap = document.getElementById({json.dumps(wrap_id)});"
         f"const count = document.getElementById({json.dumps(overlay_count_id)});"
-        "if (!wrap || !count) { return; }"
-        "wrap.querySelectorAll('.ufa-overlay-path').forEach(function(path) {"
+        f"const layer = document.getElementById({json.dumps(overlay_layer_id)});"
+        "if (!wrap || !count || !layer) { return; }"
+        "layer.querySelectorAll('.ufa-overlay-path').forEach(function(path) {"
         "path.style.display = 'none';"
         "});"
         "const selected = Array.from(wrap.querySelectorAll('.ufa-free-overlay-check:checked'));"
@@ -2635,6 +2636,7 @@ def render_possession_free_board(
 
         card_id = f"{board_id}-card-{card_index}"
         overlay_path_id = f"{card_id}-overlay"
+        overlay_input_id = f"{card_id}-overlay-check"
         aec_per_throw = _format_browser_number(row.get("aec_per_throw"), digits=3)
         total_aec = _format_browser_number(row.get("total_aec"), digits=3)
         outcome = escape(str(row.get("outcome", "unknown")).title())
@@ -2681,8 +2683,9 @@ def render_possession_free_board(
               {render_mini_possession_svg(path)}
               <div class="ufa-free-card-meta">
                 <label class="ufa-free-overlay-toggle"
+                  for="{overlay_input_id}"
                   onclick="event.stopPropagation();">
-                  <input class="ufa-free-overlay-check" type="checkbox"
+                  <input id="{overlay_input_id}" class="ufa-free-overlay-check" type="checkbox"
                     data-overlay-path="{overlay_path_id}"
                     onchange="{escape(update_overlay, quote=True)}" />
                   Overlay
@@ -3343,11 +3346,23 @@ def _possession_browser_css():
         display: inline-flex;
         align-items: center;
         gap: 5px;
+        justify-content: center;
+        box-sizing: border-box;
+        min-height: 26px;
+        width: 100%;
         margin-top: 4px;
+        padding: 4px 8px;
+        border: 1px solid transparent;
+        border-radius: 5px;
         color: #10233f;
         font-size: 11px;
         font-weight: 800;
         cursor: pointer;
+        user-select: none;
+      }
+      .ufa-free-overlay-toggle:hover {
+        border-color: #b9d9f5;
+        background: #edf6ff;
       }
       .ufa-free-overlay-toggle input {
         margin: 0;
