@@ -2340,6 +2340,20 @@ def render_possession_free_board(
         "}"
         f"{update_overlay}"
     )
+    clear_overlay_row = (
+        f"const rowWrap = document.getElementById({json.dumps(wrap_id)});"
+        "const rowBreak = this.closest('.ufa-free-row-break');"
+        "if (!rowWrap || !rowBreak) { return; }"
+        "let item = rowBreak.nextElementSibling;"
+        "while (item && !item.classList.contains('ufa-free-row-break')) {"
+        "if (item.classList.contains('ufa-free-card')) {"
+        "const checkbox = item.querySelector('.ufa-free-overlay-check');"
+        "if (checkbox) { checkbox.checked = false; }"
+        "}"
+        "item = item.nextElementSibling;"
+        "}"
+        f"{update_overlay}"
+    )
 
     move_row_up = (
         f"const board = document.getElementById({json.dumps(board_id)});"
@@ -2416,9 +2430,10 @@ def render_possession_free_board(
         "});"
         "breaker.draggable = true;"
         "breaker.title = 'Drag this divider between possession groups';"
-        "breaker.innerHTML = '<input type=\"text\" value=\"Pattern group ' + nextIndex + '\" aria-label=\"Row title\" />"
-        "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
+         "breaker.innerHTML = '<input type=\"text\" value=\"Pattern group ' + nextIndex + '\" aria-label=\"Row title\" />"
+         "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
+         "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
+         "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
         "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\">Move down</button>"
         "<button type=\"button\" class=\"ufa-free-row-remove\" aria-label=\"Remove row break\">Remove</button>';"
         f"breaker.ondragstart = function(event) {{ {drag_start} }};"
@@ -2431,9 +2446,13 @@ def render_possession_free_board(
         "breaker.querySelector('input').onmousedown = function(event) { event.stopPropagation(); };"
         "breaker.querySelector('.ufa-free-row-overlay').onclick = function(event) {"
         "event.stopPropagation();"
-        f"{overlay_row}"
-        "};"
-        "breaker.querySelector('.ufa-free-row-move-up').onclick = function(event) {"
+         f"{overlay_row}"
+         "};"
+         "breaker.querySelector('.ufa-free-row-overlay-clear').onclick = function(event) {"
+         "event.stopPropagation();"
+         f"{clear_overlay_row}"
+         "};"
+         "breaker.querySelector('.ufa-free-row-move-up').onclick = function(event) {"
         "event.stopPropagation();"
         f"{move_row_up}"
         "};"
@@ -2566,9 +2585,10 @@ def render_possession_free_board(
         "breaker.dataset.arrangeLabel = title || ('Pattern group ' + index);"
         "breaker.draggable = true;"
         "breaker.title = 'Drag this divider between possession groups';"
-        "breaker.innerHTML = '<input type=\"text\" aria-label=\"Row title\" />"
-        "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
+         "breaker.innerHTML = '<input type=\"text\" aria-label=\"Row title\" />"
+         "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
+         "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
+         "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
         "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\">Move down</button>"
         "<button type=\"button\" class=\"ufa-free-row-remove\" aria-label=\"Remove row break\">Remove</button>';"
         "breaker.querySelector('input').value = title || ('Pattern group ' + index);"
@@ -2582,9 +2602,13 @@ def render_possession_free_board(
         "breaker.querySelector('input').onmousedown = function(event) { event.stopPropagation(); };"
         "breaker.querySelector('.ufa-free-row-overlay').onclick = function(event) {"
         "event.stopPropagation();"
-        f"{overlay_row}"
-        "};"
-        "breaker.querySelector('.ufa-free-row-move-up').onclick = function(event) {"
+         f"{overlay_row}"
+         "};"
+         "breaker.querySelector('.ufa-free-row-overlay-clear').onclick = function(event) {"
+         "event.stopPropagation();"
+         f"{clear_overlay_row}"
+         "};"
+         "breaker.querySelector('.ufa-free-row-move-up').onclick = function(event) {"
         "event.stopPropagation();"
         f"{move_row_up}"
         "};"
@@ -3306,6 +3330,13 @@ def _possession_browser_css():
       }
       .ufa-free-row-break .ufa-free-row-overlay:hover {
         background: #edf6ff;
+      }
+      .ufa-free-row-break .ufa-free-row-overlay-clear {
+        border-color: #e0b9b0;
+        color: #a23f2c;
+      }
+      .ufa-free-row-break .ufa-free-row-overlay-clear:hover {
+        background: #fff3f0;
       }
       .ufa-free-row-break .ufa-free-row-move-up,
       .ufa-free-row-break .ufa-free-row-move-down {
