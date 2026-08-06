@@ -3727,7 +3727,24 @@ def create_scoring_possession_browser(
         )
     )
     overlay_html.add_class("ufa-browser-overlay-widget")
+    overlay_toggle_button = widgets.Button(
+        description="Hide overlay",
+        icon="eye-slash",
+        layout=widgets.Layout(width="145px", display="none"),
+        tooltip="Hide or show the selected-possession overlay",
+    )
+    overlay_hidden = {"value": False}
     state = {"possessions": base_possessions}
+
+    def set_overlay_visibility(hidden):
+        overlay_hidden["value"] = bool(hidden)
+        overlay_html.layout.display = "none" if hidden else None
+        if hidden:
+            overlay_toggle_button.description = "Show overlay"
+            overlay_toggle_button.icon = "eye"
+        else:
+            overlay_toggle_button.description = "Hide overlay"
+            overlay_toggle_button.icon = "eye-slash"
 
     def make_options(frame):
         options = []
@@ -3788,6 +3805,7 @@ def create_scoring_possession_browser(
             field_html.value = ""
             overlay_html.value = ""
             overlay_html.layout.display = "none"
+            overlay_toggle_button.layout.display = "none"
             return
 
         if view_filter.value == "shape_gallery":
@@ -3796,6 +3814,7 @@ def create_scoring_possession_browser(
             summary_panel.layout.display = "none"
             overlay_html.value = ""
             overlay_html.layout.display = "none"
+            overlay_toggle_button.layout.display = "none"
             field_panel.add_class("gallery")
             gallery_max_shapes = 1 if shape_filter.value != "all" else 6
             gallery_max_per_shape = 12 if shape_filter.value != "all" else 4
@@ -3811,7 +3830,10 @@ def create_scoring_possession_browser(
             count_label.value = f"<b>{len(browser_possessions)}</b> filtered"
             summary_html.value = ""
             summary_panel.layout.display = "none"
-            overlay_html.layout.display = None
+            overlay_toggle_button.layout.display = None
+            overlay_html.layout.display = (
+                "none" if overlay_hidden["value"] else None
+            )
             field_panel.add_class("gallery")
             field_html.value, overlay_html.value = render_possession_free_board(
                 browser_possessions,
@@ -3825,6 +3847,7 @@ def create_scoring_possession_browser(
         summary_panel.layout.display = None
         overlay_html.value = ""
         overlay_html.layout.display = "none"
+        overlay_toggle_button.layout.display = "none"
         field_panel.remove_class("gallery")
 
         row = browser_possessions.iloc[index]
@@ -3926,6 +3949,11 @@ def create_scoring_possession_browser(
     previous_button.on_click(on_previous)
     next_button.on_click(on_next)
 
+    def on_overlay_toggle(_):
+        set_overlay_visibility(not overlay_hidden["value"])
+
+    overlay_toggle_button.on_click(on_overlay_toggle)
+
     nav = widgets.HBox([previous_button, next_button, count_label])
     nav.add_class("ufa-browser-nav")
     controls = widgets.VBox(
@@ -3992,7 +4020,10 @@ def create_scoring_possession_browser(
             menu_toggle_button.icon = "bars"
 
     menu_toggle_button.on_click(on_menu_toggle)
-    topbar = widgets.HBox([menu_toggle_button])
+    topbar = widgets.HBox(
+        [menu_toggle_button, overlay_toggle_button],
+        layout=widgets.Layout(gap="8px"),
+    )
     topbar.add_class("ufa-browser-topbar")
     apply_filters()
     return widgets.VBox([widgets.HTML(_possession_browser_css()), topbar, shell])
