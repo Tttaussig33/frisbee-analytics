@@ -3680,7 +3680,7 @@ def create_scoring_possession_browser(
     free_board_card_filter = widgets.IntSlider(
         value=min(24, len(base_possessions)),
         min=1,
-        max=max(1, min(120, len(base_possessions))),
+        max=max(1, len(base_possessions)),
         step=1,
         description="Cards shown",
         continuous_update=False,
@@ -3906,7 +3906,7 @@ def create_scoring_possession_browser(
 
         filtered = order_possessions(filtered)
 
-        board_card_limit = max(1, min(120, len(filtered)))
+        board_card_limit = max(1, len(filtered))
         if free_board_card_filter.max != board_card_limit:
             free_board_card_filter.max = board_card_limit
         if free_board_card_filter.value > board_card_limit:
