@@ -2282,8 +2282,31 @@ def render_possession_free_board(
         "event.dataTransfer.setData('text/plain', this.id);"
         "event.dataTransfer.effectAllowed = 'move';"
         "this.classList.add('dragging');"
+        "const dragBoard = this.closest('.ufa-free-board');"
+        "if (dragBoard && this.classList.contains('ufa-free-card')"
+        "&& this.classList.contains('row-selected')) {"
+        "const selectedCards = Array.from("
+        "dragBoard.querySelectorAll('.ufa-free-card.row-selected')"
+        ");"
+        "if (selectedCards.length > 1) {"
+        "selectedCards.forEach(function(card) {"
+        "card.classList.add('group-dragging');"
+        "});"
+        "}"
+        "}"
     )
-    drag_end = "this.classList.remove('dragging');"
+    drag_end = (
+        "const dragBoard = this.closest('.ufa-free-board');"
+        "this.classList.remove('dragging');"
+        "if (dragBoard) {"
+        "dragBoard.querySelectorAll('.group-dragging').forEach(function(item) {"
+        "item.classList.remove('group-dragging');"
+        "});"
+        "dragBoard.querySelectorAll('.drop-target').forEach(function(item) {"
+        "item.classList.remove('drop-target');"
+        "});"
+        "}"
+    )
     drag_over = "event.preventDefault(); this.classList.add('drop-target');"
     drag_leave = "this.classList.remove('drop-target');"
     drop = (
@@ -2294,12 +2317,19 @@ def render_possession_free_board(
         "event.dataTransfer.getData('text/plain')"
         ");"
         "if (!board || !dragged || dragged === this) { return; }"
+        "const movingItems = dragged.classList.contains('ufa-free-card')"
+        "&& dragged.classList.contains('row-selected')"
+        "? Array.from(board.querySelectorAll('.ufa-free-card.row-selected'))"
+        ": [dragged];"
+        "if (movingItems.includes(this)) { return; }"
         "const items = Array.from(board.querySelectorAll('.ufa-free-board-item'));"
         "const fromIndex = items.indexOf(dragged);"
         "const toIndex = items.indexOf(this);"
         "if (fromIndex < 0 || toIndex < 0) { return; }"
-        "if (fromIndex < toIndex) { this.after(dragged); }"
-        "else { this.before(dragged); }"
+        "const fragment = document.createDocumentFragment();"
+        "movingItems.forEach(function(item) { fragment.appendChild(item); });"
+        "if (fromIndex < toIndex) { this.after(fragment); }"
+        "else { this.before(fragment); }"
     )
     select_arrange_target = (
         f"const board = document.getElementById({json.dumps(board_id)});"
@@ -3347,6 +3377,10 @@ def _possession_browser_css():
       }
       .ufa-free-card.dragging {
         opacity: 0.55;
+        transform: scale(0.98);
+      }
+      .ufa-free-card.group-dragging {
+        opacity: 0.42;
         transform: scale(0.98);
       }
       .ufa-free-card.drop-target {
