@@ -143,6 +143,27 @@ paper_table = format_model_performance_table(comparison)
 latex = model_performance_table_to_latex(paper_table)
 ```
 
+## Possession Pattern Browser
+
+Generate a standalone HTML browser from the cached per-game Shown Space throws:
+
+```powershell
+python scripts/export_possession_pattern_browser.py --team glory --season 2026
+```
+
+The output is written to `outputs/possession_browsers/2026-glory.html`. The
+standalone page includes possession filters, draggable cards, row groups,
+overlays, arrangement saving, a sticky arrangement toolbar, and a team selector.
+
+To generate the linked browser pages for every cached team:
+
+```powershell
+python scripts/export_possession_pattern_browser.py --all-teams --team glory --season 2026
+```
+
+Open `outputs/possession_browsers/index.html`; the team selector navigates among
+all 22 team pages without rerunning the notebook.
+
 ## Validation
 
 Compare generated stats to a Shown Space-style reference CSV:

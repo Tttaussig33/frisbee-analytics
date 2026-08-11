@@ -2,6 +2,7 @@ import time
 import hashlib
 import json
 from html import escape
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -2209,6 +2210,7 @@ def render_possession_free_board(
     max_cards=24,
     include_overlay=True,
     return_overlay=False,
+    external_controls=False,
 ):
     """Render a draggable board of mini possession cards."""
     if possessions.empty:
@@ -2498,7 +2500,7 @@ def render_possession_free_board(
         "currentGroup = {title: title || 'Pattern group ' + (groups.length + 2), possessions: []};"
         "return;"
         "}"
-        "if (!item.classList.contains('ufa-free-card')) { return; }"
+        "if (!item.classList.contains('ufa-free-card') || item.hidden) { return; }"
         "const checkbox = item.querySelector('.ufa-free-overlay-check');"
         "currentGroup.possessions.push({"
         "possession_id: item.dataset.possessionId,"
@@ -2665,6 +2667,15 @@ def render_possession_free_board(
         total_aec = _format_browser_number(row.get("total_aec"), digits=3)
         outcome = escape(str(row.get("outcome", "unknown")).title())
         line_type = escape(_line_type_label(row.get("line_type")))
+        outcome_value = escape(
+            str(row.get("outcome", "unknown")).strip().lower(), quote=True
+        )
+        line_type_value = escape(
+            str(row.get("line_type", "unknown")).strip().lower(), quote=True
+        )
+        throw_count_value = int(row.get("throw_count", len(path)))
+        huck_count_value = pd.to_numeric(row.get("huck_count", 0), errors="coerce")
+        huck_count_value = 0 if pd.isna(huck_count_value) else int(huck_count_value)
         shape_label = escape(_shape_cluster_label(row))
         meta = (
             f"{escape(str(row.get('GameID', '-')))} | "
@@ -2698,6 +2709,12 @@ def render_possession_free_board(
               data-possession-id="{escape(str(row['possession_id']), quote=True)}"
               data-card-label="{escape(card_label, quote=True)}"
               data-arrange-label="{escape(card_label, quote=True)}"
+              data-outcome="{outcome_value}"
+              data-line-type="{line_type_value}"
+              data-throw-count="{throw_count_value}"
+              data-huck-count="{huck_count_value}"
+              data-aec-per-throw="{escape(str(row.get('aec_per_throw', '')), quote=True)}"
+              data-total-aec="{escape(str(row.get('total_aec', '')), quote=True)}"
               ondragstart="{escape(drag_start, quote=True)}"
               ondragend="{escape(drag_end, quote=True)}"
               ondragover="{escape(drag_over, quote=True)}"
@@ -2742,8 +2759,11 @@ def render_possession_free_board(
         </button>
       </aside>
     """
+    board_wrap_class = "ufa-free-board-wrap"
+    if external_controls:
+        board_wrap_class += " with-external-controls"
     board_html = f"""
-    <div id="{wrap_id}" class="ufa-free-board-wrap">
+    <div id="{wrap_id}" class="{board_wrap_class}">
       <div class="ufa-free-board-layout{' with-inline-overlay' if include_overlay else ''}">
         <div class="ufa-free-board-content">
           <div class="ufa-gallery-kicker">Free Arrange</div>
@@ -2753,25 +2773,25 @@ def render_possession_free_board(
           <div class="ufa-free-board-actions">
             <label>
               Placement
-              <select id="{insert_position_id}">
+              <select id="{insert_position_id}" class="ufa-free-insert-position">
                 <option value="above">Above selected</option>
                 <option value="below">Below selected</option>
                 <option value="bottom">At bottom</option>
               </select>
             </label>
-            <button type="button"
+            <button class="ufa-free-insert-row-break" type="button"
               onclick="{escape(insert_row_break, quote=True)}">
               Insert row break
             </button>
-            <button class="primary" type="button"
+            <button class="primary ufa-free-save-arrangement" type="button"
               onclick="{escape(save_arrangement, quote=True)}">
               Save arrangement
             </button>
-            <button type="button"
+            <button class="ufa-free-load-arrangement" type="button"
               onclick="{escape(load_arrangement, quote=True)}">
               Load saved
             </button>
-            <button type="button"
+            <button class="ufa-free-clear-row-breaks" type="button"
               onclick="{escape(clear_row_breaks, quote=True)}">
               Clear row breaks
             </button>
@@ -2953,6 +2973,64 @@ def _possession_browser_css():
       }
       .ufa-browser-topbar .widget-button {
         border-radius: 6px;
+      }
+      .ufa-browser-sticky-toolbar {
+        position: sticky !important;
+        top: 8px;
+        z-index: 2000;
+        box-sizing: border-box;
+        align-self: flex-start;
+        width: calc(100% - 286px) !important;
+        max-width: 1380px;
+        margin: 0 0 8px;
+        overflow: visible !important;
+      }
+      .ufa-browser-sticky-toolbar .widget-html-content {
+        width: 100% !important;
+        overflow: visible !important;
+      }
+      .ufa-free-external-actions {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #cbd6e2;
+        border-radius: 7px;
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 5px 14px rgba(15, 23, 42, 0.12);
+        color: #52637a;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .ufa-free-external-actions label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .ufa-free-external-actions select,
+      .ufa-free-external-actions button {
+        border: 1px solid #cbd6e2;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #10233f;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0;
+        padding: 6px 10px;
+        text-transform: none;
+      }
+      .ufa-free-external-actions button {
+        cursor: pointer;
+      }
+      .ufa-free-external-actions button.primary {
+        border-color: #2b8ce6;
+        background: #2b8ce6;
+        color: #ffffff;
       }
       .ufa-browser-controls {
         box-sizing: border-box;
@@ -3177,11 +3255,15 @@ def _possession_browser_css():
         min-width: 0;
       }
       .ufa-free-board-actions {
+        box-sizing: border-box;
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         gap: 8px;
         margin: -4px 0 12px;
+        padding: 8px 0;
+        border-bottom: 1px solid #d8e1eb;
+        background: #ffffff;
       }
       .ufa-free-board-actions label {
         display: inline-flex;
@@ -3216,6 +3298,9 @@ def _possession_browser_css():
         border-color: #2b8ce6;
         background: #2b8ce6;
         color: #ffffff;
+      }
+      .ufa-free-board-wrap.with-external-controls .ufa-free-board-actions {
+        display: none;
       }
       .ufa-free-export-status {
         min-height: 18px;
@@ -3483,6 +3568,11 @@ def _possession_browser_css():
         width: 100%;
       }
       @media (max-width: 800px) {
+        .ufa-browser-sticky-toolbar {
+          top: 4px;
+          width: 100% !important;
+          max-width: none;
+        }
         .ufa-free-board-layout {
           flex-direction: column-reverse;
           padding-right: 0;
@@ -3509,6 +3599,380 @@ def _possession_browser_css():
       }
     </style>
     """
+
+
+def write_possession_pattern_browser_html(
+    possessions,
+    paths,
+    output_path,
+    title="UFA possession pattern browser",
+    max_cards=None,
+    team_id=None,
+    team_options=None,
+):
+    """Write a standalone HTML free-arrange possession browser."""
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    path_lookup = _browser_path_lookup(paths)
+    browser_possessions = _sort_browser_possessions(possessions)
+    browser_possessions = browser_possessions[
+        browser_possessions["possession_id"].isin(path_lookup)
+    ].reset_index(drop=True)
+    if browser_possessions.empty:
+        raise ValueError("No possessions with matching paths were provided.")
+
+    if max_cards is None:
+        max_cards = len(browser_possessions)
+    max_cards = max(1, min(int(max_cards), len(browser_possessions)))
+    throw_counts = pd.to_numeric(
+        browser_possessions.get("throw_count"), errors="coerce"
+    ).dropna()
+    min_throw_count = int(throw_counts.min()) if not throw_counts.empty else 1
+    max_throw_count = int(throw_counts.max()) if not throw_counts.empty else 50
+
+    board_html = render_possession_free_board(
+        browser_possessions,
+        path_lookup,
+        max_cards=max_cards,
+        include_overlay=True,
+    )
+    safe_title = escape(str(title))
+    selected_team_id = str(team_id or "").strip().lower()
+    team_options_html = ""
+    for option in team_options or []:
+        if isinstance(option, dict):
+            option_id = option.get("id", "")
+            option_label = option.get("label", option_id)
+            option_href = option.get("href", "")
+        else:
+            option_id, option_label, option_href = option
+        selected = " selected" if str(option_id).lower() == selected_team_id else ""
+        team_options_html += (
+            f'<option value="{escape(str(option_href), quote=True)}"{selected}>'
+            f"{escape(str(option_label))}</option>"
+        )
+    team_filter_html = ""
+    if team_options_html:
+        team_filter_html = (
+            '<label class="standalone-team-filter">Team'
+            '<select id="standaloneTeamFilter" aria-label="Choose team">'
+            f"{team_options_html}</select></label>"
+        )
+    document = (
+        "<!doctype html>\n"
+        '<html lang="en">\n'
+        "<head>\n"
+        '  <meta charset="utf-8" />\n'
+        '  <meta name="viewport" content="width=device-width, initial-scale=1" />\n'
+        f"  <title>{safe_title}</title>\n"
+        + _possession_browser_css()
+        + """
+        <style>
+          :root {
+            color: #10233f;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #eef3f7;
+          }
+          * { box-sizing: border-box; }
+          html { scroll-behavior: smooth; }
+          body { margin: 0; min-width: 760px; }
+          [hidden] { display: none !important; }
+          .standalone-page {
+            width: 100%;
+            max-width: 1840px;
+            margin: 0 auto;
+            padding: 16px;
+          }
+          .standalone-heading {
+            margin: 0 0 10px;
+            color: #10233f;
+            font-size: 22px;
+            letter-spacing: 0;
+          }
+          .standalone-filters {
+            display: flex;
+            align-items: end;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            border: 1px solid #d8e1eb;
+            border-radius: 7px;
+            background: #ffffff;
+          }
+          .standalone-filters label {
+            display: grid;
+            gap: 3px;
+            color: #52637a;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+          }
+          .standalone-filters select,
+          .standalone-filters input,
+          .standalone-filters button {
+            min-height: 34px;
+            border: 1px solid #cbd6e2;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #10233f;
+            font: 700 12px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 6px 9px;
+          }
+          .standalone-filters input { width: 84px; }
+          .standalone-team-filter select { min-width: 190px; }
+          .standalone-filters button { cursor: pointer; }
+          .standalone-count {
+            margin-left: auto;
+            align-self: center;
+            color: #52637a;
+            font-size: 12px;
+            font-weight: 800;
+          }
+          .standalone-browser .ufa-free-board-layout.with-inline-overlay {
+            padding-right: 0;
+          }
+          .standalone-browser .ufa-free-board-actions {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: 0 0 12px;
+            padding: 9px 10px;
+            border: 1px solid #cbd6e2;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 14px rgba(15, 23, 42, 0.12);
+          }
+          .standalone-browser .ufa-free-board-content {
+            overflow: visible;
+          }
+          .standalone-browser .ufa-free-overlay-shell {
+            top: 12px;
+          }
+          .standalone-browser.overlay-hidden .ufa-free-board-layout {
+            padding-right: 0;
+          }
+          @media (max-width: 980px) {
+            body { min-width: 0; }
+            .standalone-page { padding: 8px; }
+            .standalone-count { width: 100%; margin-left: 0; }
+          }
+        </style>
+        </head>
+        <body>
+          <div class="standalone-page">
+        """
+        + f"<h1 class=\"standalone-heading\">{safe_title}</h1>"
+        + f"""
+            <section class="standalone-filters" aria-label="Possession filters">
+              {team_filter_html}
+              <label>
+                Line
+                <select id="standaloneLineFilter">
+                  <option value="all">All lines</option>
+                  <option value="o_line">O-line</option>
+                  <option value="d_line">D-line</option>
+                </select>
+              </label>
+              <label>
+                Outcome
+                <select id="standaloneOutcomeFilter">
+                  <option value="all">All outcomes</option>
+                  <option value="goal">Goals</option>
+                  <option value="turnover">Turnovers</option>
+                </select>
+              </label>
+              <label>
+                Hucks
+                <select id="standaloneHuckFilter">
+                  <option value="all">Include all</option>
+                  <option value="non_huck">Non-hucks only</option>
+                  <option value="huck">Hucks only</option>
+                </select>
+              </label>
+              <label>
+                Min throws
+                <input id="standaloneMinThrows" type="number" min="0" value="{min_throw_count}" />
+              </label>
+              <label>
+                Max throws
+                <input id="standaloneMaxThrows" type="number" min="0" value="{max_throw_count}" />
+              </label>
+              <label>
+                Cards shown
+                <input id="standaloneCardLimit" type="number" min="1" max="{max_cards}" value="{max_cards}" />
+              </label>
+              <button id="standaloneResetFilters" type="button">Reset filters</button>
+              <button id="standaloneToggleOverlay" type="button">Hide overlay</button>
+              <span id="standaloneVisibleCount" class="standalone-count"></span>
+            </section>
+            <main id="standaloneBrowser" class="standalone-browser">
+              {board_html}
+            </main>
+          </div>
+          <script>
+            (function () {{
+              const browser = document.getElementById('standaloneBrowser');
+              const board = browser.querySelector('.ufa-free-board');
+              const teamFilter = document.getElementById('standaloneTeamFilter');
+              const lineFilter = document.getElementById('standaloneLineFilter');
+              const outcomeFilter = document.getElementById('standaloneOutcomeFilter');
+              const huckFilter = document.getElementById('standaloneHuckFilter');
+              const minThrows = document.getElementById('standaloneMinThrows');
+              const maxThrows = document.getElementById('standaloneMaxThrows');
+              const cardLimit = document.getElementById('standaloneCardLimit');
+              const count = document.getElementById('standaloneVisibleCount');
+              const reset = document.getElementById('standaloneResetFilters');
+              const overlayToggle = document.getElementById('standaloneToggleOverlay');
+              const overlayShell = browser.querySelector('.ufa-free-overlay-shell');
+
+              if (teamFilter) {{
+                teamFilter.addEventListener('change', function () {{
+                  if (teamFilter.value) {{ window.location.assign(teamFilter.value); }}
+                }});
+              }}
+
+              const dragScrollEdge = 140;
+              const dragScrollMaxSpeed = 30;
+              let dragScrollSpeed = 0;
+              let dragScrollFrame = null;
+
+              function stopDragScroll() {{
+                dragScrollSpeed = 0;
+                if (dragScrollFrame !== null) {{
+                  window.cancelAnimationFrame(dragScrollFrame);
+                  dragScrollFrame = null;
+                }}
+              }}
+
+              function runDragScroll() {{
+                if (!board.querySelector('.ufa-free-board-item.dragging') || dragScrollSpeed === 0) {{
+                  stopDragScroll();
+                  return;
+                }}
+                window.scrollBy(0, dragScrollSpeed);
+                dragScrollFrame = window.requestAnimationFrame(runDragScroll);
+              }}
+
+              document.addEventListener('dragover', function (event) {{
+                if (!board.querySelector('.ufa-free-board-item.dragging')) {{ return; }}
+                event.preventDefault();
+                const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+                const edge = Math.min(dragScrollEdge, viewportHeight * 0.25);
+                let nextSpeed = 0;
+                if (event.clientY < edge) {{
+                  const strength = Math.max(0, (edge - event.clientY) / edge);
+                  nextSpeed = -Math.max(4, Math.round(dragScrollMaxSpeed * strength));
+                }} else if (event.clientY > viewportHeight - edge) {{
+                  const strength = Math.max(0, (event.clientY - (viewportHeight - edge)) / edge);
+                  nextSpeed = Math.max(4, Math.round(dragScrollMaxSpeed * strength));
+                }}
+                dragScrollSpeed = nextSpeed;
+                if (dragScrollSpeed === 0) {{
+                  stopDragScroll();
+                }} else if (dragScrollFrame === null) {{
+                  dragScrollFrame = window.requestAnimationFrame(runDragScroll);
+                }}
+              }});
+              document.addEventListener('dragend', stopDragScroll, true);
+              document.addEventListener('drop', stopDragScroll, true);
+
+              function numericValue(input, fallback) {{
+                const value = Number(input.value);
+                return Number.isFinite(value) ? value : fallback;
+              }}
+
+              function syncRowBreakVisibility() {{
+                board.querySelectorAll('.ufa-free-row-break').forEach(function (rowBreak) {{
+                  let item = rowBreak.nextElementSibling;
+                  let hasVisibleCard = false;
+                  while (item && !item.classList.contains('ufa-free-row-break')) {{
+                    if (item.classList.contains('ufa-free-card') && !item.hidden) {{
+                      hasVisibleCard = true;
+                      break;
+                    }}
+                    item = item.nextElementSibling;
+                  }}
+                  rowBreak.hidden = !hasVisibleCard;
+                }});
+              }}
+
+              function applyFilters() {{
+                const selectedLine = lineFilter.value;
+                const selectedOutcome = outcomeFilter.value;
+                const selectedHuck = huckFilter.value;
+                const minimum = numericValue(minThrows, 0);
+                const maximum = numericValue(maxThrows, Number.POSITIVE_INFINITY);
+                const limit = Math.max(1, numericValue(cardLimit, Number.POSITIVE_INFINITY));
+                let visible = 0;
+                let matched = 0;
+
+                board.querySelectorAll('.ufa-free-card').forEach(function (card) {{
+                  const throws = Number(card.dataset.throwCount || 0);
+                  const hucks = Number(card.dataset.huckCount || 0);
+                  const lineMatches = selectedLine === 'all' || card.dataset.lineType === selectedLine;
+                  const outcomeMatches = selectedOutcome === 'all' || card.dataset.outcome === selectedOutcome;
+                  const huckMatches = selectedHuck === 'all'
+                    || (selectedHuck === 'non_huck' && hucks === 0)
+                    || (selectedHuck === 'huck' && hucks > 0);
+                  const throwMatches = throws >= minimum && throws <= maximum;
+                  const matches = lineMatches && outcomeMatches && huckMatches && throwMatches;
+                  if (matches) {{ matched += 1; }}
+                  const show = matches && visible < limit;
+                  card.hidden = !show;
+                  if (show) {{ visible += 1; }}
+                  if (!show) {{ card.classList.remove('row-selected'); }}
+                }});
+
+                syncRowBreakVisibility();
+                count.textContent = visible.toLocaleString() + ' shown of '
+                  + matched.toLocaleString() + ' matching possessions';
+              }}
+
+              [lineFilter, outcomeFilter, huckFilter, minThrows, maxThrows, cardLimit]
+                .forEach(function (control) {{
+                  control.addEventListener('change', applyFilters);
+                  control.addEventListener('input', applyFilters);
+                }});
+
+              reset.addEventListener('click', function () {{
+                lineFilter.value = 'all';
+                outcomeFilter.value = 'all';
+                huckFilter.value = 'all';
+                minThrows.value = '{min_throw_count}';
+                maxThrows.value = '{max_throw_count}';
+                cardLimit.value = '{max_cards}';
+                applyFilters();
+              }});
+
+              overlayToggle.addEventListener('click', function () {{
+                const hidden = !overlayShell.hidden;
+                overlayShell.hidden = hidden;
+                browser.classList.toggle('overlay-hidden', hidden);
+                overlayToggle.textContent = hidden ? 'Show overlay' : 'Hide overlay';
+              }});
+
+              let filterQueued = false;
+              new MutationObserver(function () {{
+                if (filterQueued) {{ return; }}
+                filterQueued = true;
+                window.requestAnimationFrame(function () {{
+                  filterQueued = false;
+                  applyFilters();
+                }});
+              }}).observe(board, {{ childList: true }});
+
+              applyFilters();
+            }})();
+          </script>
+        </body>
+        </html>
+        """
+    )
+    output_path.write_text(document, encoding="utf-8")
+    return output_path
 
 
 def create_scoring_possession_browser(
@@ -3735,6 +4199,56 @@ def create_scoring_possession_browser(
     )
     overlay_hidden = {"value": False}
     state = {"possessions": base_possessions}
+    sticky_toolbar_bootstrap = (
+        "var widget=this.closest('.widget-html');"
+        "if(widget){"
+        "widget.style.position='sticky';"
+        "widget.style.top='8px';"
+        "widget.style.zIndex='2000';"
+        "widget.style.overflow='visible';"
+        "}"
+    )
+    external_toolbar_html = f"""
+    <div class="ufa-free-external-actions" aria-label="Free arrange controls"
+      onmouseenter="{escape(sticky_toolbar_bootstrap, quote=True)}"
+      onfocusin="{escape(sticky_toolbar_bootstrap, quote=True)}">
+      <label>
+        Placement
+        <select class="ufa-free-external-position" aria-label="Placement"
+          onchange="(function(value){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var select=board&&board.querySelector('.ufa-free-insert-position');if(select){{select.value=value;}}}})(this.value)">
+          <option value="above">Above selected</option>
+          <option value="below">Below selected</option>
+          <option value="bottom">At bottom</option>
+        </select>
+      </label>
+      <button type="button"
+        onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var position=document.querySelector('.ufa-free-external-position');var select=board&&board.querySelector('.ufa-free-insert-position');var button=board&&board.querySelector('.ufa-free-insert-row-break');if(select&&position){{select.value=position.value;}}if(button){{button.click();}}}})()">
+        Insert row break
+      </button>
+      <button class="primary" type="button"
+        onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-save-arrangement');if(button){{button.click();}}}})()">
+        Save arrangement
+      </button>
+      <button type="button"
+        onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-load-arrangement');if(button){{button.click();}}}})()">
+        Load saved
+      </button>
+      <button type="button"
+        onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-clear-row-breaks');if(button){{button.click();}}}})()">
+        Clear row breaks
+      </button>
+    </div>
+    """
+    free_arrange_toolbar = widgets.HTML(
+        value=external_toolbar_html,
+        layout=widgets.Layout(width="100%", display="none", overflow="visible"),
+    )
+    free_arrange_toolbar.add_class("ufa-browser-sticky-toolbar")
+
+    def set_free_arrange_toolbar_visibility():
+        free_arrange_toolbar.layout.display = (
+            None if view_filter.value == "free_board" else "none"
+        )
 
     def set_overlay_visibility(hidden):
         overlay_hidden["value"] = bool(hidden)
@@ -3799,6 +4313,7 @@ def create_scoring_possession_browser(
 
     def update(index):
         browser_possessions = state["possessions"]
+        set_free_arrange_toolbar_visibility()
         if index is None or browser_possessions.empty:
             count_label.value = "<b>0</b> of <b>0</b>"
             summary_html.value = "<b>No possessions match these filters.</b>"
@@ -3841,6 +4356,7 @@ def create_scoring_possession_browser(
                 max_cards=int(free_board_card_filter.value),
                 include_overlay=False,
                 return_overlay=True,
+                external_controls=True,
             )
             return
 
@@ -3857,6 +4373,7 @@ def create_scoring_possession_browser(
         field_html.value = render_shownspace_possession_svg(path)
 
     def apply_filters(_=None):
+        set_free_arrange_toolbar_visibility()
         free_board_card_filter.layout.display = (
             None if view_filter.value == "free_board" else "none"
         )
@@ -4026,7 +4543,17 @@ def create_scoring_possession_browser(
     )
     topbar.add_class("ufa-browser-topbar")
     apply_filters()
-    return widgets.VBox([widgets.HTML(_possession_browser_css()), topbar, shell])
+    browser_root = widgets.VBox(
+        [
+            widgets.HTML(_possession_browser_css()),
+            topbar,
+            free_arrange_toolbar,
+            shell,
+        ],
+        layout=widgets.Layout(width="100%", overflow="visible"),
+    )
+    browser_root.add_class("ufa-possession-browser-root")
+    return browser_root
 
 
 def create_team_scoring_possession_browser(
