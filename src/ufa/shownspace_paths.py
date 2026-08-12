@@ -2292,6 +2292,76 @@ def render_possession_free_board(
         "selectedCards.forEach(function(card) {"
         "card.classList.add('group-dragging');"
         "});"
+        "document.querySelectorAll('.ufa-multi-drag-preview').forEach(function(item) {"
+        "if (item._ufaMoveHandler) {"
+        "document.removeEventListener('dragover', item._ufaMoveHandler, true);"
+        "}"
+        "item.remove();"
+        "});"
+        "const preview = document.createElement('div');"
+        "preview.className = 'ufa-multi-drag-preview';"
+        "const cardCount = selectedCards.length;"
+        "const fieldWidth = 108;"
+        "const fieldHeight = 230;"
+        "const previewGap = 6;"
+        "const previewPadding = 12;"
+        "const availableWidth = Math.max(fieldWidth, window.innerWidth * 0.72);"
+        "const availableHeight = Math.max(fieldHeight, window.innerHeight * 0.82);"
+        "const maxFullColumns = Math.max(1, Math.floor("
+        "(availableWidth - previewPadding + previewGap) / (fieldWidth + previewGap)"
+        "));"
+        "const columns = Math.min(cardCount, 6, maxFullColumns);"
+        "const rows = Math.ceil(cardCount / columns);"
+        "const widthScale = (availableWidth - previewPadding"
+        "- ((columns - 1) * previewGap)) / (columns * fieldWidth);"
+        "const heightScale = (availableHeight - previewPadding"
+        "- ((rows - 1) * previewGap)) / (rows * fieldHeight);"
+        "const previewScale = Math.min(1, widthScale, heightScale);"
+        "const thumbWidth = Math.max(18, Math.floor(fieldWidth * previewScale));"
+        "const thumbHeight = Math.max(38, Math.round(fieldHeight * previewScale));"
+        "preview.style.gridTemplateColumns = 'repeat(' + columns + ', '"
+        "+ thumbWidth + 'px)';"
+        "selectedCards.forEach(function(card) {"
+        "const field = card.querySelector('.ufa-mini-svg');"
+        "if (!field) { return; }"
+        "const fieldClone = field.cloneNode(true);"
+        "fieldClone.setAttribute('width', thumbWidth);"
+        "fieldClone.setAttribute('height', thumbHeight);"
+        "fieldClone.style.margin = '0';"
+        "preview.appendChild(fieldClone);"
+        "});"
+        "document.body.appendChild(preview);"
+        "const draggedIndex = Math.max(0, selectedCards.indexOf(this));"
+        "const draggedColumn = draggedIndex % columns;"
+        "const draggedRow = Math.floor(draggedIndex / columns);"
+        "const sourceField = this.querySelector('.ufa-mini-svg');"
+        "const sourceRect = sourceField ? sourceField.getBoundingClientRect() : null;"
+        "const pointerXRatio = sourceRect && sourceRect.width"
+        "? Math.max(0, Math.min(1, (event.clientX - sourceRect.left) / sourceRect.width))"
+        ": 0.5;"
+        "const pointerYRatio = sourceRect && sourceRect.height"
+        "? Math.max(0, Math.min(1, (event.clientY - sourceRect.top) / sourceRect.height))"
+        ": 0.5;"
+        "const previewInset = 8;"
+        "const anchorX = previewInset + (draggedColumn * (thumbWidth + previewGap))"
+        "+ (pointerXRatio * thumbWidth);"
+        "const anchorY = previewInset + (draggedRow * (thumbHeight + previewGap))"
+        "+ (pointerYRatio * thumbHeight);"
+        "const positionPreview = function(moveEvent) {"
+        "if (!moveEvent || (!moveEvent.clientX && !moveEvent.clientY)) { return; }"
+        "preview.style.left = (moveEvent.clientX - anchorX) + 'px';"
+        "preview.style.top = (moveEvent.clientY - anchorY) + 'px';"
+        "};"
+        "preview._ufaMoveHandler = positionPreview;"
+        "document.addEventListener('dragover', positionPreview, true);"
+        "positionPreview(event);"
+        "const nativeGhost = document.createElement('canvas');"
+        "nativeGhost.className = 'ufa-native-drag-ghost';"
+        "nativeGhost.width = 1;"
+        "nativeGhost.height = 1;"
+        "document.body.appendChild(nativeGhost);"
+        "event.dataTransfer.setDragImage(nativeGhost, 0, 0);"
+        "window.setTimeout(function() { nativeGhost.remove(); }, 0);"
         "}"
         "}"
     )
@@ -2306,6 +2376,15 @@ def render_possession_free_board(
         "item.classList.remove('drop-target');"
         "});"
         "}"
+        "document.querySelectorAll('.ufa-multi-drag-preview').forEach(function(item) {"
+        "if (item._ufaMoveHandler) {"
+        "document.removeEventListener('dragover', item._ufaMoveHandler, true);"
+        "}"
+        "item.remove();"
+        "});"
+        "document.querySelectorAll('.ufa-native-drag-ghost').forEach(function(item) {"
+        "item.remove();"
+        "});"
     )
     drag_over = "event.preventDefault(); this.classList.add('drop-target');"
     drag_leave = "this.classList.remove('drop-target');"
@@ -2990,8 +3069,8 @@ def _possession_browser_css():
         max-width: 1680px;
         overflow: visible !important;
         border: 1px solid #d8e1eb;
-        border-radius: 12px;
-        background: linear-gradient(180deg, #f8fbff 0%, #f3f6fa 100%);
+        border-radius: 8px;
+        background: #f5f8fb;
         box-shadow: 0 18px 44px rgba(15, 23, 42, 0.10);
         padding: 14px;
       }
@@ -3383,6 +3462,26 @@ def _possession_browser_css():
         opacity: 0.42;
         transform: scale(0.98);
       }
+      .ufa-multi-drag-preview {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2147483647;
+        display: grid;
+        gap: 6px;
+        padding: 6px;
+        border: 2px solid #2b8ce6;
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 8px 22px rgba(15, 35, 63, 0.24);
+        pointer-events: none;
+        will-change: left, top;
+      }
+      .ufa-multi-drag-preview .ufa-mini-svg {
+        display: block;
+        margin: 0;
+        border-radius: 3px;
+      }
       .ufa-free-card.drop-target {
         border-color: #2b8ce6;
         box-shadow: 0 0 0 3px rgba(43, 140, 230, 0.16);
@@ -3704,80 +3803,180 @@ def write_possession_pattern_browser_html(
         + """
         <style>
           :root {
-            color: #10233f;
+            color: #142a43;
+            color-scheme: light;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #eef3f7;
+            background: #edf2f6;
           }
           * { box-sizing: border-box; }
           html { scroll-behavior: smooth; }
-          body { margin: 0; min-width: 760px; }
+          body { margin: 0; min-width: 760px; background: #edf2f6; }
           [hidden] { display: none !important; }
           .standalone-page {
             width: 100%;
             max-width: 1840px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 0 14px 20px;
           }
           .standalone-heading {
-            margin: 0 0 10px;
+            display: flex;
+            align-items: center;
+            min-height: 66px;
+            margin: 0 -14px 14px;
+            padding: 16px 24px;
+            border-bottom: 1px solid #d2dce7;
+            background: #edf2f6;
+            box-shadow: none;
             color: #10233f;
-            font-size: 22px;
+            font-size: 24px;
+            font-weight: 780;
             letter-spacing: 0;
           }
           .standalone-filters {
             display: flex;
             align-items: end;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 12px;
-            padding: 10px 12px;
-            border: 1px solid #d8e1eb;
-            border-radius: 7px;
+            gap: 10px 8px;
+            margin-bottom: 14px;
+            padding: 12px 14px;
+            border: 1px solid #d2dce7;
+            border-left: 4px solid #49a365;
+            border-radius: 8px;
             background: #ffffff;
+            box-shadow: 0 3px 10px rgba(15, 35, 58, 0.06);
           }
           .standalone-filters label {
             display: grid;
-            gap: 3px;
-            color: #52637a;
-            font-size: 11px;
+            gap: 4px;
+            color: #40546e;
+            font-size: 10px;
             font-weight: 800;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
           }
           .standalone-filters select,
           .standalone-filters input,
           .standalone-filters button {
-            min-height: 34px;
-            border: 1px solid #cbd6e2;
+            min-height: 36px;
+            border: 1px solid #c4d0dd;
             border-radius: 6px;
             background: #ffffff;
-            color: #10233f;
+            color: #142a43;
             font: 700 12px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            padding: 6px 9px;
+            padding: 7px 10px;
+            transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
           }
           .standalone-filters input { width: 84px; }
-          .standalone-team-filter select { min-width: 190px; }
-          .standalone-filters button { cursor: pointer; }
+          .standalone-team-filter select {
+            min-width: 200px;
+            border-color: #83bd95;
+            background: #f1f9f3;
+            box-shadow: inset 3px 0 0 #49a365;
+          }
+          .standalone-filters select:hover,
+          .standalone-filters input:hover,
+          .standalone-filters button:hover {
+            border-color: #879cb2;
+          }
+          .standalone-filters select:focus-visible,
+          .standalone-filters input:focus-visible,
+          .standalone-filters button:focus-visible,
+          .standalone-browser .ufa-free-board-actions select:focus-visible,
+          .standalone-browser .ufa-free-board-actions button:focus-visible {
+            outline: 3px solid rgba(44, 125, 204, 0.22);
+            outline-offset: 1px;
+          }
+          .standalone-filters button {
+            cursor: pointer;
+            align-self: end;
+          }
+          #standaloneResetFilters {
+            background: #f5f7fa;
+            color: #344b65;
+          }
+          #standaloneToggleOverlay {
+            border-color: #83bd95;
+            background: #eaf6ed;
+            color: #1f6638;
+          }
           .standalone-count {
             margin-left: auto;
             align-self: center;
-            color: #52637a;
+            min-height: 36px;
+            padding: 9px 11px;
+            border-left: 3px solid #49a365;
+            border-radius: 4px;
+            background: #f4f7fa;
+            color: #40546e;
             font-size: 12px;
             font-weight: 800;
+          }
+          .standalone-browser .ufa-free-board-wrap {
+            border-color: #d2dce7;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(15, 35, 58, 0.08);
+          }
+          .standalone-browser .ufa-free-board-content > .ufa-gallery-kicker {
+            display: inline-block;
+            margin: 0 10px 10px 0;
+            color: #243d5a;
+            font-size: 12px;
+          }
+          .standalone-browser .ufa-free-board-content > .ufa-free-board-meta {
+            display: inline-block;
+            margin: 0 0 10px;
+            color: #697b91;
           }
           .standalone-browser .ufa-free-board-layout.with-inline-overlay {
             padding-right: 0;
           }
           .standalone-browser .ufa-free-board-actions {
             position: sticky;
-            top: 0;
+            top: 8px;
             z-index: 100;
             margin: 0 0 12px;
-            padding: 9px 10px;
-            border: 1px solid #cbd6e2;
+            padding: 9px 11px;
+            border: 1px solid #c4d0dd;
+            border-left: 4px solid #49a365;
             border-radius: 7px;
             background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 5px 14px rgba(15, 23, 42, 0.12);
+            box-shadow: 0 6px 16px rgba(15, 35, 58, 0.13);
+          }
+          .standalone-browser .ufa-free-board-actions label {
+            color: #52637a;
+          }
+          .standalone-browser .ufa-free-board-actions select,
+          .standalone-browser .ufa-free-board-actions button {
+            min-height: 34px;
+            border-color: #b9c7d5;
+            background: #ffffff;
+            color: #10233f;
+          }
+          .standalone-browser .ufa-free-board-actions button:hover {
+            border-color: #879cb2;
+            background: #f3f6f9;
+          }
+          .standalone-browser .ufa-free-board-actions button.primary {
+            border-color: #2c7dcc;
+            background: #2c7dcc;
+            color: #ffffff;
+          }
+          .standalone-browser .ufa-free-board-actions button.primary:hover {
+            border-color: #4191dd;
+            background: #4191dd;
+          }
+          .standalone-browser .ufa-free-board-actions .ufa-free-sticky-overlay-toggle {
+            border-color: #79b98c;
+            background: #e7f5eb;
+            color: #1f6638;
+          }
+          .standalone-browser .ufa-free-board-actions .ufa-free-clear-row-breaks {
+            border-color: #d8aaa4;
+            color: #8a3f37;
+          }
+          .standalone-browser .ufa-free-board-actions .ufa-free-arrange-selection-count {
+            margin-left: auto;
+            color: #52637a;
           }
           .standalone-browser .ufa-free-board-content {
             overflow: visible;
@@ -3790,8 +3989,20 @@ def write_possession_pattern_browser_html(
           }
           @media (max-width: 980px) {
             body { min-width: 0; }
-            .standalone-page { padding: 8px; }
+            .standalone-page { padding: 0 8px 14px; }
+            .standalone-heading {
+              min-height: 56px;
+              margin: 0 -8px 10px;
+              padding: 13px 16px;
+              font-size: 20px;
+            }
+            .standalone-filters { padding: 10px; }
             .standalone-count { width: 100%; margin-left: 0; }
+            .standalone-browser .ufa-free-board-actions { top: 4px; }
+            .standalone-browser .ufa-free-board-actions .ufa-free-arrange-selection-count {
+              width: 100%;
+              margin-left: 0;
+            }
           }
         </style>
         </head>
@@ -3861,6 +4072,18 @@ def write_possession_pattern_browser_html(
               const reset = document.getElementById('standaloneResetFilters');
               const overlayToggle = document.getElementById('standaloneToggleOverlay');
               const overlayShell = browser.querySelector('.ufa-free-overlay-shell');
+              const boardActions = browser.querySelector('.ufa-free-board-actions');
+              const stickyOverlayToggle = document.createElement('button');
+              stickyOverlayToggle.id = 'standaloneStickyToggleOverlay';
+              stickyOverlayToggle.className = 'ufa-free-sticky-overlay-toggle';
+              stickyOverlayToggle.type = 'button';
+              stickyOverlayToggle.textContent = 'Hide overlay';
+              if (boardActions) {{
+                const selectionCount = boardActions.querySelector(
+                  '.ufa-free-arrange-selection-count'
+                );
+                boardActions.insertBefore(stickyOverlayToggle, selectionCount || null);
+              }}
 
               if (teamFilter) {{
                 teamFilter.addEventListener('change', function () {{
@@ -3981,11 +4204,21 @@ def write_possession_pattern_browser_html(
                 applyFilters();
               }});
 
-              overlayToggle.addEventListener('click', function () {{
-                const hidden = !overlayShell.hidden;
+              function setOverlayHidden(hidden) {{
                 overlayShell.hidden = hidden;
                 browser.classList.toggle('overlay-hidden', hidden);
-                overlayToggle.textContent = hidden ? 'Show overlay' : 'Hide overlay';
+                const buttonText = hidden ? 'Show overlay' : 'Hide overlay';
+                overlayToggle.textContent = buttonText;
+                stickyOverlayToggle.textContent = buttonText;
+                overlayToggle.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+                stickyOverlayToggle.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+              }}
+
+              overlayToggle.addEventListener('click', function () {{
+                setOverlayHidden(!overlayShell.hidden);
+              }});
+              stickyOverlayToggle.addEventListener('click', function () {{
+                setOverlayHidden(!overlayShell.hidden);
               }});
 
               let filterQueued = false;
