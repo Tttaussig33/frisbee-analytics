@@ -2256,7 +2256,12 @@ def render_possession_free_board(
         "layer.querySelectorAll('.ufa-overlay-path').forEach(function(path) {"
         "path.style.display = 'none';"
         "});"
-        "const selected = Array.from(wrap.querySelectorAll('.ufa-free-overlay-check:checked'));"
+        "const selected = Array.from("
+        "wrap.querySelectorAll('.ufa-free-overlay-check:checked')"
+        ").filter(function(input) {"
+        "const card = input.closest('.ufa-free-card');"
+        "return Boolean(card && !card.hidden);"
+        "});"
         "selected.forEach(function(input) {"
         "const path = document.getElementById(input.dataset.overlayPath);"
         "if (path) { path.style.display = ''; }"
@@ -2279,10 +2284,22 @@ def render_possession_free_board(
         f"{update_overlay}"
     )
     drag_start = (
+        "const dragOrigin = event.target && event.target.closest("
+        "'button, input, select, textarea, label'"
+        ");"
+        "if (dragOrigin && dragOrigin !== this) {"
+        "event.preventDefault();"
+        "event.stopPropagation();"
+        "return;"
+        "}"
         "event.dataTransfer.setData('text/plain', this.id);"
         "event.dataTransfer.effectAllowed = 'move';"
         "this.classList.add('dragging');"
         "const dragBoard = this.closest('.ufa-free-board');"
+        "if (dragBoard) {"
+        "dragBoard._ufaDragSnapshot = Array.from(dragBoard.children);"
+        "dragBoard._ufaDropCommitted = false;"
+        "}"
         "if (dragBoard && this.classList.contains('ufa-free-card')"
         "&& this.classList.contains('row-selected')) {"
         "const selectedCards = Array.from("
@@ -2365,10 +2382,45 @@ def render_possession_free_board(
         "}"
         "}"
     )
+    protect_row_controls = (
+        "breaker.querySelectorAll('button, input').forEach(function(control) {"
+        "control.draggable = false;"
+        "control.onpointerdown = function(event) {"
+        "event.stopPropagation();"
+        "breaker.draggable = false;"
+        "if (control.tagName === 'BUTTON' && control.setPointerCapture"
+        "&& typeof event.pointerId === 'number') {"
+        "try { control.setPointerCapture(event.pointerId); } catch (error) {}"
+        "}"
+        "const restoreRowDrag = function() {"
+        "breaker.draggable = true;"
+        "document.removeEventListener('pointerup', restoreRowDrag, true);"
+        "document.removeEventListener('pointercancel', restoreRowDrag, true);"
+        "};"
+        "document.addEventListener('pointerup', restoreRowDrag, true);"
+        "document.addEventListener('pointercancel', restoreRowDrag, true);"
+        "};"
+        "control.onmousedown = function(event) { event.stopPropagation(); };"
+        "control.ondragstart = function(event) {"
+        "event.preventDefault();"
+        "event.stopPropagation();"
+        "};"
+        "});"
+    )
     drag_end = (
         "const dragBoard = this.closest('.ufa-free-board');"
         "this.classList.remove('dragging');"
         "if (dragBoard) {"
+        "if (!dragBoard._ufaDropCommitted"
+        "&& Array.isArray(dragBoard._ufaDragSnapshot)) {"
+        "const restoreFragment = document.createDocumentFragment();"
+        "dragBoard._ufaDragSnapshot.forEach(function(item) {"
+        "restoreFragment.appendChild(item);"
+        "});"
+        "dragBoard.appendChild(restoreFragment);"
+        "}"
+        "dragBoard._ufaDragSnapshot = null;"
+        "dragBoard._ufaDropCommitted = false;"
         "dragBoard.querySelectorAll('.group-dragging').forEach(function(item) {"
         "item.classList.remove('group-dragging');"
         "});"
@@ -2386,7 +2438,11 @@ def render_possession_free_board(
         "item.remove();"
         "});"
     )
-    drag_over = "event.preventDefault(); this.classList.add('drop-target');"
+    drag_over = (
+        "event.preventDefault();"
+        "if (event.dataTransfer) { event.dataTransfer.dropEffect = 'move'; }"
+        "this.classList.add('drop-target');"
+    )
     drag_leave = "this.classList.remove('drop-target');"
     drop = (
         "event.preventDefault();"
@@ -2409,6 +2465,7 @@ def render_possession_free_board(
         "movingItems.forEach(function(item) { fragment.appendChild(item); });"
         "if (fromIndex < toIndex) { this.after(fragment); }"
         "else { this.before(fragment); }"
+        "board._ufaDropCommitted = true;"
     )
     select_arrange_target = (
         f"const board = document.getElementById({json.dumps(board_id)});"
@@ -2422,9 +2479,9 @@ def render_possession_free_board(
         f"const selectionWrap = document.getElementById({json.dumps(wrap_id)});"
         f"const selectionCount = document.getElementById({json.dumps(arrange_selection_count_id)});"
         "if (!selectionWrap || !selectionCount) { return; }"
-        "const selected = Array.from(selectionWrap.querySelectorAll('.ufa-free-card.row-selected'));"
-        "selectionCount.textContent = selected.length"
-        "? selected.length + ' selected for row break'"
+        "const arrangeSelected = Array.from(selectionWrap.querySelectorAll('.ufa-free-card.row-selected'));"
+        "selectionCount.textContent = arrangeSelected.length"
+        "? arrangeSelected.length + ' selected for row break'"
         ": 'Click cards to select for a row break';"
     )
     toggle_arrange_selection = (
@@ -2433,7 +2490,24 @@ def render_possession_free_board(
         "board.querySelectorAll('.ufa-free-board-item.arrange-target').forEach(function(item) {"
         "item.classList.remove('arrange-target');"
         "});"
+        "const startsNewSelection = board.dataset.selectionCommitted === 'true'"
+        "&& !this.classList.contains('row-selected');"
+        "if (startsNewSelection) {"
+        "board.querySelectorAll('.ufa-free-card.row-selected').forEach(function(card) {"
+        "card.classList.remove('row-selected');"
+        "});"
+        "}"
+        "board.dataset.selectionCommitted = 'false';"
         "this.classList.toggle('row-selected');"
+        f"{update_arrange_selection}"
+    )
+    clear_arrange_selection = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        "if (!board) { return; }"
+        "board.querySelectorAll('.ufa-free-card.row-selected').forEach(function(card) {"
+        "card.classList.remove('row-selected');"
+        "});"
+        "board.dataset.selectionCommitted = 'false';"
         f"{update_arrange_selection}"
     )
 
@@ -2441,9 +2515,12 @@ def render_possession_free_board(
         f"const rowWrap = document.getElementById({json.dumps(wrap_id)});"
         "const rowBreak = this.closest('.ufa-free-row-break');"
         "if (!rowWrap || !rowBreak) { return; }"
+        "rowWrap.querySelectorAll('.ufa-free-overlay-check').forEach(function(input) {"
+        "input.checked = false;"
+        "});"
         "let item = rowBreak.nextElementSibling;"
         "while (item && !item.classList.contains('ufa-free-row-break')) {"
-        "if (item.classList.contains('ufa-free-card')) {"
+        "if (item.classList.contains('ufa-free-card') && !item.hidden) {"
         "const checkbox = item.querySelector('.ufa-free-overlay-check');"
         "if (checkbox) { checkbox.checked = true; }"
         "}"
@@ -2511,24 +2588,79 @@ def render_possession_free_board(
         "else { board.appendChild(fragment); }"
     )
 
+    bind_row_move_controls = (
+        "const bindRowMoveButton = function(button, moveRow) {"
+        "if (!button) { return; }"
+        "button.onpointerup = function(event) {"
+        "if (event.isPrimary === false"
+        "|| (event.pointerType === 'mouse' && event.button !== 0)) { return; }"
+        "event.preventDefault();"
+        "event.stopPropagation();"
+        "this._ufaPointerMoveHandled = true;"
+        "const handledButton = this;"
+        "window.setTimeout(function() {"
+        "handledButton._ufaPointerMoveHandled = false;"
+        "}, 0);"
+        "moveRow.call(this);"
+        "};"
+        "button.onclick = function(event) {"
+        "event.preventDefault();"
+        "event.stopPropagation();"
+        "if (this._ufaPointerMoveHandled) { return; }"
+        "moveRow.call(this);"
+        "};"
+        "};"
+        "bindRowMoveButton("
+        "breaker.querySelector('.ufa-free-row-move-up'),"
+        f"function() {{ {move_row_up} }}"
+        ");"
+        "bindRowMoveButton("
+        "breaker.querySelector('.ufa-free-row-move-down'),"
+        f"function() {{ {move_row_down} }}"
+        ");"
+    )
+
     insert_row_break = (
         f"const board = document.getElementById({json.dumps(board_id)});"
         f"const select = document.getElementById({json.dumps(insert_position_id)});"
         "if (!board || !select) { return; }"
-        "const selectedCards = Array.from(board.querySelectorAll('.ufa-free-card.row-selected'));"
+        "const allSelectedCards = Array.from(board.querySelectorAll('.ufa-free-card.row-selected'));"
+        "const selectedCards = allSelectedCards.filter(function(card) { return !card.hidden; });"
         "let position = select.value;"
         "let target = board.querySelector('.ufa-free-board-item.arrange-target');"
+        "let previousBreak = null;"
+        "let nextBreak = null;"
         "if (selectedCards.length) {"
         "const items = Array.from(board.querySelectorAll('.ufa-free-board-item'));"
         "selectedCards.sort(function(left, right) {"
         "return items.indexOf(left) - items.indexOf(right);"
         "});"
-        "if (position === 'above') {"
-        "target = selectedCards[0];"
-        "} else if (position === 'below') {"
-        "target = selectedCards[selectedCards.length - 1];"
-        "} else {"
+        "let item = selectedCards[0].previousElementSibling;"
+        "while (item && !item.classList.contains('ufa-free-row-break')) {"
+        "item = item.previousElementSibling;"
+        "}"
+        "previousBreak = item;"
+        "item = selectedCards[0].nextElementSibling;"
+        "while (item && !item.classList.contains('ufa-free-row-break')) {"
+        "item = item.nextElementSibling;"
+        "}"
+        "nextBreak = item;"
         "target = null;"
+        "const selectionStartsRow = selectedCards[0].previousElementSibling === previousBreak;"
+        "const selectionEndsRow = selectedCards[selectedCards.length - 1].nextElementSibling === nextBreak;"
+        "const existingBoundary = position === 'above' && previousBreak && selectionStartsRow && selectionEndsRow"
+        "? previousBreak"
+        ": position === 'below' && nextBreak && selectionStartsRow && selectionEndsRow"
+        "? nextBreak"
+        ": null;"
+        "if (existingBoundary) {"
+        "board.querySelectorAll('.arrange-target').forEach(function(item) {"
+        "item.classList.remove('arrange-target');"
+        "});"
+        "existingBoundary.classList.add('arrange-target');"
+        "board.dataset.selectionCommitted = 'true';"
+        f"{update_arrange_selection}"
+        "return;"
         "}"
         "}"
         "const nextIndex = board.querySelectorAll('.ufa-free-row-break').length + 1;"
@@ -2553,28 +2685,50 @@ def render_possession_free_board(
         f"breaker.ondragleave = function() {{ {drag_leave} }};"
         f"breaker.ondrop = function(event) {{ {drop} }};"
         f"breaker.onclick = function() {{ {select_arrange_target} }};"
+        f"{protect_row_controls}"
         "breaker.querySelector('input').onclick = function(event) { event.stopPropagation(); };"
-        "breaker.querySelector('input').onmousedown = function(event) { event.stopPropagation(); };"
         "breaker.querySelector('.ufa-free-row-overlay').onclick = function(event) {"
+        "event.preventDefault();"
         "event.stopPropagation();"
          f"{overlay_row}"
          "};"
          "breaker.querySelector('.ufa-free-row-overlay-clear').onclick = function(event) {"
+         "event.preventDefault();"
          "event.stopPropagation();"
          f"{clear_overlay_row}"
          "};"
-         "breaker.querySelector('.ufa-free-row-move-up').onclick = function(event) {"
-        "event.stopPropagation();"
-        f"{move_row_up}"
-        "};"
-        "breaker.querySelector('.ufa-free-row-move-down').onclick = function(event) {"
-        "event.stopPropagation();"
-        f"{move_row_down}"
-        "};"
+        f"{bind_row_move_controls}"
         "breaker.querySelector('.ufa-free-row-remove').onclick = function(event) {"
+        "event.preventDefault();"
         "event.stopPropagation();"
         "breaker.remove();"
         "};"
+        "if (selectedCards.length) {"
+        "const selectedFragment = document.createDocumentFragment();"
+        "if (position === 'above') {"
+        "selectedFragment.appendChild(breaker);"
+        "selectedCards.forEach(function(card) { selectedFragment.appendChild(card); });"
+        "if (nextBreak && nextBreak.isConnected) {"
+        "board.insertBefore(selectedFragment, nextBreak);"
+        "} else {"
+        "board.appendChild(selectedFragment);"
+        "}"
+        "} else if (position === 'below') {"
+        "selectedCards.forEach(function(card) { selectedFragment.appendChild(card); });"
+        "selectedFragment.appendChild(breaker);"
+        "if (previousBreak && previousBreak.isConnected) {"
+        "previousBreak.after(selectedFragment);"
+        "} else if (board.firstChild) {"
+        "board.insertBefore(selectedFragment, board.firstChild);"
+        "} else {"
+        "board.appendChild(selectedFragment);"
+        "}"
+        "} else {"
+        "selectedFragment.appendChild(breaker);"
+        "selectedCards.forEach(function(card) { selectedFragment.appendChild(card); });"
+        "board.appendChild(selectedFragment);"
+        "}"
+        "} else {"
         "if (position === 'above') {"
         "if (target) { board.insertBefore(breaker, target); }"
         "else { board.insertBefore(breaker, board.firstChild); }"
@@ -2584,7 +2738,11 @@ def render_possession_free_board(
         "} else {"
         "board.appendChild(breaker);"
         "}"
-        "selectedCards.forEach(function(card) { card.classList.remove('row-selected'); });"
+        "}"
+        "allSelectedCards.forEach(function(card) {"
+        "if (card.hidden) { card.classList.remove('row-selected'); }"
+        "});"
+        "if (selectedCards.length) { board.dataset.selectionCommitted = 'true'; }"
         f"{update_arrange_selection}"
     )
     clear_row_breaks = (
@@ -2600,13 +2758,22 @@ def render_possession_free_board(
         f"const output = document.getElementById({json.dumps(export_text_id)});"
         "if (!board) { return; }"
         "const groups = [];"
-        "let currentGroup = {title: 'Group 1', possessions: []};"
+        "let currentGroup = {"
+        "title: 'Group 1', possessions: [], has_break: false, auto_unsorted: false"
+        "};"
         "Array.from(board.children).forEach(function(item) {"
         "if (item.classList.contains('ufa-free-row-break')) {"
-        "if (currentGroup.possessions.length) { groups.push(currentGroup); }"
+        "if (currentGroup.has_break || currentGroup.possessions.length) {"
+        "groups.push(currentGroup);"
+        "}"
         "const titleInput = item.querySelector('input');"
         "const title = titleInput && titleInput.value.trim() ? titleInput.value.trim() : item.dataset.arrangeLabel;"
-        "currentGroup = {title: title || 'Pattern group ' + (groups.length + 2), possessions: []};"
+        "currentGroup = {"
+        "title: title || 'Pattern group ' + (groups.length + 2),"
+        "possessions: [],"
+        "has_break: true,"
+        "auto_unsorted: item.dataset.autoUnsorted === 'true'"
+        "};"
         "return;"
         "}"
         "if (!item.classList.contains('ufa-free-card') || item.hidden) { return; }"
@@ -2617,17 +2784,23 @@ def render_possession_free_board(
         "overlay_selected: Boolean(checkbox && checkbox.checked)"
         "});"
         "});"
-        "if (currentGroup.possessions.length) { groups.push(currentGroup); }"
-        "const nonEmptyGroups = groups.filter(function(group) { return group.possessions.length; });"
-        "const cardCount = nonEmptyGroups.reduce(function(total, group) {"
+        "if (currentGroup.has_break || currentGroup.possessions.length) {"
+        "groups.push(currentGroup);"
+        "}"
+        "const cardCount = groups.reduce(function(total, group) {"
         "return total + group.possessions.length;"
         "}, 0);"
         "const payload = {"
         "saved_at: new Date().toISOString(),"
         "cards_shown: cardCount,"
         f"filtered_possessions: {len(possessions)},"
-        "groups: nonEmptyGroups.map(function(group, index) {"
-        "return {group_index: index + 1, title: group.title, possessions: group.possessions};"
+        "groups: groups.map(function(group, index) {"
+        "return {"
+        "group_index: index + 1,"
+        "title: group.title,"
+        "auto_unsorted: Boolean(group.auto_unsorted),"
+        "possessions: group.possessions"
+        "};"
         "})"
         "};"
         "const text = JSON.stringify(payload, null, 2);"
@@ -2642,7 +2815,7 @@ def render_possession_free_board(
         "localSaveMessage = 'Browser storage blocked; exported JSON';"
         "}"
         "if (status) {"
-        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. JSON shown below.';"
+        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + groups.length + ' groups. JSON shown below.';"
         "status.scrollIntoView({block: 'nearest'});"
         "}"
         "try {"
@@ -2657,7 +2830,7 @@ def render_possession_free_board(
         "URL.revokeObjectURL(url);"
         "} catch (error) {"
         "if (status) {"
-        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + nonEmptyGroups.length + ' groups. Download was blocked; JSON shown below.';"
+        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + groups.length + ' groups. Download was blocked; JSON shown below.';"
         "}"
         "}"
     )
@@ -2688,12 +2861,14 @@ def render_possession_free_board(
         "card.classList.remove('arrange-target');"
         "card.classList.remove('row-selected');"
         "});"
+        "board.dataset.selectionCommitted = 'false';"
         "board.innerHTML = '';"
-        "function makeBreak(title, index) {"
+        "function makeBreak(title, index, autoUnsorted) {"
         "const breaker = document.createElement('div');"
         f"breaker.id = {json.dumps(board_id + '-row-break-')} + index + '-' + Date.now();"
         "breaker.className = 'ufa-free-board-item ufa-free-row-break';"
         "breaker.dataset.arrangeLabel = title || ('Pattern group ' + index);"
+        "if (autoUnsorted) { breaker.dataset.autoUnsorted = 'true'; }"
         "breaker.draggable = true;"
         "breaker.title = 'Drag this divider between possession groups';"
          "breaker.innerHTML = '<input type=\"text\" aria-label=\"Row title\" />"
@@ -2709,25 +2884,21 @@ def render_possession_free_board(
         f"breaker.ondragleave = function() {{ {drag_leave} }};"
         f"breaker.ondrop = function(event) {{ {drop} }};"
         f"breaker.onclick = function() {{ {select_arrange_target} }};"
+        f"{protect_row_controls}"
         "breaker.querySelector('input').onclick = function(event) { event.stopPropagation(); };"
-        "breaker.querySelector('input').onmousedown = function(event) { event.stopPropagation(); };"
         "breaker.querySelector('.ufa-free-row-overlay').onclick = function(event) {"
+        "event.preventDefault();"
         "event.stopPropagation();"
          f"{overlay_row}"
          "};"
          "breaker.querySelector('.ufa-free-row-overlay-clear').onclick = function(event) {"
+         "event.preventDefault();"
          "event.stopPropagation();"
          f"{clear_overlay_row}"
          "};"
-         "breaker.querySelector('.ufa-free-row-move-up').onclick = function(event) {"
-        "event.stopPropagation();"
-        f"{move_row_up}"
-        "};"
-        "breaker.querySelector('.ufa-free-row-move-down').onclick = function(event) {"
-        "event.stopPropagation();"
-        f"{move_row_down}"
-        "};"
+        f"{bind_row_move_controls}"
         "breaker.querySelector('.ufa-free-row-remove').onclick = function(event) {"
+        "event.preventDefault();"
         "event.stopPropagation();"
         "breaker.remove();"
         "};"
@@ -2737,7 +2908,7 @@ def render_possession_free_board(
         "(payload.groups || []).forEach(function(group, groupIndex) {"
         "const title = group.title || ('Pattern group ' + (groupIndex + 1));"
         "if (groupIndex > 0 || title !== 'Group 1') {"
-        "board.appendChild(makeBreak(title, groupIndex + 1));"
+        "board.appendChild(makeBreak(title, groupIndex + 1, Boolean(group.auto_unsorted)));"
         "}"
         "(group.possessions || []).forEach(function(possession) {"
         "const card = cardMap[possession.possession_id];"
@@ -2748,6 +2919,23 @@ def render_possession_free_board(
         "usedIds.add(possession.possession_id);"
         "});"
         "});"
+        "let stagingBreak = Array.from(board.querySelectorAll('.ufa-free-row-break')).find(function(candidate) {"
+        "return candidate.dataset.autoUnsorted === 'true';"
+        "}) || null;"
+        "if (stagingBreak) {"
+        "const stagingGroup = [stagingBreak];"
+        "let stagingItem = stagingBreak.nextElementSibling;"
+        "while (stagingItem && !stagingItem.classList.contains('ufa-free-row-break')) {"
+        "stagingGroup.push(stagingItem);"
+        "stagingItem = stagingItem.nextElementSibling;"
+        "}"
+        "const stagingFragment = document.createDocumentFragment();"
+        "stagingGroup.forEach(function(item) { stagingFragment.appendChild(item); });"
+        "board.appendChild(stagingFragment);"
+        "} else {"
+        "stagingBreak = makeBreak('Unsorted: new cards', (payload.groups || []).length + 1, true);"
+        "board.appendChild(stagingBreak);"
+        "}"
         "Object.keys(cardMap).forEach(function(possessionId) {"
         "if (!usedIds.has(possessionId)) { board.appendChild(cardMap[possessionId]); }"
         "});"
@@ -2891,6 +3079,10 @@ def render_possession_free_board(
             <button class="ufa-free-insert-row-break" type="button"
               onclick="{escape(insert_row_break, quote=True)}">
               Insert row break
+            </button>
+            <button class="ufa-free-clear-selection" type="button"
+              onclick="{escape(clear_arrange_selection, quote=True)}">
+              Clear selection
             </button>
             <button class="primary ufa-free-save-arrangement" type="button"
               onclick="{escape(save_arrangement, quote=True)}">
@@ -3539,8 +3731,11 @@ def _possession_browser_css():
         font-size: 10px;
         font-weight: 800;
         padding: 2px 7px;
+        touch-action: manipulation;
         text-transform: none;
         letter-spacing: 0;
+        user-select: none;
+        -webkit-user-drag: none;
       }
       .ufa-free-row-break .ufa-free-row-overlay {
         border-color: #2b8ce6;
@@ -4141,20 +4336,160 @@ def write_possession_pattern_browser_html(
                 return Number.isFinite(value) ? value : fallback;
               }}
 
+              function refreshVisibleOverlay() {{
+                const overlayInput = board.querySelector('.ufa-free-overlay-check');
+                if (overlayInput) {{
+                  overlayInput.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                }}
+              }}
+
               function syncRowBreakVisibility() {{
                 board.querySelectorAll('.ufa-free-row-break').forEach(function (rowBreak) {{
-                  let item = rowBreak.nextElementSibling;
-                  let hasVisibleCard = false;
-                  while (item && !item.classList.contains('ufa-free-row-break')) {{
-                    if (item.classList.contains('ufa-free-card') && !item.hidden) {{
-                      hasVisibleCard = true;
-                      break;
-                    }}
-                    item = item.nextElementSibling;
-                  }}
-                  rowBreak.hidden = !hasVisibleCard;
+                  rowBreak.hidden = false;
                 }});
               }}
+
+              function unsortedRowTitle(minimum, maximum) {{
+                if (minimum === maximum) {{
+                  return 'Unsorted: ' + minimum + ' throw' + (minimum === 1 ? '' : 's');
+                }}
+                return 'Unsorted: ' + minimum + '-' + maximum + ' throws';
+              }}
+
+              function updateRowSelectionCount() {{
+                const selectionCount = boardActions && boardActions.querySelector(
+                  '.ufa-free-arrange-selection-count'
+                );
+                if (!selectionCount) {{ return; }}
+                const selectedCount = board.querySelectorAll(
+                  '.ufa-free-card.row-selected'
+                ).length;
+                selectionCount.textContent = selectedCount
+                  ? selectedCount + ' selected for row break'
+                  : 'Click cards to select for a row break';
+              }}
+
+              function findUnsortedRow() {{
+                return Array.from(board.querySelectorAll('.ufa-free-row-break'))
+                  .find(function (rowBreak) {{
+                    return rowBreak.dataset.autoUnsorted === 'true';
+                  }}) || null;
+              }}
+
+              function createFallbackUnsortedRow(title) {{
+                const rowBreak = document.createElement('div');
+                rowBreak.id = 'ufa-auto-unsorted-' + Date.now();
+                rowBreak.className = 'ufa-free-board-item ufa-free-row-break';
+                rowBreak.dataset.autoUnsorted = 'true';
+                rowBreak.dataset.arrangeLabel = title;
+
+                const titleInput = document.createElement('input');
+                titleInput.type = 'text';
+                titleInput.value = title;
+                titleInput.setAttribute('aria-label', 'Row title');
+                titleInput.addEventListener('click', function (event) {{
+                  event.stopPropagation();
+                }});
+
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.className = 'ufa-free-row-remove';
+                removeButton.textContent = 'Remove';
+                removeButton.setAttribute('aria-label', 'Remove row break');
+                removeButton.addEventListener('click', function (event) {{
+                  event.stopPropagation();
+                  rowBreak.remove();
+                }});
+
+                rowBreak.appendChild(titleInput);
+                rowBreak.appendChild(removeButton);
+                board.appendChild(rowBreak);
+                return rowBreak;
+              }}
+
+              function ensureUnsortedRow(minimum, maximum) {{
+                let rowBreak = findUnsortedRow();
+                if (!rowBreak) {{
+                  const insertButton = boardActions && boardActions.querySelector(
+                    '.ufa-free-insert-row-break'
+                  );
+                  const positionSelect = boardActions && boardActions.querySelector(
+                    '.ufa-free-insert-position'
+                  );
+                  if (!insertButton || !positionSelect) {{
+                    rowBreak = createFallbackUnsortedRow(
+                      unsortedRowTitle(minimum, maximum)
+                    );
+                  }} else {{
+                    const existingBreaks = new Set(
+                      board.querySelectorAll('.ufa-free-row-break')
+                    );
+                    const selectedCards = Array.from(
+                      board.querySelectorAll('.ufa-free-card.row-selected')
+                    );
+                    const arrangeTarget = board.querySelector(
+                      '.ufa-free-board-item.arrange-target'
+                    );
+                    const previousPosition = positionSelect.value;
+                    selectedCards.forEach(function (card) {{
+                      card.classList.remove('row-selected');
+                    }});
+                    positionSelect.value = 'bottom';
+                    insertButton.click();
+                    positionSelect.value = previousPosition;
+
+                    rowBreak = Array.from(board.querySelectorAll('.ufa-free-row-break'))
+                      .find(function (candidate) {{
+                        return !existingBreaks.has(candidate);
+                      }}) || null;
+                    if (!rowBreak) {{
+                      rowBreak = createFallbackUnsortedRow(
+                        unsortedRowTitle(minimum, maximum)
+                      );
+                    }}
+                    rowBreak.classList.remove('arrange-target');
+                    if (arrangeTarget && arrangeTarget.isConnected) {{
+                      arrangeTarget.classList.add('arrange-target');
+                    }}
+                    selectedCards.forEach(function (card) {{
+                      card.classList.add('row-selected');
+                    }});
+                    updateRowSelectionCount();
+                  }}
+                }}
+
+                rowBreak.dataset.autoUnsorted = 'true';
+                rowBreak.dataset.arrangeLabel = unsortedRowTitle(minimum, maximum);
+                const titleInput = rowBreak.querySelector('input');
+                if (titleInput) {{
+                  titleInput.value = unsortedRowTitle(minimum, maximum);
+                }}
+                rowBreak.hidden = false;
+
+                const unsortedGroup = [rowBreak];
+                let item = rowBreak.nextElementSibling;
+                while (item && !item.classList.contains('ufa-free-row-break')) {{
+                  unsortedGroup.push(item);
+                  item = item.nextElementSibling;
+                }}
+                const fragment = document.createDocumentFragment();
+                unsortedGroup.forEach(function (groupItem) {{
+                  fragment.appendChild(groupItem);
+                }});
+                board.appendChild(fragment);
+                return rowBreak;
+              }}
+
+              function moveNewThrowCardsToBottom(cards, minimum, maximum) {{
+                const rowBreak = ensureUnsortedRow(minimum, maximum);
+                if (!rowBreak) {{
+                  cards.forEach(function (card) {{ board.appendChild(card); }});
+                  return;
+                }}
+                cards.forEach(function (card) {{ board.appendChild(card); }});
+              }}
+
+              let previousThrowRange = null;
 
               function applyFilters() {{
                 const selectedLine = lineFilter.value;
@@ -4163,6 +4498,12 @@ def write_possession_pattern_browser_html(
                 const minimum = numericValue(minThrows, 0);
                 const maximum = numericValue(maxThrows, Number.POSITIVE_INFINITY);
                 const limit = Math.max(1, numericValue(cardLimit, Number.POSITIVE_INFINITY));
+                const throwInputsComplete = minThrows.value.trim() !== ''
+                  && maxThrows.value.trim() !== '';
+                const advancedThrowCount = throwInputsComplete
+                  && previousThrowRange !== null
+                  && maximum > previousThrowRange.maximum;
+                const newThrowCards = [];
                 let visible = 0;
                 let matched = 0;
 
@@ -4175,6 +4516,12 @@ def write_possession_pattern_browser_html(
                     || (selectedHuck === 'non_huck' && hucks === 0)
                     || (selectedHuck === 'huck' && hucks > 0);
                   const throwMatches = throws >= minimum && throws <= maximum;
+                  const matchedPreviousThrowRange = previousThrowRange !== null
+                    && throws >= previousThrowRange.minimum
+                    && throws <= previousThrowRange.maximum;
+                  if (advancedThrowCount && throwMatches && !matchedPreviousThrowRange) {{
+                    newThrowCards.push(card);
+                  }}
                   const matches = lineMatches && outcomeMatches && huckMatches && throwMatches;
                   if (matches) {{ matched += 1; }}
                   const show = matches && visible < limit;
@@ -4183,7 +4530,13 @@ def write_possession_pattern_browser_html(
                   if (!show) {{ card.classList.remove('row-selected'); }}
                 }});
 
+                if (advancedThrowCount) {{
+                  moveNewThrowCardsToBottom(newThrowCards, minimum, maximum);
+                }}
+                previousThrowRange = {{ minimum: minimum, maximum: maximum }};
+                updateRowSelectionCount();
                 syncRowBreakVisibility();
+                refreshVisibleOverlay();
                 count.textContent = visible.toLocaleString() + ' shown of '
                   + matched.toLocaleString() + ' matching possessions';
               }}
@@ -4201,6 +4554,7 @@ def write_possession_pattern_browser_html(
                 minThrows.value = '{min_throw_count}';
                 maxThrows.value = '{max_throw_count}';
                 cardLimit.value = '{max_cards}';
+                previousThrowRange = null;
                 applyFilters();
               }});
 
@@ -4491,6 +4845,10 @@ def create_scoring_possession_browser(
       <button type="button"
         onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var position=document.querySelector('.ufa-free-external-position');var select=board&&board.querySelector('.ufa-free-insert-position');var button=board&&board.querySelector('.ufa-free-insert-row-break');if(select&&position){{select.value=position.value;}}if(button){{button.click();}}}})()">
         Insert row break
+      </button>
+      <button type="button"
+        onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-clear-selection');if(button){{button.click();}}}})()">
+        Clear selection
       </button>
       <button class="primary" type="button"
         onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-save-arrangement');if(button){{button.click();}}}})()">
