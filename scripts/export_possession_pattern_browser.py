@@ -182,6 +182,7 @@ def main():
             max_cards=args.max_cards,
             team_id=export_team_id,
             team_options=navigation_options,
+            persistence_key=f"{args.season}:{export_team_id}",
         )
         print(
             f"{export_team_id.title()}: {len(game_files):,} games, "

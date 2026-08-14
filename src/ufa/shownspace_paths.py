@@ -2211,6 +2211,7 @@ def render_possession_free_board(
     include_overlay=True,
     return_overlay=False,
     external_controls=False,
+    persistence_key=None,
 ):
     """Render a draggable board of mini possession cards."""
     if possessions.empty:
@@ -2227,6 +2228,7 @@ def render_possession_free_board(
     board_key = hashlib.sha1(
         "|".join(frame["possession_id"].astype(str).tolist()).encode("utf-8")
     ).hexdigest()[:12]
+    persistence_token = str(persistence_key or board_key).strip()
     board_id = f"ufa-free-board-{board_key}"
     wrap_id = f"ufa-free-wrap-{board_key}"
     overlay_layer_id = f"ufa-free-overlay-layer-{board_key}"
@@ -2235,7 +2237,12 @@ def render_possession_free_board(
     export_text_id = f"ufa-free-export-text-{board_key}"
     insert_position_id = f"ufa-free-insert-position-{board_key}"
     arrange_selection_count_id = f"ufa-free-arrange-selection-count-{board_key}"
-    storage_key = f"ufa-free-arrange:{board_key}"
+    recovery_history_id = f"ufa-free-recovery-history-{board_key}"
+    recovery_restore_id = f"ufa-free-recovery-restore-{board_key}"
+    recovery_status_id = f"ufa-free-recovery-status-{board_key}"
+    storage_key = f"ufa-free-arrange:{persistence_token}"
+    legacy_storage_key = f"ufa-free-arrange:{board_key}"
+    recovery_storage_key = f"ufa-free-recovery:{persistence_token}"
     overlay_palette = [
         "#c3482b",
         "#0d4f94",
@@ -2776,7 +2783,7 @@ def render_possession_free_board(
         "};"
         "return;"
         "}"
-        "if (!item.classList.contains('ufa-free-card') || item.hidden) { return; }"
+        "if (!item.classList.contains('ufa-free-card')) { return; }"
         "const checkbox = item.querySelector('.ufa-free-overlay-check');"
         "currentGroup.possessions.push({"
         "possession_id: item.dataset.possessionId,"
@@ -2842,6 +2849,12 @@ def render_possession_free_board(
         "let text = null;"
         "try {"
         f"text = window.localStorage.getItem({json.dumps(storage_key)});"
+        f"if (!text && {json.dumps(legacy_storage_key)} !== {json.dumps(storage_key)}) {{"
+        f"text = window.localStorage.getItem({json.dumps(legacy_storage_key)});"
+        "if (text) {"
+        f"window.localStorage.setItem({json.dumps(storage_key)}, text);"
+        "}"
+        "}"
         "} catch (error) {"
         "text = null;"
         "}"
@@ -3034,6 +3047,30 @@ def render_possession_free_board(
         )
 
     shown_count = len(cards)
+    recovery_controls = ""
+    recovery_data_attributes = ""
+    if persistence_key:
+        recovery_controls = f"""
+            <label class="ufa-free-recovery-control">
+              Recovery
+              <select id="{recovery_history_id}" class="ufa-free-recovery-history"
+                aria-label="Recovery history" disabled>
+                <option value="">No recovery snapshots</option>
+              </select>
+            </label>
+            <button id="{recovery_restore_id}" class="ufa-free-recovery-restore"
+              type="button" disabled>
+              Restore
+            </button>
+            <span id="{recovery_status_id}" class="ufa-free-recovery-status"
+              role="status" aria-live="polite">
+              Autosave ready
+            </span>
+        """
+        recovery_data_attributes = (
+            f' data-checkpoint-storage-key="{escape(storage_key, quote=True)}"'
+            f' data-recovery-storage-key="{escape(recovery_storage_key, quote=True)}"'
+        )
     overlay_panel = f"""
       <aside class="ufa-free-overlay-panel">
         <div class="ufa-gallery-kicker">Selected Overlay</div>
@@ -3096,6 +3133,7 @@ def render_possession_free_board(
               onclick="{escape(clear_row_breaks, quote=True)}">
               Clear row breaks
             </button>
+            {recovery_controls}
             <span id="{arrange_selection_count_id}"
               class="ufa-free-arrange-selection-count">
               Click cards to select for a row break
@@ -3104,7 +3142,7 @@ def render_possession_free_board(
           <div id="{export_status_id}" class="ufa-free-export-status"></div>
           <pre id="{export_text_id}" class="ufa-free-export-text"
             aria-label="Saved arrangement JSON"></pre>
-          <div id="{board_id}" class="ufa-free-board"
+          <div id="{board_id}" class="ufa-free-board"{recovery_data_attributes}
             ondragover="event.preventDefault();">
             {''.join(cards)}
           </div>
@@ -3600,6 +3638,28 @@ def _possession_browser_css():
         background: #2b8ce6;
         color: #ffffff;
       }
+      .ufa-free-board-actions .ufa-free-recovery-control {
+        padding-left: 8px;
+        border-left: 1px solid #d8e1eb;
+      }
+      .ufa-free-board-actions .ufa-free-recovery-history {
+        min-width: 205px;
+        max-width: 240px;
+      }
+      .ufa-free-board-actions button:disabled,
+      .ufa-free-board-actions select:disabled {
+        cursor: default;
+        opacity: 0.55;
+      }
+      .ufa-free-recovery-status {
+        color: #2f7247;
+        font-size: 11px;
+        font-weight: 750;
+        white-space: nowrap;
+      }
+      .ufa-free-recovery-status.save-error {
+        color: #a23f2c;
+      }
       .ufa-free-board-wrap.with-external-controls .ufa-free-board-actions {
         display: none;
       }
@@ -3937,6 +3997,7 @@ def write_possession_pattern_browser_html(
     max_cards=None,
     team_id=None,
     team_options=None,
+    persistence_key=None,
 ):
     """Write a standalone HTML free-arrange possession browser."""
     output_path = Path(output_path)
@@ -3964,6 +4025,7 @@ def write_possession_pattern_browser_html(
         path_lookup,
         max_cards=max_cards,
         include_overlay=True,
+        persistence_key=persistence_key,
     )
     safe_title = escape(str(title))
     selected_team_id = str(team_id or "").strip().lower()
@@ -4268,6 +4330,13 @@ def write_possession_pattern_browser_html(
               const overlayToggle = document.getElementById('standaloneToggleOverlay');
               const overlayShell = browser.querySelector('.ufa-free-overlay-shell');
               const boardActions = browser.querySelector('.ufa-free-board-actions');
+              const loadCheckpointButton = browser.querySelector('.ufa-free-load-arrangement');
+              const recoveryHistory = browser.querySelector('.ufa-free-recovery-history');
+              const recoveryRestore = browser.querySelector('.ufa-free-recovery-restore');
+              const recoveryStatus = browser.querySelector('.ufa-free-recovery-status');
+              const recoveryOutput = browser.querySelector('.ufa-free-export-text');
+              const checkpointStorageKey = board.dataset.checkpointStorageKey || '';
+              const recoveryStorageKey = board.dataset.recoveryStorageKey || '';
               const stickyOverlayToggle = document.createElement('button');
               stickyOverlayToggle.id = 'standaloneStickyToggleOverlay';
               stickyOverlayToggle.className = 'ufa-free-sticky-overlay-toggle';
@@ -4290,6 +4359,10 @@ def write_possession_pattern_browser_html(
               const dragScrollMaxSpeed = 30;
               let dragScrollSpeed = 0;
               let dragScrollFrame = null;
+              let recoveryTimer = null;
+              let recoveryApplying = false;
+              let recoveryObserver = null;
+              const recoveryLimit = 5;
 
               function stopDragScroll() {{
                 dragScrollSpeed = 0;
@@ -4334,6 +4407,347 @@ def write_possession_pattern_browser_html(
               function numericValue(input, fallback) {{
                 const value = Number(input.value);
                 return Number.isFinite(value) ? value : fallback;
+              }}
+
+              function readRecoverySnapshots() {{
+                if (!recoveryStorageKey) {{ return []; }}
+                try {{
+                  const text = window.localStorage.getItem(recoveryStorageKey);
+                  if (!text) {{ return []; }}
+                  const parsed = JSON.parse(text);
+                  const snapshots = Array.isArray(parsed)
+                    ? parsed
+                    : Array.isArray(parsed.snapshots)
+                    ? parsed.snapshots
+                    : [];
+                  return snapshots
+                    .filter(function (snapshot) {{
+                      return snapshot && snapshot.payload && snapshot.saved_at;
+                    }})
+                    .slice(0, recoveryLimit);
+                }} catch (error) {{
+                  return [];
+                }}
+              }}
+
+              function writeRecoverySnapshots(snapshots) {{
+                if (!recoveryStorageKey) {{ return false; }}
+                try {{
+                  window.localStorage.setItem(
+                    recoveryStorageKey,
+                    JSON.stringify({{ version: 1, snapshots: snapshots.slice(0, recoveryLimit) }})
+                  );
+                  return true;
+                }} catch (error) {{
+                  if (recoveryStatus) {{
+                    recoveryStatus.textContent = 'Autosave unavailable - use Save arrangement';
+                    recoveryStatus.classList.add('save-error');
+                  }}
+                  return false;
+                }}
+              }}
+
+              function recoveryTimestamp(value) {{
+                const timestamp = new Date(value);
+                if (Number.isNaN(timestamp.getTime())) {{ return 'Unknown time'; }}
+                return timestamp.toLocaleString([], {{
+                  month: 'short',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: '2-digit',
+                  second: '2-digit',
+                }});
+              }}
+
+              function refreshRecoveryHistory(preferredId) {{
+                if (!recoveryHistory || !recoveryRestore) {{ return; }}
+                const snapshots = readRecoverySnapshots();
+                const previousValue = preferredId || recoveryHistory.value;
+                recoveryHistory.innerHTML = '';
+                if (!snapshots.length) {{
+                  const emptyOption = document.createElement('option');
+                  emptyOption.value = '';
+                  emptyOption.textContent = 'No recovery snapshots';
+                  recoveryHistory.appendChild(emptyOption);
+                  recoveryHistory.disabled = true;
+                  recoveryRestore.disabled = true;
+                  return;
+                }}
+                snapshots.forEach(function (snapshot, index) {{
+                  const option = document.createElement('option');
+                  option.value = snapshot.id || snapshot.saved_at;
+                  option.textContent = (index === 0 ? 'Latest - ' : '')
+                    + recoveryTimestamp(snapshot.saved_at);
+                  recoveryHistory.appendChild(option);
+                }});
+                const hasPreviousValue = snapshots.some(function (snapshot) {{
+                  return (snapshot.id || snapshot.saved_at) === previousValue;
+                }});
+                recoveryHistory.value = hasPreviousValue
+                  ? previousValue
+                  : (snapshots[0].id || snapshots[0].saved_at);
+                recoveryHistory.disabled = false;
+                recoveryRestore.disabled = false;
+              }}
+
+              function currentRecoveryUiState() {{
+                return {{
+                  line: lineFilter.value,
+                  outcome: outcomeFilter.value,
+                  hucks: huckFilter.value,
+                  min_throws: minThrows.value,
+                  max_throws: maxThrows.value,
+                  cards_shown: cardLimit.value,
+                  overlay_hidden: Boolean(overlayShell && overlayShell.hidden),
+                }};
+              }}
+
+              function serializeRecoveryArrangement() {{
+                const groups = [];
+                let currentGroup = {{
+                  title: 'Group 1',
+                  possessions: [],
+                  has_break: false,
+                  auto_unsorted: false,
+                }};
+                Array.from(board.children).forEach(function (item) {{
+                  if (item.classList.contains('ufa-free-row-break')) {{
+                    if (currentGroup.has_break || currentGroup.possessions.length) {{
+                      groups.push(currentGroup);
+                    }}
+                    const titleInput = item.querySelector('input');
+                    const title = titleInput && titleInput.value.trim()
+                      ? titleInput.value.trim()
+                      : item.dataset.arrangeLabel;
+                    currentGroup = {{
+                      title: title || 'Pattern group ' + (groups.length + 2),
+                      possessions: [],
+                      has_break: true,
+                      auto_unsorted: item.dataset.autoUnsorted === 'true',
+                    }};
+                    return;
+                  }}
+                  if (!item.classList.contains('ufa-free-card')) {{ return; }}
+                  const checkbox = item.querySelector('.ufa-free-overlay-check');
+                  currentGroup.possessions.push({{
+                    possession_id: item.dataset.possessionId,
+                    overlay_selected: Boolean(checkbox && checkbox.checked),
+                  }});
+                }});
+                if (currentGroup.has_break || currentGroup.possessions.length) {{
+                  groups.push(currentGroup);
+                }}
+                const savedAt = new Date().toISOString();
+                return {{
+                  version: 2,
+                  saved_at: savedAt,
+                  cards_saved: groups.reduce(function (total, group) {{
+                    return total + group.possessions.length;
+                  }}, 0),
+                  groups: groups.map(function (group, index) {{
+                    return {{
+                      group_index: index + 1,
+                      title: group.title,
+                      auto_unsorted: Boolean(group.auto_unsorted),
+                      possessions: group.possessions,
+                    }};
+                  }}),
+                  ui_state: currentRecoveryUiState(),
+                }};
+              }}
+
+              function recoverySignature(payload) {{
+                return JSON.stringify({{
+                  groups: payload.groups || [],
+                  ui_state: payload.ui_state || {{}},
+                }});
+              }}
+
+              function saveRecoverySnapshot() {{
+                if (recoveryTimer !== null) {{
+                  window.clearTimeout(recoveryTimer);
+                  recoveryTimer = null;
+                }}
+                if (recoveryApplying || !recoveryStorageKey) {{ return; }}
+                const payload = serializeRecoveryArrangement();
+                const signature = recoverySignature(payload);
+                const snapshots = readRecoverySnapshots();
+                if (snapshots.length && snapshots[0].signature === signature) {{
+                  if (recoveryStatus) {{
+                    recoveryStatus.textContent = 'Autosaved '
+                      + recoveryTimestamp(snapshots[0].saved_at);
+                    recoveryStatus.classList.remove('save-error');
+                  }}
+                  refreshRecoveryHistory(snapshots[0].id || snapshots[0].saved_at);
+                  return;
+                }}
+                const snapshot = {{
+                  id: payload.saved_at + '-' + Math.random().toString(36).slice(2, 8),
+                  saved_at: payload.saved_at,
+                  signature: signature,
+                  payload: payload,
+                }};
+                snapshots.unshift(snapshot);
+                if (!writeRecoverySnapshots(snapshots)) {{ return; }}
+                if (recoveryStatus) {{
+                  recoveryStatus.textContent = 'Autosaved '
+                    + recoveryTimestamp(snapshot.saved_at);
+                  recoveryStatus.classList.remove('save-error');
+                }}
+                refreshRecoveryHistory(snapshot.id);
+              }}
+
+              function scheduleRecoverySave() {{
+                if (recoveryApplying || !recoveryStorageKey) {{ return; }}
+                if (recoveryTimer !== null) {{ window.clearTimeout(recoveryTimer); }}
+                if (recoveryStatus) {{
+                  recoveryStatus.textContent = 'Unsaved changes';
+                  recoveryStatus.classList.remove('save-error');
+                }}
+                recoveryTimer = window.setTimeout(saveRecoverySnapshot, 1000);
+              }}
+
+              function setControlValue(control, value) {{
+                if (!control || value === undefined || value === null) {{ return; }}
+                const nextValue = String(value);
+                if (control.tagName === 'SELECT') {{
+                  const valid = Array.from(control.options).some(function (option) {{
+                    return option.value === nextValue;
+                  }});
+                  if (!valid) {{ return; }}
+                }}
+                control.value = nextValue;
+              }}
+
+              function applyRecoveryUiState(uiState) {{
+                if (!uiState) {{ return; }}
+                setControlValue(lineFilter, uiState.line);
+                setControlValue(outcomeFilter, uiState.outcome);
+                setControlValue(huckFilter, uiState.hucks);
+                setControlValue(minThrows, uiState.min_throws);
+                setControlValue(maxThrows, uiState.max_throws);
+                setControlValue(cardLimit, uiState.cards_shown);
+                if (typeof uiState.overlay_hidden === 'boolean') {{
+                  setOverlayHidden(uiState.overlay_hidden);
+                }}
+              }}
+
+              function applyRecoverySnapshot(snapshot, automatic) {{
+                if (!snapshot || !snapshot.payload || !checkpointStorageKey
+                    || !loadCheckpointButton) {{
+                  return false;
+                }}
+                let checkpointText = null;
+                let hadCheckpoint = false;
+                recoveryApplying = true;
+                try {{
+                  checkpointText = window.localStorage.getItem(checkpointStorageKey);
+                  hadCheckpoint = checkpointText !== null;
+                  window.localStorage.setItem(
+                    checkpointStorageKey,
+                    JSON.stringify(snapshot.payload)
+                  );
+                  loadCheckpointButton.click();
+                }} catch (error) {{
+                  if (recoveryStatus) {{
+                    recoveryStatus.textContent = 'Recovery snapshot could not be restored';
+                    recoveryStatus.classList.add('save-error');
+                  }}
+                  recoveryApplying = false;
+                  return false;
+                }} finally {{
+                  try {{
+                    if (hadCheckpoint) {{
+                      window.localStorage.setItem(checkpointStorageKey, checkpointText);
+                    }} else {{
+                      window.localStorage.removeItem(checkpointStorageKey);
+                    }}
+                  }} catch (error) {{}}
+                }}
+                if (recoveryOutput) {{
+                  recoveryOutput.textContent = '';
+                  recoveryOutput.style.display = 'none';
+                }}
+                applyRecoveryUiState(snapshot.payload.ui_state);
+                previousThrowRange = null;
+                if (!automatic) {{ applyFilters(); }}
+                if (recoveryStatus) {{
+                  recoveryStatus.textContent = (automatic ? 'Recovered ' : 'Restored ')
+                    + recoveryTimestamp(snapshot.saved_at);
+                  recoveryStatus.classList.remove('save-error');
+                }}
+                refreshRecoveryHistory(snapshot.id || snapshot.saved_at);
+                window.setTimeout(function () {{
+                  recoveryApplying = false;
+                  if (!automatic) {{ scheduleRecoverySave(); }}
+                }}, 0);
+                return true;
+              }}
+
+              function startRecovery() {{
+                if (!recoveryStorageKey || !recoveryHistory || !recoveryRestore) {{
+                  return;
+                }}
+                const snapshots = readRecoverySnapshots();
+                refreshRecoveryHistory();
+                if (snapshots.length) {{
+                  applyRecoverySnapshot(snapshots[0], true);
+                }} else if (recoveryStatus) {{
+                  recoveryStatus.textContent = 'Autosave ready';
+                }}
+
+                recoveryObserver = new MutationObserver(function () {{
+                  scheduleRecoverySave();
+                }});
+                recoveryObserver.observe(board, {{ childList: true }});
+
+                board.addEventListener('input', function (event) {{
+                  if (event.target.matches('.ufa-free-row-break input')) {{
+                    scheduleRecoverySave();
+                  }}
+                }});
+                board.addEventListener('change', function (event) {{
+                  if (event.target.matches('.ufa-free-overlay-check')) {{
+                    scheduleRecoverySave();
+                  }}
+                }});
+                browser.addEventListener('click', function (event) {{
+                  if (event.target.closest(
+                    '.ufa-free-row-overlay, .ufa-free-row-overlay-clear, .ufa-free-overlay-clear'
+                  )) {{
+                    window.setTimeout(scheduleRecoverySave, 0);
+                  }}
+                }});
+                [lineFilter, outcomeFilter, huckFilter, minThrows, maxThrows, cardLimit]
+                  .forEach(function (control) {{
+                    control.addEventListener('change', scheduleRecoverySave);
+                    control.addEventListener('input', scheduleRecoverySave);
+                  }});
+                recoveryRestore.addEventListener('click', function () {{
+                  const selectedId = recoveryHistory.value;
+                  const selectedSnapshot = readRecoverySnapshots().find(
+                    function (snapshot) {{
+                      return (snapshot.id || snapshot.saved_at) === selectedId;
+                    }}
+                  );
+                  applyRecoverySnapshot(selectedSnapshot, false);
+                }});
+                document.addEventListener('visibilitychange', function () {{
+                  if (document.visibilityState === 'hidden' && recoveryTimer !== null) {{
+                    saveRecoverySnapshot();
+                  }}
+                }});
+                window.addEventListener('beforeunload', function () {{
+                  if (recoveryTimer !== null) {{ saveRecoverySnapshot(); }}
+                }});
+
+                window.setTimeout(function () {{
+                  if (!snapshots.length) {{ return; }}
+                  const currentSignature = recoverySignature(serializeRecoveryArrangement());
+                  if (currentSignature !== snapshots[0].signature) {{
+                    scheduleRecoverySave();
+                  }}
+                }}, 0);
               }}
 
               function refreshVisibleOverlay() {{
@@ -4556,6 +4970,7 @@ def write_possession_pattern_browser_html(
                 cardLimit.value = '{max_cards}';
                 previousThrowRange = null;
                 applyFilters();
+                scheduleRecoverySave();
               }});
 
               function setOverlayHidden(hidden) {{
@@ -4570,9 +4985,11 @@ def write_possession_pattern_browser_html(
 
               overlayToggle.addEventListener('click', function () {{
                 setOverlayHidden(!overlayShell.hidden);
+                scheduleRecoverySave();
               }});
               stickyOverlayToggle.addEventListener('click', function () {{
                 setOverlayHidden(!overlayShell.hidden);
+                scheduleRecoverySave();
               }});
 
               let filterQueued = false;
@@ -4585,6 +5002,7 @@ def write_possession_pattern_browser_html(
                 }});
               }}).observe(board, {{ childList: true }});
 
+              startRecovery();
               applyFilters();
             }})();
           </script>
