@@ -2488,8 +2488,8 @@ def render_possession_free_board(
         "if (!selectionWrap || !selectionCount) { return; }"
         "const arrangeSelected = Array.from(selectionWrap.querySelectorAll('.ufa-free-card.row-selected'));"
         "selectionCount.textContent = arrangeSelected.length"
-        "? arrangeSelected.length + ' selected for row break'"
-        ": 'Click cards to select for a row break';"
+        "? arrangeSelected.length + ' selected'"
+        ": '0 selected';"
     )
     toggle_arrange_selection = (
         f"const board = document.getElementById({json.dumps(board_id)});"
@@ -3051,21 +3051,26 @@ def render_possession_free_board(
     recovery_data_attributes = ""
     if persistence_key:
         recovery_controls = f"""
-            <label class="ufa-free-recovery-control">
-              Recovery
-              <select id="{recovery_history_id}" class="ufa-free-recovery-history"
-                aria-label="Recovery history" disabled>
-                <option value="">No recovery snapshots</option>
-              </select>
-            </label>
-            <button id="{recovery_restore_id}" class="ufa-free-recovery-restore"
-              type="button" disabled>
-              Restore
-            </button>
-            <span id="{recovery_status_id}" class="ufa-free-recovery-status"
-              role="status" aria-live="polite">
-              Autosave ready
-            </span>
+            <details class="ufa-free-recovery-menu">
+              <summary>Recovery</summary>
+              <div class="ufa-free-recovery-popover">
+                <label class="ufa-free-recovery-control">
+                  Version
+                  <select id="{recovery_history_id}" class="ufa-free-recovery-history"
+                    aria-label="Recovery history" disabled>
+                    <option value="">No recovery snapshots</option>
+                  </select>
+                </label>
+                <button id="{recovery_restore_id}" class="ufa-free-recovery-restore"
+                  type="button" disabled>
+                  Restore
+                </button>
+                <span id="{recovery_status_id}" class="ufa-free-recovery-status"
+                  role="status" aria-live="polite" title="Autosave is ready">
+                  Saved
+                </span>
+              </div>
+            </details>
         """
         recovery_data_attributes = (
             f' data-checkpoint-storage-key="{escape(storage_key, quote=True)}"'
@@ -3106,8 +3111,9 @@ def render_possession_free_board(
           </div>
           <div class="ufa-free-board-actions">
             <label>
-              Placement
-              <select id="{insert_position_id}" class="ufa-free-insert-position">
+              <span class="ufa-free-placement-label">Placement</span>
+              <select id="{insert_position_id}" class="ufa-free-insert-position"
+                aria-label="Row break placement">
                 <option value="above">Above selected</option>
                 <option value="below">Below selected</option>
                 <option value="bottom">At bottom</option>
@@ -3135,8 +3141,9 @@ def render_possession_free_board(
             </button>
             {recovery_controls}
             <span id="{arrange_selection_count_id}"
-              class="ufa-free-arrange-selection-count">
-              Click cards to select for a row break
+              class="ufa-free-arrange-selection-count"
+              title="Click cards to select for a row break">
+              0 selected
             </span>
           </div>
           <div id="{export_status_id}" class="ufa-free-export-status"></div>
@@ -3638,9 +3645,56 @@ def _possession_browser_css():
         background: #2b8ce6;
         color: #ffffff;
       }
+      .ufa-free-board-actions .ufa-free-recovery-menu {
+        position: relative;
+        flex: 0 0 auto;
+      }
+      .ufa-free-board-actions .ufa-free-recovery-menu summary {
+        min-height: 30px;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid #cbd6e2;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #10233f;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+        list-style: none;
+        padding: 6px 10px;
+      }
+      .ufa-free-board-actions .ufa-free-recovery-menu summary::-webkit-details-marker {
+        display: none;
+      }
+      .ufa-free-board-actions .ufa-free-recovery-menu summary::after {
+        content: 'v';
+        margin-left: 7px;
+        color: #52637a;
+        font-size: 10px;
+      }
+      .ufa-free-board-actions .ufa-free-recovery-menu[open] summary::after {
+        content: '^';
+      }
+      .ufa-free-board-actions .ufa-free-recovery-popover {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        z-index: 220;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 390px;
+        padding: 10px;
+        border: 1px solid #c4d0dd;
+        border-radius: 7px;
+        background: #ffffff;
+        box-shadow: 0 8px 22px rgba(15, 35, 58, 0.18);
+      }
       .ufa-free-board-actions .ufa-free-recovery-control {
-        padding-left: 8px;
-        border-left: 1px solid #d8e1eb;
+        padding-left: 0;
+        border-left: 0;
       }
       .ufa-free-board-actions .ufa-free-recovery-history {
         min-width: 205px;
@@ -4061,6 +4115,25 @@ def write_possession_pattern_browser_html(
         '  <meta charset="utf-8" />\n'
         '  <meta name="viewport" content="width=device-width, initial-scale=1" />\n'
         f"  <title>{safe_title}</title>\n"
+        + """
+        <script>
+          (function () {
+            try {
+              const storedTheme = window.localStorage.getItem(
+                'ufa-possession-browser-theme'
+              );
+              const prefersDark = window.matchMedia
+                && window.matchMedia('(prefers-color-scheme: dark)').matches;
+              document.documentElement.dataset.theme = storedTheme === 'dark'
+                || (!storedTheme && prefersDark)
+                ? 'dark'
+                : 'light';
+            } catch (error) {
+              document.documentElement.dataset.theme = 'light';
+            }
+          })();
+        </script>
+        """
         + _possession_browser_css()
         + """
         <style>
@@ -4129,6 +4202,68 @@ def write_possession_pattern_browser_html(
             transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
           }
           .standalone-filters input { width: 84px; }
+          .standalone-filters .standalone-theme-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            align-self: end;
+            gap: 8px;
+            min-height: 36px;
+            padding: 7px 10px;
+            border: 1px solid #c4d0dd;
+            border-radius: 6px;
+            background: #f5f7fa;
+            cursor: pointer;
+          }
+          .standalone-theme-toggle input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: 0;
+            opacity: 0;
+            pointer-events: none;
+          }
+          .standalone-theme-track {
+            position: relative;
+            flex: 0 0 34px;
+            width: 34px;
+            height: 18px;
+            border: 1px solid #9dacbc;
+            border-radius: 9px;
+            background: #cbd5df;
+            transition: border-color 140ms ease, background-color 140ms ease;
+          }
+          .standalone-theme-track::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(15, 35, 58, 0.28);
+            transition: transform 140ms ease;
+          }
+          .standalone-theme-toggle input:checked + .standalone-theme-track {
+            border-color: #3f8e58;
+            background: #49a365;
+          }
+          .standalone-theme-toggle input:checked + .standalone-theme-track::after {
+            transform: translateX(16px);
+          }
+          .standalone-theme-toggle input:focus-visible + .standalone-theme-track {
+            outline: 3px solid rgba(44, 125, 204, 0.28);
+            outline-offset: 2px;
+          }
+          .standalone-theme-text {
+            color: #344b65;
+            font-size: 12px;
+            font-weight: 750;
+            letter-spacing: 0;
+            text-transform: none;
+            white-space: nowrap;
+          }
           .standalone-team-filter select {
             min-width: 200px;
             border-color: #83bd95;
@@ -4203,6 +4338,7 @@ def write_possession_pattern_browser_html(
             border-radius: 7px;
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 6px 16px rgba(15, 35, 58, 0.13);
+            gap: 6px;
           }
           .standalone-browser .ufa-free-board-actions label {
             color: #52637a;
@@ -4214,7 +4350,21 @@ def write_possession_pattern_browser_html(
             background: #ffffff;
             color: #10233f;
           }
+          .standalone-browser .ufa-free-board-actions button {
+            padding-left: 9px;
+            padding-right: 9px;
+          }
           .standalone-browser .ufa-free-board-actions button:hover {
+            border-color: #879cb2;
+            background: #f3f6f9;
+          }
+          .standalone-browser .ufa-free-board-actions .ufa-free-recovery-menu summary {
+            min-height: 34px;
+            border-color: #b9c7d5;
+            padding-left: 9px;
+            padding-right: 9px;
+          }
+          .standalone-browser .ufa-free-board-actions .ufa-free-recovery-menu summary:hover {
             border-color: #879cb2;
             background: #f3f6f9;
           }
@@ -4248,6 +4398,233 @@ def write_possession_pattern_browser_html(
           }
           .standalone-browser.overlay-hidden .ufa-free-board-layout {
             padding-right: 0;
+          }
+          html[data-theme="dark"] {
+            color: #e8f0ea;
+            color-scheme: dark;
+            background: #111713;
+          }
+          html[data-theme="dark"] body {
+            background: #111713;
+          }
+          html[data-theme="dark"] .standalone-heading {
+            border-color: #35443a;
+            background: #151c17;
+            color: #f0f5f1;
+          }
+          html[data-theme="dark"] .standalone-filters {
+            border-color: #3b4d41;
+            border-left-color: #56a76c;
+            background: #18211b;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.24);
+          }
+          html[data-theme="dark"] .standalone-filters label {
+            color: #b9c9be;
+          }
+          html[data-theme="dark"] .standalone-filters select,
+          html[data-theme="dark"] .standalone-filters input,
+          html[data-theme="dark"] .standalone-filters button,
+          html[data-theme="dark"] .standalone-filters .standalone-theme-toggle {
+            border-color: #4a5e50;
+            background: #222d25;
+            color: #edf4ef;
+          }
+          html[data-theme="dark"] .standalone-team-filter select {
+            border-color: #5c9e70;
+            background: #203127;
+            box-shadow: inset 3px 0 0 #56a76c;
+          }
+          html[data-theme="dark"] .standalone-filters select:hover,
+          html[data-theme="dark"] .standalone-filters input:hover,
+          html[data-theme="dark"] .standalone-filters button:hover,
+          html[data-theme="dark"] .standalone-filters .standalone-theme-toggle:hover {
+            border-color: #74887a;
+            background: #29372d;
+          }
+          html[data-theme="dark"] #standaloneResetFilters {
+            background: #222d25;
+            color: #dce7df;
+          }
+          html[data-theme="dark"] #standaloneToggleOverlay {
+            border-color: #518e63;
+            background: #203b29;
+            color: #bfe6c9;
+          }
+          html[data-theme="dark"] .standalone-theme-text {
+            color: #e3ece6;
+          }
+          html[data-theme="dark"] .standalone-theme-track {
+            border-color: #607166;
+            background: #3a4740;
+          }
+          html[data-theme="dark"] .standalone-count {
+            border-left-color: #56a76c;
+            background: #202a23;
+            color: #c2d1c7;
+          }
+          html[data-theme="dark"] .ufa-free-board-wrap {
+            border-color: #35453b;
+            background: #151d18;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
+            color: #e8f0ea;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-content > .ufa-gallery-kicker {
+            color: #dce8df;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-content > .ufa-free-board-meta,
+          html[data-theme="dark"] .ufa-free-board-meta,
+          html[data-theme="dark"] .ufa-gallery-kicker,
+          html[data-theme="dark"] .ufa-free-overlay-note,
+          html[data-theme="dark"] .ufa-free-arrange-selection-count,
+          html[data-theme="dark"] .ufa-free-export-status {
+            color: #aebfb3;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions {
+            border-color: #43564a;
+            border-left-color: #56a76c;
+            background: rgba(24, 33, 27, 0.98);
+            box-shadow: 0 7px 18px rgba(0, 0, 0, 0.30);
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions label {
+            color: #bdcbc1;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions select,
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions button,
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions .ufa-free-recovery-menu summary {
+            border-color: #4a5e50;
+            background: #222d25;
+            color: #edf4ef;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions button:hover,
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions .ufa-free-recovery-menu summary:hover {
+            border-color: #74887a;
+            background: #2a382e;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions button.primary {
+            border-color: #3d83c4;
+            background: #3577b5;
+            color: #ffffff;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions button.primary:hover {
+            border-color: #61a1db;
+            background: #4388c8;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions .ufa-free-sticky-overlay-toggle {
+            border-color: #518e63;
+            background: #203b29;
+            color: #bfe6c9;
+          }
+          html[data-theme="dark"] .standalone-browser .ufa-free-board-actions .ufa-free-clear-row-breaks {
+            border-color: #815b55;
+            color: #f0b8ae;
+          }
+          html[data-theme="dark"] .ufa-free-board-actions .ufa-free-recovery-menu summary::after {
+            color: #b7c7bc;
+          }
+          html[data-theme="dark"] .ufa-free-board-actions .ufa-free-recovery-popover {
+            border-color: #4a5e50;
+            background: #202a23;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+          }
+          html[data-theme="dark"] .ufa-free-recovery-status {
+            color: #9ed5ab;
+          }
+          html[data-theme="dark"] .ufa-free-recovery-status.save-error {
+            color: #f0a99c;
+          }
+          html[data-theme="dark"] .ufa-free-card,
+          html[data-theme="dark"] .ufa-free-overlay-panel {
+            border-color: #3d4e43;
+            background: #1d2721;
+          }
+          html[data-theme="dark"] .ufa-free-card-meta,
+          html[data-theme="dark"] .ufa-free-card-meta span,
+          html[data-theme="dark"] .ufa-free-card-meta .shape {
+            color: #b2c2b7;
+          }
+          html[data-theme="dark"] .ufa-free-card-meta b,
+          html[data-theme="dark"] .ufa-free-overlay-toggle {
+            color: #eef4f0;
+          }
+          html[data-theme="dark"] .ufa-free-overlay-toggle:hover {
+            border-color: #557b64;
+            background: #26372c;
+          }
+          html[data-theme="dark"] .ufa-free-row-break {
+            border-color: #607568;
+            background: #1b261f;
+            color: #bdccc2;
+          }
+          html[data-theme="dark"] .ufa-free-row-break input,
+          html[data-theme="dark"] .ufa-free-row-break button,
+          html[data-theme="dark"] .ufa-free-overlay-clear {
+            border-color: #4a5e50;
+            background: #263229;
+            color: #e6eee8;
+          }
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-overlay {
+            border-color: #4a8dc8;
+            color: #a9d2f2;
+          }
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-overlay:hover {
+            background: #203546;
+          }
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-overlay-clear {
+            border-color: #815b55;
+            color: #f0b8ae;
+          }
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-overlay-clear:hover {
+            background: #3b2925;
+          }
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-up,
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-down {
+            color: #bdccc2;
+          }
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-up:hover,
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-down:hover {
+            background: #29362d;
+          }
+          html[data-theme="dark"] .ufa-free-export-text {
+            border-color: #4a5e50;
+            background: #19221c;
+            color: #dce8df;
+          }
+          html[data-theme="dark"] .ufa-multi-drag-preview {
+            border-color: #4b94d5;
+            background: #202a23;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.46);
+          }
+          html[data-theme="dark"] .ufa-mini-svg,
+          html[data-theme="dark"] .ufa-overlay-svg {
+            background: #172019;
+          }
+          html[data-theme="dark"] .ufa-free-overlay-panel,
+          html[data-theme="dark"] .ufa-free-recovery-popover {
+            scrollbar-color: #52675a #1a231d;
+          }
+          html[data-theme="dark"] input[type="checkbox"] {
+            accent-color: #4f9f66;
+          }
+          @media (min-width: 981px) and (max-width: 1499px) {
+            .standalone-browser .ufa-free-placement-label {
+              display: none;
+            }
+          }
+          @media (min-width: 981px) and (max-width: 1399px) {
+            .standalone-browser .ufa-free-board-actions .ufa-free-arrange-selection-count {
+              display: none;
+            }
+          }
+          @media (min-width: 981px) and (max-width: 1300px) {
+            .standalone-browser .ufa-free-board-actions {
+              gap: 4px;
+            }
+            .standalone-browser .ufa-free-board-actions button,
+            .standalone-browser .ufa-free-board-actions .ufa-free-recovery-menu summary {
+              padding-left: 7px;
+              padding-right: 7px;
+              font-size: 12px;
+            }
           }
           @media (max-width: 980px) {
             body { min-width: 0; }
@@ -4313,6 +4690,12 @@ def write_possession_pattern_browser_html(
               </label>
               <button id="standaloneResetFilters" type="button">Reset filters</button>
               <button id="standaloneToggleOverlay" type="button">Hide overlay</button>
+              <label class="standalone-theme-toggle" title="Use dark mode">
+                <input id="standaloneThemeToggle" type="checkbox" role="switch"
+                  aria-label="Dark mode" />
+                <span class="standalone-theme-track" aria-hidden="true"></span>
+                <span class="standalone-theme-text">Dark mode</span>
+              </label>
               <span id="standaloneVisibleCount" class="standalone-count"></span>
             </section>
             <main id="standaloneBrowser" class="standalone-browser">
@@ -4333,12 +4716,14 @@ def write_possession_pattern_browser_html(
               const count = document.getElementById('standaloneVisibleCount');
               const reset = document.getElementById('standaloneResetFilters');
               const overlayToggle = document.getElementById('standaloneToggleOverlay');
+              const themeToggle = document.getElementById('standaloneThemeToggle');
               const overlayShell = browser.querySelector('.ufa-free-overlay-shell');
               const boardActions = browser.querySelector('.ufa-free-board-actions');
               const loadCheckpointButton = browser.querySelector('.ufa-free-load-arrangement');
               const recoveryHistory = browser.querySelector('.ufa-free-recovery-history');
               const recoveryRestore = browser.querySelector('.ufa-free-recovery-restore');
               const recoveryStatus = browser.querySelector('.ufa-free-recovery-status');
+              const recoveryMenu = browser.querySelector('.ufa-free-recovery-menu');
               const recoveryOutput = browser.querySelector('.ufa-free-export-text');
               const checkpointStorageKey = board.dataset.checkpointStorageKey || '';
               const recoveryStorageKey = board.dataset.recoveryStorageKey || '';
@@ -4357,6 +4742,39 @@ def write_possession_pattern_browser_html(
               if (teamFilter) {{
                 teamFilter.addEventListener('change', function () {{
                   if (teamFilter.value) {{ window.location.assign(teamFilter.value); }}
+                }});
+              }}
+
+              function applyTheme(theme, persist) {{
+                const useDark = theme === 'dark';
+                document.documentElement.dataset.theme = useDark ? 'dark' : 'light';
+                if (themeToggle) {{
+                  themeToggle.checked = useDark;
+                  themeToggle.closest('.standalone-theme-toggle').title = useDark
+                    ? 'Use light mode'
+                    : 'Use dark mode';
+                }}
+                if (!persist) {{ return; }}
+                try {{
+                  window.localStorage.setItem(
+                    'ufa-possession-browser-theme',
+                    useDark ? 'dark' : 'light'
+                  );
+                }} catch (error) {{}}
+              }}
+
+              applyTheme(document.documentElement.dataset.theme, false);
+              if (themeToggle) {{
+                themeToggle.addEventListener('change', function () {{
+                  applyTheme(themeToggle.checked ? 'dark' : 'light', true);
+                }});
+              }}
+
+              if (recoveryMenu) {{
+                document.addEventListener('click', function (event) {{
+                  if (recoveryMenu.open && !recoveryMenu.contains(event.target)) {{
+                    recoveryMenu.removeAttribute('open');
+                  }}
                 }});
               }}
 
@@ -4768,7 +5186,8 @@ def write_possession_pattern_browser_html(
                   return true;
                 }} catch (error) {{
                   if (recoveryStatus) {{
-                    recoveryStatus.textContent = 'Autosave unavailable - use Save arrangement';
+                    recoveryStatus.textContent = 'Save error';
+                    recoveryStatus.title = 'Autosave unavailable - use Save arrangement';
                     recoveryStatus.classList.add('save-error');
                   }}
                   return false;
@@ -4902,7 +5321,8 @@ def write_possession_pattern_browser_html(
                 const snapshots = readRecoverySnapshots();
                 if (snapshots.length && snapshots[0].signature === signature) {{
                   if (recoveryStatus) {{
-                    recoveryStatus.textContent = 'Autosaved '
+                    recoveryStatus.textContent = 'Saved';
+                    recoveryStatus.title = 'Autosaved '
                       + recoveryTimestamp(snapshots[0].saved_at);
                     recoveryStatus.classList.remove('save-error');
                   }}
@@ -4918,7 +5338,8 @@ def write_possession_pattern_browser_html(
                 snapshots.unshift(snapshot);
                 if (!writeRecoverySnapshots(snapshots)) {{ return; }}
                 if (recoveryStatus) {{
-                  recoveryStatus.textContent = 'Autosaved '
+                  recoveryStatus.textContent = 'Saved';
+                  recoveryStatus.title = 'Autosaved '
                     + recoveryTimestamp(snapshot.saved_at);
                   recoveryStatus.classList.remove('save-error');
                 }}
@@ -4929,7 +5350,8 @@ def write_possession_pattern_browser_html(
                 if (recoveryApplying || !recoveryStorageKey) {{ return; }}
                 if (recoveryTimer !== null) {{ window.clearTimeout(recoveryTimer); }}
                 if (recoveryStatus) {{
-                  recoveryStatus.textContent = 'Unsaved changes';
+                  recoveryStatus.textContent = 'Saving...';
+                  recoveryStatus.title = 'Autosave pending';
                   recoveryStatus.classList.remove('save-error');
                 }}
                 recoveryTimer = window.setTimeout(saveRecoverySnapshot, 1000);
@@ -4978,7 +5400,8 @@ def write_possession_pattern_browser_html(
                   loadCheckpointButton.click();
                 }} catch (error) {{
                   if (recoveryStatus) {{
-                    recoveryStatus.textContent = 'Recovery snapshot could not be restored';
+                    recoveryStatus.textContent = 'Restore error';
+                    recoveryStatus.title = 'Recovery snapshot could not be restored';
                     recoveryStatus.classList.add('save-error');
                   }}
                   recoveryApplying = false;
@@ -5000,7 +5423,8 @@ def write_possession_pattern_browser_html(
                 previousThrowRange = null;
                 if (!automatic) {{ applyFilters(); }}
                 if (recoveryStatus) {{
-                  recoveryStatus.textContent = (automatic ? 'Recovered ' : 'Restored ')
+                  recoveryStatus.textContent = automatic ? 'Recovered' : 'Restored';
+                  recoveryStatus.title = (automatic ? 'Recovered ' : 'Restored ')
                     + recoveryTimestamp(snapshot.saved_at);
                   recoveryStatus.classList.remove('save-error');
                 }}
@@ -5021,7 +5445,8 @@ def write_possession_pattern_browser_html(
                 if (snapshots.length) {{
                   applyRecoverySnapshot(snapshots[0], true);
                 }} else if (recoveryStatus) {{
-                  recoveryStatus.textContent = 'Autosave ready';
+                  recoveryStatus.textContent = 'Saved';
+                  recoveryStatus.title = 'Autosave is ready';
                 }}
 
                 recoveryObserver = new MutationObserver(function () {{
@@ -5063,6 +5488,7 @@ def write_possession_pattern_browser_html(
                     }}
                   );
                   applyRecoverySnapshot(selectedSnapshot, false);
+                  if (recoveryMenu) {{ recoveryMenu.removeAttribute('open'); }}
                 }});
                 document.addEventListener('visibilitychange', function () {{
                   if (document.visibilityState === 'hidden' && recoveryTimer !== null) {{
@@ -5111,8 +5537,8 @@ def write_possession_pattern_browser_html(
                   '.ufa-free-card.row-selected'
                 ).length;
                 selectionCount.textContent = selectedCount
-                  ? selectedCount + ' selected for row break'
-                  : 'Click cards to select for a row break';
+                  ? selectedCount + ' selected'
+                  : '0 selected';
               }}
 
               function findUnsortedRow() {{
