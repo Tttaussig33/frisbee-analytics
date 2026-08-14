@@ -3734,6 +3734,11 @@ def _possession_browser_css():
         margin: 0;
         border-radius: 3px;
       }
+      body.ufa-custom-group-drag-active,
+      body.ufa-custom-group-drag-active * {
+        cursor: grabbing !important;
+        user-select: none !important;
+      }
       .ufa-free-card.drop-target {
         border-color: #2b8ce6;
         box-shadow: 0 0 0 3px rgba(43, 140, 230, 0.16);
@@ -4359,6 +4364,7 @@ def write_possession_pattern_browser_html(
               const dragScrollMaxSpeed = 30;
               let dragScrollSpeed = 0;
               let dragScrollFrame = null;
+              let customGroupDrag = null;
               let recoveryTimer = null;
               let recoveryApplying = false;
               let recoveryObserver = null;
@@ -4373,26 +4379,42 @@ def write_possession_pattern_browser_html(
               }}
 
               function runDragScroll() {{
-                if (!board.querySelector('.ufa-free-board-item.dragging') || dragScrollSpeed === 0) {{
+                const nativeDrag = board.querySelector('.ufa-free-board-item.dragging');
+                const groupedDrag = customGroupDrag && customGroupDrag.active;
+                if ((!nativeDrag && !groupedDrag) || dragScrollSpeed === 0) {{
                   stopDragScroll();
                   return;
                 }}
                 window.scrollBy(0, dragScrollSpeed);
+                if (groupedDrag) {{
+                  updateCustomGroupDropTarget(
+                    customGroupDrag.clientX,
+                    customGroupDrag.clientY
+                  );
+                }}
                 dragScrollFrame = window.requestAnimationFrame(runDragScroll);
               }}
 
-              document.addEventListener('dragover', function (event) {{
-                if (!board.querySelector('.ufa-free-board-item.dragging')) {{ return; }}
-                event.preventDefault();
-                const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+              function updateDragScroll(clientY) {{
+                const viewportHeight = window.innerHeight
+                  || document.documentElement.clientHeight;
                 const edge = Math.min(dragScrollEdge, viewportHeight * 0.25);
                 let nextSpeed = 0;
-                if (event.clientY < edge) {{
-                  const strength = Math.max(0, (edge - event.clientY) / edge);
-                  nextSpeed = -Math.max(4, Math.round(dragScrollMaxSpeed * strength));
-                }} else if (event.clientY > viewportHeight - edge) {{
-                  const strength = Math.max(0, (event.clientY - (viewportHeight - edge)) / edge);
-                  nextSpeed = Math.max(4, Math.round(dragScrollMaxSpeed * strength));
+                if (clientY < edge) {{
+                  const strength = Math.max(0, (edge - clientY) / edge);
+                  nextSpeed = -Math.max(
+                    4,
+                    Math.round(dragScrollMaxSpeed * strength)
+                  );
+                }} else if (clientY > viewportHeight - edge) {{
+                  const strength = Math.max(
+                    0,
+                    (clientY - (viewportHeight - edge)) / edge
+                  );
+                  nextSpeed = Math.max(
+                    4,
+                    Math.round(dragScrollMaxSpeed * strength)
+                  );
                 }}
                 dragScrollSpeed = nextSpeed;
                 if (dragScrollSpeed === 0) {{
@@ -4400,9 +4422,315 @@ def write_possession_pattern_browser_html(
                 }} else if (dragScrollFrame === null) {{
                   dragScrollFrame = window.requestAnimationFrame(runDragScroll);
                 }}
+              }}
+
+              document.addEventListener('dragover', function (event) {{
+                if (!board.querySelector('.ufa-free-board-item.dragging')) {{ return; }}
+                event.preventDefault();
+                updateDragScroll(event.clientY);
               }});
               document.addEventListener('dragend', stopDragScroll, true);
               document.addEventListener('drop', stopDragScroll, true);
+
+              function buildCustomGroupPreview(state, event) {{
+                const preview = document.createElement('div');
+                preview.className = 'ufa-multi-drag-preview';
+                const cardCount = state.cards.length;
+                const fieldWidth = 108;
+                const fieldHeight = 230;
+                const previewGap = 6;
+                const previewPadding = 12;
+                const availableWidth = Math.max(
+                  fieldWidth,
+                  window.innerWidth * 0.72
+                );
+                const availableHeight = Math.max(
+                  fieldHeight,
+                  window.innerHeight * 0.82
+                );
+                const maxFullColumns = Math.max(
+                  1,
+                  Math.floor(
+                    (availableWidth - previewPadding + previewGap)
+                    / (fieldWidth + previewGap)
+                  )
+                );
+                const columns = Math.min(cardCount, 6, maxFullColumns);
+                const rows = Math.ceil(cardCount / columns);
+                const widthScale = (
+                  availableWidth - previewPadding
+                  - ((columns - 1) * previewGap)
+                ) / (columns * fieldWidth);
+                const heightScale = (
+                  availableHeight - previewPadding
+                  - ((rows - 1) * previewGap)
+                ) / (rows * fieldHeight);
+                const previewScale = Math.min(1, widthScale, heightScale);
+                const thumbWidth = Math.max(
+                  18,
+                  Math.floor(fieldWidth * previewScale)
+                );
+                const thumbHeight = Math.max(
+                  38,
+                  Math.round(fieldHeight * previewScale)
+                );
+                preview.style.gridTemplateColumns = 'repeat('
+                  + columns + ', ' + thumbWidth + 'px)';
+                state.cards.forEach(function (card) {{
+                  const field = card.querySelector('.ufa-mini-svg');
+                  if (!field) {{ return; }}
+                  const fieldClone = field.cloneNode(true);
+                  fieldClone.setAttribute('width', thumbWidth);
+                  fieldClone.setAttribute('height', thumbHeight);
+                  fieldClone.style.margin = '0';
+                  preview.appendChild(fieldClone);
+                }});
+                document.body.appendChild(preview);
+
+                const draggedIndex = Math.max(0, state.cards.indexOf(state.source));
+                const draggedColumn = draggedIndex % columns;
+                const draggedRow = Math.floor(draggedIndex / columns);
+                const sourceField = state.source.querySelector('.ufa-mini-svg');
+                const sourceRect = sourceField
+                  ? sourceField.getBoundingClientRect()
+                  : state.source.getBoundingClientRect();
+                const pointerXRatio = sourceRect.width
+                  ? Math.max(
+                      0,
+                      Math.min(1, (state.startX - sourceRect.left) / sourceRect.width)
+                    )
+                  : 0.5;
+                const pointerYRatio = sourceRect.height
+                  ? Math.max(
+                      0,
+                      Math.min(1, (state.startY - sourceRect.top) / sourceRect.height)
+                    )
+                  : 0.5;
+                const previewInset = 8;
+                state.anchorX = previewInset
+                  + (draggedColumn * (thumbWidth + previewGap))
+                  + (pointerXRatio * thumbWidth);
+                state.anchorY = previewInset
+                  + (draggedRow * (thumbHeight + previewGap))
+                  + (pointerYRatio * thumbHeight);
+                state.preview = preview;
+                positionCustomGroupPreview(state, event.clientX, event.clientY);
+              }}
+
+              function positionCustomGroupPreview(state, clientX, clientY) {{
+                if (!state.preview) {{ return; }}
+                state.preview.style.left = (clientX - state.anchorX) + 'px';
+                state.preview.style.top = (clientY - state.anchorY) + 'px';
+              }}
+
+              function updateCustomGroupDropTarget(clientX, clientY) {{
+                const state = customGroupDrag;
+                if (!state || !state.active) {{ return; }}
+                if (state.target) {{ state.target.classList.remove('drop-target'); }}
+                state.target = null;
+                const pointed = document.elementFromPoint(clientX, clientY);
+                const target = pointed && pointed.closest('.ufa-free-board-item');
+                if (!target || !board.contains(target) || state.cards.includes(target)) {{
+                  return;
+                }}
+                target.classList.add('drop-target');
+                state.target = target;
+              }}
+
+              function clearCustomGroupVisuals(state) {{
+                state.source.classList.remove('dragging');
+                state.cards.forEach(function (card) {{
+                  card.classList.remove('group-dragging');
+                }});
+                if (state.target) {{ state.target.classList.remove('drop-target'); }}
+                state.target = null;
+                if (state.preview) {{ state.preview.remove(); }}
+                state.preview = null;
+                document.body.classList.remove('ufa-custom-group-drag-active');
+                stopDragScroll();
+              }}
+
+              function suppressCustomGroupClick() {{
+                board.dataset.suppressCardClick = 'true';
+                window.setTimeout(function () {{
+                  board.dataset.suppressCardClick = 'false';
+                }}, 0);
+              }}
+
+              board.addEventListener('click', function (event) {{
+                if (board.dataset.suppressCardClick !== 'true'
+                    || !event.target.closest('.ufa-free-card')) {{
+                  return;
+                }}
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                board.dataset.suppressCardClick = 'false';
+              }}, true);
+
+              function removeCustomGroupListeners(state) {{
+                document.removeEventListener('mousemove', state.onMove, true);
+                document.removeEventListener('mouseup', state.onMouseUp, true);
+                document.removeEventListener('mousedown', state.onMouseDown, true);
+                document.removeEventListener('contextmenu', state.onContextMenu, true);
+                document.removeEventListener('keydown', state.onKeyDown, true);
+                window.removeEventListener('blur', state.onBlur, true);
+              }}
+
+              function finishCustomGroupDrag(state, suppressClick) {{
+                clearCustomGroupVisuals(state);
+                removeCustomGroupListeners(state);
+                state.source.draggable = true;
+                customGroupDrag = null;
+                if (suppressClick) {{ suppressCustomGroupClick(); }}
+              }}
+
+              function restoreCustomGroupSnapshot(state) {{
+                board.dataset.suppressRecoveryMutation = 'true';
+                const fragment = document.createDocumentFragment();
+                state.snapshot.forEach(function (item) {{
+                  fragment.appendChild(item);
+                }});
+                board.appendChild(fragment);
+              }}
+
+              function cancelCustomGroupDrag(event) {{
+                const state = customGroupDrag;
+                if (!state || state.cancelled) {{ return; }}
+                if (event) {{
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
+                }}
+                state.cancelled = true;
+                restoreCustomGroupSnapshot(state);
+                clearCustomGroupVisuals(state);
+              }}
+
+              function beginCustomGroupDrag(event) {{
+                if (event.button !== 0) {{ return; }}
+                const source = event.target.closest('.ufa-free-card');
+                if (!source || !board.contains(source)
+                    || event.target.closest('button, input, select, textarea, label')) {{
+                  return;
+                }}
+                const selectedCards = Array.from(
+                  board.querySelectorAll('.ufa-free-card.row-selected')
+                );
+                const draggedCards = source.classList.contains('row-selected')
+                    && selectedCards.length > 1
+                  ? selectedCards
+                  : [source];
+
+                source.draggable = false;
+                const state = {{
+                  source: source,
+                  cards: draggedCards,
+                  snapshot: Array.from(board.children),
+                  startX: event.clientX,
+                  startY: event.clientY,
+                  clientX: event.clientX,
+                  clientY: event.clientY,
+                  active: false,
+                  cancelled: false,
+                  preview: null,
+                  target: null,
+                  anchorX: 0,
+                  anchorY: 0,
+                }};
+                customGroupDrag = state;
+
+                state.onMove = function (moveEvent) {{
+                  if (state.cancelled) {{ return; }}
+                  if ((moveEvent.buttons & 2) === 2) {{
+                    cancelCustomGroupDrag(moveEvent);
+                    return;
+                  }}
+                  state.clientX = moveEvent.clientX;
+                  state.clientY = moveEvent.clientY;
+                  if (!state.active) {{
+                    const distance = Math.hypot(
+                      moveEvent.clientX - state.startX,
+                      moveEvent.clientY - state.startY
+                    );
+                    if (distance < 5) {{ return; }}
+                    state.active = true;
+                    state.source.classList.add('dragging');
+                    if (state.cards.length > 1) {{
+                      state.cards.forEach(function (card) {{
+                        card.classList.add('group-dragging');
+                      }});
+                    }}
+                    document.body.classList.add('ufa-custom-group-drag-active');
+                    buildCustomGroupPreview(state, moveEvent);
+                  }}
+                  moveEvent.preventDefault();
+                  positionCustomGroupPreview(
+                    state,
+                    moveEvent.clientX,
+                    moveEvent.clientY
+                  );
+                  updateCustomGroupDropTarget(
+                    moveEvent.clientX,
+                    moveEvent.clientY
+                  );
+                  updateDragScroll(moveEvent.clientY);
+                }};
+
+                state.onMouseDown = function (downEvent) {{
+                  if (downEvent.button === 2) {{ cancelCustomGroupDrag(downEvent); }}
+                }};
+                state.onContextMenu = function (contextEvent) {{
+                  contextEvent.preventDefault();
+                  contextEvent.stopImmediatePropagation();
+                  cancelCustomGroupDrag(contextEvent);
+                }};
+                state.onKeyDown = function (keyEvent) {{
+                  if (keyEvent.key === 'Escape') {{ cancelCustomGroupDrag(keyEvent); }}
+                }};
+                state.onBlur = function () {{
+                  cancelCustomGroupDrag();
+                  finishCustomGroupDrag(state, true);
+                }};
+                state.onMouseUp = function (upEvent) {{
+                  if (upEvent.button !== 0) {{ return; }}
+                  if (state.cancelled) {{
+                    upEvent.preventDefault();
+                    finishCustomGroupDrag(state, true);
+                    return;
+                  }}
+                  if (!state.active) {{
+                    finishCustomGroupDrag(state, false);
+                    return;
+                  }}
+                  upEvent.preventDefault();
+                  upEvent.stopImmediatePropagation();
+                  const target = state.target;
+                  if (target && !state.cards.includes(target)) {{
+                    const items = Array.from(
+                      board.querySelectorAll('.ufa-free-board-item')
+                    );
+                    const fromIndex = items.indexOf(state.source);
+                    const toIndex = items.indexOf(target);
+                    const fragment = document.createDocumentFragment();
+                    state.cards.forEach(function (card) {{
+                      fragment.appendChild(card);
+                    }});
+                    if (fromIndex < toIndex) {{ target.after(fragment); }}
+                    else {{ target.before(fragment); }}
+                  }} else {{
+                    restoreCustomGroupSnapshot(state);
+                  }}
+                  finishCustomGroupDrag(state, true);
+                }};
+
+                document.addEventListener('mousemove', state.onMove, true);
+                document.addEventListener('mouseup', state.onMouseUp, true);
+                document.addEventListener('mousedown', state.onMouseDown, true);
+                document.addEventListener('contextmenu', state.onContextMenu, true);
+                document.addEventListener('keydown', state.onKeyDown, true);
+                window.addEventListener('blur', state.onBlur, true);
+              }}
+
+              board.addEventListener('mousedown', beginCustomGroupDrag, true);
 
               function numericValue(input, fallback) {{
                 const value = Number(input.value);
@@ -4697,6 +5025,10 @@ def write_possession_pattern_browser_html(
                 }}
 
                 recoveryObserver = new MutationObserver(function () {{
+                  if (board.dataset.suppressRecoveryMutation === 'true') {{
+                    board.dataset.suppressRecoveryMutation = 'false';
+                    return;
+                  }}
                   scheduleRecoverySave();
                 }});
                 recoveryObserver.observe(board, {{ childList: true }});
