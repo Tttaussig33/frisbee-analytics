@@ -2637,11 +2637,40 @@ def render_possession_free_board(
         "let target = board.querySelector('.ufa-free-board-item.arrange-target');"
         "let previousBreak = null;"
         "let nextBreak = null;"
+        "let restoreViewportAnchor = function() {};"
         "if (selectedCards.length) {"
         "const items = Array.from(board.querySelectorAll('.ufa-free-board-item'));"
         "selectedCards.sort(function(left, right) {"
         "return items.indexOf(left) - items.indexOf(right);"
         "});"
+        "const viewportCenter = window.innerHeight / 2;"
+        "const nearestViewportCard = selectedCards.reduce(function(best, card) {"
+        "const cardRect = card.getBoundingClientRect();"
+        "const distance = Math.abs((cardRect.top + (cardRect.height / 2)) - viewportCenter);"
+        "return !best || distance < best.distance"
+        "? { card: card, distance: distance }"
+        ": best;"
+        "}, null);"
+        "const viewportAnchorCard = position === 'above'"
+        "? selectedCards[selectedCards.length - 1]"
+        ": position === 'below'"
+        "? selectedCards[0]"
+        ": nearestViewportCard.card;"
+        "const viewportAnchor = {"
+        "card: viewportAnchorCard,"
+        "top: viewportAnchorCard.getBoundingClientRect().top"
+        "};"
+        "restoreViewportAnchor = function() {"
+        "if (!viewportAnchor || !viewportAnchor.card.isConnected) { return; }"
+        "const currentTop = viewportAnchor.card.getBoundingClientRect().top;"
+        "const scrollDelta = currentTop - viewportAnchor.top;"
+        "if (Math.abs(scrollDelta) < 1) { return; }"
+        "const root = document.documentElement;"
+        "const previousScrollBehavior = root.style.scrollBehavior;"
+        "root.style.scrollBehavior = 'auto';"
+        "window.scrollBy(0, scrollDelta);"
+        "root.style.scrollBehavior = previousScrollBehavior;"
+        "};"
         "let item = selectedCards[0].previousElementSibling;"
         "while (item && !item.classList.contains('ufa-free-row-break')) {"
         "item = item.previousElementSibling;"
@@ -2655,9 +2684,20 @@ def render_possession_free_board(
         "target = null;"
         "const selectionStartsRow = selectedCards[0].previousElementSibling === previousBreak;"
         "const selectionEndsRow = selectedCards[selectedCards.length - 1].nextElementSibling === nextBreak;"
-        "const existingBoundary = position === 'above' && previousBreak && selectionStartsRow && selectionEndsRow"
+        "const selectedSet = new Set(selectedCards);"
+        "const rowCards = [];"
+        "item = previousBreak ? previousBreak.nextElementSibling : board.firstElementChild;"
+        "while (item && item !== nextBreak) {"
+        "if (item.classList.contains('ufa-free-card')) { rowCards.push(item); }"
+        "item = item.nextElementSibling;"
+        "}"
+        "const selectionFillsRow = rowCards.length === selectedCards.length"
+        "&& rowCards.every(function(card) { return selectedSet.has(card); });"
+        "const existingBoundary = position === 'above' && previousBreak && selectionStartsRow"
+        "&& selectionEndsRow && selectionFillsRow"
         "? previousBreak"
-        ": position === 'below' && nextBreak && selectionStartsRow && selectionEndsRow"
+        ": position === 'below' && nextBreak && selectionStartsRow"
+        "&& selectionEndsRow && selectionFillsRow"
         "? nextBreak"
         ": null;"
         "if (existingBoundary) {"
@@ -2670,6 +2710,16 @@ def render_possession_free_board(
         "return;"
         "}"
         "}"
+        "board.dataset.suppressFilterMutation = 'true';"
+        "board.dataset.suppressFilterRun = 'true';"
+        "window.requestAnimationFrame(function() {"
+        "if (board.dataset.suppressFilterMutation === 'true') {"
+        "board.dataset.suppressFilterMutation = 'false';"
+        "}"
+        "if (board.dataset.suppressFilterRun === 'true') {"
+        "board.dataset.suppressFilterRun = 'false';"
+        "}"
+        "});"
         "const nextIndex = board.querySelectorAll('.ufa-free-row-break').length + 1;"
         "const breaker = document.createElement('div');"
         f"breaker.id = {json.dumps(board_id + '-row-break-')} + nextIndex + '-' + Date.now();"
@@ -2721,14 +2771,11 @@ def render_possession_free_board(
         "board.appendChild(selectedFragment);"
         "}"
         "} else if (position === 'below') {"
-        "selectedCards.forEach(function(card) { selectedFragment.appendChild(card); });"
-        "selectedFragment.appendChild(breaker);"
-        "if (previousBreak && previousBreak.isConnected) {"
-        "previousBreak.after(selectedFragment);"
-        "} else if (board.firstChild) {"
-        "board.insertBefore(selectedFragment, board.firstChild);"
+        "const lastSelectedCard = selectedCards[selectedCards.length - 1];"
+        "if (lastSelectedCard && lastSelectedCard.isConnected) {"
+        "lastSelectedCard.after(breaker);"
         "} else {"
-        "board.appendChild(selectedFragment);"
+        "board.appendChild(breaker);"
         "}"
         "} else {"
         "selectedFragment.appendChild(breaker);"
@@ -2751,6 +2798,10 @@ def render_possession_free_board(
         "});"
         "if (selectedCards.length) { board.dataset.selectionCommitted = 'true'; }"
         f"{update_arrange_selection}"
+        "if (selectedCards.length) {"
+        "restoreViewportAnchor();"
+        "window.requestAnimationFrame(restoreViewportAnchor);"
+        "}"
     )
     clear_row_breaks = (
         f"const board = document.getElementById({json.dumps(board_id)});"
@@ -3788,6 +3839,15 @@ def _possession_browser_css():
         margin: 0;
         border-radius: 3px;
       }
+      .ufa-multi-drag-preview.ufa-single-drag-preview {
+        border-color: rgba(43, 140, 230, 0.78);
+        background: transparent;
+        box-shadow: none;
+        opacity: 0.52;
+      }
+      .ufa-multi-drag-preview.ufa-single-drag-preview .ufa-mini-svg {
+        background: transparent;
+      }
       body.ufa-custom-group-drag-active,
       body.ufa-custom-group-drag-active * {
         cursor: grabbing !important;
@@ -4594,6 +4654,11 @@ def write_possession_pattern_browser_html(
             background: #202a23;
             box-shadow: 0 10px 28px rgba(0, 0, 0, 0.46);
           }
+          html[data-theme="dark"] .ufa-multi-drag-preview.ufa-single-drag-preview {
+            border-color: rgba(75, 148, 213, 0.82);
+            background: transparent;
+            box-shadow: none;
+          }
           html[data-theme="dark"] .ufa-mini-svg,
           html[data-theme="dark"] .ufa-overlay-svg {
             background: #172019;
@@ -4854,6 +4919,9 @@ def write_possession_pattern_browser_html(
                 const preview = document.createElement('div');
                 preview.className = 'ufa-multi-drag-preview';
                 const cardCount = state.cards.length;
+                if (cardCount === 1) {{
+                  preview.classList.add('ufa-single-drag-preview');
+                }}
                 const fieldWidth = 108;
                 const fieldHeight = 230;
                 const previewGap = 6;
@@ -5541,13 +5609,6 @@ def write_possession_pattern_browser_html(
                   : '0 selected';
               }}
 
-              function findUnsortedRow() {{
-                return Array.from(board.querySelectorAll('.ufa-free-row-break'))
-                  .find(function (rowBreak) {{
-                    return rowBreak.dataset.autoUnsorted === 'true';
-                  }}) || null;
-              }}
-
               function createFallbackUnsortedRow(title) {{
                 const rowBreak = document.createElement('div');
                 rowBreak.id = 'ufa-auto-unsorted-' + Date.now();
@@ -5579,91 +5640,58 @@ def write_possession_pattern_browser_html(
                 return rowBreak;
               }}
 
-              function ensureUnsortedRow(minimum, maximum) {{
-                let rowBreak = findUnsortedRow();
-                if (!rowBreak) {{
-                  const insertButton = boardActions && boardActions.querySelector(
-                    '.ufa-free-insert-row-break'
-                  );
-                  const positionSelect = boardActions && boardActions.querySelector(
-                    '.ufa-free-insert-position'
-                  );
-                  if (!insertButton || !positionSelect) {{
-                    rowBreak = createFallbackUnsortedRow(
-                      unsortedRowTitle(minimum, maximum)
-                    );
-                  }} else {{
-                    const existingBreaks = new Set(
-                      board.querySelectorAll('.ufa-free-row-break')
-                    );
-                    const selectedCards = Array.from(
-                      board.querySelectorAll('.ufa-free-card.row-selected')
-                    );
-                    const arrangeTarget = board.querySelector(
-                      '.ufa-free-board-item.arrange-target'
-                    );
-                    const previousPosition = positionSelect.value;
-                    selectedCards.forEach(function (card) {{
-                      card.classList.remove('row-selected');
-                    }});
-                    positionSelect.value = 'bottom';
-                    insertButton.click();
-                    positionSelect.value = previousPosition;
+              function moveNewThrowCardsToBottom(cards, minimum, maximum) {{
+                const newCards = cards.filter(function (card) {{
+                  return card && card.isConnected
+                    && card.classList.contains('ufa-free-card');
+                }});
+                if (!newCards.length) {{ return; }}
 
-                    rowBreak = Array.from(board.querySelectorAll('.ufa-free-row-break'))
-                      .find(function (candidate) {{
-                        return !existingBreaks.has(candidate);
-                      }}) || null;
-                    if (!rowBreak) {{
-                      rowBreak = createFallbackUnsortedRow(
-                        unsortedRowTitle(minimum, maximum)
-                      );
-                    }}
-                    rowBreak.classList.remove('arrange-target');
-                    if (arrangeTarget && arrangeTarget.isConnected) {{
-                      arrangeTarget.classList.add('arrange-target');
-                    }}
-                    selectedCards.forEach(function (card) {{
-                      card.classList.add('row-selected');
-                    }});
-                    updateRowSelectionCount();
+                const autoRows = Array.from(
+                  board.querySelectorAll('.ufa-free-row-break')
+                ).filter(function (rowBreak) {{
+                  return rowBreak.dataset.autoUnsorted === 'true';
+                }});
+                let rowBreak = autoRows.length
+                  ? autoRows[autoRows.length - 1]
+                  : null;
+                let laterRowBreak = false;
+                let item = rowBreak ? rowBreak.nextElementSibling : null;
+                while (item) {{
+                  if (item.classList.contains('ufa-free-row-break')) {{
+                    laterRowBreak = true;
+                    break;
                   }}
-                }}
-
-                rowBreak.dataset.autoUnsorted = 'true';
-                rowBreak.dataset.arrangeLabel = unsortedRowTitle(minimum, maximum);
-                const titleInput = rowBreak.querySelector('input');
-                if (titleInput) {{
-                  titleInput.value = unsortedRowTitle(minimum, maximum);
-                }}
-                rowBreak.hidden = false;
-
-                const unsortedGroup = [rowBreak];
-                let item = rowBreak.nextElementSibling;
-                while (item && !item.classList.contains('ufa-free-row-break')) {{
-                  unsortedGroup.push(item);
                   item = item.nextElementSibling;
                 }}
-                const fragment = document.createDocumentFragment();
-                unsortedGroup.forEach(function (groupItem) {{
-                  fragment.appendChild(groupItem);
-                }});
-                board.appendChild(fragment);
-                return rowBreak;
-              }}
 
-              function moveNewThrowCardsToBottom(cards, minimum, maximum) {{
-                const rowBreak = ensureUnsortedRow(minimum, maximum);
-                if (!rowBreak) {{
-                  cards.forEach(function (card) {{ board.appendChild(card); }});
-                  return;
+                // Keep existing groups exactly where the user left them. If an
+                // older staging row is no longer the final group, start a new
+                // staging row at the bottom instead of moving that old group.
+                board.dataset.suppressFilterMutation = 'true';
+                if (!rowBreak || laterRowBreak) {{
+                  rowBreak = createFallbackUnsortedRow(
+                    unsortedRowTitle(minimum, maximum)
+                  );
+                }} else {{
+                  rowBreak.dataset.autoUnsorted = 'true';
+                  rowBreak.dataset.arrangeLabel = unsortedRowTitle(minimum, maximum);
+                  const titleInput = rowBreak.querySelector('input');
+                  if (titleInput) {{
+                    titleInput.value = unsortedRowTitle(minimum, maximum);
+                  }}
+                  rowBreak.hidden = false;
                 }}
-                cards.forEach(function (card) {{ board.appendChild(card); }});
+                newCards.forEach(function (card) {{ board.appendChild(card); }});
               }}
 
               let previousThrowRange = null;
 
               function applyFilters() {{
+                if (board.dataset.suppressFilterRun === 'true') {{
+                  board.dataset.suppressFilterRun = 'false';
+                  return;
+                }}
                 const selectedLine = lineFilter.value;
                 const selectedOutcome = outcomeFilter.value;
                 const selectedHuck = huckFilter.value;
@@ -5672,9 +5700,10 @@ def write_possession_pattern_browser_html(
                 const limit = Math.max(1, numericValue(cardLimit, Number.POSITIVE_INFINITY));
                 const throwInputsComplete = minThrows.value.trim() !== ''
                   && maxThrows.value.trim() !== '';
-                const advancedThrowCount = throwInputsComplete
+                const expandedThrowRange = throwInputsComplete
                   && previousThrowRange !== null
-                  && maximum > previousThrowRange.maximum;
+                  && (minimum < previousThrowRange.minimum
+                    || maximum > previousThrowRange.maximum);
                 const newThrowCards = [];
                 let visible = 0;
                 let matched = 0;
@@ -5691,7 +5720,8 @@ def write_possession_pattern_browser_html(
                   const matchedPreviousThrowRange = previousThrowRange !== null
                     && throws >= previousThrowRange.minimum
                     && throws <= previousThrowRange.maximum;
-                  if (advancedThrowCount && throwMatches && !matchedPreviousThrowRange) {{
+                  if (expandedThrowRange && throwMatches && !matchedPreviousThrowRange
+                      && lineMatches && outcomeMatches && huckMatches) {{
                     newThrowCards.push(card);
                   }}
                   const matches = lineMatches && outcomeMatches && huckMatches && throwMatches;
@@ -5702,10 +5732,12 @@ def write_possession_pattern_browser_html(
                   if (!show) {{ card.classList.remove('row-selected'); }}
                 }});
 
-                if (advancedThrowCount) {{
+                if (expandedThrowRange) {{
                   moveNewThrowCardsToBottom(newThrowCards, minimum, maximum);
                 }}
-                previousThrowRange = {{ minimum: minimum, maximum: maximum }};
+                if (throwInputsComplete) {{
+                  previousThrowRange = {{ minimum: minimum, maximum: maximum }};
+                }}
                 updateRowSelectionCount();
                 syncRowBreakVisibility();
                 refreshVisibleOverlay();
@@ -5752,6 +5784,10 @@ def write_possession_pattern_browser_html(
 
               let filterQueued = false;
               new MutationObserver(function () {{
+                if (board.dataset.suppressFilterMutation === 'true') {{
+                  board.dataset.suppressFilterMutation = 'false';
+                  return;
+                }}
                 if (filterQueued) {{ return; }}
                 filterQueued = true;
                 window.requestAnimationFrame(function () {{
