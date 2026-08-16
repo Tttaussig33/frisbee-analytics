@@ -113,8 +113,8 @@ def main():
     parser.add_argument(
         "--regular-season-games",
         type=int,
-        default=12,
-        help="Use the team's first N games; set 0 to include every cached game",
+        default=0,
+        help="Use the team's first N cached games; set 0 to include every cached game",
     )
     parser.add_argument(
         "--outcomes",

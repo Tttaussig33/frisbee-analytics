@@ -18,7 +18,42 @@ ENDZONE_LOW_Y = 20
 ENDZONE_HIGH_Y = 100
 
 
-def fetch_shownspace_games(season=2026, final_only=True, limit=500, timeout=30):
+def _filter_regular_season_games(games):
+    """Keep games marked as regular season by Shown Space schedule metadata."""
+    if games.empty:
+        return games
+
+    has_regular_week = "RegularSeasonWeek" in games
+    has_playoff_round = "PlayoffRound" in games
+    if not has_regular_week and not has_playoff_round:
+        return games
+
+    if has_regular_week:
+        regular_week = pd.to_numeric(games["RegularSeasonWeek"], errors="coerce")
+        regular_mask = regular_week.notna()
+    else:
+        regular_mask = pd.Series(True, index=games.index)
+
+    if has_playoff_round:
+        playoff_round = (
+            games["PlayoffRound"]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+            .str.lower()
+        )
+        regular_mask &= playoff_round.isin({"", "none", "nan", "null"})
+
+    return games[regular_mask].reset_index(drop=True)
+
+
+def fetch_shownspace_games(
+    season=2026,
+    final_only=True,
+    limit=500,
+    timeout=30,
+    regular_season_only=True,
+):
     response = requests.get(
         f"{BASE_URL}/api/games",
         params={"year": season, "limit": limit},
@@ -27,15 +62,20 @@ def fetch_shownspace_games(season=2026, final_only=True, limit=500, timeout=30):
     )
     response.raise_for_status()
     games = pd.DataFrame(response.json().get("games") or [])
-    if games.empty or not final_only:
+    if games.empty:
         return games
 
-    status = games.get("Status", pd.Series("", index=games.index)).fillna("")
-    is_final = games.get("is_final", pd.Series(False, index=games.index)).fillna(False)
-    final_mask = is_final.astype(bool) | status.str.strip().str.lower().str.startswith(
-        "final"
-    )
-    return games[final_mask].reset_index(drop=True)
+    if final_only:
+        status = games.get("Status", pd.Series("", index=games.index)).fillna("")
+        is_final = games.get("is_final", pd.Series(False, index=games.index)).fillna(False)
+        final_mask = is_final.astype(bool) | status.astype(str).str.strip().str.lower().str.startswith(
+            "final"
+        )
+        games = games[final_mask].reset_index(drop=True)
+
+    if regular_season_only:
+        games = _filter_regular_season_games(games)
+    return games.reset_index(drop=True)
 
 
 def fetch_shownspace_game_data(game_id, timeout=30):
@@ -67,8 +107,18 @@ def fetch_shownspace_throws_for_games(game_ids, delay=0.15, timeout=30):
     return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
 
-def fetch_shownspace_season_throws(season=2026, team_id=None, max_games=None, delay=0.15):
-    games = fetch_shownspace_games(season=season, final_only=True)
+def fetch_shownspace_season_throws(
+    season=2026,
+    team_id=None,
+    max_games=None,
+    delay=0.15,
+    regular_season_only=True,
+):
+    games = fetch_shownspace_games(
+        season=season,
+        final_only=True,
+        regular_season_only=regular_season_only,
+    )
     if team_id is not None and not games.empty:
         team_id = team_id.lower()
         games = games[
@@ -145,7 +195,11 @@ def _possession_outcome(path):
         return "turnover"
 
     final_y = pd.to_numeric(pd.Series([final_throw.get("ReceiverY")]), errors="coerce").iloc[0]
-    if pd.notna(final_y) and final_y > ENDZONE_HIGH_Y:
+    # Shown Space coordinates include the end-zone boundary itself. Scores
+    # can finish in either end zone, so treat both boundaries as goals.
+    if pd.notna(final_y) and (
+        final_y <= ENDZONE_LOW_Y or final_y >= ENDZONE_HIGH_Y
+    ):
         return "goal"
 
     return "unknown"
@@ -2803,22 +2857,17 @@ def render_possession_free_board(
         "breaker.remove();"
         "};"
         "if (selectedCards.length) {"
+        "const firstSelectedCard = selectedCards[0];"
+        "const lastSelectedCard = selectedCards[selectedCards.length - 1];"
         "const selectedFragment = document.createDocumentFragment();"
         "if (position === 'above') {"
-        "selectedFragment.appendChild(breaker);"
+        "board.insertBefore(breaker, firstSelectedCard);"
         "selectedCards.forEach(function(card) { selectedFragment.appendChild(card); });"
-        "if (nextBreak && nextBreak.isConnected) {"
-        "board.insertBefore(selectedFragment, nextBreak);"
-        "} else {"
-        "board.appendChild(selectedFragment);"
-        "}"
+        "breaker.after(selectedFragment);"
         "} else if (position === 'below') {"
-        "const lastSelectedCard = selectedCards[selectedCards.length - 1];"
-        "if (lastSelectedCard && lastSelectedCard.isConnected) {"
         "lastSelectedCard.after(breaker);"
-        "} else {"
-        "board.appendChild(breaker);"
-        "}"
+        "selectedCards.forEach(function(card) { selectedFragment.appendChild(card); });"
+        "board.insertBefore(selectedFragment, breaker);"
         "} else {"
         "selectedFragment.appendChild(breaker);"
         "selectedCards.forEach(function(card) { selectedFragment.appendChild(card); });"
@@ -6457,6 +6506,7 @@ def create_team_scoring_possession_browser(
     default_team_id="glory",
     final_only=True,
     max_games=None,
+    regular_season_only=True,
     outcomes=("goal", "turnover"),
     pull_receive_scores_only=False,
     long_field_only=False,
@@ -6478,7 +6528,11 @@ def create_team_scoring_possession_browser(
     status = widgets.HTML("Loading game list...")
     output = widgets.Output()
 
-    games = fetch_shownspace_games(season=season, final_only=final_only)
+    games = fetch_shownspace_games(
+        season=season,
+        final_only=final_only,
+        regular_season_only=regular_season_only,
+    )
     if games.empty:
         return widgets.VBox([widgets.HTML("<b>No Shown Space games found.</b>")])
 
