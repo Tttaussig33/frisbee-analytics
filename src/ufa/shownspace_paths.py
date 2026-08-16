@@ -2595,6 +2595,38 @@ def render_possession_free_board(
         "else { board.appendChild(fragment); }"
     )
 
+    move_row_to_top = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        "const rowBreak = this.closest('.ufa-free-row-break');"
+        "if (!board || !rowBreak) { return; }"
+        "if (rowBreak === board.firstElementChild) { return; }"
+        "const group = [rowBreak];"
+        "let item = rowBreak.nextElementSibling;"
+        "while (item && !item.classList.contains('ufa-free-row-break')) {"
+        "group.push(item);"
+        "item = item.nextElementSibling;"
+        "}"
+        "const fragment = document.createDocumentFragment();"
+        "group.forEach(function(node) { fragment.appendChild(node); });"
+        "board.insertBefore(fragment, board.firstElementChild);"
+    )
+
+    move_row_to_bottom = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        "const rowBreak = this.closest('.ufa-free-row-break');"
+        "if (!board || !rowBreak) { return; }"
+        "let item = rowBreak.nextElementSibling;"
+        "const group = [rowBreak];"
+        "while (item && !item.classList.contains('ufa-free-row-break')) {"
+        "group.push(item);"
+        "item = item.nextElementSibling;"
+        "}"
+        "if (group[group.length - 1] === board.lastElementChild) { return; }"
+        "const fragment = document.createDocumentFragment();"
+        "group.forEach(function(node) { fragment.appendChild(node); });"
+        "board.appendChild(fragment);"
+    )
+
     bind_row_move_controls = (
         "const bindRowMoveButton = function(button, moveRow) {"
         "if (!button) { return; }"
@@ -2624,6 +2656,14 @@ def render_possession_free_board(
         "bindRowMoveButton("
         "breaker.querySelector('.ufa-free-row-move-down'),"
         f"function() {{ {move_row_down} }}"
+        ");"
+        "bindRowMoveButton("
+        "breaker.querySelector('.ufa-free-row-move-top'),"
+        f"function() {{ {move_row_to_top} }}"
+        ");"
+        "bindRowMoveButton("
+        "breaker.querySelector('.ufa-free-row-move-bottom'),"
+        f"function() {{ {move_row_to_bottom} }}"
         ");"
     )
 
@@ -2735,6 +2775,8 @@ def render_possession_free_board(
          "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
          "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
         "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\">Move down</button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-top\" aria-label=\"Move this row to the top\">Top</button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-bottom\" aria-label=\"Move this row to the bottom\">Bottom</button>"
         "<button type=\"button\" class=\"ufa-free-row-remove\" aria-label=\"Remove row break\">Remove</button>';"
         f"breaker.ondragstart = function(event) {{ {drag_start} }};"
         f"breaker.ondragend = function() {{ {drag_end} }};"
@@ -2940,6 +2982,8 @@ def render_possession_free_board(
          "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
          "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
         "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\">Move down</button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-top\" aria-label=\"Move this row to the top\">Top</button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-bottom\" aria-label=\"Move this row to the bottom\">Bottom</button>"
         "<button type=\"button\" class=\"ufa-free-row-remove\" aria-label=\"Remove row break\">Remove</button>';"
         "breaker.querySelector('input').value = title || ('Pattern group ' + index);"
         f"breaker.ondragstart = function(event) {{ {drag_start} }};"
@@ -3662,6 +3706,13 @@ def _possession_browser_css():
         border-bottom: 1px solid #d8e1eb;
         background: #ffffff;
       }
+      /* Keep manual checkpoints available to autosave/recovery, but hide the controls for now. */
+      .ufa-free-save-arrangement,
+      .ufa-free-load-arrangement,
+      .ufa-free-external-save-arrangement,
+      .ufa-free-external-load-arrangement {
+        display: none !important;
+      }
       .ufa-free-board-actions label {
         display: inline-flex;
         align-items: center;
@@ -3931,11 +3982,15 @@ def _possession_browser_css():
         background: #fff3f0;
       }
       .ufa-free-row-break .ufa-free-row-move-up,
-      .ufa-free-row-break .ufa-free-row-move-down {
+      .ufa-free-row-break .ufa-free-row-move-down,
+      .ufa-free-row-break .ufa-free-row-move-top,
+      .ufa-free-row-break .ufa-free-row-move-bottom {
         color: #52637a;
       }
       .ufa-free-row-break .ufa-free-row-move-up:hover,
-      .ufa-free-row-break .ufa-free-row-move-down:hover {
+      .ufa-free-row-break .ufa-free-row-move-down:hover,
+      .ufa-free-row-break .ufa-free-row-move-top:hover,
+      .ufa-free-row-break .ufa-free-row-move-bottom:hover {
         background: #f3f7fb;
       }
       .ufa-free-card.overlay-selected {
@@ -4637,11 +4692,15 @@ def write_possession_pattern_browser_html(
             background: #3b2925;
           }
           html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-up,
-          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-down {
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-down,
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-top,
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-bottom {
             color: #bdccc2;
           }
           html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-up:hover,
-          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-down:hover {
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-down:hover,
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-top:hover,
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-move-bottom:hover {
             background: #29362d;
           }
           html[data-theme="dark"] .ufa-free-export-text {
@@ -5255,7 +5314,7 @@ def write_possession_pattern_browser_html(
                 }} catch (error) {{
                   if (recoveryStatus) {{
                     recoveryStatus.textContent = 'Save error';
-                    recoveryStatus.title = 'Autosave unavailable - use Save arrangement';
+                    recoveryStatus.title = 'Autosave unavailable - recovery disabled';
                     recoveryStatus.classList.add('save-error');
                   }}
                   return false;
@@ -6062,11 +6121,11 @@ def create_scoring_possession_browser(
         onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-clear-selection');if(button){{button.click();}}}})()">
         Clear selection
       </button>
-      <button class="primary" type="button"
+      <button class="primary ufa-free-external-save-arrangement" type="button"
         onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-save-arrangement');if(button){{button.click();}}}})()">
         Save arrangement
       </button>
-      <button type="button"
+      <button class="ufa-free-external-load-arrangement" type="button"
         onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-load-arrangement');if(button){{button.click();}}}})()">
         Load saved
       </button>
