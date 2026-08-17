@@ -2827,10 +2827,10 @@ def render_possession_free_board(
          "breaker.innerHTML = '<input type=\"text\" value=\"Pattern group ' + nextIndex + '\" aria-label=\"Row title\" />"
          "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
          "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
-         "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\">Move down</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-top\" aria-label=\"Move this row to the top\">Top</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-bottom\" aria-label=\"Move this row to the bottom\">Bottom</button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\" title=\"Move row up\"><span class=\"ufa-row-icon ufa-row-icon-up ufa-row-icon-single\" aria-hidden=\"true\"></span></button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\" title=\"Move row down\"><span class=\"ufa-row-icon ufa-row-icon-down ufa-row-icon-single\" aria-hidden=\"true\"></span></button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-top\" aria-label=\"Move this row to the top\" title=\"Move row to top\"><span class=\"ufa-row-icon ufa-row-icon-up\" aria-hidden=\"true\"></span></button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-bottom\" aria-label=\"Move this row to the bottom\" title=\"Move row to bottom\"><span class=\"ufa-row-icon ufa-row-icon-down\" aria-hidden=\"true\"></span></button>"
         "<button type=\"button\" class=\"ufa-free-row-remove\" aria-label=\"Remove row break\">Remove</button>';"
         f"breaker.ondragstart = function(event) {{ {drag_start} }};"
         f"breaker.ondragend = function() {{ {drag_end} }};"
@@ -3029,10 +3029,10 @@ def render_possession_free_board(
          "breaker.innerHTML = '<input type=\"text\" aria-label=\"Row title\" />"
          "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
          "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
-         "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\">Move up</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\">Move down</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-top\" aria-label=\"Move this row to the top\">Top</button>"
-        "<button type=\"button\" class=\"ufa-free-row-move-bottom\" aria-label=\"Move this row to the bottom\">Bottom</button>"
+         "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\" title=\"Move row up\"><span class=\"ufa-row-icon ufa-row-icon-up ufa-row-icon-single\" aria-hidden=\"true\"></span></button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\" title=\"Move row down\"><span class=\"ufa-row-icon ufa-row-icon-down ufa-row-icon-single\" aria-hidden=\"true\"></span></button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-top\" aria-label=\"Move this row to the top\" title=\"Move row to top\"><span class=\"ufa-row-icon ufa-row-icon-up\" aria-hidden=\"true\"></span></button>"
+        "<button type=\"button\" class=\"ufa-free-row-move-bottom\" aria-label=\"Move this row to the bottom\" title=\"Move row to bottom\"><span class=\"ufa-row-icon ufa-row-icon-down\" aria-hidden=\"true\"></span></button>"
         "<button type=\"button\" class=\"ufa-free-row-remove\" aria-label=\"Remove row break\">Remove</button>';"
         "breaker.querySelector('input').value = title || ('Pattern group ' + index);"
         f"breaker.ondragstart = function(event) {{ {drag_start} }};"
@@ -4041,6 +4041,58 @@ def _possession_browser_css():
       .ufa-free-row-break .ufa-free-row-move-top:hover,
       .ufa-free-row-break .ufa-free-row-move-bottom:hover {
         background: #f3f7fb;
+      }
+      .ufa-free-row-break .ufa-free-row-move-up,
+      .ufa-free-row-break .ufa-free-row-move-down,
+      .ufa-free-row-break .ufa-free-row-move-top,
+      .ufa-free-row-break .ufa-free-row-move-bottom {
+        width: 28px;
+        min-width: 28px;
+        height: 24px;
+        box-sizing: border-box;
+        padding: 2px 5px;
+        line-height: 1;
+      }
+      .ufa-row-icon {
+        position: relative;
+        display: inline-block;
+        width: 12px;
+        height: 14px;
+        color: currentColor;
+        vertical-align: middle;
+      }
+      .ufa-row-icon::before,
+      .ufa-row-icon::after {
+        position: absolute;
+        left: 2px;
+        width: 7px;
+        height: 7px;
+        border-top: 2px solid currentColor;
+        border-left: 2px solid currentColor;
+        content: "";
+      }
+      .ufa-row-icon::before {
+        top: 1px;
+      }
+      .ufa-row-icon::after {
+        top: 7px;
+      }
+      .ufa-row-icon-up::before,
+      .ufa-row-icon-up::after {
+        transform: rotate(45deg);
+      }
+      .ufa-row-icon-down::before,
+      .ufa-row-icon-down::after {
+        transform: rotate(225deg);
+      }
+      .ufa-row-icon-single::after {
+        display: none;
+      }
+      .ufa-row-icon-single::before {
+        top: 3px;
+      }
+      .ufa-row-icon-down.ufa-row-icon-single::before {
+        top: 0;
       }
       .ufa-free-card.overlay-selected {
         border-color: #c3482b;
