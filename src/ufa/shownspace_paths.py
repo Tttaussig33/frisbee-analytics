@@ -2291,6 +2291,7 @@ def render_possession_free_board(
     export_text_id = f"ufa-free-export-text-{board_key}"
     insert_position_id = f"ufa-free-insert-position-{board_key}"
     arrange_selection_count_id = f"ufa-free-arrange-selection-count-{board_key}"
+    undo_button_id = f"ufa-free-undo-arrangement-{board_key}"
     recovery_history_id = f"ufa-free-recovery-history-{board_key}"
     recovery_restore_id = f"ufa-free-recovery-restore-{board_key}"
     recovery_status_id = f"ufa-free-recovery-status-{board_key}"
@@ -2343,6 +2344,33 @@ def render_possession_free_board(
         "input.checked = false;"
         "});"
         f"{update_overlay}"
+    )
+    early_undo = (
+        "if (!board._ufaUndoStack) { board._ufaUndoStack = []; }"
+        "if (!board._ufaPushUndo) {"
+        "board._ufaPushUndo = function() {"
+        "if (board._ufaUndoRestoring || board._ufaSuppressUndo) { return; }"
+        "const snapshot = {"
+        "children: Array.from(board.children).map(function(item) {"
+        "const titleInput = item.querySelector('.ufa-free-row-break input');"
+        "return {"
+        "node: item,"
+        "className: item.className,"
+        "hidden: item.hidden,"
+        "title: titleInput ? titleInput.value : null,"
+        "overlay: Array.from(item.querySelectorAll('.ufa-free-overlay-check'))"
+        ".map(function(input) { return input.checked; })"
+        "};"
+        "}),"
+        "selectionCommitted: board.dataset.selectionCommitted || 'false'"
+        "};"
+        "board._ufaUndoStack.push(snapshot);"
+        "if (board._ufaUndoStack.length > 50) { board._ufaUndoStack.shift(); }"
+        f"const undoButton = document.getElementById({json.dumps(undo_button_id)});"
+        "if (undoButton) { undoButton.disabled = false; }"
+        "};"
+        "}"
+        "board._ufaPushUndo();"
     )
     drag_start = (
         "const dragOrigin = event.target && event.target.closest("
@@ -2522,6 +2550,7 @@ def render_possession_free_board(
         "const fromIndex = items.indexOf(dragged);"
         "const toIndex = items.indexOf(this);"
         "if (fromIndex < 0 || toIndex < 0) { return; }"
+        f"{early_undo}"
         "const fragment = document.createDocumentFragment();"
         "movingItems.forEach(function(item) { fragment.appendChild(item); });"
         "if (fromIndex < toIndex) { this.after(fragment); }"
@@ -2544,6 +2573,82 @@ def render_possession_free_board(
         "selectionCount.textContent = arrangeSelected.length"
         "? arrangeSelected.length + ' selected'"
         ": '0 selected';"
+    )
+    ensure_undo = (
+        "if (!board._ufaUndoStack) { board._ufaUndoStack = []; }"
+        "if (!board._ufaUpdateUndoButton) {"
+        "board._ufaUpdateUndoButton = function() {"
+        f"const undoButton = document.getElementById({json.dumps(undo_button_id)});"
+        "if (!undoButton) { return; }"
+        "const canUndo = Array.isArray(board._ufaUndoStack)"
+        "&& board._ufaUndoStack.length > 0;"
+        "undoButton.disabled = !canUndo;"
+        "undoButton.title = canUndo"
+        "? 'Undo last arrangement change'"
+        ": 'Nothing to undo';"
+        "};"
+        "}"
+        "if (!board._ufaPushUndo) {"
+        "board._ufaPushUndo = function() {"
+        "if (board._ufaUndoRestoring || board._ufaSuppressUndo) { return; }"
+        "const snapshot = {"
+        "children: Array.from(board.children).map(function(item) {"
+        "const titleInput = item.querySelector('.ufa-free-row-break input');"
+        "return {"
+        "node: item,"
+        "className: item.className,"
+        "hidden: item.hidden,"
+        "title: titleInput ? titleInput.value : null,"
+        "overlay: Array.from(item.querySelectorAll('.ufa-free-overlay-check'))"
+        ".map(function(input) { return input.checked; })"
+        "};"
+        "}),"
+        "selectionCommitted: board.dataset.selectionCommitted || 'false'"
+        "};"
+        "board._ufaUndoStack.push(snapshot);"
+        "if (board._ufaUndoStack.length > 50) {"
+        "board._ufaUndoStack.shift();"
+        "}"
+        "board._ufaUpdateUndoButton();"
+        "};"
+        "}"
+        "if (!board._ufaUndo) {"
+        "board._ufaUndo = function() {"
+        "if (!Array.isArray(board._ufaUndoStack)"
+        "|| !board._ufaUndoStack.length) {"
+        "board._ufaUpdateUndoButton();"
+        "return;"
+        "}"
+        "const snapshot = board._ufaUndoStack.pop();"
+        "board._ufaUndoRestoring = true;"
+        "Array.from(board.children).forEach(function(item) { item.remove(); });"
+        "snapshot.children.forEach(function(entry) {"
+        "entry.node.className = entry.className;"
+        "entry.node.hidden = entry.hidden;"
+        "const titleInput = entry.node.querySelector('.ufa-free-row-break input');"
+        "if (titleInput && entry.title !== null) {"
+        "titleInput.value = entry.title;"
+        "}"
+        "const inputs = Array.from(entry.node.querySelectorAll('.ufa-free-overlay-check'));"
+        "inputs.forEach(function(input, index) {"
+        "input.checked = Boolean(entry.overlay[index]);"
+        "});"
+        "board.appendChild(entry.node);"
+        "});"
+        "board.dataset.selectionCommitted = snapshot.selectionCommitted || 'false';"
+        "board._ufaUndoRestoring = false;"
+        "board._ufaUpdateUndoButton();"
+        f"{update_arrange_selection}"
+        f"{update_overlay}"
+        "};"
+        "}"
+        "board._ufaUpdateUndoButton();"
+    )
+    undo_arrangement = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        "if (!board) { return; }"
+        f"{ensure_undo}"
+        "board._ufaUndo();"
     )
     toggle_arrange_selection = (
         f"const board = document.getElementById({json.dumps(board_id)});"
@@ -2609,6 +2714,8 @@ def render_possession_free_board(
         "const rowBreak = this.closest('.ufa-free-row-break');"
         "if (!board || !rowBreak) { return; }"
         "if (rowBreak === board.firstElementChild) { return; }"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "const group = [rowBreak];"
         "let item = rowBreak.nextElementSibling;"
         "while (item && !item.classList.contains('ufa-free-row-break')) {"
@@ -2638,6 +2745,8 @@ def render_possession_free_board(
         "}"
         "const nextBreak = item;"
         "if (!nextBreak) { return; }"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "item = nextBreak.nextElementSibling;"
         "while (item && !item.classList.contains('ufa-free-row-break')) {"
         "item = item.nextElementSibling;"
@@ -2654,6 +2763,8 @@ def render_possession_free_board(
         "const rowBreak = this.closest('.ufa-free-row-break');"
         "if (!board || !rowBreak) { return; }"
         "if (rowBreak === board.firstElementChild) { return; }"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "const group = [rowBreak];"
         "let item = rowBreak.nextElementSibling;"
         "while (item && !item.classList.contains('ufa-free-row-break')) {"
@@ -2676,6 +2787,8 @@ def render_possession_free_board(
         "item = item.nextElementSibling;"
         "}"
         "if (group[group.length - 1] === board.lastElementChild) { return; }"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "const fragment = document.createDocumentFragment();"
         "group.forEach(function(node) { fragment.appendChild(node); });"
         "board.appendChild(fragment);"
@@ -2804,6 +2917,8 @@ def render_possession_free_board(
         "return;"
         "}"
         "}"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "board.dataset.suppressFilterMutation = 'true';"
         "board.dataset.suppressFilterRun = 'true';"
         "window.requestAnimationFrame(function() {"
@@ -2854,6 +2969,8 @@ def render_possession_free_board(
         "breaker.querySelector('.ufa-free-row-remove').onclick = function(event) {"
         "event.preventDefault();"
         "event.stopPropagation();"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "breaker.remove();"
         "};"
         "if (selectedCards.length) {"
@@ -2897,7 +3014,11 @@ def render_possession_free_board(
     clear_row_breaks = (
         f"const board = document.getElementById({json.dumps(board_id)});"
         "if (!board) { return; }"
-        "board.querySelectorAll('.ufa-free-row-break').forEach(function(breaker) {"
+        "const rowBreaks = Array.from(board.querySelectorAll('.ufa-free-row-break'));"
+        "if (!rowBreaks.length) { return; }"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
+        "rowBreaks.forEach(function(breaker) {"
         "breaker.remove();"
         "});"
     )
@@ -3010,6 +3131,8 @@ def render_possession_free_board(
         "if (status) { status.textContent = 'Saved arrangement could not be read.'; }"
         "return;"
         "}"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "const cardMap = {};"
         "board.querySelectorAll('.ufa-free-card').forEach(function(card) {"
         "cardMap[card.dataset.possessionId] = card;"
@@ -3057,6 +3180,8 @@ def render_possession_free_board(
         "breaker.querySelector('.ufa-free-row-remove').onclick = function(event) {"
         "event.preventDefault();"
         "event.stopPropagation();"
+        f"{ensure_undo}"
+        "board._ufaPushUndo();"
         "breaker.remove();"
         "};"
         "return breaker;"
@@ -3282,6 +3407,12 @@ def render_possession_free_board(
             <button class="ufa-free-clear-row-breaks" type="button"
               onclick="{escape(clear_row_breaks, quote=True)}">
               Clear row breaks
+            </button>
+            <button id="{undo_button_id}" class="ufa-free-undo-arrangement"
+              type="button" disabled title="Nothing to undo"
+              aria-label="Undo last arrangement change"
+              onclick="{escape(undo_arrangement, quote=True)}">
+              Undo
             </button>
             {recovery_controls}
             <span id="{arrange_selection_count_id}"
@@ -4294,6 +4425,12 @@ def write_possession_pattern_browser_html(
     ).dropna()
     min_throw_count = int(throw_counts.min()) if not throw_counts.empty else 1
     max_throw_count = int(throw_counts.max()) if not throw_counts.empty else 50
+    throw_count_options_html = "".join(
+        f'<label class="standalone-throw-count-option">'
+        f'<input type="checkbox" value="{throw_count}" />'
+        f'<span>{throw_count}</span></label>'
+        for throw_count in range(min_throw_count, max_throw_count + 1)
+    )
 
     board_html = render_possession_free_board(
         browser_possessions,
@@ -4324,6 +4461,112 @@ def write_possession_pattern_browser_html(
             '<select id="standaloneTeamFilter" aria-label="Choose team">'
             f"{team_options_html}</select></label>"
         )
+    standalone_undo_setup = """
+              if (!board._ufaUndoStack) { board._ufaUndoStack = []; }
+              function updateUndoButton() {
+                const button = board.querySelector('.ufa-free-undo-arrangement');
+                if (!button) { return; }
+                const canUndo = board._ufaUndoStack.length > 0;
+                button.disabled = !canUndo;
+                button.title = canUndo
+                  ? 'Undo last arrangement change'
+                  : 'Nothing to undo';
+              }
+              function snapshotBoard() {
+                return {
+                  children: Array.from(board.children).map(function (item) {
+                    const titleInput = item.querySelector('.ufa-free-row-break input');
+                    return {
+                      node: item,
+                      className: item.className,
+                      hidden: item.hidden,
+                      title: titleInput ? titleInput.value : null,
+                      overlay: Array.from(
+                        item.querySelectorAll('.ufa-free-overlay-check')
+                      ).map(function (input) { return input.checked; }),
+                    };
+                  }),
+                  selectionCommitted: board.dataset.selectionCommitted || 'false',
+                };
+              }
+              board._ufaUpdateUndoButton = updateUndoButton;
+              board._ufaPushUndo = function () {
+                if (board._ufaUndoRestoring || board._ufaSuppressUndo) { return; }
+                board._ufaUndoStack.push(snapshotBoard());
+                if (board._ufaUndoStack.length > 50) {
+                  board._ufaUndoStack.shift();
+                }
+                updateUndoButton();
+              };
+              board._ufaUndo = function () {
+                if (!board._ufaUndoStack.length) {
+                  updateUndoButton();
+                  return;
+                }
+                const snapshot = board._ufaUndoStack.pop();
+                board._ufaUndoRestoring = true;
+                Array.from(board.children).forEach(function (item) { item.remove(); });
+                snapshot.children.forEach(function (entry) {
+                  entry.node.className = entry.className;
+                  entry.node.hidden = entry.hidden;
+                  const titleInput = entry.node.querySelector('.ufa-free-row-break input');
+                  if (titleInput && entry.title !== null) {
+                    titleInput.value = entry.title;
+                  }
+                  const inputs = Array.from(
+                    entry.node.querySelectorAll('.ufa-free-overlay-check')
+                  );
+                  inputs.forEach(function (input, index) {
+                    input.checked = Boolean(entry.overlay[index]);
+                  });
+                  board.appendChild(entry.node);
+                });
+                board.dataset.selectionCommitted = snapshot.selectionCommitted || 'false';
+                board._ufaUndoRestoring = false;
+                updateUndoButton();
+                const selectionCount = board.querySelector(
+                  '.ufa-free-arrange-selection-count'
+                );
+                if (selectionCount) {
+                  const selectedCount = board.querySelectorAll(
+                    '.ufa-free-card.row-selected'
+                  ).length;
+                  selectionCount.textContent = selectedCount
+                    ? selectedCount + ' selected'
+                    : '0 selected';
+                }
+                const wrap = board.closest('.ufa-free-board-wrap');
+                const layer = wrap && wrap.querySelector('.ufa-overlay-layers');
+                const count = wrap && wrap.querySelector(
+                  '[id^="ufa-free-overlay-count-"]'
+                );
+                const selectedInputs = wrap
+                  ? Array.from(wrap.querySelectorAll('.ufa-free-overlay-check:checked'))
+                  : [];
+                if (layer) {
+                  layer.querySelectorAll('.ufa-overlay-path').forEach(function (path) {
+                    path.style.display = 'none';
+                  });
+                  selectedInputs.forEach(function (input) {
+                    const path = document.getElementById(input.dataset.overlayPath);
+                    if (path) { path.style.display = ''; }
+                  });
+                }
+                if (count) {
+                  count.textContent = selectedInputs.length
+                    ? selectedInputs.length + ' selected'
+                    : 'Select cards to overlay';
+                }
+                board.querySelectorAll('.ufa-free-card.overlay-selected').forEach(
+                  function (card) { card.classList.remove('overlay-selected'); }
+                );
+                selectedInputs.forEach(function (input) {
+                  const card = input.closest('.ufa-free-card');
+                  if (card) { card.classList.add('overlay-selected'); }
+                });
+              };
+              updateUndoButton();
+"""
     document = (
         "<!doctype html>\n"
         '<html lang="en">\n'
@@ -4418,6 +4661,99 @@ def write_possession_pattern_browser_html(
             transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
           }
           .standalone-filters input { width: 84px; }
+          .standalone-throw-count-picker {
+            position: relative;
+            align-self: end;
+          }
+          .standalone-throw-count-picker summary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-width: 126px;
+            min-height: 36px;
+            padding: 7px 10px;
+            border: 1px solid #c4d0dd;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #142a43;
+            cursor: pointer;
+            font: 700 12px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            list-style: none;
+          }
+          .standalone-throw-count-picker summary::-webkit-details-marker {
+            display: none;
+          }
+          .standalone-throw-count-picker summary::after {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-right: 2px solid #52637a;
+            border-bottom: 2px solid #52637a;
+            transform: rotate(45deg) translate(-2px, -2px);
+          }
+          .standalone-throw-count-picker[open] summary::after {
+            transform: rotate(-135deg) translate(-2px, -2px);
+          }
+          .standalone-throw-count-picker summary:hover {
+            border-color: #879cb2;
+          }
+          .standalone-throw-count-picker summary:focus-visible {
+            outline: 3px solid rgba(44, 125, 204, 0.22);
+            outline-offset: 1px;
+          }
+          .standalone-throw-count-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            z-index: 220;
+            width: 190px;
+            max-height: 270px;
+            overflow-y: auto;
+            padding: 8px;
+            border: 1px solid #c4d0dd;
+            border-radius: 7px;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(15, 35, 58, 0.18);
+          }
+          .standalone-throw-count-options {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2px 4px;
+          }
+          .standalone-throw-count-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-height: 28px;
+            padding: 3px 4px;
+            border-radius: 4px;
+            color: #344b65;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-transform: none;
+          }
+          .standalone-throw-count-option:hover {
+            background: #f1f5f8;
+          }
+          .standalone-throw-count-option input {
+            width: auto;
+            min-height: 0;
+            margin: 0;
+            padding: 0;
+            accent-color: #49a365;
+          }
+          .standalone-throw-count-clear {
+            width: 100%;
+            margin-top: 7px;
+            padding: 6px 8px !important;
+            min-height: 30px !important;
+            background: #f5f7fa !important;
+            color: #344b65 !important;
+            font-size: 11px !important;
+          }
           .standalone-filters .standalone-theme-toggle {
             position: relative;
             display: inline-flex;
@@ -4678,6 +5014,26 @@ def write_possession_pattern_browser_html(
             background: #202a23;
             color: #c2d1c7;
           }
+          html[data-theme="dark"] .standalone-throw-count-picker summary,
+          html[data-theme="dark"] .standalone-throw-count-menu {
+            border-color: #4a5e50;
+            background: #222d25;
+            color: #edf4ef;
+          }
+          html[data-theme="dark"] .standalone-throw-count-picker summary::after {
+            border-color: #b7c7bc;
+          }
+          html[data-theme="dark"] .standalone-throw-count-option {
+            color: #dce8df;
+          }
+          html[data-theme="dark"] .standalone-throw-count-option:hover {
+            background: #2a382e;
+          }
+          html[data-theme="dark"] .standalone-throw-count-clear {
+            border-color: #4a5e50 !important;
+            background: #29372d !important;
+            color: #dce8df !important;
+          }
           html[data-theme="dark"] .ufa-free-board-wrap {
             border-color: #35453b;
             background: #151d18;
@@ -4909,6 +5265,17 @@ def write_possession_pattern_browser_html(
                 Max throws
                 <input id="standaloneMaxThrows" type="number" min="0" value="{max_throw_count}" />
               </label>
+              <details id="standaloneThrowCountPicker" class="standalone-throw-count-picker">
+                <summary id="standaloneThrowCountSummary">Exact throws</summary>
+                <div class="standalone-throw-count-menu">
+                  <div class="standalone-throw-count-options">
+                    {throw_count_options_html}
+                  </div>
+                  <button id="standaloneClearThrowCounts" class="standalone-throw-count-clear" type="button">
+                    Clear exact counts
+                  </button>
+                </div>
+              </details>
               <label>
                 Cards shown
                 <input id="standaloneCardLimit" type="number" min="1" max="{max_cards}" value="{max_cards}" />
@@ -4931,12 +5298,24 @@ def write_possession_pattern_browser_html(
             (function () {{
               const browser = document.getElementById('standaloneBrowser');
               const board = browser.querySelector('.ufa-free-board');
+              {standalone_undo_setup}
               const teamFilter = document.getElementById('standaloneTeamFilter');
               const lineFilter = document.getElementById('standaloneLineFilter');
               const outcomeFilter = document.getElementById('standaloneOutcomeFilter');
               const huckFilter = document.getElementById('standaloneHuckFilter');
               const minThrows = document.getElementById('standaloneMinThrows');
               const maxThrows = document.getElementById('standaloneMaxThrows');
+              const throwCountSummary = document.getElementById(
+                'standaloneThrowCountSummary'
+              );
+              const exactThrowCountInputs = Array.from(
+                document.querySelectorAll(
+                  '#standaloneThrowCountPicker .standalone-throw-count-option input'
+                )
+              );
+              const clearExactThrowCounts = document.getElementById(
+                'standaloneClearThrowCounts'
+              );
               const cardLimit = document.getElementById('standaloneCardLimit');
               const count = document.getElementById('standaloneVisibleCount');
               const reset = document.getElementById('standaloneResetFilters');
@@ -5351,6 +5730,7 @@ def write_possession_pattern_browser_html(
                   upEvent.stopImmediatePropagation();
                   const target = state.target;
                   if (target && !state.cards.includes(target)) {{
+                    board._ufaPushUndo();
                     const items = Array.from(
                       board.querySelectorAll('.ufa-free-board-item')
                     );
@@ -5382,6 +5762,26 @@ def write_possession_pattern_browser_html(
                 const value = Number(input.value);
                 return Number.isFinite(value) ? value : fallback;
               }}
+
+              function selectedExactThrowCounts() {{
+                return exactThrowCountInputs
+                  .filter(function (input) {{ return input.checked; }})
+                  .map(function (input) {{ return Number(input.value); }})
+                  .filter(function (value) {{ return Number.isFinite(value); }});
+              }}
+
+              function updateExactThrowSummary() {{
+                if (!throwCountSummary) {{ return; }}
+                const selected = selectedExactThrowCounts();
+                throwCountSummary.textContent = selected.length
+                  ? 'Exact throws (' + selected.length + ')'
+                  : 'Exact throws';
+                throwCountSummary.title = selected.length
+                  ? 'Only counts ' + selected.join(', ') + ' are included'
+                  : 'Use the min/max range';
+              }}
+
+              updateExactThrowSummary();
 
               function readRecoverySnapshots() {{
                 if (!recoveryStorageKey) {{ return []; }}
@@ -5472,6 +5872,7 @@ def write_possession_pattern_browser_html(
                   hucks: huckFilter.value,
                   min_throws: minThrows.value,
                   max_throws: maxThrows.value,
+                  throw_counts: selectedExactThrowCounts(),
                   cards_shown: cardLimit.value,
                   overlay_hidden: Boolean(overlayShell && overlayShell.hidden),
                 }};
@@ -5604,6 +6005,15 @@ def write_possession_pattern_browser_html(
                 setControlValue(huckFilter, uiState.hucks);
                 setControlValue(minThrows, uiState.min_throws);
                 setControlValue(maxThrows, uiState.max_throws);
+                if (Array.isArray(uiState.throw_counts)) {{
+                  const selectedCounts = new Set(
+                    uiState.throw_counts.map(function (value) {{ return String(value); }})
+                  );
+                  exactThrowCountInputs.forEach(function (input) {{
+                    input.checked = selectedCounts.has(input.value);
+                  }});
+                  updateExactThrowSummary();
+                }}
                 setControlValue(cardLimit, uiState.cards_shown);
                 if (typeof uiState.overlay_hidden === 'boolean') {{
                   setOverlayHidden(uiState.overlay_hidden);
@@ -5618,6 +6028,7 @@ def write_possession_pattern_browser_html(
                 let checkpointText = null;
                 let hadCheckpoint = false;
                 recoveryApplying = true;
+                if (automatic) {{ board._ufaSuppressUndo = true; }}
                 try {{
                   checkpointText = window.localStorage.getItem(checkpointStorageKey);
                   hadCheckpoint = checkpointText !== null;
@@ -5626,7 +6037,7 @@ def write_possession_pattern_browser_html(
                     JSON.stringify(snapshot.payload)
                   );
                   loadCheckpointButton.click();
-                }} catch (error) {{
+                  }} catch (error) {{
                   if (recoveryStatus) {{
                     recoveryStatus.textContent = 'Restore error';
                     recoveryStatus.title = 'Recovery snapshot could not be restored';
@@ -5642,6 +6053,7 @@ def write_possession_pattern_browser_html(
                       window.localStorage.removeItem(checkpointStorageKey);
                     }}
                   }} catch (error) {{}}
+                  if (automatic) {{ board._ufaSuppressUndo = false; }}
                 }}
                 if (recoveryOutput) {{
                   recoveryOutput.textContent = '';
@@ -5704,6 +6116,7 @@ def write_possession_pattern_browser_html(
                   }}
                 }});
                 [lineFilter, outcomeFilter, huckFilter, minThrows, maxThrows, cardLimit]
+                  .concat(exactThrowCountInputs)
                   .forEach(function (control) {{
                     control.addEventListener('change', scheduleRecoverySave);
                     control.addEventListener('input', scheduleRecoverySave);
@@ -5749,7 +6162,10 @@ def write_possession_pattern_browser_html(
                 }});
               }}
 
-              function unsortedRowTitle(minimum, maximum) {{
+              function unsortedRowTitle(minimum, maximum, exactCounts) {{
+                if (exactCounts && exactCounts.length) {{
+                  return 'Unsorted: ' + exactCounts.join(', ') + ' throws';
+                }}
                 if (minimum === maximum) {{
                   return 'Unsorted: ' + minimum + ' throw' + (minimum === 1 ? '' : 's');
                 }}
@@ -5791,6 +6207,7 @@ def write_possession_pattern_browser_html(
                 removeButton.setAttribute('aria-label', 'Remove row break');
                 removeButton.addEventListener('click', function (event) {{
                   event.stopPropagation();
+                  board._ufaPushUndo();
                   rowBreak.remove();
                 }});
 
@@ -5800,7 +6217,12 @@ def write_possession_pattern_browser_html(
                 return rowBreak;
               }}
 
-              function moveNewThrowCardsToBottom(cards, minimum, maximum) {{
+              function moveNewThrowCardsToBottom(
+                cards,
+                minimum,
+                maximum,
+                exactCounts
+              ) {{
                 const newCards = cards.filter(function (card) {{
                   return card && card.isConnected
                     && card.classList.contains('ufa-free-card');
@@ -5829,16 +6251,19 @@ def write_possession_pattern_browser_html(
                 // older staging row is no longer the final group, start a new
                 // staging row at the bottom instead of moving that old group.
                 board.dataset.suppressFilterMutation = 'true';
+                const stagingTitle = unsortedRowTitle(
+                  minimum,
+                  maximum,
+                  exactCounts
+                );
                 if (!rowBreak || laterRowBreak) {{
-                  rowBreak = createFallbackUnsortedRow(
-                    unsortedRowTitle(minimum, maximum)
-                  );
+                  rowBreak = createFallbackUnsortedRow(stagingTitle);
                 }} else {{
                   rowBreak.dataset.autoUnsorted = 'true';
-                  rowBreak.dataset.arrangeLabel = unsortedRowTitle(minimum, maximum);
+                  rowBreak.dataset.arrangeLabel = stagingTitle;
                   const titleInput = rowBreak.querySelector('input');
                   if (titleInput) {{
-                    titleInput.value = unsortedRowTitle(minimum, maximum);
+                    titleInput.value = stagingTitle;
                   }}
                   rowBreak.hidden = false;
                 }}
@@ -5857,13 +6282,29 @@ def write_possession_pattern_browser_html(
                 const selectedHuck = huckFilter.value;
                 const minimum = numericValue(minThrows, 0);
                 const maximum = numericValue(maxThrows, Number.POSITIVE_INFINITY);
+                const selectedExactCounts = selectedExactThrowCounts();
+                const selectedExactCountSet = new Set(selectedExactCounts);
                 const limit = Math.max(1, numericValue(cardLimit, Number.POSITIVE_INFINITY));
                 const throwInputsComplete = minThrows.value.trim() !== ''
                   && maxThrows.value.trim() !== '';
+                const previousExactCounts = previousThrowRange
+                  && Array.isArray(previousThrowRange.exact_counts)
+                  ? previousThrowRange.exact_counts
+                  : [];
+                const exactCountsExpanded = previousThrowRange !== null
+                  && (
+                    (selectedExactCounts.length === 0 && previousExactCounts.length > 0)
+                    || selectedExactCounts.some(function (value) {{
+                      return !previousExactCounts.includes(value);
+                    }})
+                  );
                 const expandedThrowRange = throwInputsComplete
                   && previousThrowRange !== null
-                  && (minimum < previousThrowRange.minimum
-                    || maximum > previousThrowRange.maximum);
+                  && (
+                    minimum < previousThrowRange.minimum
+                    || maximum > previousThrowRange.maximum
+                    || exactCountsExpanded
+                  );
                 const newThrowCards = [];
                 let visible = 0;
                 let matched = 0;
@@ -5876,10 +6317,18 @@ def write_possession_pattern_browser_html(
                   const huckMatches = selectedHuck === 'all'
                     || (selectedHuck === 'non_huck' && hucks === 0)
                     || (selectedHuck === 'huck' && hucks > 0);
-                  const throwMatches = throws >= minimum && throws <= maximum;
+                  const throwMatches = throws >= minimum && throws <= maximum
+                    && (
+                      selectedExactCountSet.size === 0
+                      || selectedExactCountSet.has(throws)
+                    );
                   const matchedPreviousThrowRange = previousThrowRange !== null
                     && throws >= previousThrowRange.minimum
-                    && throws <= previousThrowRange.maximum;
+                    && throws <= previousThrowRange.maximum
+                    && (
+                      previousExactCounts.length === 0
+                      || previousExactCounts.includes(throws)
+                    );
                   if (expandedThrowRange && throwMatches && !matchedPreviousThrowRange
                       && lineMatches && outcomeMatches && huckMatches) {{
                     newThrowCards.push(card);
@@ -5893,10 +6342,19 @@ def write_possession_pattern_browser_html(
                 }});
 
                 if (expandedThrowRange) {{
-                  moveNewThrowCardsToBottom(newThrowCards, minimum, maximum);
+                  moveNewThrowCardsToBottom(
+                    newThrowCards,
+                    minimum,
+                    maximum,
+                    selectedExactCounts
+                  );
                 }}
                 if (throwInputsComplete) {{
-                  previousThrowRange = {{ minimum: minimum, maximum: maximum }};
+                  previousThrowRange = {{
+                    minimum: minimum,
+                    maximum: maximum,
+                    exact_counts: selectedExactCounts,
+                  }};
                 }}
                 updateRowSelectionCount();
                 syncRowBreakVisibility();
@@ -5906,10 +6364,28 @@ def write_possession_pattern_browser_html(
               }}
 
               [lineFilter, outcomeFilter, huckFilter, minThrows, maxThrows, cardLimit]
+                .concat(exactThrowCountInputs)
                 .forEach(function (control) {{
-                  control.addEventListener('change', applyFilters);
-                  control.addEventListener('input', applyFilters);
+                  control.addEventListener('change', function () {{
+                    updateExactThrowSummary();
+                    applyFilters();
+                  }});
+                  control.addEventListener('input', function () {{
+                    updateExactThrowSummary();
+                    applyFilters();
+                  }});
                 }});
+
+              if (clearExactThrowCounts) {{
+                clearExactThrowCounts.addEventListener('click', function () {{
+                  exactThrowCountInputs.forEach(function (input) {{
+                    input.checked = false;
+                  }});
+                  updateExactThrowSummary();
+                  applyFilters();
+                  scheduleRecoverySave();
+                }});
+              }}
 
               reset.addEventListener('click', function () {{
                 lineFilter.value = 'all';
@@ -5917,6 +6393,10 @@ def write_possession_pattern_browser_html(
                 huckFilter.value = 'all';
                 minThrows.value = '{min_throw_count}';
                 maxThrows.value = '{max_throw_count}';
+                exactThrowCountInputs.forEach(function (input) {{
+                  input.checked = false;
+                }});
+                updateExactThrowSummary();
                 cardLimit.value = '{max_cards}';
                 previousThrowRange = null;
                 applyFilters();
@@ -6221,6 +6701,11 @@ def create_scoring_possession_browser(
       <button type="button"
         onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-clear-selection');if(button){{button.click();}}}})()">
         Clear selection
+      </button>
+      <button type="button" class="ufa-free-external-undo-arrangement"
+        aria-label="Undo last arrangement change" title="Undo last arrangement change"
+        onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-undo-arrangement');if(button&&!button.disabled){{button.click();}}}})()">
+        Undo
       </button>
       <button class="primary ufa-free-external-save-arrangement" type="button"
         onclick="(function(){{var boards=document.querySelectorAll('.ufa-free-board-wrap');var board=boards.length?boards[boards.length-1]:null;var button=board&&board.querySelector('.ufa-free-save-arrangement');if(button){{button.click();}}}})()">
