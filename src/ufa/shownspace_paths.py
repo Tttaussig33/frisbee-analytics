@@ -4464,7 +4464,10 @@ def write_possession_pattern_browser_html(
     standalone_undo_setup = """
               if (!board._ufaUndoStack) { board._ufaUndoStack = []; }
               function updateUndoButton() {
-                const button = board.querySelector('.ufa-free-undo-arrangement');
+                const wrap = board.closest('.ufa-free-board-wrap');
+                const button = wrap
+                  ? wrap.querySelector('.ufa-free-undo-arrangement')
+                  : document.querySelector('.ufa-free-undo-arrangement');
                 if (!button) { return; }
                 const canUndo = board._ufaUndoStack.length > 0;
                 button.disabled = !canUndo;
@@ -4524,7 +4527,8 @@ def write_possession_pattern_browser_html(
                 board.dataset.selectionCommitted = snapshot.selectionCommitted || 'false';
                 board._ufaUndoRestoring = false;
                 updateUndoButton();
-                const selectionCount = board.querySelector(
+                const wrap = board.closest('.ufa-free-board-wrap');
+                const selectionCount = wrap && wrap.querySelector(
                   '.ufa-free-arrange-selection-count'
                 );
                 if (selectionCount) {
@@ -4535,7 +4539,6 @@ def write_possession_pattern_browser_html(
                     ? selectedCount + ' selected'
                     : '0 selected';
                 }
-                const wrap = board.closest('.ufa-free-board-wrap');
                 const layer = wrap && wrap.querySelector('.ufa-overlay-layers');
                 const count = wrap && wrap.querySelector(
                   '[id^="ufa-free-overlay-count-"]'
@@ -6229,44 +6232,16 @@ def write_possession_pattern_browser_html(
                 }});
                 if (!newCards.length) {{ return; }}
 
-                const autoRows = Array.from(
-                  board.querySelectorAll('.ufa-free-row-break')
-                ).filter(function (rowBreak) {{
-                  return rowBreak.dataset.autoUnsorted === 'true';
-                }});
-                let rowBreak = autoRows.length
-                  ? autoRows[autoRows.length - 1]
-                  : null;
-                let laterRowBreak = false;
-                let item = rowBreak ? rowBreak.nextElementSibling : null;
-                while (item) {{
-                  if (item.classList.contains('ufa-free-row-break')) {{
-                    laterRowBreak = true;
-                    break;
-                  }}
-                  item = item.nextElementSibling;
-                }}
-
-                // Keep existing groups exactly where the user left them. If an
-                // older staging row is no longer the final group, start a new
-                // staging row at the bottom instead of moving that old group.
+                // Always create a new staging row. Reusing an older automatic
+                // row would append newly included cards to the user's last
+                // organized row and change its contents unexpectedly.
                 board.dataset.suppressFilterMutation = 'true';
                 const stagingTitle = unsortedRowTitle(
                   minimum,
                   maximum,
                   exactCounts
                 );
-                if (!rowBreak || laterRowBreak) {{
-                  rowBreak = createFallbackUnsortedRow(stagingTitle);
-                }} else {{
-                  rowBreak.dataset.autoUnsorted = 'true';
-                  rowBreak.dataset.arrangeLabel = stagingTitle;
-                  const titleInput = rowBreak.querySelector('input');
-                  if (titleInput) {{
-                    titleInput.value = stagingTitle;
-                  }}
-                  rowBreak.hidden = false;
-                }}
+                createFallbackUnsortedRow(stagingTitle);
                 newCards.forEach(function (card) {{ board.appendChild(card); }});
               }}
 
