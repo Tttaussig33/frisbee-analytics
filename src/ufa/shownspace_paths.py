@@ -6220,12 +6220,7 @@ def write_possession_pattern_browser_html(
                 return rowBreak;
               }}
 
-              function moveNewThrowCardsToBottom(
-                cards,
-                minimum,
-                maximum,
-                exactCounts
-              ) {{
+              function moveCardsToBottom(cards, stagingTitle) {{
                 const newCards = cards.filter(function (card) {{
                   return card && card.isConnected
                     && card.classList.contains('ufa-free-card');
@@ -6236,16 +6231,53 @@ def write_possession_pattern_browser_html(
                 // row would append newly included cards to the user's last
                 // organized row and change its contents unexpectedly.
                 board.dataset.suppressFilterMutation = 'true';
+                createFallbackUnsortedRow(stagingTitle);
+                newCards.forEach(function (card) {{ board.appendChild(card); }});
+              }}
+
+              function moveNewThrowCardsToBottom(
+                cards,
+                minimum,
+                maximum,
+                exactCounts
+              ) {{
                 const stagingTitle = unsortedRowTitle(
                   minimum,
                   maximum,
                   exactCounts
                 );
-                createFallbackUnsortedRow(stagingTitle);
-                newCards.forEach(function (card) {{ board.appendChild(card); }});
+                moveCardsToBottom(cards, stagingTitle);
+              }}
+
+              function outcomeFilterValues(value) {{
+                if (value === 'goal') {{ return ['goal']; }}
+                if (value === 'turnover') {{ return ['turnover']; }}
+                return ['goal', 'turnover', 'unknown'];
+              }}
+
+              function outcomeMatchesFilter(filterValue, outcomeValue) {{
+                return filterValue === 'all' || filterValue === outcomeValue;
+              }}
+
+              function outcomeFilterExpanded(previousValue, currentValue) {{
+                if (!previousValue || previousValue === currentValue) {{
+                  return false;
+                }}
+                const previousValues = new Set(outcomeFilterValues(previousValue));
+                return outcomeFilterValues(currentValue).some(function (value) {{
+                  return !previousValues.has(value);
+                }});
+              }}
+
+              function moveNewOutcomeCardsToBottom(cards, outcomeValue) {{
+                const stagingTitle = outcomeValue === 'all'
+                  ? 'Unsorted: newly included outcomes'
+                  : 'Unsorted: ' + outcomeValue + ' possessions';
+                moveCardsToBottom(cards, stagingTitle);
               }}
 
               let previousThrowRange = null;
+              let previousOutcomeFilter = null;
 
               function applyFilters() {{
                 if (board.dataset.suppressFilterRun === 'true') {{
@@ -6259,6 +6291,10 @@ def write_possession_pattern_browser_html(
                 const maximum = numericValue(maxThrows, Number.POSITIVE_INFINITY);
                 const selectedExactCounts = selectedExactThrowCounts();
                 const selectedExactCountSet = new Set(selectedExactCounts);
+                const outcomeExpanded = outcomeFilterExpanded(
+                  previousOutcomeFilter,
+                  selectedOutcome
+                );
                 const limit = Math.max(1, numericValue(cardLimit, Number.POSITIVE_INFINITY));
                 const throwInputsComplete = minThrows.value.trim() !== ''
                   && maxThrows.value.trim() !== '';
@@ -6281,6 +6317,7 @@ def write_possession_pattern_browser_html(
                     || exactCountsExpanded
                   );
                 const newThrowCards = [];
+                const newOutcomeCards = [];
                 let visible = 0;
                 let matched = 0;
 
@@ -6304,9 +6341,18 @@ def write_possession_pattern_browser_html(
                       previousExactCounts.length === 0
                       || previousExactCounts.includes(throws)
                     );
+                  const matchedPreviousOutcome = previousOutcomeFilter !== null
+                    && outcomeMatchesFilter(
+                      previousOutcomeFilter,
+                      card.dataset.outcome
+                    );
                   if (expandedThrowRange && throwMatches && !matchedPreviousThrowRange
                       && lineMatches && outcomeMatches && huckMatches) {{
                     newThrowCards.push(card);
+                  }}
+                  if (outcomeExpanded && outcomeMatches && !matchedPreviousOutcome
+                      && lineMatches && huckMatches && throwMatches) {{
+                    newOutcomeCards.push(card);
                   }}
                   const matches = lineMatches && outcomeMatches && huckMatches && throwMatches;
                   if (matches) {{ matched += 1; }}
@@ -6324,6 +6370,9 @@ def write_possession_pattern_browser_html(
                     selectedExactCounts
                   );
                 }}
+                if (outcomeExpanded) {{
+                  moveNewOutcomeCardsToBottom(newOutcomeCards, selectedOutcome);
+                }}
                 if (throwInputsComplete) {{
                   previousThrowRange = {{
                     minimum: minimum,
@@ -6331,6 +6380,7 @@ def write_possession_pattern_browser_html(
                     exact_counts: selectedExactCounts,
                   }};
                 }}
+                previousOutcomeFilter = selectedOutcome;
                 updateRowSelectionCount();
                 syncRowBreakVisibility();
                 refreshVisibleOverlay();
