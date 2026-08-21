@@ -3300,11 +3300,16 @@ def render_possession_free_board(
               ondragleave="{escape(drag_leave, quote=True)}"
               ondrop="{escape(drop, quote=True)}"
               onclick="{escape(toggle_arrange_selection, quote=True)}">
-              {render_mini_possession_svg(path)}
-              <div class="ufa-free-card-meta">
-                <label class="ufa-free-overlay-toggle"
-                  for="{overlay_input_id}"
-                  onclick="event.stopPropagation();">
+               {render_mini_possession_svg(path)}
+               <div class="ufa-free-card-meta">
+                 <div class="ufa-free-outcome-badge outcome-{outcome_value}"
+                   aria-label="{outcome} possession">
+                   <span class="ufa-free-outcome-dot" aria-hidden="true"></span>
+                   {outcome}
+                 </div>
+                 <label class="ufa-free-overlay-toggle"
+                   for="{overlay_input_id}"
+                   onclick="event.stopPropagation();">
                   <input id="{overlay_input_id}" class="ufa-free-overlay-check" type="checkbox"
                     data-overlay-path="{overlay_path_id}"
                     onchange="{escape(update_overlay, quote=True)}" />
@@ -4252,6 +4257,43 @@ def _possession_browser_css():
         overflow: hidden;
         text-overflow: ellipsis;
       }
+      .ufa-free-outcome-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        min-height: 20px;
+        margin-bottom: 2px;
+        padding: 2px 8px;
+        border: 1px solid #cbd6e2;
+        border-radius: 5px;
+        background: #f1f4f7;
+        color: #52637a;
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.07em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+      .ufa-free-outcome-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .ufa-free-outcome-badge.outcome-goal {
+        border-color: #a8d7b8;
+        background: #eaf7ee;
+        color: #2f7247;
+      }
+      .ufa-free-outcome-badge.outcome-turnover {
+        border-color: #e5b8ae;
+        background: #fff1ed;
+        color: #a23f2c;
+      }
+      .ufa-free-board.outcome-labels-hidden .ufa-free-outcome-badge {
+        display: none;
+      }
       .ufa-free-overlay-toggle {
         display: inline-flex;
         align-items: center;
@@ -4819,6 +4861,31 @@ def write_possession_pattern_browser_html(
             text-transform: none;
             white-space: nowrap;
           }
+          .standalone-outcome-label-toggle {
+            display: inline-flex !important;
+            align-items: center;
+            align-self: end;
+            gap: 7px;
+            min-height: 36px;
+            padding: 7px 10px;
+            border: 1px solid #c4d0dd;
+            border-radius: 6px;
+            background: #f5f7fa;
+            color: #40546e !important;
+            cursor: pointer;
+            font-size: 12px !important;
+            font-weight: 750 !important;
+            letter-spacing: 0 !important;
+            text-transform: none !important;
+            white-space: nowrap;
+          }
+          .standalone-outcome-label-toggle input {
+            width: auto !important;
+            min-height: 0 !important;
+            margin: 0;
+            padding: 0;
+            accent-color: #49a365;
+          }
           .standalone-team-filter select {
             min-width: 200px;
             border-color: #83bd95;
@@ -5008,6 +5075,11 @@ def write_possession_pattern_browser_html(
           html[data-theme="dark"] .standalone-theme-text {
             color: #e3ece6;
           }
+          html[data-theme="dark"] .standalone-outcome-label-toggle {
+            border-color: #4a5e50;
+            background: #222d25;
+            color: #dce8df !important;
+          }
           html[data-theme="dark"] .standalone-theme-track {
             border-color: #607166;
             background: #3a4740;
@@ -5120,6 +5192,21 @@ def write_possession_pattern_browser_html(
           html[data-theme="dark"] .ufa-free-card-meta b,
           html[data-theme="dark"] .ufa-free-overlay-toggle {
             color: #eef4f0;
+          }
+          html[data-theme="dark"] .ufa-free-outcome-badge {
+            border-color: #4a5e50;
+            background: #26332b;
+            color: #b7c7bc;
+          }
+          html[data-theme="dark"] .ufa-free-outcome-badge.outcome-goal {
+            border-color: #557b64;
+            background: #203b29;
+            color: #bfe6c9;
+          }
+          html[data-theme="dark"] .ufa-free-outcome-badge.outcome-turnover {
+            border-color: #815b55;
+            background: #3b2926;
+            color: #f0b8ae;
           }
           html[data-theme="dark"] .ufa-free-overlay-toggle:hover {
             border-color: #557b64;
@@ -5252,6 +5339,10 @@ def write_possession_pattern_browser_html(
                   <option value="turnover">Turnovers</option>
                 </select>
               </label>
+              <label id="standaloneOutcomeLabelControl" class="standalone-outcome-label-toggle">
+                <input id="standaloneShowOutcomeLabels" type="checkbox" checked />
+                Show outcome labels
+              </label>
               <label>
                 Hucks
                 <select id="standaloneHuckFilter">
@@ -5305,6 +5396,12 @@ def write_possession_pattern_browser_html(
               const teamFilter = document.getElementById('standaloneTeamFilter');
               const lineFilter = document.getElementById('standaloneLineFilter');
               const outcomeFilter = document.getElementById('standaloneOutcomeFilter');
+              const outcomeLabelControl = document.getElementById(
+                'standaloneOutcomeLabelControl'
+              );
+              const showOutcomeLabels = document.getElementById(
+                'standaloneShowOutcomeLabels'
+              );
               const huckFilter = document.getElementById('standaloneHuckFilter');
               const minThrows = document.getElementById('standaloneMinThrows');
               const maxThrows = document.getElementById('standaloneMaxThrows');
@@ -5878,6 +5975,7 @@ def write_possession_pattern_browser_html(
                   throw_counts: selectedExactThrowCounts(),
                   cards_shown: cardLimit.value,
                   overlay_hidden: Boolean(overlayShell && overlayShell.hidden),
+                  show_outcome_labels: !showOutcomeLabels || showOutcomeLabels.checked,
                 }};
               }}
 
@@ -6018,9 +6116,14 @@ def write_possession_pattern_browser_html(
                   updateExactThrowSummary();
                 }}
                 setControlValue(cardLimit, uiState.cards_shown);
+                if (typeof uiState.show_outcome_labels === 'boolean'
+                    && showOutcomeLabels) {{
+                  showOutcomeLabels.checked = uiState.show_outcome_labels;
+                }}
                 if (typeof uiState.overlay_hidden === 'boolean') {{
                   setOverlayHidden(uiState.overlay_hidden);
                 }}
+                updateOutcomeLabelVisibility();
               }}
 
               function applyRecoverySnapshot(snapshot, automatic) {{
@@ -6188,6 +6291,16 @@ def write_possession_pattern_browser_html(
                   : '0 selected';
               }}
 
+              function updateOutcomeLabelVisibility() {{
+                const allOutcomesSelected = outcomeFilter.value === 'all';
+                const labelsVisible = allOutcomesSelected
+                  && (!showOutcomeLabels || showOutcomeLabels.checked);
+                board.classList.toggle('outcome-labels-hidden', !labelsVisible);
+                if (outcomeLabelControl) {{
+                  outcomeLabelControl.hidden = !allOutcomesSelected;
+                }}
+              }}
+
               function createFallbackUnsortedRow(title) {{
                 const rowBreak = document.createElement('div');
                 rowBreak.id = 'ufa-auto-unsorted-' + Date.now();
@@ -6287,6 +6400,7 @@ def write_possession_pattern_browser_html(
                 const selectedLine = lineFilter.value;
                 const selectedOutcome = outcomeFilter.value;
                 const selectedHuck = huckFilter.value;
+                updateOutcomeLabelVisibility();
                 const minimum = numericValue(minThrows, 0);
                 const maximum = numericValue(maxThrows, Number.POSITIVE_INFINITY);
                 const selectedExactCounts = selectedExactThrowCounts();
@@ -6421,6 +6535,9 @@ def write_possession_pattern_browser_html(
                 exactThrowCountInputs.forEach(function (input) {{
                   input.checked = false;
                 }});
+                if (showOutcomeLabels) {{
+                  showOutcomeLabels.checked = true;
+                }}
                 updateExactThrowSummary();
                 cardLimit.value = '{max_cards}';
                 previousThrowRange = null;
@@ -6446,6 +6563,13 @@ def write_possession_pattern_browser_html(
                 setOverlayHidden(!overlayShell.hidden);
                 scheduleRecoverySave();
               }});
+
+              if (showOutcomeLabels) {{
+                showOutcomeLabels.addEventListener('change', function () {{
+                  updateOutcomeLabelVisibility();
+                  scheduleRecoverySave();
+                }});
+              }}
 
               let filterQueued = false;
               new MutationObserver(function () {{
