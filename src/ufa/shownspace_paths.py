@@ -186,6 +186,27 @@ def _is_turnover_throw(throw):
     return not _has_text_value(receiver)
 
 
+def _source_event_goal_marker(throw):
+    """Return the explicit Shown Space goal marker when it is available."""
+    for column in ["source_event_type", "SourceEventType", "event_type"]:
+        if column not in throw:
+            continue
+        value = throw.get(column)
+        if pd.isna(value):
+            continue
+
+        numeric_value = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+        if pd.notna(numeric_value):
+            # Shown Space throw exports use event type 19 for a scoring catch.
+            return int(numeric_value) == 19
+
+        text_value = str(value).strip().lower()
+        if text_value in {"", "nan", "none", "null"}:
+            continue
+        return text_value in {"goal", "score", "scoring", "point"}
+    return None
+
+
 def _possession_outcome(path):
     if path.empty:
         return "unknown"
@@ -194,9 +215,13 @@ def _possession_outcome(path):
     if _is_turnover_throw(final_throw):
         return "turnover"
 
+    explicit_goal = _source_event_goal_marker(final_throw)
+    if explicit_goal is not None:
+        return "goal" if explicit_goal else "unknown"
+
     final_y = pd.to_numeric(pd.Series([final_throw.get("ReceiverY")]), errors="coerce").iloc[0]
-    # Shown Space coordinates include the end-zone boundary itself. Scores
-    # can finish in either end zone, so treat both boundaries as goals.
+    # Older or synthetic rows may not include the event type. In that case,
+    # use the end-zone boundary as the best available goal signal.
     if pd.notna(final_y) and (
         final_y <= ENDZONE_LOW_Y or final_y >= ENDZONE_HIGH_Y
     ):
@@ -3263,7 +3288,7 @@ def render_possession_free_board(
         )
         card_title = (
             f"{outcome} {line_type} - {meta} - "
-            f"aEC/T {aec_per_throw} - total {total_aec} - {shape_label}"
+            f"total {total_aec} - {shape_label}"
         )
         card_label = (
             f"{card_index}. {outcome} {line_type} | {meta} | "
