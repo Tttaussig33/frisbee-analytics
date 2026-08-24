@@ -2323,6 +2323,10 @@ def render_possession_free_board(
     storage_key = f"ufa-free-arrange:{persistence_token}"
     legacy_storage_key = f"ufa-free-arrange:{board_key}"
     recovery_storage_key = f"ufa-free-recovery:{persistence_token}"
+    export_stem = "".join(
+        character if character.isalnum() or character in "-_" else "-"
+        for character in persistence_token.lower()
+    ).strip("-") or board_key
     overlay_palette = [
         "#c3482b",
         "#0d4f94",
@@ -2599,7 +2603,26 @@ def render_possession_free_board(
         "? arrangeSelected.length + ' selected'"
         ": '0 selected';"
     )
+    update_row_card_counts = (
+        "function updateRowCardCounts() {"
+        "board.querySelectorAll('.ufa-free-row-break').forEach(function(rowBreak) {"
+        "const count = rowBreak.querySelector('.ufa-free-row-count');"
+        "if (!count) { return; }"
+        "let cardCount = 0;"
+        "let item = rowBreak.nextElementSibling;"
+        "while (item && !item.classList.contains('ufa-free-row-break')) {"
+        "if (item.classList.contains('ufa-free-card') && !item.hidden) {"
+        "cardCount += 1;"
+        "}"
+        "item = item.nextElementSibling;"
+        "}"
+        "count.textContent = cardCount + ' card' + (cardCount === 1 ? '' : 's');"
+        "count.title = cardCount + ' visible field cards in this group';"
+        "});"
+        "}"
+    )
     ensure_undo = (
+        f"{update_row_card_counts}"
         "if (!board._ufaUndoStack) { board._ufaUndoStack = []; }"
         "if (!board._ufaUpdateUndoButton) {"
         "board._ufaUpdateUndoButton = function() {"
@@ -2665,6 +2688,7 @@ def render_possession_free_board(
         "board._ufaUpdateUndoButton();"
         f"{update_arrange_selection}"
         f"{update_overlay}"
+        "updateRowCardCounts();"
         "};"
         "}"
         "board._ufaUpdateUndoButton();"
@@ -2965,6 +2989,7 @@ def render_possession_free_board(
         "breaker.draggable = true;"
         "breaker.title = 'Drag this divider between possession groups';"
          "breaker.innerHTML = '<input type=\"text\" value=\"Pattern group ' + nextIndex + '\" aria-label=\"Row title\" />"
+         "<span class=\"ufa-free-row-count\" aria-live=\"polite\">0 cards</span>"
          "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
          "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
         "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\" title=\"Move row up\"><span class=\"ufa-row-icon ufa-row-icon-up ufa-row-icon-single\" aria-hidden=\"true\"></span></button>"
@@ -3031,10 +3056,11 @@ def render_possession_free_board(
         "});"
         "if (selectedCards.length) { board.dataset.selectionCommitted = 'true'; }"
         f"{update_arrange_selection}"
-        "if (selectedCards.length) {"
-        "restoreViewportAnchor();"
-        "window.requestAnimationFrame(restoreViewportAnchor);"
-        "}"
+         "if (selectedCards.length) {"
+         "restoreViewportAnchor();"
+         "window.requestAnimationFrame(restoreViewportAnchor);"
+         "}"
+        "updateRowCardCounts();"
     )
     clear_row_breaks = (
         f"const board = document.getElementById({json.dumps(board_id)});"
@@ -3118,7 +3144,7 @@ def render_possession_free_board(
         "const url = URL.createObjectURL(blob);"
         "const link = document.createElement('a');"
         "link.href = url;"
-        f"link.download = 'ufa-free-arrange-{board_key}-' + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-') + '.json';"
+         f"link.download = {json.dumps(f'ufa-free-arrange-{export_stem}-')} + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-') + '.json';"
         "document.body.appendChild(link);"
         "link.click();"
         "link.remove();"
@@ -3175,7 +3201,8 @@ def render_possession_free_board(
         "breaker.draggable = true;"
         "breaker.title = 'Drag this divider between possession groups';"
          "breaker.innerHTML = '<input type=\"text\" aria-label=\"Row title\" />"
-         "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
+          "<span class=\"ufa-free-row-count\" aria-live=\"polite\">0 cards</span>"
+          "<button type=\"button\" class=\"ufa-free-row-overlay\" aria-label=\"Overlay all possessions in this row\">Overlay all</button>"
          "<button type=\"button\" class=\"ufa-free-row-overlay-clear\" aria-label=\"Clear overlay for all possessions in this row\">Clear overlay</button>"
          "<button type=\"button\" class=\"ufa-free-row-move-up\" aria-label=\"Move this row up\" title=\"Move row up\"><span class=\"ufa-row-icon ufa-row-icon-up ufa-row-icon-single\" aria-hidden=\"true\"></span></button>"
         "<button type=\"button\" class=\"ufa-free-row-move-down\" aria-label=\"Move this row down\" title=\"Move row down\"><span class=\"ufa-row-icon ufa-row-icon-down ufa-row-icon-single\" aria-hidden=\"true\"></span></button>"
@@ -3253,8 +3280,9 @@ def render_possession_free_board(
         "if (status) {"
         "status.textContent = 'Loaded saved arrangement from this browser.';"
         "}"
-        f"{update_overlay}"
-        f"{update_arrange_selection}"
+         f"{update_overlay}"
+         f"{update_arrange_selection}"
+         "updateRowCardCounts();"
     )
 
     cards = []
@@ -3422,11 +3450,15 @@ def render_possession_free_board(
               onclick="{escape(insert_row_break, quote=True)}">
               Insert row break
             </button>
-            <button class="ufa-free-clear-selection" type="button"
-              onclick="{escape(clear_arrange_selection, quote=True)}">
-              Clear selection
-            </button>
-            <button class="primary ufa-free-save-arrangement" type="button"
+             <button class="ufa-free-clear-selection" type="button"
+               onclick="{escape(clear_arrange_selection, quote=True)}">
+               Clear selection
+             </button>
+             <button class="ufa-free-export-arrangement" type="button"
+               onclick="{escape(save_arrangement, quote=True)}">
+               Export arrangement
+             </button>
+             <button class="primary ufa-free-save-arrangement" type="button"
               onclick="{escape(save_arrangement, quote=True)}">
               Save arrangement
             </button>
@@ -4155,6 +4187,17 @@ def _possession_browser_css():
         padding: 3px 7px;
         text-transform: none;
       }
+      .ufa-free-row-count {
+        flex: 0 0 auto;
+        min-width: 58px;
+        color: #38516f;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-align: center;
+        text-transform: none;
+        white-space: nowrap;
+      }
       .ufa-free-row-break:active {
         cursor: grabbing;
       }
@@ -4505,6 +4548,24 @@ def write_possession_pattern_browser_html(
         max_cards=max_cards,
         include_overlay=True,
         persistence_key=persistence_key,
+    )
+    standalone_update_row_card_counts = (
+        "function updateRowCardCounts() {"
+        "board.querySelectorAll('.ufa-free-row-break').forEach(function(rowBreak) {"
+        "const count = rowBreak.querySelector('.ufa-free-row-count');"
+        "if (!count) { return; }"
+        "let cardCount = 0;"
+        "let item = rowBreak.nextElementSibling;"
+        "while (item && !item.classList.contains('ufa-free-row-break')) {"
+        "if (item.classList.contains('ufa-free-card') && !item.hidden) {"
+        "cardCount += 1;"
+        "}"
+        "item = item.nextElementSibling;"
+        "}"
+        "count.textContent = cardCount + ' card' + (cardCount === 1 ? '' : 's');"
+        "count.title = cardCount + ' visible field cards in this group';"
+        "});"
+        "}"
     )
     safe_title = escape(str(title))
     selected_team_id = str(team_id or "").strip().lower()
@@ -5248,6 +5309,9 @@ def write_possession_pattern_browser_html(
             border-color: #4a5e50;
             background: #263229;
             color: #e6eee8;
+          }
+          html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-count {
+            color: #bdccc2;
           }
           html[data-theme="dark"] .ufa-free-row-break .ufa-free-row-overlay {
             border-color: #4a8dc8;
@@ -6293,6 +6357,8 @@ def write_possession_pattern_browser_html(
                 }});
               }}
 
+              {standalone_update_row_card_counts}
+
               function unsortedRowTitle(minimum, maximum, exactCounts) {{
                 if (exactCounts && exactCounts.length) {{
                   return 'Unsorted: ' + exactCounts.join(', ') + ' throws';
@@ -6341,6 +6407,11 @@ def write_possession_pattern_browser_html(
                   event.stopPropagation();
                 }});
 
+                const rowCount = document.createElement('span');
+                rowCount.className = 'ufa-free-row-count';
+                rowCount.textContent = '0 cards';
+                rowCount.setAttribute('aria-live', 'polite');
+
                 const removeButton = document.createElement('button');
                 removeButton.type = 'button';
                 removeButton.className = 'ufa-free-row-remove';
@@ -6353,6 +6424,7 @@ def write_possession_pattern_browser_html(
                 }});
 
                 rowBreak.appendChild(titleInput);
+                rowBreak.appendChild(rowCount);
                 rowBreak.appendChild(removeButton);
                 board.appendChild(rowBreak);
                 return rowBreak;
@@ -6522,6 +6594,7 @@ def write_possession_pattern_browser_html(
                 previousOutcomeFilter = selectedOutcome;
                 updateRowSelectionCount();
                 syncRowBreakVisibility();
+                updateRowCardCounts();
                 refreshVisibleOverlay();
                 count.textContent = visible.toLocaleString() + ' shown of '
                   + matched.toLocaleString() + ' matching possessions';
