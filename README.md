@@ -165,11 +165,24 @@ Open `outputs/possession_browsers/index.html`; the team selector navigates among
 all 22 team pages without rerunning the notebook.
 
 Shared arrangement checkpoints for Sol, Empire, Spiders, and Windchill live in
-`data/arrangements/2026/`. The generator embeds the matching checkpoint into
-those team pages and adds a **Load project arrangement** button. After pulling
-the repository on another device, run the generator and use that button; the
-arrangement will be restored in that browser without depending on the original
-device's local storage.
+`data/arrangements/2026/`. The generator embeds the available checkpoints into
+those team pages and adds an arrangement picker, so the original hand-organized
+layout and any generated alternatives can be loaded independently. After
+pulling the repository on another device, run the generator and choose the
+arrangement you want; it will be restored in that browser without depending on
+the original device's local storage.
+
+To build the geometry-first Codex alternatives from the four hand-organized
+examples:
+
+```powershell
+python scripts/build_pattern_arrangements.py --season 2026
+```
+
+This writes `*-codex.json` files beside the originals. It uses field-path
+locations as the clustering signal, uses smaller existing rows as seed examples,
+and splits oversized generic rows into more manageable spatial groups. It does
+not overwrite the original arrangements.
 
 ## Validation
 

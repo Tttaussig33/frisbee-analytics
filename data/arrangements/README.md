@@ -7,4 +7,7 @@ These JSON files are the portable field-card arrangements exported from the poss
 - `2026/spiders.json`
 - `2026/windchill.json`
 
-The browser's autosave and recovery history remain local to the browser. These files are the shared, Git-tracked checkpoints. After cloning or pulling the repository on another device, regenerate the browser pages and use **Load project arrangement** on the matching team page.
+The `*-codex.json` files are separate geometry-first alternatives generated
+from these hand-organized examples. The originals are never overwritten.
+
+The browser's autosave and recovery history remain local to the browser. These files are the shared, Git-tracked checkpoints. After cloning or pulling the repository on another device, regenerate the browser pages and use the arrangement picker on the matching team page.

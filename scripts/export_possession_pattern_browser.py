@@ -68,6 +68,16 @@ def _team_options(team_ids, season):
     ]
 
 
+def _arrangement_label(path, payload, team_id):
+    if path.stem == team_id:
+        return "Original arrangement"
+    configured_name = payload.get("arrangement_name")
+    if configured_name:
+        return str(configured_name)
+    suffix = path.stem.removeprefix(f"{team_id}-").replace("-", " ").strip()
+    return suffix.title() if suffix else "Project arrangement"
+
+
 def _write_index(output_dir, season, default_team, team_ids):
     default_page = f"{season}-{default_team}.html"
     links = "\n".join(
@@ -170,24 +180,29 @@ def main():
             team_id=export_team_id,
             outcomes=tuple(args.outcomes),
         )
-        project_arrangement_text = None
-        arrangement_path = (
-            REPO_ROOT
-            / "data"
-            / "arrangements"
-            / str(args.season)
-            / f"{export_team_id}.json"
+        project_arrangements = {}
+        arrangement_dir = REPO_ROOT / "data" / "arrangements" / str(args.season)
+        arrangement_paths = sorted(
+            arrangement_dir.glob(f"{export_team_id}*.json"),
+            key=lambda path: (path.stem != export_team_id, path.name),
         )
-        if arrangement_path.exists():
+        for arrangement_path in arrangement_paths:
             try:
-                project_arrangement_text = arrangement_path.read_text(encoding="utf-8")
-                json.loads(project_arrangement_text)
+                arrangement_text = arrangement_path.read_text(encoding="utf-8")
+                arrangement_payload = json.loads(arrangement_text)
+                arrangement_label = _arrangement_label(
+                    arrangement_path,
+                    arrangement_payload,
+                    export_team_id,
+                )
+                if arrangement_label in project_arrangements:
+                    arrangement_label = f"{arrangement_label} ({arrangement_path.stem})"
+                project_arrangements[arrangement_label] = arrangement_text
             except (OSError, json.JSONDecodeError) as error:
                 print(
                     f"Warning: skipped invalid project arrangement "
                     f"{arrangement_path}: {error}"
                 )
-                project_arrangement_text = None
         output_path = (
             args.output
             if not args.all_teams and args.output is not None
@@ -202,7 +217,7 @@ def main():
             team_id=export_team_id,
             team_options=navigation_options,
             persistence_key=f"{args.season}:{export_team_id}",
-            project_arrangement_text=project_arrangement_text,
+            project_arrangements=project_arrangements,
         )
         print(
             f"{export_team_id.title()}: {len(game_files):,} games, "

@@ -2292,6 +2292,7 @@ def render_possession_free_board(
     external_controls=False,
     persistence_key=None,
     project_arrangement_text=None,
+    project_arrangements=None,
 ):
     """Render a draggable board of mini possession cards."""
     if possessions.empty:
@@ -2323,9 +2324,31 @@ def render_possession_free_board(
     recovery_restore_id = f"ufa-free-recovery-restore-{board_key}"
     recovery_status_id = f"ufa-free-recovery-status-{board_key}"
     project_arrangement_id = f"ufa-free-project-arrangement-{board_key}"
+    project_arrangement_picker_id = f"{project_arrangement_id}-picker"
     storage_key = f"ufa-free-arrange:{persistence_token}"
     legacy_storage_key = f"ufa-free-arrange:{board_key}"
     recovery_storage_key = f"ufa-free-recovery:{persistence_token}"
+    project_arrangement_entries = []
+    if isinstance(project_arrangements, dict):
+        project_arrangement_entries = [
+            (str(label), str(text))
+            for label, text in project_arrangements.items()
+            if text
+        ]
+    elif project_arrangements:
+        project_arrangement_entries = [
+            (str(label), str(text))
+            for label, text in project_arrangements
+            if text
+        ]
+    if not project_arrangement_entries and project_arrangement_text:
+        project_arrangement_entries = [
+            ("Project arrangement", str(project_arrangement_text))
+        ]
+    project_arrangement_source_ids = [
+        f"{project_arrangement_id}-source-{index}"
+        for index in range(len(project_arrangement_entries))
+    ]
     export_stem = "".join(
         character if character.isalnum() or character in "-_" else "-"
         for character in persistence_token.lower()
@@ -3174,8 +3197,10 @@ def render_possession_free_board(
         "if (!board) { return; }"
         "let text = board._ufaPendingArrangementText || null;"
         "const pendingSource = board._ufaPendingArrangementSource || '';"
+        "const pendingLabel = board._ufaPendingArrangementLabel || '';"
         "board._ufaPendingArrangementText = null;"
         "board._ufaPendingArrangementSource = '';"
+        "board._ufaPendingArrangementLabel = '';"
         "try {"
         "if (!text) {"
         f"text = window.localStorage.getItem({json.dumps(storage_key)});"
@@ -3289,7 +3314,7 @@ def render_possession_free_board(
         "}"
         "if (status) {"
         "const sourceLabel = pendingSource === 'project'"
-        "? 'Loaded project arrangement from this repository.'"
+        "? 'Loaded ' + (pendingLabel || 'project') + ' arrangement.'"
         ": 'Loaded saved arrangement from this browser.';"
         "const missingMessage = missingIds.length"
         "? ' ' + missingIds.length + ' saved cards were not available on this page.'"
@@ -3302,9 +3327,11 @@ def render_possession_free_board(
     )
     load_project_arrangement = (
         f"const board = document.getElementById({json.dumps(board_id)});"
-        f"const source = document.getElementById({json.dumps(project_arrangement_id)});"
+        f"const picker = document.getElementById({json.dumps(project_arrangement_picker_id)});"
         f"const status = document.getElementById({json.dumps(export_status_id)});"
         f"const loader = document.querySelector('#{board_id}').closest('.ufa-free-board-wrap')?.querySelector('.ufa-free-load-arrangement');"
+        "const sourceId = picker ? picker.value : '';"
+        "const source = sourceId ? document.getElementById(sourceId) : null;"
         "if (!board || !source || !source.value.trim()) {"
         "if (status) { status.textContent = 'No project arrangement is available for this team.'; }"
         "return;"
@@ -3316,18 +3343,43 @@ def render_possession_free_board(
         "}"
         "board._ufaPendingArrangementText = text;"
         "board._ufaPendingArrangementSource = 'project';"
+        "board._ufaPendingArrangementLabel = picker && picker.selectedIndex >= 0"
+        "? picker.options[picker.selectedIndex].textContent"
+        ": 'project';"
         f"try {{ window.localStorage.setItem({json.dumps(storage_key)}, text); }} catch (error) {{}}"
         "if (loader) { loader.click(); }"
     )
     project_arrangement_control = ""
-    if project_arrangement_text:
+    if project_arrangement_entries:
+        arrangement_options = "".join(
+            f'<option value="{source_id}">{escape(label)}</option>'
+            for source_id, (label, _) in zip(
+                project_arrangement_source_ids,
+                project_arrangement_entries,
+            )
+        )
+        arrangement_sources = "".join(
+            f'<textarea id="{source_id}" class="ufa-free-project-arrangement-data"'
+            f' hidden aria-label="{escape(label, quote=True)}">'
+            f"{escape(text)}</textarea>"
+            for source_id, (label, text) in zip(
+                project_arrangement_source_ids,
+                project_arrangement_entries,
+            )
+        )
         project_arrangement_control = f"""
+            <label class="ufa-free-arrangement-picker">
+              <span>Arrangement</span>
+              <select id="{project_arrangement_picker_id}"
+                aria-label="Choose project arrangement">
+                {arrangement_options}
+              </select>
+            </label>
             <button class="ufa-free-load-project-arrangement" type="button"
               onclick="{escape(load_project_arrangement, quote=True)}">
-              Load project arrangement
+              Load arrangement
             </button>
-            <textarea id="{project_arrangement_id}" class="ufa-free-project-arrangement-data"
-              hidden aria-label="Project arrangement JSON">{escape(str(project_arrangement_text))}</textarea>
+            {arrangement_sources}
         """
 
     cards = []
@@ -4575,6 +4627,7 @@ def write_possession_pattern_browser_html(
     team_options=None,
     persistence_key=None,
     project_arrangement_text=None,
+    project_arrangements=None,
 ):
     """Write a standalone HTML free-arrange possession browser."""
     output_path = Path(output_path)
@@ -4610,6 +4663,7 @@ def write_possession_pattern_browser_html(
         include_overlay=True,
         persistence_key=persistence_key,
         project_arrangement_text=project_arrangement_text,
+        project_arrangements=project_arrangements,
     )
     standalone_update_row_card_counts = (
         "function updateRowCardCounts() {"
