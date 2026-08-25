@@ -1,0 +1,2590 @@
+{
+  "saved_at": "2026-08-25T01:05:21.699Z",
+  "cards_shown": 469,
+  "filtered_possessions": 469,
+  "groups": [
+    {
+      "group_index": 1,
+      "title": "Pattern group 3",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|1|1|True",
+          "label": "451. Goal O-line | 2026-08-08-IND-MIN | Q3 P1 | 19 throws | aEC/T 0.060 | total 1.148 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|3|1|False",
+          "label": "83. Goal O-line | 2026-05-16-MIN-CHI | Q3 P3 | 11 throws | aEC/T 0.083 | total 0.910 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|7|1|True",
+          "label": "374. Goal O-line | 2026-07-11-BOS-MIN | Q2 P7 | 8 throws | aEC/T 0.108 | total 0.863 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|11|2|True",
+          "label": "306. Goal O-line | 2026-07-03-CHI-MIN | Q2 P11 | 4 throws | aEC/T 0.260 | total 1.042 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|9|1|False",
+          "label": "205. Goal O-line | 2026-06-12-MIN-OAK | Q4 P9 | 5 throws | aEC/T 0.211 | total 1.054 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|10|1|True",
+          "label": "385. Goal O-line | 2026-07-11-BOS-MIN | Q3 P10 | 7 throws | aEC/T 0.137 | total 0.958 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|9|1|True",
+          "label": "401. Goal O-line | 2026-07-19-MAD-MIN | Q1 P9 | 8 throws | aEC/T 0.125 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|2|1|True",
+          "label": "264. Turnover O-line | 2026-06-19-SLC-MIN | Q2 P2 | 12 throws | aEC/T -0.023 | total -0.276 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|2|1|True",
+          "label": "1. Turnover O-line | 2026-05-02-CHI-MIN | Q1 P2 | 8 throws | aEC/T -0.031 | total -0.247 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|9|1|False",
+          "label": "213. Goal O-line | 2026-06-13-MIN-LV | Q1 P9 | 11 throws | aEC/T 0.091 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|1|1|False",
+          "label": "352. Turnover O-line | 2026-07-05-MIN-PIT | Q4 P1 | 11 throws | aEC/T -0.042 | total -0.458 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|10|1|False",
+          "label": "331. Goal O-line | 2026-07-05-MIN-PIT | Q1 P10 | 11 throws | aEC/T 0.091 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|4|1|True",
+          "label": "298. Turnover O-line | 2026-07-03-CHI-MIN | Q2 P4 | 6 throws | aEC/T -0.096 | total -0.576 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|2|1|False",
+          "label": "114. Goal O-line | 2026-05-31-MIN-MAD | Q2 P2 | 8 throws | aEC/T 0.131 | total 1.051 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|8|1|False",
+          "label": "45. Goal O-line | 2026-05-15-MIN-IND | Q1 P8 | 9 throws | aEC/T 0.111 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|6|1|True",
+          "label": "148. Goal O-line | 2026-06-06-IND-MIN | Q2 P6 | 8 throws | aEC/T 0.124 | total 0.993 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|3|1|False",
+          "label": "199. Goal O-line | 2026-06-12-MIN-OAK | Q4 P3 | 12 throws | aEC/T 0.081 | total 0.978 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|9|2|False",
+          "label": "181. Goal O-line | 2026-06-12-MIN-OAK | Q1 P9 | 9 throws | aEC/T 0.123 | total 1.107 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 2,
+      "title": "Pattern group 15",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|4|1|True",
+          "label": "3. Goal O-line | 2026-05-02-CHI-MIN | Q1 P4 | 10 throws | aEC/T 0.090 | total 0.905 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|2|1|True",
+          "label": "416. Goal O-line | 2026-07-19-MAD-MIN | Q3 P2 | 12 throws | aEC/T 0.082 | total 0.990 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|1|1|True",
+          "label": "154. Goal O-line | 2026-06-06-IND-MIN | Q3 P1 | 20 throws | aEC/T 0.058 | total 1.152 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|8|1|False",
+          "label": "72. Goal O-line | 2026-05-15-MIN-IND | Q4 P8 | 10 throws | aEC/T 0.113 | total 1.133 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|3|1|False",
+          "label": "355. Goal O-line | 2026-07-05-MIN-PIT | Q4 P3 | 8 throws | aEC/T 0.125 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 3,
+      "title": "Pattern group 16",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|9|1|False",
+          "label": "190. Goal O-line | 2026-06-12-MIN-OAK | Q2 P9 | 10 throws | aEC/T 0.114 | total 1.140 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|6|1|False",
+          "label": "194. Goal O-line | 2026-06-12-MIN-OAK | Q3 P6 | 10 throws | aEC/T 0.100 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 4,
+      "title": "Pattern group 12",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|7|1|False",
+          "label": "360. Goal O-line | 2026-07-05-MIN-PIT | Q4 P7 | 10 throws | aEC/T 0.108 | total 1.080 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|6|1|False",
+          "label": "55. Goal O-line | 2026-05-15-MIN-IND | Q2 P6 | 13 throws | aEC/T 0.079 | total 1.029 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|3|4|False",
+          "label": "116. Goal O-line | 2026-05-31-MIN-MAD | Q2 P3 | 14 throws | aEC/T 0.066 | total 0.924 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|5|1|True",
+          "label": "373. Goal O-line | 2026-07-11-BOS-MIN | Q2 P5 | 10 throws | aEC/T 0.100 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|7|1|False",
+          "label": "87. Goal O-line | 2026-05-16-MIN-CHI | Q3 P7 | 13 throws | aEC/T 0.077 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|3|1|False",
+          "label": "346. Goal O-line | 2026-07-05-MIN-PIT | Q3 P3 | 8 throws | aEC/T 0.125 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|8|1|False",
+          "label": "95. Goal O-line | 2026-05-16-MIN-CHI | Q4 P8 | 13 throws | aEC/T 0.087 | total 1.126 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 5,
+      "title": "Pattern group 7",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|2|1|True",
+          "label": "297. Goal O-line | 2026-07-03-CHI-MIN | Q2 P2 | 5 throws | aEC/T 0.180 | total 0.898 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|2|1|False",
+          "label": "40. Goal O-line | 2026-05-15-MIN-IND | Q1 P2 | 10 throws | aEC/T 0.102 | total 1.021 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|12|3|True",
+          "label": "153. Goal O-line | 2026-06-06-IND-MIN | Q2 P12 | 12 throws | aEC/T 0.095 | total 1.146 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|7|1|False",
+          "label": "110. Goal O-line | 2026-05-31-MIN-MAD | Q1 P7 | 9 throws | aEC/T 0.111 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|1|1|True",
+          "label": "272. Turnover O-line | 2026-06-19-SLC-MIN | Q3 P1 | 14 throws | aEC/T -0.010 | total -0.139 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|5|1|True",
+          "label": "293. Turnover O-line | 2026-07-03-CHI-MIN | Q1 P5 | 6 throws | aEC/T -0.027 | total -0.162 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|2|1|True",
+          "label": "137. Goal O-line | 2026-06-06-IND-MIN | Q1 P2 | 12 throws | aEC/T 0.083 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 6,
+      "title": "Pattern group 17",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|6|1|True",
+          "label": "382. Goal O-line | 2026-07-11-BOS-MIN | Q3 P6 | 9 throws | aEC/T 0.112 | total 1.008 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|9|1|False",
+          "label": "111. Goal O-line | 2026-05-31-MIN-MAD | Q1 P9 | 10 throws | aEC/T 0.102 | total 1.016 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 7,
+      "title": "Pattern group 9",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|1|1|False",
+          "label": "105. Goal O-line | 2026-05-31-MIN-MAD | Q1 P1 | 12 throws | aEC/T 0.097 | total 1.161 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|3|1|False",
+          "label": "131. Goal O-line | 2026-05-31-MIN-MAD | Q4 P3 | 22 throws | aEC/T 0.040 | total 0.884 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|4|4|False",
+          "label": "357. Goal O-line | 2026-07-05-MIN-PIT | Q4 P4 | 12 throws | aEC/T 0.084 | total 1.009 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|5|3|False",
+          "label": "67. Goal O-line | 2026-05-15-MIN-IND | Q4 P5 | 14 throws | aEC/T 0.071 | total 0.990 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|3|3|False",
+          "label": "107. Goal O-line | 2026-05-31-MIN-MAD | Q1 P3 | 11 throws | aEC/T 0.084 | total 0.919 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 8,
+      "title": "Unsorted",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|5|1|True",
+          "label": "165. Goal O-line | 2026-06-06-IND-MIN | Q4 P5 | 14 throws | aEC/T 0.072 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|4|1|True",
+          "label": "164. Turnover O-line | 2026-06-06-IND-MIN | Q4 P4 | 17 throws | aEC/T -0.002 | total -0.035 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|5|1|True",
+          "label": "393. Goal O-line | 2026-07-11-BOS-MIN | Q4 P5 | 14 throws | aEC/T 0.066 | total 0.920 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 9,
+      "title": "Pattern group 9",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|8|1|False",
+          "label": "350. Goal O-line | 2026-07-05-MIN-PIT | Q3 P8 | 12 throws | aEC/T 0.093 | total 1.114 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|9|1|False",
+          "label": "135. Goal O-line | 2026-05-31-MIN-MAD | Q4 P9 | 11 throws | aEC/T 0.102 | total 1.126 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|8|1|True",
+          "label": "287. Goal O-line | 2026-06-19-SLC-MIN | Q4 P8 | 12 throws | aEC/T 0.087 | total 1.044 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|2|1|True",
+          "label": "307. Goal O-line | 2026-07-03-CHI-MIN | Q3 P2 | 7 throws | aEC/T 0.151 | total 1.058 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|13|1|False",
+          "label": "128. Goal O-line | 2026-05-31-MIN-MAD | Q3 P13 | 11 throws | aEC/T 0.105 | total 1.154 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|1|3|False",
+          "label": "240. Turnover O-line | 2026-06-13-MIN-LV | Q4 P1 | 3 throws | aEC/T -0.141 | total -0.424 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 10,
+      "title": "Pattern group 4",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|12|2|False",
+          "label": "250. Goal D-line | 2026-06-13-MIN-LV | Q4 P12 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|6|2|True",
+          "label": "255. Turnover D-line | 2026-06-19-SLC-MIN | Q1 P6 | 6 throws | aEC/T -0.088 | total -0.531 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|7|2|True",
+          "label": "257. Goal D-line | 2026-06-19-SLC-MIN | Q1 P7 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|10|2|True",
+          "label": "260. Turnover D-line | 2026-06-19-SLC-MIN | Q1 P10 | 2 throws | aEC/T -0.431 | total -0.862 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|12|2|True",
+          "label": "262. Goal D-line | 2026-06-19-SLC-MIN | Q1 P12 | 5 throws | aEC/T 0.222 | total 1.111 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|13|2|True",
+          "label": "263. Goal D-line | 2026-06-19-SLC-MIN | Q1 P13 | 2 throws | aEC/T 0.517 | total 1.034 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|2|3|True",
+          "label": "265. Goal D-line | 2026-06-19-SLC-MIN | Q2 P2 | 9 throws | aEC/T 0.110 | total 0.989 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|3|2|True",
+          "label": "266. Goal D-line | 2026-06-19-SLC-MIN | Q2 P3 | 10 throws | aEC/T 0.100 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|4|2|True",
+          "label": "267. Turnover D-line | 2026-06-19-SLC-MIN | Q2 P4 | 1 throws | aEC/T -0.628 | total -0.628 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|4|4|True",
+          "label": "268. Turnover D-line | 2026-06-19-SLC-MIN | Q2 P4 | 4 throws | aEC/T -0.112 | total -0.448 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|6|2|True",
+          "label": "271. Goal D-line | 2026-06-19-SLC-MIN | Q2 P6 | 8 throws | aEC/T 0.142 | total 1.135 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|8|2|True",
+          "label": "278. Turnover D-line | 2026-06-19-SLC-MIN | Q3 P8 | 3 throws | aEC/T -0.120 | total -0.359 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|1|2|True",
+          "label": "280. Turnover D-line | 2026-06-19-SLC-MIN | Q4 P1 | 2 throws | aEC/T -0.436 | total -0.872 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|1|4|True",
+          "label": "281. Turnover D-line | 2026-06-19-SLC-MIN | Q4 P1 | 1 throws | aEC/T -0.934 | total -0.934 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|4|2|True",
+          "label": "284. Turnover D-line | 2026-06-19-SLC-MIN | Q4 P4 | 1 throws | aEC/T -0.839 | total -0.839 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|1|2|True",
+          "label": "289. Goal D-line | 2026-07-03-CHI-MIN | Q1 P1 | 2 throws | aEC/T 0.456 | total 0.912 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|2|2|True",
+          "label": "290. Turnover D-line | 2026-07-03-CHI-MIN | Q1 P2 | 5 throws | aEC/T -0.132 | total -0.660 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|6|2|True",
+          "label": "295. Goal D-line | 2026-07-03-CHI-MIN | Q1 P6 | 14 throws | aEC/T 0.082 | total 1.141 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|4|3|True",
+          "label": "299. Turnover D-line | 2026-07-03-CHI-MIN | Q2 P4 | 4 throws | aEC/T -0.109 | total -0.435 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|6|2|True",
+          "label": "301. Goal D-line | 2026-07-03-CHI-MIN | Q2 P6 | 6 throws | aEC/T 0.144 | total 0.866 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|7|2|True",
+          "label": "302. Goal D-line | 2026-07-03-CHI-MIN | Q2 P7 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|8|2|True",
+          "label": "303. Turnover D-line | 2026-07-03-CHI-MIN | Q2 P8 | 6 throws | aEC/T 0.021 | total 0.128 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|8|4|True",
+          "label": "304. Goal D-line | 2026-07-03-CHI-MIN | Q2 P8 | 9 throws | aEC/T 0.088 | total 0.791 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|4|3|True",
+          "label": "309. Goal D-line | 2026-07-03-CHI-MIN | Q3 P4 | 5 throws | aEC/T 0.186 | total 0.932 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|5|2|True",
+          "label": "310. Goal D-line | 2026-07-03-CHI-MIN | Q3 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|6|2|True",
+          "label": "311. Goal D-line | 2026-07-03-CHI-MIN | Q3 P6 | 5 throws | aEC/T 0.199 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|11|2|True",
+          "label": "315. Goal D-line | 2026-07-03-CHI-MIN | Q3 P11 | 13 throws | aEC/T 0.087 | total 1.126 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|2|2|True",
+          "label": "317. Turnover D-line | 2026-07-03-CHI-MIN | Q4 P2 | 5 throws | aEC/T -0.124 | total -0.621 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|7|2|True",
+          "label": "321. Goal D-line | 2026-07-03-CHI-MIN | Q4 P7 | 7 throws | aEC/T 0.143 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|8|2|True",
+          "label": "322. Goal D-line | 2026-07-03-CHI-MIN | Q4 P8 | 5 throws | aEC/T 0.201 | total 1.007 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|12|2|True",
+          "label": "325. Turnover D-line | 2026-07-03-CHI-MIN | Q4 P12 | 7 throws | aEC/T -0.017 | total -0.120 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|1|2|False",
+          "label": "326. Goal D-line | 2026-07-05-MIN-PIT | Q1 P1 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|2|2|False",
+          "label": "327. Goal D-line | 2026-07-05-MIN-PIT | Q1 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|13|2|False",
+          "label": "333. Turnover D-line | 2026-07-05-MIN-PIT | Q1 P13 | 2 throws | aEC/T -0.295 | total -0.590 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|3|2|False",
+          "label": "337. Goal D-line | 2026-07-05-MIN-PIT | Q2 P3 | 7 throws | aEC/T 0.142 | total 0.996 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|7|2|False",
+          "label": "340. Goal D-line | 2026-07-05-MIN-PIT | Q2 P7 | 3 throws | aEC/T 0.276 | total 0.829 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|11|2|False",
+          "label": "343. Goal D-line | 2026-07-05-MIN-PIT | Q2 P11 | 11 throws | aEC/T 0.120 | total 1.324 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|4|2|False",
+          "label": "347. Turnover D-line | 2026-07-05-MIN-PIT | Q3 P4 | 4 throws | aEC/T -0.228 | total -0.913 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|9|1|False",
+          "label": "247. Goal O-line | 2026-06-13-MIN-LV | Q4 P9 | 11 throws | aEC/T 0.083 | total 0.917 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|5|1|False",
+          "label": "348. Goal O-line | 2026-07-05-MIN-PIT | Q3 P5 | 11 throws | aEC/T 0.091 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|1|1|True",
+          "label": "396. Goal O-line | 2026-07-19-MAD-MIN | Q1 P1 | 9 throws | aEC/T 0.121 | total 1.091 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|2|1|False",
+          "label": "206. Goal O-line | 2026-06-13-MIN-LV | Q1 P2 | 13 throws | aEC/T 0.081 | total 1.052 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|1|1|False",
+          "label": "121. Goal O-line | 2026-05-31-MIN-MAD | Q3 P1 | 8 throws | aEC/T 0.139 | total 1.114 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|10|1|True",
+          "label": "161. Goal O-line | 2026-06-06-IND-MIN | Q3 P10 | 13 throws | aEC/T 0.084 | total 1.092 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 11,
+      "title": "Pattern group 5",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|9|2|False",
+          "label": "351. Goal D-line | 2026-07-05-MIN-PIT | Q3 P9 | 2 throws | aEC/T 0.512 | total 1.025 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|1|5|False",
+          "label": "354. Goal D-line | 2026-07-05-MIN-PIT | Q4 P1 | 11 throws | aEC/T 0.030 | total 0.334 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|4|2|False",
+          "label": "356. Turnover D-line | 2026-07-05-MIN-PIT | Q4 P4 | 14 throws | aEC/T 0.014 | total 0.196 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|5|2|False",
+          "label": "358. Goal D-line | 2026-07-05-MIN-PIT | Q4 P5 | 4 throws | aEC/T 0.251 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|6|2|False",
+          "label": "359. Turnover D-line | 2026-07-05-MIN-PIT | Q4 P6 | 3 throws | aEC/T -0.143 | total -0.430 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|2|2|True",
+          "label": "371. Goal D-line | 2026-07-11-BOS-MIN | Q2 P2 | 2 throws | aEC/T 0.502 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|8|2|True",
+          "label": "375. Goal D-line | 2026-07-11-BOS-MIN | Q2 P8 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|12|2|True",
+          "label": "378. Goal D-line | 2026-07-11-BOS-MIN | Q2 P12 | 14 throws | aEC/T 0.079 | total 1.103 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|1|2|True",
+          "label": "379. Goal D-line | 2026-07-11-BOS-MIN | Q3 P1 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|4|2|True",
+          "label": "381. Goal D-line | 2026-07-11-BOS-MIN | Q3 P4 | 12 throws | aEC/T 0.060 | total 0.724 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|11|3|True",
+          "label": "403. Goal D-line | 2026-07-19-MAD-MIN | Q1 P11 | 7 throws | aEC/T 0.147 | total 1.027 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|12|2|True",
+          "label": "404. Goal D-line | 2026-07-19-MAD-MIN | Q1 P12 | 3 throws | aEC/T 0.341 | total 1.024 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|13|2|True",
+          "label": "405. Goal D-line | 2026-07-19-MAD-MIN | Q1 P13 | 2 throws | aEC/T 0.518 | total 1.036 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|2|2|True",
+          "label": "407. Turnover D-line | 2026-07-19-MAD-MIN | Q2 P2 | 1 throws | aEC/T -0.642 | total -0.642 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|2|4|True",
+          "label": "408. Goal D-line | 2026-07-19-MAD-MIN | Q2 P2 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|3|2|True",
+          "label": "409. Goal D-line | 2026-07-19-MAD-MIN | Q2 P3 | 11 throws | aEC/T 0.089 | total 0.977 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|4|2|True",
+          "label": "410. Goal D-line | 2026-07-19-MAD-MIN | Q2 P4 | 8 throws | aEC/T 0.097 | total 0.772 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|5|2|True",
+          "label": "411. Goal D-line | 2026-07-19-MAD-MIN | Q2 P5 | 13 throws | aEC/T 0.079 | total 1.030 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|6|2|True",
+          "label": "412. Turnover D-line | 2026-07-19-MAD-MIN | Q2 P6 | 6 throws | aEC/T 0.022 | total 0.133 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|6|4|True",
+          "label": "413. Goal D-line | 2026-07-19-MAD-MIN | Q2 P6 | 2 throws | aEC/T 0.522 | total 1.044 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|8|2|True",
+          "label": "421. Goal D-line | 2026-07-19-MAD-MIN | Q3 P8 | 7 throws | aEC/T 0.194 | total 1.355 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|1|2|True",
+          "label": "422. Goal D-line | 2026-07-19-MAD-MIN | Q4 P1 | 4 throws | aEC/T 0.243 | total 0.973 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|6|1|False",
+          "label": "187. Goal O-line | 2026-06-12-MIN-OAK | Q2 P6 | 11 throws | aEC/T 0.093 | total 1.022 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|4|1|False",
+          "label": "220. Goal O-line | 2026-06-13-MIN-LV | Q2 P4 | 11 throws | aEC/T 0.090 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|1|1|False",
+          "label": "198. Goal O-line | 2026-06-12-MIN-OAK | Q4 P1 | 13 throws | aEC/T 0.087 | total 1.129 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|2|1|True",
+          "label": "145. Goal O-line | 2026-06-06-IND-MIN | Q2 P2 | 14 throws | aEC/T 0.076 | total 1.067 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|11|1|False",
+          "label": "112. Goal O-line | 2026-05-31-MIN-MAD | Q1 P11 | 11 throws | aEC/T 0.094 | total 1.030 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 12,
+      "title": "Pattern group 16",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|10|1|False",
+          "label": "342. Goal O-line | 2026-07-05-MIN-PIT | Q2 P10 | 3 throws | aEC/T 0.346 | total 1.037 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|11|1|True",
+          "label": "261. Goal O-line | 2026-06-19-SLC-MIN | Q1 P11 | 5 throws | aEC/T 0.204 | total 1.019 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|7|3|True",
+          "label": "168. Goal O-line | 2026-06-06-IND-MIN | Q4 P7 | 7 throws | aEC/T 0.145 | total 1.014 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|5|1|True",
+          "label": "365. Goal O-line | 2026-07-11-BOS-MIN | Q1 P5 | 11 throws | aEC/T 0.091 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|10|1|True",
+          "label": "314. Goal O-line | 2026-07-03-CHI-MIN | Q3 P10 | 7 throws | aEC/T 0.148 | total 1.033 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|2|1|False",
+          "label": "173. Goal O-line | 2026-06-12-MIN-OAK | Q1 P2 | 11 throws | aEC/T 0.098 | total 1.075 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|5|3|True",
+          "label": "270. Goal O-line | 2026-06-19-SLC-MIN | Q2 P5 | 4 throws | aEC/T 0.233 | total 0.934 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|7|1|True",
+          "label": "420. Goal O-line | 2026-07-19-MAD-MIN | Q3 P7 | 5 throws | aEC/T 0.182 | total 0.908 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|6|3|True",
+          "label": "466. Turnover O-line | 2026-08-08-IND-MIN | Q4 P6 | 7 throws | aEC/T -0.010 | total -0.067 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|5|1|False",
+          "label": "338. Goal O-line | 2026-07-05-MIN-PIT | Q2 P5 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|9|1|True",
+          "label": "279. Turnover O-line | 2026-06-19-SLC-MIN | Q3 P9 | 12 throws | aEC/T 0.008 | total 0.093 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|7|1|True",
+          "label": "446. Goal O-line | 2026-08-08-IND-MIN | Q2 P7 | 7 throws | aEC/T 0.102 | total 0.711 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 13,
+      "title": "Pattern group 11",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|4|1|True",
+          "label": "36. Goal O-line | 2026-05-02-CHI-MIN | Q4 P4 | 7 throws | aEC/T 0.143 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|8|2|False",
+          "label": "361. Goal O-line | 2026-07-05-MIN-PIT | Q4 P8 | 5 throws | aEC/T 0.220 | total 1.102 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|5|1|False",
+          "label": "108. Goal O-line | 2026-05-31-MIN-MAD | Q1 P5 | 11 throws | aEC/T 0.091 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|10|1|True",
+          "label": "305. Goal O-line | 2026-07-03-CHI-MIN | Q2 P10 | 13 throws | aEC/T 0.082 | total 1.063 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 14,
+      "title": "Pattern group 24",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|6|1|True",
+          "label": "320. Goal O-line | 2026-07-03-CHI-MIN | Q4 P6 | 13 throws | aEC/T 0.071 | total 0.929 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|6|1|True",
+          "label": "425. Goal O-line | 2026-07-19-MAD-MIN | Q4 P6 | 11 throws | aEC/T 0.091 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|5|5|False",
+          "label": "178. Goal O-line | 2026-06-12-MIN-OAK | Q1 P5 | 11 throws | aEC/T 0.079 | total 0.872 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 15,
+      "title": "Pattern group 24",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|2|1|True",
+          "label": "362. Goal O-line | 2026-07-11-BOS-MIN | Q1 P2 | 4 throws | aEC/T 0.267 | total 1.070 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|7|3|True",
+          "label": "277. Goal O-line | 2026-06-19-SLC-MIN | Q3 P7 | 4 throws | aEC/T 0.252 | total 1.009 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|8|1|False",
+          "label": "195. Goal O-line | 2026-06-12-MIN-OAK | Q3 P8 | 4 throws | aEC/T 0.251 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 16,
+      "title": "Pattern group 18",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|5|1|False",
+          "label": "117. Turnover O-line | 2026-05-31-MIN-MAD | Q2 P5 | 8 throws | aEC/T -0.035 | total -0.278 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|11|3|False",
+          "label": "249. Goal O-line | 2026-06-13-MIN-LV | Q4 P11 | 3 throws | aEC/T 0.339 | total 1.018 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|8|1|True",
+          "label": "426. Goal O-line | 2026-07-19-MAD-MIN | Q4 P8 | 9 throws | aEC/T 0.112 | total 1.007 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|1|1|False",
+          "label": "64. Goal O-line | 2026-05-15-MIN-IND | Q4 P1 | 8 throws | aEC/T 0.134 | total 1.072 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 17,
+      "title": "Pattern group 18",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|8|1|True",
+          "label": "143. Goal O-line | 2026-06-06-IND-MIN | Q1 P8 | 7 throws | aEC/T 0.154 | total 1.076 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|8|1|False",
+          "label": "125. Goal O-line | 2026-05-31-MIN-MAD | Q3 P8 | 12 throws | aEC/T 0.085 | total 1.016 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|12|1|False",
+          "label": "332. Goal O-line | 2026-07-05-MIN-PIT | Q1 P12 | 7 throws | aEC/T 0.144 | total 1.007 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|3|1|False",
+          "label": "59. Goal O-line | 2026-05-15-MIN-IND | Q3 P3 | 20 throws | aEC/T 0.050 | total 0.991 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|3|1|True",
+          "label": "380. Goal O-line | 2026-07-11-BOS-MIN | Q3 P3 | 20 throws | aEC/T 0.049 | total 0.977 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|1|1|False",
+          "label": "74. Goal O-line | 2026-05-16-MIN-CHI | Q1 P1 | 23 throws | aEC/T 0.050 | total 1.147 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|3|1|False",
+          "label": "122. Goal O-line | 2026-05-31-MIN-MAD | Q3 P3 | 5 throws | aEC/T 0.197 | total 0.983 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|8|1|False",
+          "label": "235. Goal O-line | 2026-06-13-MIN-LV | Q3 P8 | 8 throws | aEC/T 0.122 | total 0.974 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 18,
+      "title": "Pattern group 21",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|5|1|False",
+          "label": "43. Goal O-line | 2026-05-15-MIN-IND | Q1 P5 | 6 throws | aEC/T 0.167 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|8|1|False",
+          "label": "80. Goal O-line | 2026-05-16-MIN-CHI | Q1 P8 | 17 throws | aEC/T 0.060 | total 1.022 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|4|1|False",
+          "label": "76. Goal O-line | 2026-05-16-MIN-CHI | Q1 P4 | 5 throws | aEC/T 0.200 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|4|1|True",
+          "label": "29. Goal O-line | 2026-05-02-CHI-MIN | Q3 P4 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 19,
+      "title": "Pattern group 20",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|5|1|False",
+          "label": "200. Goal O-line | 2026-06-12-MIN-OAK | Q4 P5 | 6 throws | aEC/T 0.165 | total 0.992 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|10|1|True",
+          "label": "428. Goal O-line | 2026-07-19-MAD-MIN | Q4 P10 | 6 throws | aEC/T 0.173 | total 1.037 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 20,
+      "title": "Pattern group 24",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|2|1|True",
+          "label": "163. Goal O-line | 2026-06-06-IND-MIN | Q4 P2 | 3 throws | aEC/T 0.337 | total 1.012 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|5|3|True",
+          "label": "140. Goal O-line | 2026-06-06-IND-MIN | Q1 P5 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|2|1|False",
+          "label": "336. Goal O-line | 2026-07-05-MIN-PIT | Q2 P2 | 4 throws | aEC/T 0.250 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|12|1|True",
+          "label": "386. Goal O-line | 2026-07-11-BOS-MIN | Q3 P12 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|3|1|True",
+          "label": "397. Goal O-line | 2026-07-19-MAD-MIN | Q1 P3 | 3 throws | aEC/T 0.334 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|8|1|False",
+          "label": "330. Goal O-line | 2026-07-05-MIN-PIT | Q1 P8 | 8 throws | aEC/T 0.125 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|5|1|True",
+          "label": "300. Goal O-line | 2026-07-03-CHI-MIN | Q2 P5 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 21,
+      "title": "Pattern group 22",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|12|2|False",
+          "label": "344. Goal O-line | 2026-07-05-MIN-PIT | Q2 P12 | 3 throws | aEC/T 0.359 | total 1.076 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|1|1|True",
+          "label": "251. Goal O-line | 2026-06-19-SLC-MIN | Q1 P1 | 5 throws | aEC/T 0.218 | total 1.091 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|9|3|True",
+          "label": "259. Goal O-line | 2026-06-19-SLC-MIN | Q1 P9 | 2 throws | aEC/T 0.340 | total 0.680 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|2|3|False",
+          "label": "192. Goal O-line | 2026-06-12-MIN-OAK | Q3 P2 | 2 throws | aEC/T 0.499 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|2|2|False",
+          "label": "241. Goal O-line | 2026-06-13-MIN-LV | Q4 P2 | 4 throws | aEC/T 0.249 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|6|4|True",
+          "label": "256. Goal O-line | 2026-06-19-SLC-MIN | Q1 P6 | 4 throws | aEC/T 0.198 | total 0.794 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|8|3|True",
+          "label": "313. Goal O-line | 2026-07-03-CHI-MIN | Q3 P8 | 3 throws | aEC/T 0.334 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|11|1|True",
+          "label": "324. Goal O-line | 2026-07-03-CHI-MIN | Q4 P11 | 5 throws | aEC/T 0.210 | total 1.052 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|6|2|False",
+          "label": "339. Goal O-line | 2026-07-05-MIN-PIT | Q2 P6 | 5 throws | aEC/T 0.200 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|5|3|True",
+          "label": "399. Goal O-line | 2026-07-19-MAD-MIN | Q1 P5 | 7 throws | aEC/T 0.142 | total 0.993 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|10|1|True",
+          "label": "151. Goal O-line | 2026-06-06-IND-MIN | Q2 P10 | 8 throws | aEC/T 0.108 | total 0.863 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|8|1|False",
+          "label": "180. Goal O-line | 2026-06-12-MIN-OAK | Q1 P8 | 4 throws | aEC/T 0.273 | total 1.092 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|3|2|True",
+          "label": "283. Goal O-line | 2026-06-19-SLC-MIN | Q4 P3 | 6 throws | aEC/T 0.108 | total 0.649 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|5|1|True",
+          "label": "275. Goal O-line | 2026-06-19-SLC-MIN | Q3 P5 | 4 throws | aEC/T 0.251 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|5|3|True",
+          "label": "294. Goal O-line | 2026-07-03-CHI-MIN | Q1 P5 | 3 throws | aEC/T 0.318 | total 0.953 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|3|1|True",
+          "label": "252. Goal O-line | 2026-06-19-SLC-MIN | Q1 P3 | 2 throws | aEC/T 0.503 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|4|1|False",
+          "label": "328. Goal O-line | 2026-07-05-MIN-PIT | Q1 P4 | 2 throws | aEC/T 0.498 | total 0.996 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|3|1|False",
+          "label": "65. Goal O-line | 2026-05-15-MIN-IND | Q4 P3 | 2 throws | aEC/T 0.508 | total 1.016 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|8|3|True",
+          "label": "384. Goal O-line | 2026-07-11-BOS-MIN | Q3 P8 | 3 throws | aEC/T 0.330 | total 0.989 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|2|3|False",
+          "label": "98. Goal O-line | 2026-05-16-MIN-CHI | Q5 P2 | 3 throws | aEC/T 0.336 | total 1.008 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|5|3|True",
+          "label": "254. Goal O-line | 2026-06-19-SLC-MIN | Q1 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|2|4|True",
+          "label": "318. Goal O-line | 2026-07-03-CHI-MIN | Q4 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|7|3|True",
+          "label": "395. Goal O-line | 2026-07-11-BOS-MIN | Q4 P7 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|2|3|True",
+          "label": "15. Goal O-line | 2026-05-02-CHI-MIN | Q2 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 22,
+      "title": "Pattern group 25",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|12|4|False",
+          "label": "229. Goal O-line | 2026-06-13-MIN-LV | Q2 P12 | 8 throws | aEC/T 0.145 | total 1.162 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|6|6|False",
+          "label": "70. Goal O-line | 2026-05-15-MIN-IND | Q4 P6 | 24 throws | aEC/T 0.041 | total 0.973 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|7|1|False",
+          "label": "234. Turnover O-line | 2026-06-13-MIN-LV | Q3 P7 | 8 throws | aEC/T -0.015 | total -0.120 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|1|1|True",
+          "label": "387. Goal O-line | 2026-07-11-BOS-MIN | Q4 P1 | 12 throws | aEC/T 0.097 | total 1.159 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|7|1|True",
+          "label": "38. Goal O-line | 2026-05-02-CHI-MIN | Q4 P7 | 22 throws | aEC/T 0.046 | total 1.007 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|5|3|False",
+          "label": "102. Goal O-line | 2026-05-16-MIN-CHI | Q5 P5 | 13 throws | aEC/T 0.074 | total 0.956 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 23,
+      "title": "Pattern group 27",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|7|1|True",
+          "label": "400. Goal O-line | 2026-07-19-MAD-MIN | Q1 P7 | 19 throws | aEC/T 0.053 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|3|3|True",
+          "label": "292. Goal O-line | 2026-07-03-CHI-MIN | Q1 P3 | 10 throws | aEC/T 0.096 | total 0.965 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|2|1|False",
+          "label": "90. Goal O-line | 2026-05-16-MIN-CHI | Q4 P2 | 46 throws | aEC/T 0.017 | total 0.791 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|9|2|True",
+          "label": "427. Turnover D-line | 2026-07-19-MAD-MIN | Q4 P9 | 1 throws | aEC/T -0.721 | total -0.721 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|11|2|True",
+          "label": "429. Turnover D-line | 2026-07-19-MAD-MIN | Q4 P11 | 6 throws | aEC/T -0.104 | total -0.622 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|5|2|True",
+          "label": "4. Turnover D-line | 2026-05-02-CHI-MIN | Q1 P5 | 1 throws | aEC/T -0.646 | total -0.646 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|5|4|True",
+          "label": "5. Goal D-line | 2026-05-02-CHI-MIN | Q1 P5 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|6|2|True",
+          "label": "6. Goal D-line | 2026-05-02-CHI-MIN | Q1 P6 | 10 throws | aEC/T 0.100 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|7|2|True",
+          "label": "7. Goal D-line | 2026-05-02-CHI-MIN | Q1 P7 | 15 throws | aEC/T 0.067 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|8|2|True",
+          "label": "8. Goal D-line | 2026-05-02-CHI-MIN | Q1 P8 | 8 throws | aEC/T 0.126 | total 1.008 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|9|2|True",
+          "label": "9. Goal D-line | 2026-05-02-CHI-MIN | Q1 P9 | 8 throws | aEC/T 0.129 | total 1.030 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|10|2|True",
+          "label": "10. Goal D-line | 2026-05-02-CHI-MIN | Q1 P10 | 9 throws | aEC/T 0.116 | total 1.043 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|11|2|True",
+          "label": "11. Goal D-line | 2026-05-02-CHI-MIN | Q1 P11 | 5 throws | aEC/T 0.223 | total 1.115 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|12|2|True",
+          "label": "12. Goal D-line | 2026-05-02-CHI-MIN | Q1 P12 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|3|2|True",
+          "label": "16. Goal D-line | 2026-05-02-CHI-MIN | Q2 P3 | 5 throws | aEC/T 0.200 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|4|2|True",
+          "label": "17. Turnover D-line | 2026-05-02-CHI-MIN | Q2 P4 | 1 throws | aEC/T -0.634 | total -0.634 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|4|4|True",
+          "label": "18. Turnover D-line | 2026-05-02-CHI-MIN | Q2 P4 | 5 throws | aEC/T -0.106 | total -0.531 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|4|6|True",
+          "label": "19. Goal D-line | 2026-05-02-CHI-MIN | Q2 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|6|5|True",
+          "label": "22. Goal D-line | 2026-05-02-CHI-MIN | Q2 P6 | 10 throws | aEC/T 0.112 | total 1.121 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|7|2|True",
+          "label": "23. Goal D-line | 2026-05-02-CHI-MIN | Q2 P7 | 6 throws | aEC/T 0.188 | total 1.128 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|8|2|True",
+          "label": "24. Goal D-line | 2026-05-02-CHI-MIN | Q2 P8 | 6 throws | aEC/T 0.174 | total 1.046 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|1|2|True",
+          "label": "25. Goal D-line | 2026-05-02-CHI-MIN | Q3 P1 | 3 throws | aEC/T 0.335 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|2|2|True",
+          "label": "26. Turnover D-line | 2026-05-02-CHI-MIN | Q3 P2 | 8 throws | aEC/T -0.029 | total -0.235 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|7|3|True",
+          "label": "32. Turnover D-line | 2026-05-02-CHI-MIN | Q3 P7 | 9 throws | aEC/T 0.027 | total 0.239 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|2|2|True",
+          "label": "35. Goal D-line | 2026-05-02-CHI-MIN | Q4 P2 | 8 throws | aEC/T 0.125 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|5|2|True",
+          "label": "37. Goal D-line | 2026-05-02-CHI-MIN | Q4 P5 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|3|2|False",
+          "label": "41. Turnover D-line | 2026-05-15-MIN-IND | Q1 P3 | 8 throws | aEC/T -0.043 | total -0.341 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|3|4|False",
+          "label": "42. Goal D-line | 2026-05-15-MIN-IND | Q1 P3 | 3 throws | aEC/T 0.333 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|9|2|False",
+          "label": "46. Turnover D-line | 2026-05-15-MIN-IND | Q1 P9 | 3 throws | aEC/T -0.182 | total -0.546 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|9|4|False",
+          "label": "47. Goal D-line | 2026-05-15-MIN-IND | Q1 P9 | 9 throws | aEC/T 0.115 | total 1.039 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|10|2|False",
+          "label": "48. Goal D-line | 2026-05-15-MIN-IND | Q1 P10 | 5 throws | aEC/T 0.151 | total 0.754 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|11|2|False",
+          "label": "49. Goal D-line | 2026-05-15-MIN-IND | Q1 P11 | 3 throws | aEC/T 0.354 | total 1.061 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|2|2|False",
+          "label": "52. Goal D-line | 2026-05-15-MIN-IND | Q2 P2 | 20 throws | aEC/T 0.052 | total 1.041 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|3|2|False",
+          "label": "53. Goal D-line | 2026-05-15-MIN-IND | Q2 P3 | 9 throws | aEC/T 0.092 | total 0.824 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|4|2|False",
+          "label": "54. Goal D-line | 2026-05-15-MIN-IND | Q2 P4 | 13 throws | aEC/T 0.084 | total 1.089 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|7|2|False",
+          "label": "56. Goal D-line | 2026-05-15-MIN-IND | Q2 P7 | 7 throws | aEC/T 0.149 | total 1.041 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|4|2|False",
+          "label": "60. Turnover D-line | 2026-05-15-MIN-IND | Q3 P4 | 9 throws | aEC/T -0.059 | total -0.534 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|6|2|False",
+          "label": "68. Turnover D-line | 2026-05-15-MIN-IND | Q4 P6 | 18 throws | aEC/T -0.002 | total -0.044 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|6|4|False",
+          "label": "69. Turnover D-line | 2026-05-15-MIN-IND | Q4 P6 | 1 throws | aEC/T -0.797 | total -0.797 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|7|2|False",
+          "label": "71. Turnover D-line | 2026-05-15-MIN-IND | Q4 P7 | 8 throws | aEC/T -0.075 | total -0.598 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|9|2|False",
+          "label": "73. Goal D-line | 2026-05-15-MIN-IND | Q4 P9 | 3 throws | aEC/T 0.374 | total 1.123 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|2|2|False",
+          "label": "75. Goal D-line | 2026-05-16-MIN-CHI | Q1 P2 | 6 throws | aEC/T 0.163 | total 0.977 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|5|2|False",
+          "label": "77. Goal D-line | 2026-05-16-MIN-CHI | Q1 P5 | 10 throws | aEC/T 0.100 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|6|2|False",
+          "label": "78. Turnover D-line | 2026-05-16-MIN-CHI | Q1 P6 | 7 throws | aEC/T -0.007 | total -0.051 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|1|2|False",
+          "label": "82. Goal D-line | 2026-05-16-MIN-CHI | Q3 P1 | 9 throws | aEC/T 0.096 | total 0.865 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|4|2|False",
+          "label": "84. Goal D-line | 2026-05-16-MIN-CHI | Q3 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|5|2|False",
+          "label": "85. Turnover D-line | 2026-05-16-MIN-CHI | Q3 P5 | 3 throws | aEC/T -0.169 | total -0.506 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|5|4|False",
+          "label": "86. Goal D-line | 2026-05-16-MIN-CHI | Q3 P5 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|8|2|False",
+          "label": "88. Goal D-line | 2026-05-16-MIN-CHI | Q3 P8 | 6 throws | aEC/T 0.204 | total 1.226 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|3|2|False",
+          "label": "91. Goal D-line | 2026-05-16-MIN-CHI | Q4 P3 | 5 throws | aEC/T 0.158 | total 0.791 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|4|2|False",
+          "label": "92. Turnover D-line | 2026-05-16-MIN-CHI | Q4 P4 | 1 throws | aEC/T -0.754 | total -0.754 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|9|2|False",
+          "label": "96. Goal D-line | 2026-05-16-MIN-CHI | Q4 P9 | 3 throws | aEC/T 0.325 | total 0.975 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|3|2|False",
+          "label": "99. Goal D-line | 2026-05-16-MIN-CHI | Q5 P3 | 13 throws | aEC/T 0.089 | total 1.159 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|4|2|False",
+          "label": "100. Turnover D-line | 2026-05-16-MIN-CHI | Q5 P4 | 3 throws | aEC/T -0.201 | total -0.603 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|6|2|False",
+          "label": "103. Goal D-line | 2026-05-16-MIN-CHI | Q5 P6 | 14 throws | aEC/T 0.071 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|3|2|False",
+          "label": "115. Turnover D-line | 2026-05-31-MIN-MAD | Q2 P3 | 8 throws | aEC/T -0.074 | total -0.589 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|6|3|False",
+          "label": "119. Goal D-line | 2026-05-31-MIN-MAD | Q2 P6 | 14 throws | aEC/T 0.074 | total 1.038 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|7|2|False",
+          "label": "120. Goal D-line | 2026-05-31-MIN-MAD | Q2 P7 | 2 throws | aEC/T 0.568 | total 1.136 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|4|2|False",
+          "label": "123. Goal D-line | 2026-05-31-MIN-MAD | Q3 P4 | 3 throws | aEC/T 0.281 | total 0.844 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|1|2|False",
+          "label": "129. Goal D-line | 2026-05-31-MIN-MAD | Q4 P1 | 29 throws | aEC/T 0.038 | total 1.090 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|3|2|True",
+          "label": "138. Goal D-line | 2026-06-06-IND-MIN | Q1 P3 | 21 throws | aEC/T 0.044 | total 0.920 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|6|2|True",
+          "label": "141. Goal D-line | 2026-06-06-IND-MIN | Q1 P6 | 6 throws | aEC/T 0.167 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|7|2|True",
+          "label": "142. Turnover D-line | 2026-06-06-IND-MIN | Q1 P7 | 4 throws | aEC/T 0.007 | total 0.029 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|9|2|True",
+          "label": "144. Goal D-line | 2026-06-06-IND-MIN | Q1 P9 | 5 throws | aEC/T 0.219 | total 1.096 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|3|2|True",
+          "label": "146. Goal D-line | 2026-06-06-IND-MIN | Q2 P3 | 3 throws | aEC/T 0.334 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|4|2|True",
+          "label": "147. Goal D-line | 2026-06-06-IND-MIN | Q2 P4 | 4 throws | aEC/T 0.244 | total 0.977 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|4|2|True",
+          "label": "156. Goal D-line | 2026-06-06-IND-MIN | Q3 P4 | 15 throws | aEC/T 0.061 | total 0.913 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|5|2|True",
+          "label": "157. Goal D-line | 2026-06-06-IND-MIN | Q3 P5 | 5 throws | aEC/T 0.200 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|6|2|True",
+          "label": "158. Goal D-line | 2026-06-06-IND-MIN | Q3 P6 | 17 throws | aEC/T 0.048 | total 0.817 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|11|2|True",
+          "label": "162. Goal D-line | 2026-06-06-IND-MIN | Q3 P11 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|6|2|True",
+          "label": "166. Turnover D-line | 2026-06-06-IND-MIN | Q4 P6 | 2 throws | aEC/T -0.233 | total -0.466 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|8|2|True",
+          "label": "169. Goal D-line | 2026-06-06-IND-MIN | Q4 P8 | 4 throws | aEC/T 0.269 | total 1.076 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|9|2|True",
+          "label": "170. Turnover D-line | 2026-06-06-IND-MIN | Q4 P9 | 6 throws | aEC/T -0.091 | total -0.545 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|1|2|False",
+          "label": "171. Turnover D-line | 2026-06-12-MIN-OAK | Q1 P1 | 7 throws | aEC/T -0.018 | total -0.123 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|1|4|False",
+          "label": "172. Turnover D-line | 2026-06-12-MIN-OAK | Q1 P1 | 2 throws | aEC/T -0.358 | total -0.715 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|3|2|False",
+          "label": "174. Turnover D-line | 2026-06-12-MIN-OAK | Q1 P3 | 4 throws | aEC/T -0.060 | total -0.238 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|2|2|False",
+          "label": "183. Turnover D-line | 2026-06-12-MIN-OAK | Q2 P2 | 14 throws | aEC/T -0.045 | total -0.625 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|7|2|False",
+          "label": "188. Goal D-line | 2026-06-12-MIN-OAK | Q2 P7 | 4 throws | aEC/T 0.211 | total 0.843 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|8|2|False",
+          "label": "189. Turnover D-line | 2026-06-12-MIN-OAK | Q2 P8 | 3 throws | aEC/T -0.238 | total -0.713 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|9|2|False",
+          "label": "196. Goal D-line | 2026-06-12-MIN-OAK | Q3 P9 | 7 throws | aEC/T 0.131 | total 0.914 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|6|2|False",
+          "label": "201. Turnover D-line | 2026-06-12-MIN-OAK | Q4 P6 | 1 throws | aEC/T -0.810 | total -0.810 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|8|2|False",
+          "label": "203. Turnover D-line | 2026-06-12-MIN-OAK | Q4 P8 | 7 throws | aEC/T -0.004 | total -0.027 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|3|2|False",
+          "label": "207. Goal D-line | 2026-06-13-MIN-LV | Q1 P3 | 4 throws | aEC/T 0.246 | total 0.983 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|4|2|False",
+          "label": "208. Turnover D-line | 2026-06-13-MIN-LV | Q1 P4 | 2 throws | aEC/T -0.194 | total -0.388 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|4|4|False",
+          "label": "209. Goal D-line | 2026-06-13-MIN-LV | Q1 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|5|2|False",
+          "label": "210. Goal D-line | 2026-06-13-MIN-LV | Q1 P5 | 8 throws | aEC/T 0.118 | total 0.940 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|6|2|False",
+          "label": "211. Goal D-line | 2026-06-13-MIN-LV | Q1 P6 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|7|2|False",
+          "label": "212. Goal D-line | 2026-06-13-MIN-LV | Q1 P7 | 10 throws | aEC/T 0.100 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|10|2|False",
+          "label": "214. Goal D-line | 2026-06-13-MIN-LV | Q1 P10 | 3 throws | aEC/T 0.335 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|11|2|False",
+          "label": "215. Goal D-line | 2026-06-13-MIN-LV | Q1 P11 | 7 throws | aEC/T 0.150 | total 1.053 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|1|12|2|False",
+          "label": "216. Turnover D-line | 2026-06-13-MIN-LV | Q1 P12 | 2 throws | aEC/T -0.141 | total -0.282 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|2|2|False",
+          "label": "218. Goal D-line | 2026-06-13-MIN-LV | Q2 P2 | 6 throws | aEC/T 0.168 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|3|2|False",
+          "label": "219. Turnover D-line | 2026-06-13-MIN-LV | Q2 P3 | 2 throws | aEC/T -0.170 | total -0.341 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|5|2|False",
+          "label": "221. Goal D-line | 2026-06-13-MIN-LV | Q2 P5 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|6|2|False",
+          "label": "222. Goal D-line | 2026-06-13-MIN-LV | Q2 P6 | 7 throws | aEC/T 0.134 | total 0.941 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|7|2|False",
+          "label": "223. Turnover D-line | 2026-06-13-MIN-LV | Q2 P7 | 3 throws | aEC/T -0.050 | total -0.150 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|7|4|False",
+          "label": "224. Goal D-line | 2026-06-13-MIN-LV | Q2 P7 | 4 throws | aEC/T 0.250 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|8|2|False",
+          "label": "225. Goal D-line | 2026-06-13-MIN-LV | Q2 P8 | 2 throws | aEC/T 0.474 | total 0.949 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|11|2|False",
+          "label": "227. Goal D-line | 2026-06-13-MIN-LV | Q2 P11 | 5 throws | aEC/T 0.199 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|12|2|False",
+          "label": "228. Turnover D-line | 2026-06-13-MIN-LV | Q2 P12 | 4 throws | aEC/T -0.041 | total -0.164 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|3|2|False",
+          "label": "232. Goal D-line | 2026-06-13-MIN-LV | Q3 P3 | 5 throws | aEC/T 0.199 | total 0.996 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|4|2|False",
+          "label": "233. Goal D-line | 2026-06-13-MIN-LV | Q3 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|9|2|False",
+          "label": "236. Turnover D-line | 2026-06-13-MIN-LV | Q3 P9 | 3 throws | aEC/T -0.181 | total -0.543 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|9|4|False",
+          "label": "237. Goal D-line | 2026-06-13-MIN-LV | Q3 P9 | 12 throws | aEC/T 0.086 | total 1.028 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|3|2|False",
+          "label": "242. Goal D-line | 2026-06-13-MIN-LV | Q4 P3 | 2 throws | aEC/T 0.494 | total 0.988 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|4|2|False",
+          "label": "243. Turnover D-line | 2026-06-13-MIN-LV | Q4 P4 | 6 throws | aEC/T -0.070 | total -0.423 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|4|4|False",
+          "label": "244. Turnover D-line | 2026-06-13-MIN-LV | Q4 P4 | 2 throws | aEC/T -0.261 | total -0.522 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|5|2|False",
+          "label": "245. Goal D-line | 2026-06-13-MIN-LV | Q4 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 24,
+      "title": "Pattern group 28",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|9|1|True",
+          "label": "456. Goal O-line | 2026-08-08-IND-MIN | Q3 P9 | 9 throws | aEC/T 0.111 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|8|1|True",
+          "label": "367. Goal O-line | 2026-07-11-BOS-MIN | Q1 P8 | 10 throws | aEC/T 0.113 | total 1.134 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|7|1|True",
+          "label": "455. Goal O-line | 2026-08-08-IND-MIN | Q3 P7 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|2|5|1|True",
+          "label": "269. Turnover O-line | 2026-06-19-SLC-MIN | Q2 P5 | 6 throws | aEC/T 0.031 | total 0.189 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|11|1|True",
+          "label": "377. Goal O-line | 2026-07-11-BOS-MIN | Q2 P11 | 6 throws | aEC/T 0.214 | total 1.287 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|13|1|True",
+          "label": "459. Goal O-line | 2026-08-08-IND-MIN | Q3 P13 | 13 throws | aEC/T 0.074 | total 0.963 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|5|1|True",
+          "label": "454. Goal O-line | 2026-08-08-IND-MIN | Q3 P5 | 11 throws | aEC/T 0.090 | total 0.990 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|7|1|True",
+          "label": "439. Goal O-line | 2026-08-08-IND-MIN | Q1 P7 | 13 throws | aEC/T 0.088 | total 1.145 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 25,
+      "title": "Pattern group 28",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|14|1|False",
+          "label": "334. Goal O-line | 2026-07-05-MIN-PIT | Q1 P14 | 9 throws | aEC/T 0.127 | total 1.145 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|2|1|True",
+          "label": "282. Goal O-line | 2026-06-19-SLC-MIN | Q4 P2 | 9 throws | aEC/T 0.114 | total 1.025 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|10|1|False",
+          "label": "126. Goal O-line | 2026-05-31-MIN-MAD | Q3 P10 | 8 throws | aEC/T 0.127 | total 1.016 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|10|1|False",
+          "label": "226. Goal O-line | 2026-06-13-MIN-LV | Q2 P10 | 9 throws | aEC/T 0.112 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|1|1|True",
+          "label": "316. Goal O-line | 2026-07-03-CHI-MIN | Q4 P1 | 5 throws | aEC/T 0.213 | total 1.066 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|7|1|False",
+          "label": "134. Goal O-line | 2026-05-31-MIN-MAD | Q4 P7 | 12 throws | aEC/T 0.078 | total 0.931 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|6|1|False",
+          "label": "329. Goal O-line | 2026-07-05-MIN-PIT | Q1 P6 | 8 throws | aEC/T 0.125 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|5|3|False",
+          "label": "62. Goal O-line | 2026-05-15-MIN-IND | Q3 P5 | 8 throws | aEC/T 0.126 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|1|2|True",
+          "label": "406. Goal O-line | 2026-07-19-MAD-MIN | Q2 P1 | 16 throws | aEC/T 0.060 | total 0.961 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|3|1|True",
+          "label": "443. Goal O-line | 2026-08-08-IND-MIN | Q2 P3 | 11 throws | aEC/T 0.085 | total 0.931 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|6|1|False",
+          "label": "124. Goal O-line | 2026-05-31-MIN-MAD | Q3 P6 | 8 throws | aEC/T 0.125 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|7|1|True",
+          "label": "366. Turnover O-line | 2026-07-11-BOS-MIN | Q1 P7 | 6 throws | aEC/T -0.040 | total -0.242 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|7|1|False",
+          "label": "246. Goal O-line | 2026-06-13-MIN-LV | Q4 P7 | 5 throws | aEC/T 0.201 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 26,
+      "title": "Pattern group 29",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|1|3|True",
+          "label": "433. Goal O-line | 2026-08-08-IND-MIN | Q1 P1 | 2 throws | aEC/T 0.510 | total 1.021 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|2|2|True",
+          "label": "434. Goal D-line | 2026-08-08-IND-MIN | Q1 P2 | 4 throws | aEC/T 0.254 | total 1.015 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|3|2|True",
+          "label": "435. Turnover D-line | 2026-08-08-IND-MIN | Q1 P3 | 3 throws | aEC/T -0.152 | total -0.455 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|3|4|True",
+          "label": "436. Goal D-line | 2026-08-08-IND-MIN | Q1 P3 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|4|2|True",
+          "label": "437. Goal D-line | 2026-08-08-IND-MIN | Q1 P4 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|5|2|True",
+          "label": "438. Goal D-line | 2026-08-08-IND-MIN | Q1 P5 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|4|2|True",
+          "label": "444. Goal O-line | 2026-08-08-IND-MIN | Q2 P4 | 7 throws | aEC/T 0.142 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|5|2|True",
+          "label": "445. Goal D-line | 2026-08-08-IND-MIN | Q2 P5 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|9|3|True",
+          "label": "448. Goal O-line | 2026-08-08-IND-MIN | Q2 P9 | 14 throws | aEC/T 0.067 | total 0.941 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|10|2|True",
+          "label": "449. Goal D-line | 2026-08-08-IND-MIN | Q2 P10 | 5 throws | aEC/T 0.220 | total 1.101 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|11|2|True",
+          "label": "450. Goal D-line | 2026-08-08-IND-MIN | Q2 P11 | 6 throws | aEC/T 0.202 | total 1.211 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|3|3|True",
+          "label": "453. Goal O-line | 2026-08-08-IND-MIN | Q3 P3 | 3 throws | aEC/T 0.331 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|10|2|True",
+          "label": "457. Turnover D-line | 2026-08-08-IND-MIN | Q3 P10 | 10 throws | aEC/T -0.078 | total -0.779 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|11|1|True",
+          "label": "458. Goal O-line | 2026-08-08-IND-MIN | Q3 P11 | 7 throws | aEC/T 0.143 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|14|2|True",
+          "label": "460. Turnover D-line | 2026-08-08-IND-MIN | Q3 P14 | 16 throws | aEC/T 0.013 | total 0.213 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|1|2|True",
+          "label": "461. Turnover D-line | 2026-08-08-IND-MIN | Q4 P1 | 7 throws | aEC/T -0.062 | total -0.432 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|2|1|True",
+          "label": "462. Goal O-line | 2026-08-08-IND-MIN | Q4 P2 | 12 throws | aEC/T 0.081 | total 0.973 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|4|1|True",
+          "label": "463. Goal O-line | 2026-08-08-IND-MIN | Q4 P4 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|5|2|True",
+          "label": "464. Turnover D-line | 2026-08-08-IND-MIN | Q4 P5 | 4 throws | aEC/T -0.215 | total -0.862 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|6|5|True",
+          "label": "467. Turnover D-line | 2026-08-08-IND-MIN | Q4 P6 | 1 throws | aEC/T -0.929 | total -0.929 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 27,
+      "title": "Pattern group 31",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|10|1|True",
+          "label": "288. Turnover O-line | 2026-06-19-SLC-MIN | Q4 P10 | 4 throws | aEC/T -0.102 | total -0.407 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|11|1|True",
+          "label": "369. Turnover O-line | 2026-07-11-BOS-MIN | Q1 P11 | 6 throws | aEC/T -0.088 | total -0.526 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|4|1|True",
+          "label": "372. Turnover O-line | 2026-07-11-BOS-MIN | Q2 P4 | 7 throws | aEC/T -0.072 | total -0.501 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|2|2|True",
+          "label": "388. Turnover O-line | 2026-07-11-BOS-MIN | Q4 P2 | 6 throws | aEC/T -0.123 | total -0.740 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|1|1|True",
+          "label": "414. Turnover O-line | 2026-07-19-MAD-MIN | Q3 P1 | 9 throws | aEC/T -0.055 | total -0.495 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|4|1|True",
+          "label": "417. Turnover O-line | 2026-07-19-MAD-MIN | Q3 P4 | 5 throws | aEC/T -0.133 | total -0.663 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|4|3|True",
+          "label": "418. Turnover O-line | 2026-07-19-MAD-MIN | Q3 P4 | 10 throws | aEC/T -0.034 | total -0.340 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|11|4|True",
+          "label": "430. Turnover O-line | 2026-07-19-MAD-MIN | Q4 P11 | 5 throws | aEC/T -0.130 | total -0.650 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|1|1|True",
+          "label": "296. Turnover O-line | 2026-07-03-CHI-MIN | Q2 P1 | 7 throws | aEC/T -0.099 | total -0.694 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 28,
+      "title": "Pattern group 32",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|11|1|False",
+          "label": "248. Turnover O-line | 2026-06-13-MIN-LV | Q4 P11 | 3 throws | aEC/T -0.132 | total -0.395 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|5|1|True",
+          "label": "253. Turnover O-line | 2026-06-19-SLC-MIN | Q1 P5 | 5 throws | aEC/T 0.022 | total 0.112 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|1|9|1|True",
+          "label": "258. Turnover O-line | 2026-06-19-SLC-MIN | Q1 P9 | 3 throws | aEC/T -0.182 | total -0.546 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|2|1|True",
+          "label": "273. Turnover O-line | 2026-06-19-SLC-MIN | Q3 P2 | 5 throws | aEC/T -0.115 | total -0.577 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|7|1|True",
+          "label": "286. Turnover O-line | 2026-06-19-SLC-MIN | Q4 P7 | 18 throws | aEC/T -0.027 | total -0.489 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|3|1|True",
+          "label": "291. Turnover O-line | 2026-07-03-CHI-MIN | Q1 P3 | 12 throws | aEC/T -0.018 | total -0.211 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|10|1|True",
+          "label": "323. Turnover O-line | 2026-07-03-CHI-MIN | Q4 P10 | 11 throws | aEC/T -0.019 | total -0.204 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|4|1|True",
+          "label": "308. Turnover O-line | 2026-07-03-CHI-MIN | Q3 P4 | 14 throws | aEC/T -0.020 | total -0.285 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 29,
+      "title": "Pattern group 31",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|3|1|True",
+          "label": "28. Turnover O-line | 2026-05-02-CHI-MIN | Q3 P3 | 6 throws | aEC/T -0.042 | total -0.253 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|12|1|True",
+          "label": "431. Turnover O-line | 2026-07-19-MAD-MIN | Q4 P12 | 5 throws | aEC/T -0.022 | total -0.111 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|1|1|False",
+          "label": "335. Turnover O-line | 2026-07-05-MIN-PIT | Q2 P1 | 9 throws | aEC/T -0.026 | total -0.231 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 30,
+      "title": "Pattern group 33",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|5|1|True",
+          "label": "139. Turnover O-line | 2026-06-06-IND-MIN | Q1 P5 | 6 throws | aEC/T 0.017 | total 0.104 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|5|1|True",
+          "label": "424. Turnover O-line | 2026-07-19-MAD-MIN | Q4 P5 | 3 throws | aEC/T -0.164 | total -0.491 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|2|4|True",
+          "label": "389. Turnover O-line | 2026-07-11-BOS-MIN | Q4 P2 | 3 throws | aEC/T 0.067 | total 0.202 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|1|1|True",
+          "label": "432. Turnover O-line | 2026-08-08-IND-MIN | Q1 P1 | 2 throws | aEC/T -0.350 | total -0.701 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|3|3|True",
+          "label": "391. Turnover O-line | 2026-07-11-BOS-MIN | Q4 P3 | 2 throws | aEC/T -0.174 | total -0.347 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|3|1|True",
+          "label": "390. Turnover O-line | 2026-07-11-BOS-MIN | Q4 P3 | 7 throws | aEC/T 0.017 | total 0.116 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|7|1|False",
+          "label": "349. Turnover O-line | 2026-07-05-MIN-PIT | Q3 P7 | 10 throws | aEC/T -0.048 | total -0.475 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|9|1|False",
+          "label": "341. Turnover O-line | 2026-07-05-MIN-PIT | Q2 P9 | 9 throws | aEC/T 0.008 | total 0.073 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 31,
+      "title": "Pattern group 34",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|4|1|True",
+          "label": "392. Turnover O-line | 2026-07-11-BOS-MIN | Q4 P4 | 13 throws | aEC/T -0.025 | total -0.320 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|2|1|False",
+          "label": "345. Turnover O-line | 2026-07-05-MIN-PIT | Q3 P2 | 8 throws | aEC/T -0.023 | total -0.188 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|1|3|False",
+          "label": "353. Turnover O-line | 2026-07-05-MIN-PIT | Q4 P1 | 4 throws | aEC/T -0.139 | total -0.557 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|3|2|True",
+          "label": "363. Turnover O-line | 2026-07-11-BOS-MIN | Q1 P3 | 5 throws | aEC/T -0.164 | total -0.820 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|10|1|True",
+          "label": "368. Turnover O-line | 2026-07-11-BOS-MIN | Q1 P10 | 7 throws | aEC/T -0.003 | total -0.020 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|4|1|True",
+          "label": "364. Turnover O-line | 2026-07-11-BOS-MIN | Q1 P4 | 2 throws | aEC/T -0.373 | total -0.746 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|10|1|True",
+          "label": "376. Turnover O-line | 2026-07-11-BOS-MIN | Q2 P10 | 7 throws | aEC/T -0.021 | total -0.147 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|8|1|True",
+          "label": "383. Turnover O-line | 2026-07-11-BOS-MIN | Q3 P8 | 8 throws | aEC/T -0.004 | total -0.029 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|7|1|True",
+          "label": "394. Turnover O-line | 2026-07-11-BOS-MIN | Q4 P7 | 7 throws | aEC/T 0.045 | total 0.312 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|5|1|True",
+          "label": "398. Turnover O-line | 2026-07-19-MAD-MIN | Q1 P5 | 6 throws | aEC/T -0.057 | total -0.343 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|11|1|True",
+          "label": "402. Turnover O-line | 2026-07-19-MAD-MIN | Q1 P11 | 9 throws | aEC/T -0.008 | total -0.071 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|1|3|True",
+          "label": "415. Turnover O-line | 2026-07-19-MAD-MIN | Q3 P1 | 2 throws | aEC/T -0.443 | total -0.886 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|3|1|True",
+          "label": "2. Turnover O-line | 2026-05-02-CHI-MIN | Q1 P3 | 4 throws | aEC/T -0.166 | total -0.664 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|1|1|True",
+          "label": "13. Turnover O-line | 2026-05-02-CHI-MIN | Q2 P1 | 10 throws | aEC/T 0.006 | total 0.055 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|2|1|True",
+          "label": "14. Turnover O-line | 2026-05-02-CHI-MIN | Q2 P2 | 21 throws | aEC/T -0.008 | total -0.163 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|6|1|True",
+          "label": "20. Turnover O-line | 2026-05-02-CHI-MIN | Q2 P6 | 3 throws | aEC/T -0.264 | total -0.793 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|6|3|True",
+          "label": "21. Turnover O-line | 2026-05-02-CHI-MIN | Q2 P6 | 2 throws | aEC/T -0.383 | total -0.766 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|2|4|True",
+          "label": "27. Turnover O-line | 2026-05-02-CHI-MIN | Q3 P2 | 4 throws | aEC/T -0.139 | total -0.555 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|7|1|False",
+          "label": "79. Turnover O-line | 2026-05-16-MIN-CHI | Q1 P7 | 6 throws | aEC/T -0.096 | total -0.579 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|10|1|False",
+          "label": "81. Turnover O-line | 2026-05-16-MIN-CHI | Q1 P10 | 4 throws | aEC/T -0.155 | total -0.621 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|6|1|False",
+          "label": "118. Turnover O-line | 2026-05-31-MIN-MAD | Q2 P6 | 8 throws | aEC/T -0.090 | total -0.720 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|5|1|False",
+          "label": "132. Turnover O-line | 2026-05-31-MIN-MAD | Q4 P5 | 9 throws | aEC/T -0.078 | total -0.704 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|1|1|True",
+          "label": "33. Turnover O-line | 2026-05-02-CHI-MIN | Q4 P1 | 23 throws | aEC/T 0.011 | total 0.257 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|6|1|True",
+          "label": "30. Turnover O-line | 2026-05-02-CHI-MIN | Q3 P6 | 24 throws | aEC/T -0.010 | total -0.242 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|7|1|True",
+          "label": "31. Turnover O-line | 2026-05-02-CHI-MIN | Q3 P7 | 13 throws | aEC/T 0.019 | total 0.244 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|9|1|True",
+          "label": "39. Turnover O-line | 2026-05-02-CHI-MIN | Q4 P9 | 4 throws | aEC/T -0.063 | total -0.253 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|1|7|1|False",
+          "label": "44. Turnover O-line | 2026-05-15-MIN-IND | Q1 P7 | 1 throws | aEC/T -0.850 | total -0.850 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|1|1|False",
+          "label": "50. Turnover O-line | 2026-05-15-MIN-IND | Q2 P1 | 6 throws | aEC/T -0.002 | total -0.011 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|2|1|False",
+          "label": "57. Turnover O-line | 2026-05-15-MIN-IND | Q3 P2 | 3 throws | aEC/T -0.289 | total -0.868 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|2|3|False",
+          "label": "58. Turnover O-line | 2026-05-15-MIN-IND | Q3 P2 | 4 throws | aEC/T -0.074 | total -0.296 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|5|1|False",
+          "label": "61. Turnover O-line | 2026-05-15-MIN-IND | Q3 P5 | 5 throws | aEC/T -0.054 | total -0.269 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|7|1|False",
+          "label": "63. Turnover O-line | 2026-05-15-MIN-IND | Q3 P7 | 11 throws | aEC/T -0.048 | total -0.530 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|4|5|1|False",
+          "label": "66. Turnover O-line | 2026-05-15-MIN-IND | Q4 P5 | 3 throws | aEC/T -0.097 | total -0.292 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|1|1|False",
+          "label": "89. Turnover O-line | 2026-05-16-MIN-CHI | Q4 P1 | 3 throws | aEC/T -0.068 | total -0.204 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|7|1|False",
+          "label": "94. Turnover O-line | 2026-05-16-MIN-CHI | Q4 P7 | 5 throws | aEC/T -0.123 | total -0.614 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|2|1|False",
+          "label": "97. Turnover O-line | 2026-05-16-MIN-CHI | Q5 P2 | 6 throws | aEC/T -0.032 | total -0.194 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|8|1|False",
+          "label": "104. Turnover O-line | 2026-05-16-MIN-CHI | Q5 P8 | 6 throws | aEC/T -0.012 | total -0.070 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|3|1|False",
+          "label": "106. Turnover O-line | 2026-05-31-MIN-MAD | Q1 P3 | 6 throws | aEC/T -0.067 | total -0.399 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|6|2|False",
+          "label": "109. Turnover O-line | 2026-05-31-MIN-MAD | Q1 P6 | 3 throws | aEC/T -0.240 | total -0.719 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|12|1|False",
+          "label": "127. Turnover O-line | 2026-05-31-MIN-MAD | Q3 P12 | 10 throws | aEC/T -0.021 | total -0.206 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|2|2|False",
+          "label": "130. Turnover O-line | 2026-05-31-MIN-MAD | Q4 P2 | 2 throws | aEC/T -0.259 | total -0.518 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|1|1|1|True",
+          "label": "136. Turnover O-line | 2026-06-06-IND-MIN | Q1 P1 | 15 throws | aEC/T 0.015 | total 0.231 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|8|1|True",
+          "label": "149. Turnover O-line | 2026-06-06-IND-MIN | Q2 P8 | 14 throws | aEC/T 0.011 | total 0.153 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|9|1|True",
+          "label": "150. Turnover O-line | 2026-06-06-IND-MIN | Q2 P9 | 9 throws | aEC/T -0.069 | total -0.623 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|8|1|True",
+          "label": "159. Turnover O-line | 2026-06-06-IND-MIN | Q3 P8 | 9 throws | aEC/T -0.039 | total -0.349 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|9|1|True",
+          "label": "160. Turnover O-line | 2026-06-06-IND-MIN | Q3 P9 | 4 throws | aEC/T -0.110 | total -0.440 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|7|1|True",
+          "label": "167. Turnover O-line | 2026-06-06-IND-MIN | Q4 P7 | 23 throws | aEC/T -0.010 | total -0.221 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|3|1|False",
+          "label": "184. Turnover O-line | 2026-06-12-MIN-OAK | Q2 P3 | 16 throws | aEC/T -0.041 | total -0.662 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|4|1|False",
+          "label": "175. Turnover O-line | 2026-06-12-MIN-OAK | Q1 P4 | 1 throws | aEC/T -0.641 | total -0.641 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|2|1|False",
+          "label": "230. Turnover O-line | 2026-06-13-MIN-LV | Q3 P2 | 5 throws | aEC/T -0.105 | total -0.525 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|3|1|True",
+          "label": "452. Turnover O-line | 2026-08-08-IND-MIN | Q3 P3 | 4 throws | aEC/T -0.159 | total -0.636 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|11|1|False",
+          "label": "238. Turnover O-line | 2026-06-13-MIN-LV | Q3 P11 | 7 throws | aEC/T -0.024 | total -0.167 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|5|1|False",
+          "label": "176. Turnover O-line | 2026-06-12-MIN-OAK | Q1 P5 | 4 throws | aEC/T -0.210 | total -0.841 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|5|3|False",
+          "label": "177. Turnover O-line | 2026-06-12-MIN-OAK | Q1 P5 | 2 throws | aEC/T -0.367 | total -0.735 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|7|1|False",
+          "label": "179. Turnover O-line | 2026-06-12-MIN-OAK | Q1 P7 | 17 throws | aEC/T -0.031 | total -0.534 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|9|1|True",
+          "label": "440. Turnover O-line | 2026-08-08-IND-MIN | Q1 P9 | 3 throws | aEC/T -0.192 | total -0.577 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|4|1|False",
+          "label": "185. Turnover O-line | 2026-06-12-MIN-OAK | Q2 P4 | 10 throws | aEC/T 0.002 | total 0.020 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|2|1|False",
+          "label": "191. Turnover O-line | 2026-06-12-MIN-OAK | Q3 P2 | 24 throws | aEC/T -0.006 | total -0.138 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|11|1|False",
+          "label": "197. Turnover O-line | 2026-06-12-MIN-OAK | Q3 P11 | 15 throws | aEC/T -0.001 | total -0.018 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|8|4|False",
+          "label": "204. Turnover O-line | 2026-06-12-MIN-OAK | Q4 P8 | 1 throws | aEC/T -0.616 | total -0.616 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|1|1|False",
+          "label": "239. Turnover O-line | 2026-06-13-MIN-LV | Q4 P1 | 4 throws | aEC/T -0.149 | total -0.597 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|10|1|True",
+          "label": "441. Turnover O-line | 2026-08-08-IND-MIN | Q1 P10 | 17 throws | aEC/T 0.022 | total 0.376 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|2|1|True",
+          "label": "442. Turnover O-line | 2026-08-08-IND-MIN | Q2 P2 | 8 throws | aEC/T -0.059 | total -0.474 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|9|1|True",
+          "label": "447. Turnover O-line | 2026-08-08-IND-MIN | Q2 P9 | 18 throws | aEC/T -0.004 | total -0.077 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|6|1|True",
+          "label": "465. Turnover O-line | 2026-08-08-IND-MIN | Q4 P6 | 1 throws | aEC/T -0.617 | total -0.617 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|8|1|True",
+          "label": "469. Turnover O-line | 2026-08-08-IND-MIN | Q4 P8 | 21 throws | aEC/T -0.017 | total -0.358 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|7|1|True",
+          "label": "468. Turnover O-line | 2026-08-08-IND-MIN | Q4 P7 | 11 throws | aEC/T 0.001 | total 0.011 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 32,
+      "title": "Pattern group 10",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|4|1|False",
+          "label": "193. Goal O-line | 2026-06-12-MIN-OAK | Q3 P4 | 11 throws | aEC/T 0.084 | total 0.923 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|1|3|False",
+          "label": "51. Goal O-line | 2026-05-15-MIN-IND | Q2 P1 | 6 throws | aEC/T 0.171 | total 1.029 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|1|1|False",
+          "label": "182. Goal O-line | 2026-06-12-MIN-OAK | Q2 P1 | 11 throws | aEC/T 0.077 | total 0.850 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|3|1|True",
+          "label": "274. Goal O-line | 2026-06-19-SLC-MIN | Q3 P3 | 14 throws | aEC/T 0.071 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 33,
+      "title": "Pattern group 17",
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|7|1|False",
+          "label": "202. Goal O-line | 2026-06-12-MIN-OAK | Q4 P7 | 14 throws | aEC/T 0.072 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|1|3|True",
+          "label": "34. Goal O-line | 2026-05-02-CHI-MIN | Q4 P1 | 15 throws | aEC/T 0.051 | total 0.763 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|3|1|True",
+          "label": "155. Goal O-line | 2026-06-06-IND-MIN | Q3 P3 | 9 throws | aEC/T 0.110 | total 0.988 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|2|3|False",
+          "label": "231. Goal O-line | 2026-06-13-MIN-LV | Q3 P2 | 9 throws | aEC/T 0.110 | total 0.988 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|5|1|False",
+          "label": "93. Goal O-line | 2026-05-16-MIN-CHI | Q4 P5 | 10 throws | aEC/T 0.089 | total 0.892 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|4|3|False",
+          "label": "186. Goal O-line | 2026-06-12-MIN-OAK | Q2 P4 | 17 throws | aEC/T 0.047 | total 0.801 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 34,
+      "title": "Unsorted: 1-46 throws",
+      "auto_unsorted": true,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-IND-MIN|2|12|1|True",
+          "label": "152. Turnover O-line | 2026-06-06-IND-MIN | Q2 P12 | 8 throws | aEC/T -0.062 | total -0.494 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|5|1|True",
+          "label": "285. Goal O-line | 2026-06-19-SLC-MIN | Q4 P5 | 9 throws | aEC/T 0.094 | total 0.845 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|5|3|False",
+          "label": "133. Goal O-line | 2026-05-31-MIN-MAD | Q4 P5 | 12 throws | aEC/T 0.084 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|1|1|False",
+          "label": "217. Goal O-line | 2026-06-13-MIN-LV | Q2 P1 | 8 throws | aEC/T 0.136 | total 1.084 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|5|1|False",
+          "label": "101. Turnover O-line | 2026-05-16-MIN-CHI | Q5 P5 | 13 throws | aEC/T -0.007 | total -0.085 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|7|1|True",
+          "label": "276. Turnover O-line | 2026-06-19-SLC-MIN | Q3 P7 | 15 throws | aEC/T -0.008 | total -0.127 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|3|1|True",
+          "label": "423. Goal O-line | 2026-07-19-MAD-MIN | Q4 P3 | 19 throws | aEC/T 0.052 | total 0.981 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|13|1|False",
+          "label": "113. Goal O-line | 2026-05-31-MIN-MAD | Q1 P13 | 10 throws | aEC/T 0.117 | total 1.165 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|8|1|True",
+          "label": "312. Turnover O-line | 2026-07-03-CHI-MIN | Q3 P8 | 7 throws | aEC/T -0.025 | total -0.177 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|4|1|True",
+          "label": "319. Goal O-line | 2026-07-03-CHI-MIN | Q4 P4 | 8 throws | aEC/T 0.124 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|5|1|True",
+          "label": "419. Goal O-line | 2026-07-19-MAD-MIN | Q3 P5 | 12 throws | aEC/T 0.075 | total 0.897 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|1|1|True",
+          "label": "370. Goal O-line | 2026-07-11-BOS-MIN | Q2 P1 | 12 throws | aEC/T 0.095 | total 1.135 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    }
+  ]
+}

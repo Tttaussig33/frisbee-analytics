@@ -1,4 +1,5 @@
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -169,6 +170,24 @@ def main():
             team_id=export_team_id,
             outcomes=tuple(args.outcomes),
         )
+        project_arrangement_text = None
+        arrangement_path = (
+            REPO_ROOT
+            / "data"
+            / "arrangements"
+            / str(args.season)
+            / f"{export_team_id}.json"
+        )
+        if arrangement_path.exists():
+            try:
+                project_arrangement_text = arrangement_path.read_text(encoding="utf-8")
+                json.loads(project_arrangement_text)
+            except (OSError, json.JSONDecodeError) as error:
+                print(
+                    f"Warning: skipped invalid project arrangement "
+                    f"{arrangement_path}: {error}"
+                )
+                project_arrangement_text = None
         output_path = (
             args.output
             if not args.all_teams and args.output is not None
@@ -183,6 +202,7 @@ def main():
             team_id=export_team_id,
             team_options=navigation_options,
             persistence_key=f"{args.season}:{export_team_id}",
+            project_arrangement_text=project_arrangement_text,
         )
         print(
             f"{export_team_id.title()}: {len(game_files):,} games, "

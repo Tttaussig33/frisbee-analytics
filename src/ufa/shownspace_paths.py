@@ -2291,6 +2291,7 @@ def render_possession_free_board(
     return_overlay=False,
     external_controls=False,
     persistence_key=None,
+    project_arrangement_text=None,
 ):
     """Render a draggable board of mini possession cards."""
     if possessions.empty:
@@ -2314,12 +2315,14 @@ def render_possession_free_board(
     overlay_count_id = f"ufa-free-overlay-count-{board_key}"
     export_status_id = f"ufa-free-export-status-{board_key}"
     export_text_id = f"ufa-free-export-text-{board_key}"
+    export_download_id = f"ufa-free-export-download-{board_key}"
     insert_position_id = f"ufa-free-insert-position-{board_key}"
     arrange_selection_count_id = f"ufa-free-arrange-selection-count-{board_key}"
     undo_button_id = f"ufa-free-undo-arrangement-{board_key}"
     recovery_history_id = f"ufa-free-recovery-history-{board_key}"
     recovery_restore_id = f"ufa-free-recovery-restore-{board_key}"
     recovery_status_id = f"ufa-free-recovery-status-{board_key}"
+    project_arrangement_id = f"ufa-free-project-arrangement-{board_key}"
     storage_key = f"ufa-free-arrange:{persistence_token}"
     legacy_storage_key = f"ufa-free-arrange:{board_key}"
     recovery_storage_key = f"ufa-free-recovery:{persistence_token}"
@@ -3077,6 +3080,7 @@ def render_possession_free_board(
         f"const board = document.getElementById({json.dumps(board_id)});"
         f"const status = document.getElementById({json.dumps(export_status_id)});"
         f"const output = document.getElementById({json.dumps(export_text_id)});"
+        f"const download = document.getElementById({json.dumps(export_download_id)});"
         "if (!board) { return; }"
         "const groups = [];"
         "let currentGroup = {"
@@ -3139,20 +3143,27 @@ def render_possession_free_board(
         "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + groups.length + ' groups. JSON shown below.';"
         "status.scrollIntoView({block: 'nearest'});"
         "}"
+        f"const filename = {json.dumps(f'ufa-free-arrange-{export_stem}-')} + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-') + '.json';"
+        "let url = 'data:application/json;charset=utf-8,' + encodeURIComponent(text);"
+        "let objectUrl = false;"
         "try {"
         "const blob = new Blob([text], {type: 'application/json'});"
-        "const url = URL.createObjectURL(blob);"
-        "const link = document.createElement('a');"
-        "link.href = url;"
-         f"link.download = {json.dumps(f'ufa-free-arrange-{export_stem}-')} + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-') + '.json';"
-        "document.body.appendChild(link);"
-        "link.click();"
-        "link.remove();"
-        "URL.revokeObjectURL(url);"
-        "} catch (error) {"
-        "if (status) {"
-        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + groups.length + ' groups. Download was blocked; JSON shown below.';"
+        "url = URL.createObjectURL(blob);"
+        "objectUrl = true;"
+        "} catch (error) {}"
+        "if (download) {"
+        "const previousUrl = download.dataset.objectUrl;"
+        "if (previousUrl && previousUrl.indexOf('blob:') === 0) {"
+        "try { URL.revokeObjectURL(previousUrl); } catch (error) {}"
         "}"
+        "download.href = url;"
+        "download.download = filename;"
+        "download.dataset.objectUrl = objectUrl ? url : '';"
+        "download.hidden = false;"
+        "download.textContent = 'Download ' + filename;"
+        "}"
+        "if (status) {"
+        "status.textContent = localSaveMessage + ': ' + cardCount + ' cards across ' + groups.length + ' groups. Arrangement ready; click the download link below.';"
         "}"
     )
     load_arrangement = (
@@ -3160,8 +3171,12 @@ def render_possession_free_board(
         f"const status = document.getElementById({json.dumps(export_status_id)});"
         f"const output = document.getElementById({json.dumps(export_text_id)});"
         "if (!board) { return; }"
-        "let text = null;"
+        "let text = board._ufaPendingArrangementText || null;"
+        "const pendingSource = board._ufaPendingArrangementSource || '';"
+        "board._ufaPendingArrangementText = null;"
+        "board._ufaPendingArrangementSource = '';"
         "try {"
+        "if (!text) {"
         f"text = window.localStorage.getItem({json.dumps(storage_key)});"
         f"if (!text && {json.dumps(legacy_storage_key)} !== {json.dumps(storage_key)}) {{"
         f"text = window.localStorage.getItem({json.dumps(legacy_storage_key)});"
@@ -3169,8 +3184,9 @@ def render_possession_free_board(
         f"window.localStorage.setItem({json.dumps(storage_key)}, text);"
         "}"
         "}"
+        "}"
         "} catch (error) {"
-        "text = null;"
+        "if (!text) { text = null; }"
         "}"
         "if (!text) {"
         "if (status) { status.textContent = 'No saved arrangement found for this board.'; }"
@@ -3278,12 +3294,41 @@ def render_possession_free_board(
         "output.style.display = 'block';"
         "}"
         "if (status) {"
-        "status.textContent = 'Loaded saved arrangement from this browser.';"
+        "status.textContent = pendingSource === 'project' ? 'Loaded project arrangement from this repository.' : 'Loaded saved arrangement from this browser.';"
         "}"
          f"{update_overlay}"
          f"{update_arrange_selection}"
          "updateRowCardCounts();"
     )
+    load_project_arrangement = (
+        f"const board = document.getElementById({json.dumps(board_id)});"
+        f"const source = document.getElementById({json.dumps(project_arrangement_id)});"
+        f"const status = document.getElementById({json.dumps(export_status_id)});"
+        f"const loader = document.querySelector('#{board_id}').closest('.ufa-free-board-wrap')?.querySelector('.ufa-free-load-arrangement');"
+        "if (!board || !source || !source.value.trim()) {"
+        "if (status) { status.textContent = 'No project arrangement is available for this team.'; }"
+        "return;"
+        "}"
+        "const text = source.value.trim();"
+        "try { JSON.parse(text); } catch (error) {"
+        "if (status) { status.textContent = 'The project arrangement file could not be read.'; }"
+        "return;"
+        "}"
+        "board._ufaPendingArrangementText = text;"
+        "board._ufaPendingArrangementSource = 'project';"
+        f"try {{ window.localStorage.setItem({json.dumps(storage_key)}, text); }} catch (error) {{}}"
+        "if (loader) { loader.click(); }"
+    )
+    project_arrangement_control = ""
+    if project_arrangement_text:
+        project_arrangement_control = f"""
+            <button class="ufa-free-load-project-arrangement" type="button"
+              onclick="{escape(load_project_arrangement, quote=True)}">
+              Load project arrangement
+            </button>
+            <textarea id="{project_arrangement_id}" class="ufa-free-project-arrangement-data"
+              hidden aria-label="Project arrangement JSON">{escape(str(project_arrangement_text))}</textarea>
+        """
 
     cards = []
     overlay_groups = []
@@ -3466,6 +3511,7 @@ def render_possession_free_board(
               onclick="{escape(load_arrangement, quote=True)}">
               Load saved
             </button>
+            {project_arrangement_control}
             <button class="ufa-free-clear-row-breaks" type="button"
               onclick="{escape(clear_row_breaks, quote=True)}">
               Clear row breaks
@@ -3484,6 +3530,8 @@ def render_possession_free_board(
             </span>
           </div>
           <div id="{export_status_id}" class="ufa-free-export-status"></div>
+          <a id="{export_download_id}" class="ufa-free-export-download"
+            hidden download>Download arrangement JSON</a>
           <pre id="{export_text_id}" class="ufa-free-export-text"
             aria-label="Saved arrangement JSON"></pre>
           <div id="{board_id}" class="ufa-free-board"{recovery_data_attributes}
@@ -4067,6 +4115,18 @@ def _possession_browser_css():
         font-size: 11px;
         margin: -6px 0 10px;
       }
+      .ufa-free-export-download {
+        display: inline-flex;
+        align-items: center;
+        margin: -4px 0 10px;
+        color: #1c6ea4;
+        font-size: 11px;
+        font-weight: 800;
+        text-decoration: underline;
+      }
+      .ufa-free-export-download[hidden] {
+        display: none;
+      }
       .ufa-free-export-text {
         box-sizing: border-box;
         display: none;
@@ -4514,6 +4574,7 @@ def write_possession_pattern_browser_html(
     team_id=None,
     team_options=None,
     persistence_key=None,
+    project_arrangement_text=None,
 ):
     """Write a standalone HTML free-arrange possession browser."""
     output_path = Path(output_path)
@@ -4548,6 +4609,7 @@ def write_possession_pattern_browser_html(
         max_cards=max_cards,
         include_overlay=True,
         persistence_key=persistence_key,
+        project_arrangement_text=project_arrangement_text,
     )
     standalone_update_row_card_counts = (
         "function updateRowCardCounts() {"
@@ -5211,6 +5273,9 @@ def write_possession_pattern_browser_html(
           html[data-theme="dark"] .ufa-free-arrange-selection-count,
           html[data-theme="dark"] .ufa-free-export-status {
             color: #aebfb3;
+          }
+          html[data-theme="dark"] .ufa-free-export-download {
+            color: #a9d2f2;
           }
           html[data-theme="dark"] .standalone-browser .ufa-free-board-actions {
             border-color: #43564a;

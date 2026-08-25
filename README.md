@@ -164,6 +164,13 @@ python scripts/export_possession_pattern_browser.py --all-teams --team glory --s
 Open `outputs/possession_browsers/index.html`; the team selector navigates among
 all 22 team pages without rerunning the notebook.
 
+Shared arrangement checkpoints for Sol, Empire, Spiders, and Windchill live in
+`data/arrangements/2026/`. The generator embeds the matching checkpoint into
+those team pages and adds a **Load project arrangement** button. After pulling
+the repository on another device, run the generator and use that button; the
+arrangement will be restored in that browser without depending on the original
+device's local storage.
+
 ## Validation
 
 Compare generated stats to a Shown Space-style reference CSV:
