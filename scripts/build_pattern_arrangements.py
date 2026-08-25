@@ -36,6 +36,7 @@ from ufa.shownspace_paths import (  # noqa: E402
 
 EXAMPLE_TEAMS = ("sol", "empire", "spiders", "windchill")
 DEFAULT_TARGET_GROUP_SIZE = 16
+DEFAULT_O_LINE_TARGET_GROUP_SIZE = 10
 DEFAULT_REFERENCE_MAX_SIZE = 24
 DEFAULT_MIN_GROUPS = 24
 DEFAULT_MAX_GROUPS = 40
@@ -130,7 +131,11 @@ def _arrangement_order(payload: dict) -> tuple[list[str], dict[str, int], dict[s
     return ordered_ids, original_index, original_labels
 
 
-def _feature_frame(possessions: pd.DataFrame, paths: list[pd.DataFrame]):
+def _feature_frame(
+    possessions: pd.DataFrame,
+    paths: list[pd.DataFrame],
+    throw_count_weight: float = 0.0,
+):
     shape_features = calculate_possession_shape_features(
         possessions,
         paths,
@@ -140,14 +145,21 @@ def _feature_frame(possessions: pd.DataFrame, paths: list[pd.DataFrame]):
     for column in shape_features.columns:
         enriched[column] = shape_features[column].to_numpy()
 
+    if throw_count_weight > 0:
+        enriched["shape_throw_count"] = np.log1p(
+            pd.to_numeric(enriched["throw_count"], errors="coerce")
+            .fillna(0)
+            .clip(lower=0)
+        )
+
     shape_columns = [
         column
         for column in enriched.columns
         if column.startswith("shape_")
     ]
-    # All clustering signal comes from field locations and path shape. Throw
-    # count is deliberately omitted so a five-throw and ten-throw path can
-    # still share a spatial group.
+    # Field locations and path shape remain the primary signal. A small,
+    # optional throw-count weight prevents very different-length paths from
+    # overwhelming an otherwise useful visual overlay group.
     features = (
         enriched.reindex(columns=shape_columns)
         .apply(pd.to_numeric, errors="coerce")
@@ -189,6 +201,79 @@ def _cluster_count(
         1,
         min(max(target, min_groups, reference_count), max_groups),
     )
+
+
+def _refine_cluster_labels(
+    scaled_features: np.ndarray,
+    labels: np.ndarray,
+    *,
+    max_groups: int,
+    random_state: int,
+    min_group_size: int = 8,
+    min_child_size: int = 3,
+    p90_threshold: float = 5.0,
+    max_distance_threshold: float = 12.0,
+) -> np.ndarray:
+    """Split only the most visually heterogeneous groups.
+
+    The initial seeded K-means pass preserves the hand-organized examples.
+    This second pass prevents one broad centroid from hiding a visibly different
+    path family inside an otherwise useful overlay row.
+    """
+    refined = np.asarray(labels, dtype=int).copy()
+    next_label = int(refined.max()) + 1 if refined.size else 0
+
+    while len(np.unique(refined)) < max_groups:
+        best_split = None
+        for cluster_id in np.unique(refined):
+            indexes = np.flatnonzero(refined == cluster_id)
+            if len(indexes) < min_group_size:
+                continue
+
+            matrix = scaled_features[indexes]
+            center = matrix.mean(axis=0)
+            distances = np.sqrt(((matrix - center) ** 2).sum(axis=1))
+            p90 = float(np.quantile(distances, 0.90))
+            maximum = float(np.max(distances))
+            if p90 <= p90_threshold and maximum <= max_distance_threshold:
+                continue
+
+            splitter = KMeans(
+                n_clusters=2,
+                random_state=random_state + int(cluster_id),
+                n_init=10,
+            )
+            child_labels = splitter.fit_predict(matrix)
+            child_sizes = np.bincount(child_labels, minlength=2)
+            if child_sizes.min() < min_child_size:
+                continue
+
+            before = float(((matrix - center) ** 2).sum())
+            after = 0.0
+            for child_id in (0, 1):
+                child_matrix = matrix[child_labels == child_id]
+                child_center = child_matrix.mean(axis=0)
+                after += float(((child_matrix - child_center) ** 2).sum())
+            improvement = (before - after) / before if before else 0.0
+            if improvement < 0.15:
+                continue
+
+            score = max(
+                p90 / p90_threshold,
+                maximum / max_distance_threshold,
+            )
+            candidate = (score, improvement, indexes, child_labels)
+            if best_split is None or candidate[:2] > best_split[:2]:
+                best_split = candidate
+
+        if best_split is None:
+            break
+
+        _, _, indexes, child_labels = best_split
+        refined[indexes[child_labels == 1]] = next_label
+        next_label += 1
+
+    return refined
 
 
 def _lane(value: float) -> str:
@@ -253,6 +338,8 @@ def build_codex_arrangement(
     max_groups: int = DEFAULT_MAX_GROUPS,
     random_state: int = 2026,
     line_type: str | None = None,
+    throw_count_weight: float = 0.0,
+    refine_groups: bool = False,
 ) -> dict:
     arrangement_name = (
         "Codex spatial arrangement"
@@ -264,7 +351,12 @@ def build_codex_arrangement(
         if line_type is None
         else f"Codex {'O-line' if line_type == 'o_line' else 'D-line'} pattern"
     )
-    enriched, raw_features = _feature_frame(possessions, paths)
+    throw_count_weight = max(0.0, float(throw_count_weight))
+    enriched, raw_features = _feature_frame(
+        possessions,
+        paths,
+        throw_count_weight=throw_count_weight,
+    )
     if enriched.empty:
         return {
             "version": 3,
@@ -281,6 +373,9 @@ def build_codex_arrangement(
     feature_by_id.index = ids
     scaler = StandardScaler()
     scaled = scaler.fit_transform(raw_features)
+    if throw_count_weight > 0 and "shape_throw_count" in raw_features:
+        throw_count_column = raw_features.columns.get_loc("shape_throw_count")
+        scaled[:, throw_count_column] *= throw_count_weight
     scaled_by_id = pd.DataFrame(scaled, index=ids, columns=raw_features.columns)
 
     seed_centroids = _reference_centroids(
@@ -320,6 +415,14 @@ def build_codex_arrangement(
             max_iter=300,
         )
         labels = model.fit_predict(scaled)
+
+    if refine_groups:
+        labels = _refine_cluster_labels(
+            scaled,
+            labels,
+            max_groups=max_groups,
+            random_state=random_state,
+        )
 
     enriched = enriched.copy()
     enriched["_cluster"] = labels
@@ -395,6 +498,8 @@ def build_codex_arrangement(
             "cluster_count": len(groups),
             "random_state": random_state,
             "line_type": line_type or "all",
+            "throw_count_weight": throw_count_weight,
+            "cohesion_refinement": refine_groups,
         },
         "cards_shown": len(enriched),
         "filtered_possessions": len(enriched),
@@ -438,7 +543,7 @@ def _parse_args():
     parser.add_argument("--team", action="append", dest="teams")
     parser.add_argument("--source-dir", type=Path, default=None)
     parser.add_argument("--output-dir", type=Path, default=None)
-    parser.add_argument("--target-group-size", type=int, default=DEFAULT_TARGET_GROUP_SIZE)
+    parser.add_argument("--target-group-size", type=int, default=None)
     parser.add_argument("--reference-max-size", type=int, default=DEFAULT_REFERENCE_MAX_SIZE)
     parser.add_argument("--min-groups", type=int, default=DEFAULT_MIN_GROUPS)
     parser.add_argument("--max-groups", type=int, default=DEFAULT_MAX_GROUPS)
@@ -448,6 +553,12 @@ def _parse_args():
         choices=("all", "o_line", "d_line"),
         default="all",
         help="Scope the generated arrangement to one line type; default is all lines.",
+    )
+    parser.add_argument(
+        "--throw-count-weight",
+        type=float,
+        default=None,
+        help="Secondary throw-count weight; O-line defaults to 0.35 and all lines to 0.",
     )
     return parser.parse_args()
 
@@ -464,6 +575,14 @@ def main():
     line_type = None if args.line_type == "all" else args.line_type
     line_suffix = line_type.replace("_", "-") if line_type else ""
     output_suffix = "-codex" if line_type is None else f"-codex-{line_suffix}"
+    target_group_size = args.target_group_size or (
+        DEFAULT_O_LINE_TARGET_GROUP_SIZE
+        if line_type == "o_line"
+        else DEFAULT_TARGET_GROUP_SIZE
+    )
+    throw_count_weight = args.throw_count_weight
+    if throw_count_weight is None:
+        throw_count_weight = 0.35 if line_type == "o_line" else 0.0
 
     for team_id in teams:
         payload, original_payload = build_team_arrangement(
@@ -471,11 +590,13 @@ def main():
             source_dir,
             arrangement_dir,
             line_type=line_type,
-            target_group_size=max(1, args.target_group_size),
+            target_group_size=max(1, target_group_size),
             reference_max_size=max(1, args.reference_max_size),
             min_groups=max(1, args.min_groups),
             max_groups=max(1, args.max_groups),
             random_state=args.seed,
+            throw_count_weight=max(0.0, throw_count_weight),
+            refine_groups=line_type == "o_line",
         )
         output_path = output_dir / f"{team_id}{output_suffix}.json"
         output_path.write_text(

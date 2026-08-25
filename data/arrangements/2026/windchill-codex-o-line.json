@@ -3,7 +3,7 @@
   "arrangement_name": "Codex O-line spatial arrangement",
   "team_id": "windchill",
   "line_type": "o_line",
-  "generated_at": "2026-08-25T16:25:24.166354+00:00",
+  "generated_at": "2026-08-25T16:49:54.188401+00:00",
   "source_arrangement": "windchill.json",
   "method": {
     "description": "Geometry-first K-means grouping seeded by smaller groups in the team's hand-organized arrangement.",
@@ -18,18 +18,58 @@
       0.875,
       1.0
     ],
-    "target_group_size": 16,
+    "target_group_size": 10,
     "reference_max_size": 24,
-    "cluster_count": 28,
+    "cluster_count": 30,
     "random_state": 2026,
-    "line_type": "o_line"
+    "line_type": "o_line",
+    "throw_count_weight": 0.35,
+    "cohesion_refinement": true
   },
   "cards_shown": 291,
   "filtered_possessions": 291,
   "groups": [
     {
       "group_index": 1,
-      "title": "Codex O-line pattern 01 | right-right | direct | 2-throw median",
+      "title": "Codex O-line pattern 01 | left-left | direct | 1.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|8|4|False",
+          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q4 P8 | 1 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|2|4|True",
+          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q4 P2 | 1 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|2|3|True",
+          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q2 P2 | 1 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|1|3|True",
+          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q1 P1 | 2 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|2|2|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P2 | 4 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|1|3|False",
+          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q4 P1 | 4 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 2,
+      "title": "Codex O-line pattern 02 | right-right | direct | 2-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -56,39 +96,6 @@
         {
           "possession_id": "2026-05-16-MIN-CHI|5|2|3|False",
           "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q5 P2 | 3 throws",
-          "overlay_selected": false
-        }
-      ]
-    },
-    {
-      "group_index": 2,
-      "title": "Codex O-line pattern 02 | left-left | direct | 2-throw median",
-      "break_before": true,
-      "auto_unsorted": false,
-      "possessions": [
-        {
-          "possession_id": "2026-07-03-CHI-MIN|4|2|4|True",
-          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q4 P2 | 1 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|2|2|3|True",
-          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q2 P2 | 1 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-08-08-IND-MIN|1|1|3|True",
-          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q1 P1 | 2 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-13-MIN-LV|4|2|2|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P2 | 4 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-05-MIN-PIT|4|1|3|False",
-          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q4 P1 | 4 throws",
           "overlay_selected": false
         }
       ]
@@ -133,55 +140,7 @@
     },
     {
       "group_index": 4,
-      "title": "Codex O-line pattern 04 | middle-middle | direct | 3-throw median",
-      "break_before": true,
-      "auto_unsorted": false,
-      "possessions": [
-        {
-          "possession_id": "2026-06-12-MIN-OAK|1|4|1|False",
-          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q1 P4 | 1 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-12-MIN-OAK|4|8|4|False",
-          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q4 P8 | 1 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-05-MIN-PIT|1|4|1|False",
-          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q1 P4 | 2 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-13-MIN-LV|4|11|3|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P11 | 3 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-11-BOS-MIN|3|8|3|True",
-          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q3 P8 | 3 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-12-MIN-OAK|3|8|1|False",
-          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q3 P8 | 4 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-19-SLC-MIN|3|7|3|True",
-          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q3 P7 | 4 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-19-SLC-MIN|3|5|1|True",
-          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q3 P5 | 4 throws",
-          "overlay_selected": false
-        }
-      ]
-    },
-    {
-      "group_index": 5,
-      "title": "Codex O-line pattern 05 | middle-right | mixed | 3-throw median",
+      "title": "Codex O-line pattern 04 | middle-right | mixed | 3-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -243,8 +202,46 @@
       ]
     },
     {
+      "group_index": 5,
+      "title": "Codex O-line pattern 05 | middle-middle | direct | 3.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|4|1|False",
+          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q1 P4 | 1 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|1|4|1|False",
+          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q1 P4 | 2 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|3|1|True",
+          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q1 P3 | 3 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|2|1|True",
+          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q1 P2 | 4 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|8|1|False",
+          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q3 P8 | 4 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|7|3|True",
+          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q3 P7 | 4 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
       "group_index": 6,
-      "title": "Codex O-line pattern 06 | middle-middle | direct | 4-throw median",
+      "title": "Codex O-line pattern 06 | middle-right | direct | 4-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -269,11 +266,6 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-19-MAD-MIN|1|3|1|True",
-          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q1 P3 | 3 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-07-03-CHI-MIN|2|5|1|True",
           "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q2 P5 | 4 throws",
           "overlay_selected": false
@@ -284,11 +276,6 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-11-BOS-MIN|1|2|1|True",
-          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q1 P2 | 4 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-07-03-CHI-MIN|4|1|1|True",
           "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q4 P1 | 5 throws",
           "overlay_selected": false
@@ -296,11 +283,6 @@
         {
           "possession_id": "2026-05-15-MIN-IND|1|5|1|False",
           "label": "Goal O-Line | 2026-05-15-MIN-IND | Q1 P5 | 6 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-15-MIN-IND|4|1|1|False",
-          "label": "Goal O-Line | 2026-05-15-MIN-IND | Q4 P1 | 8 throws",
           "overlay_selected": false
         },
         {
@@ -387,6 +369,11 @@
           "overlay_selected": false
         },
         {
+          "possession_id": "2026-07-11-BOS-MIN|1|11|1|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q1 P11 | 6 throws",
+          "overlay_selected": false
+        },
+        {
           "possession_id": "2026-07-11-BOS-MIN|4|2|2|True",
           "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q4 P2 | 6 throws",
           "overlay_selected": false
@@ -409,11 +396,6 @@
         {
           "possession_id": "2026-05-31-MIN-MAD|4|5|1|False",
           "label": "Turnover O-Line | 2026-05-31-MIN-MAD | Q4 P5 | 9 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-19-MAD-MIN|3|1|1|True",
-          "label": "Turnover O-Line | 2026-07-19-MAD-MIN | Q3 P1 | 9 throws",
           "overlay_selected": false
         },
         {
@@ -465,6 +447,11 @@
           "overlay_selected": false
         },
         {
+          "possession_id": "2026-05-02-CHI-MIN|3|3|1|True",
+          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q3 P3 | 6 throws",
+          "overlay_selected": false
+        },
+        {
           "possession_id": "2026-08-08-IND-MIN|2|4|2|True",
           "label": "Goal O-Line | 2026-08-08-IND-MIN | Q2 P4 | 7 throws",
           "overlay_selected": false
@@ -488,7 +475,113 @@
     },
     {
       "group_index": 9,
-      "title": "Codex O-line pattern 09 | left-right | mixed | 6-throw median",
+      "title": "Codex O-line pattern 09 | middle-left | mixed | 6-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-IND-MIN|3|3|1|True",
+          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q3 P3 | 4 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|12|1|True",
+          "label": "Turnover O-Line | 2026-07-19-MAD-MIN | Q4 P12 | 5 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|2|1|True",
+          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q3 P2 | 5 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|2|4|1|True",
+          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q2 P4 | 6 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|1|7|1|False",
+          "label": "Turnover O-Line | 2026-05-16-MIN-CHI | Q1 P7 | 6 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|3|1|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q4 P3 | 7 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|7|1|False",
+          "label": "Turnover O-Line | 2026-06-13-MIN-LV | Q3 P7 | 8 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|3|7|1|False",
+          "label": "Turnover O-Line | 2026-05-15-MIN-IND | Q3 P7 | 11 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|1|7|1|False",
+          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q1 P7 | 17 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 10,
+      "title": "Codex O-line pattern 10 | left-right | direct | 6-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|3|3|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q4 P3 | 2 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|11|1|False",
+          "label": "Turnover O-Line | 2026-06-13-MIN-LV | Q4 P11 | 3 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|9|1|True",
+          "label": "Turnover O-Line | 2026-06-06-IND-MIN | Q3 P9 | 4 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|7|1|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P7 | 5 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|7|1|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q1 P7 | 6 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|2|5|1|False",
+          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q2 P5 | 6 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|7|1|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q4 P7 | 7 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|4|6|3|True",
+          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q4 P6 | 7 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|12|4|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P12 | 8 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 11,
+      "title": "Codex O-line pattern 11 | left-right | mixed | 6-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -530,11 +623,16 @@
       ]
     },
     {
-      "group_index": 10,
-      "title": "Codex O-line pattern 10 | right-middle | mixed | 6-throw median",
+      "group_index": 12,
+      "title": "Codex O-line pattern 12 | right-middle | mixed | 6-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
+        {
+          "possession_id": "2026-06-13-MIN-LV|4|11|3|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P11 | 3 throws",
+          "overlay_selected": false
+        },
         {
           "possession_id": "2026-07-19-MAD-MIN|4|10|1|True",
           "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q4 P10 | 6 throws",
@@ -553,46 +651,8 @@
       ]
     },
     {
-      "group_index": 11,
-      "title": "Codex O-line pattern 11 | middle-middle | mixed | 6.5-throw median",
-      "break_before": true,
-      "auto_unsorted": false,
-      "possessions": [
-        {
-          "possession_id": "2026-06-13-MIN-LV|4|7|1|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P7 | 5 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-05-MIN-PIT|4|8|2|False",
-          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q4 P8 | 5 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-16-MIN-CHI|5|2|1|False",
-          "label": "Turnover O-Line | 2026-05-16-MIN-CHI | Q5 P2 | 6 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|4|4|1|True",
-          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q4 P4 | 7 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|1|5|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q1 P5 | 11 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-19-MAD-MIN|2|1|2|True",
-          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q2 P1 | 16 throws",
-          "overlay_selected": false
-        }
-      ]
-    },
-    {
-      "group_index": 12,
-      "title": "Codex O-line pattern 12 | middle-middle | winding | 6.5-throw median",
+      "group_index": 13,
+      "title": "Codex O-line pattern 13 | middle-middle | winding | 6.5-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -649,8 +709,8 @@
       ]
     },
     {
-      "group_index": 13,
-      "title": "Codex O-line pattern 13 | middle-middle | mixed | 7-throw median",
+      "group_index": 14,
+      "title": "Codex O-line pattern 14 | middle-middle | mixed | 7-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -707,146 +767,61 @@
       ]
     },
     {
-      "group_index": 14,
-      "title": "Codex O-line pattern 14 | middle-right | mixed | 8-throw median",
+      "group_index": 15,
+      "title": "Codex O-line pattern 15 | middle-middle | mixed | 7-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
         {
-          "possession_id": "2026-07-11-BOS-MIN|4|3|3|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q4 P3 | 2 throws",
+          "possession_id": "2026-07-11-BOS-MIN|3|8|3|True",
+          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q3 P8 | 3 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-13-MIN-LV|4|11|1|False",
-          "label": "Turnover O-Line | 2026-06-13-MIN-LV | Q4 P11 | 3 throws",
+          "possession_id": "2026-06-19-SLC-MIN|2|5|3|True",
+          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q2 P5 | 4 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-06-IND-MIN|3|9|1|True",
-          "label": "Turnover O-Line | 2026-06-06-IND-MIN | Q3 P9 | 4 throws",
+          "possession_id": "2026-06-19-SLC-MIN|3|5|1|True",
+          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q3 P5 | 4 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-13-MIN-LV|3|2|1|False",
-          "label": "Turnover O-Line | 2026-06-13-MIN-LV | Q3 P2 | 5 throws",
+          "possession_id": "2026-07-05-MIN-PIT|4|8|2|False",
+          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q4 P8 | 5 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-15-MIN-IND|3|5|1|False",
-          "label": "Turnover O-Line | 2026-05-15-MIN-IND | Q3 P5 | 5 throws",
+          "possession_id": "2026-05-02-CHI-MIN|4|4|1|True",
+          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q4 P4 | 7 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-19-MAD-MIN|3|7|1|True",
-          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q3 P7 | 5 throws",
+          "possession_id": "2026-07-11-BOS-MIN|1|10|1|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q1 P10 | 7 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-11-BOS-MIN|1|7|1|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q1 P7 | 6 throws",
+          "possession_id": "2026-07-05-MIN-PIT|1|12|1|False",
+          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q1 P12 | 7 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-05-MIN-PIT|2|5|1|False",
-          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q2 P5 | 6 throws",
+          "possession_id": "2026-05-31-MIN-MAD|1|5|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q1 P5 | 11 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-03-CHI-MIN|3|10|1|True",
-          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q3 P10 | 7 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-08-08-IND-MIN|2|7|1|True",
-          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q2 P7 | 7 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-08-08-IND-MIN|4|6|3|True",
-          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q4 P6 | 7 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|3|6|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q3 P6 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-03-CHI-MIN|4|4|1|True",
-          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q4 P4 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-13-MIN-LV|2|1|1|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P1 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-05-MIN-PIT|1|6|1|False",
-          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q1 P6 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-15-MIN-IND|3|5|3|False",
-          "label": "Goal O-Line | 2026-05-15-MIN-IND | Q3 P5 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-05-MIN-PIT|4|3|1|False",
-          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q4 P3 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-13-MIN-LV|2|10|1|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P10 | 9 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-19-SLC-MIN|4|2|1|True",
-          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q4 P2 | 9 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|2|1|1|True",
-          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q2 P1 | 10 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|1|4|1|True",
-          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q1 P4 | 10 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-08-08-IND-MIN|2|3|1|True",
-          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q2 P3 | 11 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-11-BOS-MIN|4|1|1|True",
-          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q4 P1 | 12 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-19-SLC-MIN|3|9|1|True",
-          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q3 P9 | 12 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|4|7|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q4 P7 | 12 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-19-SLC-MIN|3|7|1|True",
-          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q3 P7 | 15 throws",
+          "possession_id": "2026-06-13-MIN-LV|4|9|1|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P9 | 11 throws",
           "overlay_selected": false
         }
       ]
     },
     {
-      "group_index": 15,
-      "title": "Codex O-line pattern 15 | right-left | mixed | 8-throw median",
+      "group_index": 16,
+      "title": "Codex O-line pattern 16 | right-left | mixed | 7-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -886,18 +861,8 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-31-MIN-MAD|4|9|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q4 P9 | 11 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-06-12-MIN-OAK|3|4|1|False",
           "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q3 P4 | 11 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-12-MIN-OAK|2|1|1|False",
-          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q2 P1 | 11 throws",
           "overlay_selected": false
         },
         {
@@ -908,89 +873,149 @@
       ]
     },
     {
-      "group_index": 16,
-      "title": "Codex O-line pattern 16 | middle-left | mixed | 9-throw median",
+      "group_index": 17,
+      "title": "Codex O-line pattern 17 | middle-right | mixed | 8.5-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
         {
-          "possession_id": "2026-08-08-IND-MIN|3|3|1|True",
-          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q3 P3 | 4 throws",
+          "possession_id": "2026-06-13-MIN-LV|3|2|1|False",
+          "label": "Turnover O-Line | 2026-06-13-MIN-LV | Q3 P2 | 5 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-19-MAD-MIN|4|12|1|True",
-          "label": "Turnover O-Line | 2026-07-19-MAD-MIN | Q4 P12 | 5 throws",
+          "possession_id": "2026-05-15-MIN-IND|3|5|1|False",
+          "label": "Turnover O-Line | 2026-05-15-MIN-IND | Q3 P5 | 5 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-19-SLC-MIN|3|2|1|True",
-          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q3 P2 | 5 throws",
+          "possession_id": "2026-07-19-MAD-MIN|3|7|1|True",
+          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q3 P7 | 5 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-03-CHI-MIN|2|4|1|True",
-          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q2 P4 | 6 throws",
+          "possession_id": "2026-07-03-CHI-MIN|3|10|1|True",
+          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q3 P10 | 7 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-16-MIN-CHI|1|7|1|False",
-          "label": "Turnover O-Line | 2026-05-16-MIN-CHI | Q1 P7 | 6 throws",
+          "possession_id": "2026-08-08-IND-MIN|2|7|1|True",
+          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q2 P7 | 7 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-13-MIN-LV|3|7|1|False",
-          "label": "Turnover O-Line | 2026-06-13-MIN-LV | Q3 P7 | 8 throws",
+          "possession_id": "2026-07-11-BOS-MIN|2|10|1|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q2 P10 | 7 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-05-MIN-PIT|2|1|1|False",
-          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q2 P1 | 9 throws",
+          "possession_id": "2026-05-31-MIN-MAD|3|6|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q3 P6 | 8 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-12-MIN-OAK|2|4|1|False",
-          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q2 P4 | 10 throws",
+          "possession_id": "2026-07-03-CHI-MIN|4|4|1|True",
+          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q4 P4 | 8 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-31-MIN-MAD|3|12|1|False",
-          "label": "Turnover O-Line | 2026-05-31-MIN-MAD | Q3 P12 | 10 throws",
+          "possession_id": "2026-06-13-MIN-LV|2|1|1|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P1 | 8 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-15-MIN-IND|3|7|1|False",
-          "label": "Turnover O-Line | 2026-05-15-MIN-IND | Q3 P7 | 11 throws",
+          "possession_id": "2026-07-05-MIN-PIT|1|6|1|False",
+          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q1 P6 | 8 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-03-CHI-MIN|3|4|1|True",
-          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q3 P4 | 14 throws",
+          "possession_id": "2026-05-15-MIN-IND|3|5|3|False",
+          "label": "Goal O-Line | 2026-05-15-MIN-IND | Q3 P5 | 8 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-12-MIN-OAK|1|7|1|False",
-          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q1 P7 | 17 throws",
+          "possession_id": "2026-07-05-MIN-PIT|4|3|1|False",
+          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q4 P3 | 8 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-06-IND-MIN|4|7|1|True",
-          "label": "Turnover O-Line | 2026-06-06-IND-MIN | Q4 P7 | 23 throws",
+          "possession_id": "2026-05-31-MIN-MAD|3|10|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q3 P10 | 8 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|10|1|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P10 | 9 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|2|1|True",
+          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q4 P2 | 9 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|1|1|1|True",
+          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q1 P1 | 9 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|1|1|True",
+          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q2 P1 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|1|4|1|True",
+          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q1 P4 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|3|3|True",
+          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q1 P3 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|13|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q1 P13 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|4|1|1|True",
+          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q4 P1 | 12 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|9|1|True",
+          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q3 P9 | 12 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|7|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q4 P7 | 12 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|5|1|True",
+          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q3 P5 | 12 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|3|7|1|True",
+          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q3 P7 | 15 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|4|3|1|True",
+          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q4 P3 | 19 throws",
           "overlay_selected": false
         }
       ]
     },
     {
-      "group_index": 17,
-      "title": "Codex O-line pattern 17 | left-right | winding | 9-throw median",
+      "group_index": 18,
+      "title": "Codex O-line pattern 18 | left-middle | winding | 9-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
-        {
-          "possession_id": "2026-07-11-BOS-MIN|1|11|1|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q1 P11 | 6 throws",
-          "overlay_selected": false
-        },
         {
           "possession_id": "2026-05-31-MIN-MAD|1|3|1|False",
           "label": "Turnover O-Line | 2026-05-31-MIN-MAD | Q1 P3 | 6 throws",
@@ -1002,66 +1027,13 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-11-BOS-MIN|2|4|1|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q2 P4 | 7 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-07-05-MIN-PIT|3|2|1|False",
           "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q3 P2 | 8 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-06-IND-MIN|3|8|1|True",
-          "label": "Turnover O-Line | 2026-06-06-IND-MIN | Q3 P8 | 9 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-19-MAD-MIN|3|4|3|True",
-          "label": "Turnover O-Line | 2026-07-19-MAD-MIN | Q3 P4 | 10 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-03-CHI-MIN|4|10|1|True",
-          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q4 P10 | 11 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-03-CHI-MIN|1|3|1|True",
-          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q1 P3 | 12 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-08-08-IND-MIN|2|9|1|True",
-          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q2 P9 | 18 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|2|2|1|True",
-          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q2 P2 | 21 throws",
-          "overlay_selected": false
-        }
-      ]
-    },
-    {
-      "group_index": 18,
-      "title": "Codex O-line pattern 18 | middle-middle | winding | 9-throw median",
-      "break_before": true,
-      "auto_unsorted": false,
-      "possessions": [
-        {
-          "possession_id": "2026-05-02-CHI-MIN|3|2|4|True",
-          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q3 P2 | 4 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-11-BOS-MIN|1|10|1|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q1 P10 | 7 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-05-MIN-PIT|1|12|1|False",
-          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q1 P12 | 7 throws",
+          "possession_id": "2026-07-05-MIN-PIT|2|1|1|False",
+          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q2 P1 | 9 throws",
           "overlay_selected": false
         },
         {
@@ -1070,51 +1042,36 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-31-MIN-MAD|3|8|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q3 P8 | 12 throws",
+          "possession_id": "2026-06-12-MIN-OAK|2|4|1|False",
+          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q2 P4 | 10 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-19-SLC-MIN|3|3|1|True",
-          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q3 P3 | 14 throws",
+          "possession_id": "2026-07-19-MAD-MIN|3|4|3|True",
+          "label": "Turnover O-Line | 2026-07-19-MAD-MIN | Q3 P4 | 10 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-08-08-IND-MIN|4|8|1|True",
-          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q4 P8 | 21 throws",
+          "possession_id": "2026-07-05-MIN-PIT|3|7|1|False",
+          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q3 P7 | 10 throws",
           "overlay_selected": false
         }
       ]
     },
     {
       "group_index": 19,
-      "title": "Codex O-line pattern 19 | middle-right | winding | 9-throw median",
+      "title": "Codex O-line pattern 19 | right-right | winding | 9-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
-        {
-          "possession_id": "2026-06-19-SLC-MIN|2|5|3|True",
-          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q2 P5 | 4 throws",
-          "overlay_selected": false
-        },
         {
           "possession_id": "2026-07-11-BOS-MIN|1|3|2|True",
           "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q1 P3 | 5 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-11-BOS-MIN|2|10|1|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q2 P10 | 7 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|3|10|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q3 P10 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-13-MIN-LV|3|8|1|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q3 P8 | 8 throws",
+          "possession_id": "2026-05-16-MIN-CHI|5|2|1|False",
+          "label": "Turnover O-Line | 2026-05-16-MIN-CHI | Q5 P2 | 6 throws",
           "overlay_selected": false
         },
         {
@@ -1128,18 +1085,8 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-19-MAD-MIN|1|1|1|True",
-          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q1 P1 | 9 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-06-19-SLC-MIN|4|5|1|True",
           "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q4 P5 | 9 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|1|13|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q1 P13 | 10 throws",
           "overlay_selected": false
         },
         {
@@ -1148,8 +1095,8 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-13-MIN-LV|4|9|1|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q4 P9 | 11 throws",
+          "possession_id": "2026-05-31-MIN-MAD|4|9|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q4 P9 | 11 throws",
           "overlay_selected": false
         },
         {
@@ -1158,30 +1105,78 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-31-MIN-MAD|4|5|3|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q4 P5 | 12 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-07-19-MAD-MIN|3|2|1|True",
           "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q3 P2 | 12 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-06-IND-MIN|3|10|1|True",
-          "label": "Goal O-Line | 2026-06-06-IND-MIN | Q3 P10 | 13 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-19-MAD-MIN|4|3|1|True",
-          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q4 P3 | 19 throws",
           "overlay_selected": false
         }
       ]
     },
     {
       "group_index": 20,
-      "title": "Codex O-line pattern 20 | middle-left | mixed | 10-throw median",
+      "title": "Codex O-line pattern 20 | middle-middle | mixed | 11-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|2|1|True",
+          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q3 P2 | 7 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|3|3|1|False",
+          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q3 P3 | 8 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|2|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q2 P2 | 8 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|1|9|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q1 P9 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|6|1|False",
+          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q2 P6 | 11 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-13-MIN-LV|2|4|1|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P4 | 11 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-05-MIN-PIT|4|1|1|False",
+          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q4 P1 | 11 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|3|7|1|False",
+          "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q3 P7 | 13 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|4|8|1|False",
+          "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q4 P8 | 13 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-15-MIN-IND|2|6|1|False",
+          "label": "Goal O-Line | 2026-05-15-MIN-IND | Q2 P6 | 13 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|11|1|False",
+          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q3 P11 | 15 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 21,
+      "title": "Codex O-line pattern 21 | middle-left | mixed | 11-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -1193,16 +1188,6 @@
         {
           "possession_id": "2026-05-16-MIN-CHI|1|4|1|False",
           "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q1 P4 | 5 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|3|3|1|True",
-          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q3 P3 | 6 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-11-BOS-MIN|4|3|1|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q4 P3 | 7 throws",
           "overlay_selected": false
         },
         {
@@ -1231,6 +1216,11 @@
           "overlay_selected": false
         },
         {
+          "possession_id": "2026-07-11-BOS-MIN|2|5|1|True",
+          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q2 P5 | 10 throws",
+          "overlay_selected": false
+        },
+        {
           "possession_id": "2026-07-05-MIN-PIT|1|10|1|False",
           "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q1 P10 | 11 throws",
           "overlay_selected": false
@@ -1246,11 +1236,6 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-05-MIN-PIT|4|1|1|False",
-          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q4 P1 | 11 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-07-05-MIN-PIT|3|8|1|False",
           "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q3 P8 | 12 throws",
           "overlay_selected": false
@@ -1258,6 +1243,11 @@
         {
           "possession_id": "2026-07-05-MIN-PIT|4|4|4|False",
           "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q4 P4 | 12 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|4|1|1|False",
+          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q4 P1 | 13 throws",
           "overlay_selected": false
         },
         {
@@ -1278,99 +1268,8 @@
       ]
     },
     {
-      "group_index": 21,
-      "title": "Codex O-line pattern 21 | middle-left | mixed | 10-throw median",
-      "break_before": true,
-      "auto_unsorted": false,
-      "possessions": [
-        {
-          "possession_id": "2026-06-12-MIN-OAK|2|9|1|False",
-          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q2 P9 | 10 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-12-MIN-OAK|3|6|1|False",
-          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q3 P6 | 10 throws",
-          "overlay_selected": false
-        }
-      ]
-    },
-    {
       "group_index": 22,
-      "title": "Codex O-line pattern 22 | middle-middle | mixed | 11-throw median",
-      "break_before": true,
-      "auto_unsorted": false,
-      "possessions": [
-        {
-          "possession_id": "2026-07-03-CHI-MIN|3|2|1|True",
-          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q3 P2 | 7 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-05-MIN-PIT|3|3|1|False",
-          "label": "Goal O-Line | 2026-07-05-MIN-PIT | Q3 P3 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|2|2|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q2 P2 | 8 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|1|9|1|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q1 P9 | 10 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-11-BOS-MIN|2|5|1|True",
-          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q2 P5 | 10 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-12-MIN-OAK|2|6|1|False",
-          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q2 P6 | 11 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-08-08-IND-MIN|3|5|1|True",
-          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q3 P5 | 11 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-16-MIN-CHI|3|7|1|False",
-          "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q3 P7 | 13 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-16-MIN-CHI|4|8|1|False",
-          "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q4 P8 | 13 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-12-MIN-OAK|4|1|1|False",
-          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q4 P1 | 13 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-15-MIN-IND|2|6|1|False",
-          "label": "Goal O-Line | 2026-05-15-MIN-IND | Q2 P6 | 13 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-31-MIN-MAD|2|3|4|False",
-          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q2 P3 | 14 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-12-MIN-OAK|3|11|1|False",
-          "label": "Turnover O-Line | 2026-06-12-MIN-OAK | Q3 P11 | 15 throws",
-          "overlay_selected": false
-        }
-      ]
-    },
-    {
-      "group_index": 23,
-      "title": "Codex O-line pattern 23 | middle-right | mixed | 11-throw median",
+      "title": "Codex O-line pattern 22 | middle-right | winding | 11-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -1380,13 +1279,13 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-11-BOS-MIN|4|7|1|True",
-          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q4 P7 | 7 throws",
+          "possession_id": "2026-07-03-CHI-MIN|3|8|1|True",
+          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q3 P8 | 7 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-03-CHI-MIN|3|8|1|True",
-          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q3 P8 | 7 throws",
+          "possession_id": "2026-05-15-MIN-IND|4|1|1|False",
+          "label": "Goal O-Line | 2026-05-15-MIN-IND | Q4 P1 | 8 throws",
           "overlay_selected": false
         },
         {
@@ -1400,8 +1299,8 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-03-CHI-MIN|1|3|3|True",
-          "label": "Goal O-Line | 2026-07-03-CHI-MIN | Q1 P3 | 10 throws",
+          "possession_id": "2026-08-08-IND-MIN|3|5|1|True",
+          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q3 P5 | 11 throws",
           "overlay_selected": false
         },
         {
@@ -1425,11 +1324,6 @@
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-19-MAD-MIN|3|5|1|True",
-          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q3 P5 | 12 throws",
-          "overlay_selected": false
-        },
-        {
           "possession_id": "2026-08-08-IND-MIN|3|13|1|True",
           "label": "Goal O-Line | 2026-08-08-IND-MIN | Q3 P13 | 13 throws",
           "overlay_selected": false
@@ -1437,6 +1331,11 @@
         {
           "possession_id": "2026-06-13-MIN-LV|1|2|1|False",
           "label": "Goal O-Line | 2026-06-13-MIN-LV | Q1 P2 | 13 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|2|3|4|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q2 P3 | 14 throws",
           "overlay_selected": false
         },
         {
@@ -1452,8 +1351,109 @@
       ]
     },
     {
+      "group_index": 23,
+      "title": "Codex O-line pattern 23 | middle-middle | winding | 11-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-13-MIN-LV|3|8|1|False",
+          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q3 P8 | 8 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|2|9|1|False",
+          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q2 P9 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-MIN-OAK|3|6|1|False",
+          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q3 P6 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|4|5|3|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q4 P5 | 12 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|10|1|True",
+          "label": "Goal O-Line | 2026-06-06-IND-MIN | Q3 P10 | 13 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|2|1|2|True",
+          "label": "Goal O-Line | 2026-07-19-MAD-MIN | Q2 P1 | 16 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
       "group_index": 24,
-      "title": "Codex O-line pattern 24 | middle-left | mixed | 12-throw median",
+      "title": "Codex O-line pattern 24 | middle-right | winding | 12-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-11-BOS-MIN|2|4|1|True",
+          "label": "Turnover O-Line | 2026-07-11-BOS-MIN | Q2 P4 | 7 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|3|8|1|True",
+          "label": "Turnover O-Line | 2026-06-06-IND-MIN | Q3 P8 | 9 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-19-MAD-MIN|3|1|1|True",
+          "label": "Turnover O-Line | 2026-07-19-MAD-MIN | Q3 P1 | 9 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-MIN-MAD|3|12|1|False",
+          "label": "Turnover O-Line | 2026-05-31-MIN-MAD | Q3 P12 | 10 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|4|10|1|True",
+          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q4 P10 | 11 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|1|3|1|True",
+          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q1 P3 | 12 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-03-CHI-MIN|3|4|1|True",
+          "label": "Turnover O-Line | 2026-07-03-CHI-MIN | Q3 P4 | 14 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|9|1|True",
+          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q2 P9 | 18 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SLC-MIN|4|7|1|True",
+          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q4 P7 | 18 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|2|2|1|True",
+          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q2 P2 | 21 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-IND-MIN|4|7|1|True",
+          "label": "Turnover O-Line | 2026-06-06-IND-MIN | Q4 P7 | 23 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 25,
+      "title": "Codex O-line pattern 25 | middle-left | mixed | 12-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -1510,8 +1510,8 @@
       ]
     },
     {
-      "group_index": 25,
-      "title": "Codex O-line pattern 25 | right-left | winding | 12-throw median",
+      "group_index": 26,
+      "title": "Codex O-line pattern 26 | right-left | winding | 12-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -1533,71 +1533,46 @@
       ]
     },
     {
-      "group_index": 26,
-      "title": "Codex O-line pattern 26 | middle-middle | winding | 13-throw median",
+      "group_index": 27,
+      "title": "Codex O-line pattern 27 | middle-middle | winding | 13-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
         {
-          "possession_id": "2026-06-13-MIN-LV|2|12|4|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P12 | 8 throws",
+          "possession_id": "2026-05-02-CHI-MIN|3|2|4|True",
+          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q3 P2 | 4 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-05-MIN-PIT|3|7|1|False",
-          "label": "Turnover O-Line | 2026-07-05-MIN-PIT | Q3 P7 | 10 throws",
+          "possession_id": "2026-06-12-MIN-OAK|2|1|1|False",
+          "label": "Goal O-Line | 2026-06-12-MIN-OAK | Q2 P1 | 11 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-07-11-BOS-MIN|1|5|1|True",
-          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q1 P5 | 11 throws",
+          "possession_id": "2026-05-31-MIN-MAD|3|8|1|False",
+          "label": "Goal O-Line | 2026-05-31-MIN-MAD | Q3 P8 | 12 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-06-13-MIN-LV|2|4|1|False",
-          "label": "Goal O-Line | 2026-06-13-MIN-LV | Q2 P4 | 11 throws",
+          "possession_id": "2026-06-19-SLC-MIN|3|3|1|True",
+          "label": "Goal O-Line | 2026-06-19-SLC-MIN | Q3 P3 | 14 throws",
           "overlay_selected": false
         },
         {
-          "possession_id": "2026-05-16-MIN-CHI|5|5|1|False",
-          "label": "Turnover O-Line | 2026-05-16-MIN-CHI | Q5 P5 | 13 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-16-MIN-CHI|5|5|3|False",
-          "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q5 P5 | 13 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-08-08-IND-MIN|1|10|1|True",
-          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q1 P10 | 17 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-07-11-BOS-MIN|3|3|1|True",
-          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q3 P3 | 20 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|4|7|1|True",
-          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q4 P7 | 22 throws",
+          "possession_id": "2026-08-08-IND-MIN|4|8|1|True",
+          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q4 P8 | 21 throws",
           "overlay_selected": false
         },
         {
           "possession_id": "2026-05-02-CHI-MIN|4|1|1|True",
           "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q4 P1 | 23 throws",
           "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-05-02-CHI-MIN|3|6|1|True",
-          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q3 P6 | 24 throws",
-          "overlay_selected": false
         }
       ]
     },
     {
-      "group_index": 27,
-      "title": "Codex O-line pattern 27 | right-middle | winding | 13.5-throw median",
+      "group_index": 28,
+      "title": "Codex O-line pattern 28 | right-middle | winding | 13.5-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -1654,8 +1629,56 @@
       ]
     },
     {
-      "group_index": 28,
-      "title": "Codex O-line pattern 28 | right-left | winding | 18-throw median",
+      "group_index": 29,
+      "title": "Codex O-line pattern 29 | left-middle | winding | 15-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-IND-MIN|2|3|1|True",
+          "label": "Goal O-Line | 2026-08-08-IND-MIN | Q2 P3 | 11 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|1|5|1|True",
+          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q1 P5 | 11 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|5|1|False",
+          "label": "Turnover O-Line | 2026-05-16-MIN-CHI | Q5 P5 | 13 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-MIN-CHI|5|5|3|False",
+          "label": "Goal O-Line | 2026-05-16-MIN-CHI | Q5 P5 | 13 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-IND-MIN|1|10|1|True",
+          "label": "Turnover O-Line | 2026-08-08-IND-MIN | Q1 P10 | 17 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-BOS-MIN|3|3|1|True",
+          "label": "Goal O-Line | 2026-07-11-BOS-MIN | Q3 P3 | 20 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|4|7|1|True",
+          "label": "Goal O-Line | 2026-05-02-CHI-MIN | Q4 P7 | 22 throws",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-CHI-MIN|3|6|1|True",
+          "label": "Turnover O-Line | 2026-05-02-CHI-MIN | Q3 P6 | 24 throws",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 30,
+      "title": "Codex O-line pattern 30 | right-left | winding | 18-throw median",
       "break_before": true,
       "auto_unsorted": false,
       "possessions": [
@@ -1677,11 +1700,6 @@
         {
           "possession_id": "2026-06-06-IND-MIN|4|4|1|True",
           "label": "Turnover O-Line | 2026-06-06-IND-MIN | Q4 P4 | 17 throws",
-          "overlay_selected": false
-        },
-        {
-          "possession_id": "2026-06-19-SLC-MIN|4|7|1|True",
-          "label": "Turnover O-Line | 2026-06-19-SLC-MIN | Q4 P7 | 18 throws",
           "overlay_selected": false
         },
         {

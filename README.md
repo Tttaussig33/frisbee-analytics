@@ -192,7 +192,9 @@ python scripts/build_pattern_arrangements.py --season 2026 --line-type o_line
 
 This writes `*-codex-o-line.json` files containing only O-line goals and
 turnovers. The arrangement picker exposes these alongside the original and
-all-line Codex layouts.
+all-line Codex layouts. The O-line pass uses smaller spatial groups, a light
+throw-count signal, and a cohesion pass that splits unusually heterogeneous
+rows so their overlays are easier to interpret.
 
 ## Validation
 
