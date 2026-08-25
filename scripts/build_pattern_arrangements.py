@@ -68,7 +68,7 @@ def _team_game_files(source_dir: Path, team_id: str) -> list[Path]:
     return [csv_path for _, csv_path in candidates]
 
 
-def _load_team_possessions(source_dir: Path, team_id: str):
+def _load_team_possessions(source_dir: Path, team_id: str, line_type: str | None = None):
     game_files = _team_game_files(source_dir, team_id)
     if not game_files:
         raise ValueError(f"No cached games found for {team_id} in {source_dir}")
@@ -82,6 +82,15 @@ def _load_team_possessions(source_dir: Path, team_id: str):
         team_id=team_id,
         outcomes=("goal", "turnover"),
     )
+    if line_type:
+        possessions = possessions.loc[
+            possessions["line_type"].eq(line_type)
+        ].reset_index(drop=True)
+        paths = [
+            path
+            for path in paths
+            if not path.empty and str(path["line_type"].iloc[0]) == line_type
+        ]
     return game_files, possessions, paths
 
 
@@ -202,7 +211,11 @@ def _flow(value: float) -> str:
     return "mixed"
 
 
-def _cluster_title(cluster_frame: pd.DataFrame, index: int) -> str:
+def _cluster_title(
+    cluster_frame: pd.DataFrame,
+    index: int,
+    prefix: str = "Codex pattern",
+) -> str:
     start_lane = _lane(pd.to_numeric(cluster_frame["shape_start_x"], errors="coerce").median())
     end_lane = _lane(pd.to_numeric(cluster_frame["shape_end_x"], errors="coerce").median())
     flow = _flow(pd.to_numeric(cluster_frame["shape_directness"], errors="coerce").median())
@@ -215,7 +228,7 @@ def _cluster_title(cluster_frame: pd.DataFrame, index: int) -> str:
         throw_text = f"{int(median_throws)}-throw median"
     else:
         throw_text = f"{median_throws:.1f}-throw median"
-    return f"Codex pattern {index:02d} | {start_lane}-{end_lane} | {flow} | {throw_text}"
+    return f"{prefix} {index:02d} | {start_lane}-{end_lane} | {flow} | {throw_text}"
 
 
 def _make_card_label(row: pd.Series) -> str:
@@ -239,13 +252,25 @@ def build_codex_arrangement(
     min_groups: int = DEFAULT_MIN_GROUPS,
     max_groups: int = DEFAULT_MAX_GROUPS,
     random_state: int = 2026,
+    line_type: str | None = None,
 ) -> dict:
+    arrangement_name = (
+        "Codex spatial arrangement"
+        if line_type is None
+        else f"Codex {'O-line' if line_type == 'o_line' else 'D-line'} spatial arrangement"
+    )
+    group_title_prefix = (
+        "Codex pattern"
+        if line_type is None
+        else f"Codex {'O-line' if line_type == 'o_line' else 'D-line'} pattern"
+    )
     enriched, raw_features = _feature_frame(possessions, paths)
     if enriched.empty:
         return {
             "version": 3,
-            "arrangement_name": "Codex spatial arrangement",
+            "arrangement_name": arrangement_name,
             "team_id": team_id,
+            "line_type": line_type or "all",
             "cards_shown": 0,
             "filtered_possessions": 0,
             "groups": [],
@@ -334,7 +359,11 @@ def build_codex_arrangement(
         groups.append(
             {
                 "group_index": group_index,
-                "title": _cluster_title(cluster_frame, group_index),
+                "title": _cluster_title(
+                    cluster_frame,
+                    group_index,
+                    prefix=group_title_prefix,
+                ),
                 "break_before": True,
                 "auto_unsorted": False,
                 "possessions": [
@@ -350,8 +379,9 @@ def build_codex_arrangement(
 
     return {
         "version": 3,
-        "arrangement_name": "Codex spatial arrangement",
+        "arrangement_name": arrangement_name,
         "team_id": team_id,
+        "line_type": line_type or "all",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_arrangement": f"{team_id}.json",
         "method": {
@@ -364,6 +394,7 @@ def build_codex_arrangement(
             "reference_max_size": reference_max_size,
             "cluster_count": len(groups),
             "random_state": random_state,
+            "line_type": line_type or "all",
         },
         "cards_shown": len(enriched),
         "filtered_possessions": len(enriched),
@@ -375,18 +406,24 @@ def build_team_arrangement(
     team_id: str,
     source_dir: Path,
     arrangement_dir: Path,
+    line_type: str | None = None,
     **kwargs,
 ) -> tuple[dict, dict]:
     original_path = arrangement_dir / f"{team_id}.json"
     if not original_path.exists():
         raise ValueError(f"Missing hand-organized example: {original_path}")
     original_payload = _read_arrangement(original_path)
-    game_files, possessions, paths = _load_team_possessions(source_dir, team_id)
+    game_files, possessions, paths = _load_team_possessions(
+        source_dir,
+        team_id,
+        line_type=line_type,
+    )
     payload = build_codex_arrangement(
         team_id,
         possessions,
         paths,
         original_payload,
+        line_type=line_type,
         **kwargs,
     )
     payload["source_games"] = len(game_files)
@@ -406,6 +443,12 @@ def _parse_args():
     parser.add_argument("--min-groups", type=int, default=DEFAULT_MIN_GROUPS)
     parser.add_argument("--max-groups", type=int, default=DEFAULT_MAX_GROUPS)
     parser.add_argument("--seed", type=int, default=2026)
+    parser.add_argument(
+        "--line-type",
+        choices=("all", "o_line", "d_line"),
+        default="all",
+        help="Scope the generated arrangement to one line type; default is all lines.",
+    )
     return parser.parse_args()
 
 
@@ -418,19 +461,23 @@ def main():
     output_dir = args.output_dir or arrangement_dir
     output_dir.mkdir(parents=True, exist_ok=True)
     teams = [team.strip().lower() for team in (args.teams or EXAMPLE_TEAMS)]
+    line_type = None if args.line_type == "all" else args.line_type
+    line_suffix = line_type.replace("_", "-") if line_type else ""
+    output_suffix = "-codex" if line_type is None else f"-codex-{line_suffix}"
 
     for team_id in teams:
         payload, original_payload = build_team_arrangement(
             team_id,
             source_dir,
             arrangement_dir,
+            line_type=line_type,
             target_group_size=max(1, args.target_group_size),
             reference_max_size=max(1, args.reference_max_size),
             min_groups=max(1, args.min_groups),
             max_groups=max(1, args.max_groups),
             random_state=args.seed,
         )
-        output_path = output_dir / f"{team_id}-codex.json"
+        output_path = output_dir / f"{team_id}{output_suffix}.json"
         output_path.write_text(
             json.dumps(payload, indent=2, ensure_ascii=True) + "\n",
             encoding="utf-8",
@@ -444,6 +491,7 @@ def main():
             f"{team_id.title()}: {payload['source_games']} games, "
             f"{payload['cards_shown']} cards, "
             f"{len(payload['groups'])} Codex groups "
+            f"({args.line_type}) "
             f"(original {len(original_payload.get('groups', []))} groups / "
             f"{original_cards} cards; size range "
             f"{min(group_sizes) if group_sizes else 0}-{max(group_sizes) if group_sizes else 0}) "

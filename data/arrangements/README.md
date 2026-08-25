@@ -9,5 +9,7 @@ These JSON files are the portable field-card arrangements exported from the poss
 
 The `*-codex.json` files are separate geometry-first alternatives generated
 from these hand-organized examples. The originals are never overwritten.
+The `*-codex-o-line.json` files are scoped alternatives containing only O-line
+goals and turnovers, for the browser's O-line all-outcomes view.
 
 The browser's autosave and recovery history remain local to the browser. These files are the shared, Git-tracked checkpoints. After cloning or pulling the repository on another device, regenerate the browser pages and use the arrangement picker on the matching team page.

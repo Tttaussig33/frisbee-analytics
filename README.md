@@ -184,6 +184,16 @@ locations as the clustering signal, uses smaller existing rows as seed examples,
 and splits oversized generic rows into more manageable spatial groups. It does
 not overwrite the original arrangements.
 
+For the browser's O-line all-outcomes view, build a separate scoped alternative:
+
+```powershell
+python scripts/build_pattern_arrangements.py --season 2026 --line-type o_line
+```
+
+This writes `*-codex-o-line.json` files containing only O-line goals and
+turnovers. The arrangement picker exposes these alongside the original and
+all-line Codex layouts.
+
 ## Validation
 
 Compare generated stats to a Shown Space-style reference CSV:
