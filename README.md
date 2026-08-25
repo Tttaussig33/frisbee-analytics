@@ -196,6 +196,23 @@ all-line Codex layouts. The O-line pass uses smaller spatial groups, a light
 throw-count signal, and a cohesion pass that splits unusually heterogeneous
 rows so their overlays are easier to interpret.
 
+## Team Possession Patterns Paper
+
+The current team-centered paper lives in `paper/ufa_team_possession_patterns.tex`.
+It uses the first three rows of the saved Empire, Sol, Wind Chill, and Spiders
+arrangements as recurring spatial patterns, includes goals and turnovers in the
+local efficiency calculation, and restricts reported results to regular-season
+game files through July 19, 2026. Rebuild its vector field figures and tables
+with:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\build_paper_figures.py
+```
+
+The generated SVGs, CSV summaries, and LaTeX table fragments are written under
+`paper/generated/`. See `paper/README.md` for the LaTeX/Overleaf build steps and
+the exact metric definitions.
+
 ## Validation
 
 Compare generated stats to a Shown Space-style reference CSV:

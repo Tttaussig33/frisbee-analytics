@@ -3,3 +3,10 @@ __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 outputs/possession_browsers/
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+paper/build/

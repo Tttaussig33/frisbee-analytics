@@ -1,0 +1,701 @@
+"""Build paper figures and tables from the saved possession arrangements.
+
+The manuscript uses the first three groups in each hand-organized checkpoint as
+the selected patterns.  The checkpoint itself can contain later playoff cards;
+the analysis below keeps only regular-season game files through the final
+regular-season weekend, so the paper's estimates do not silently mix seasons.
+
+Outputs are intentionally simple SVG and text/CSV artifacts so they remain
+portable and inspectable without a plotting backend such as Kaleido.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import sys
+from datetime import date, datetime, timezone
+from html import escape
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SRC_DIR = REPO_ROOT / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+from ufa.shownspace_paths import (  # noqa: E402
+    ENDZONE_HIGH_Y,
+    ENDZONE_LOW_Y,
+    FIELD_X_MAX,
+    FIELD_X_MIN,
+    FIELD_Y_MAX,
+    FIELD_Y_MIN,
+    build_possessions,
+)
+
+
+FOCUS_TEAMS = ("empire", "sol", "windchill", "spiders")
+FOCUS_TEAM_NAMES = {
+    "empire": "New York Empire",
+    "sol": "Austin Sol",
+    "windchill": "Minnesota Wind Chill",
+    "spiders": "Oakland Spiders",
+}
+REGULAR_SEASON_END = date(2026, 7, 19)
+HEATMAP_MAX_THROWS = 50
+PAPER_COLORS = {
+    "navy": "#102a43",
+    "muted": "#526173",
+    "field": "#86d973",
+    "field_bg": "#f4f8f3",
+    "goal": "#155e9e",
+    "turnover": "#b43f35",
+    "rule": "#243b53",
+    "accent": "#c98b2e",
+}
+
+
+def _number(value, digits=3):
+    if value is None or pd.isna(value):
+        return "-"
+    return f"{float(value):.{digits}f}"
+
+
+def _percent(value, digits=1):
+    if value is None or pd.isna(value):
+        return "-"
+    return f"{100 * float(value):.{digits}f}%"
+
+
+def _latex_text(value):
+    replacements = {
+        "&": r"\&",
+        "%": r"\%",
+        "_": r"\_",
+        "#": r"\#",
+        "{": r"\{",
+        "}": r"\}",
+    }
+    return "".join(replacements.get(char, char) for char in str(value))
+
+
+def _latex_number(value, digits=3):
+    if value is None or pd.isna(value):
+        return "--"
+    return f"{float(value):.{digits}f}"
+
+
+def _latex_percent(value, digits=1):
+    if value is None or pd.isna(value):
+        return "--"
+    return f"{100 * float(value):.{digits}f}\\%"
+
+
+def _game_date(csv_path: Path, sample: pd.DataFrame) -> date | None:
+    name_date = csv_path.name[:10]
+    parsed = pd.to_datetime(name_date, errors="coerce")
+    if pd.notna(parsed):
+        return parsed.date()
+    if "start_timestamp" in sample and not sample.empty:
+        parsed = pd.to_datetime(sample["start_timestamp"].iloc[0], errors="coerce")
+        if pd.notna(parsed):
+            return parsed.date()
+    return None
+
+
+def team_game_files(source_dir: Path, team_id: str, regular_season_end: date):
+    candidates = []
+    for csv_path in sorted(source_dir.glob("*.csv")):
+        sample = pd.read_csv(csv_path, nrows=1, low_memory=False)
+        if sample.empty:
+            continue
+        home = str(sample.get("home_team_id", pd.Series([""])).iloc[0]).lower()
+        away = str(sample.get("away_team_id", pd.Series([""])).iloc[0]).lower()
+        if team_id not in {home, away}:
+            continue
+        game_date = _game_date(csv_path, sample)
+        if game_date is not None and game_date > regular_season_end:
+            continue
+        start = pd.to_datetime(
+            sample.get("start_timestamp", pd.Series([pd.NaT])).iloc[0],
+            errors="coerce",
+        )
+        candidates.append((start, csv_path))
+    candidates.sort(
+        key=lambda item: (
+            pd.Timestamp.max if pd.isna(item[0]) else item[0],
+            item[1].name,
+        )
+    )
+    return [csv_path for _, csv_path in candidates]
+
+
+def cached_team_ids(source_dir: Path, regular_season_end: date):
+    team_ids = set()
+    for csv_path in sorted(source_dir.glob("*.csv")):
+        sample = pd.read_csv(csv_path, nrows=1, low_memory=False)
+        if sample.empty:
+            continue
+        game_date = _game_date(csv_path, sample)
+        if game_date is not None and game_date > regular_season_end:
+            continue
+        for column in ("home_team_id", "away_team_id"):
+            value = str(sample.get(column, pd.Series([""])).iloc[0]).strip().lower()
+            if value:
+                team_ids.add(value)
+    return sorted(team_ids)
+
+
+def load_team(source_dir: Path, team_id: str, regular_season_end: date):
+    files = team_game_files(source_dir, team_id, regular_season_end)
+    if not files:
+        raise ValueError(f"No regular-season files found for {team_id}")
+    throws = pd.concat(
+        [pd.read_csv(path, low_memory=False) for path in files],
+        ignore_index=True,
+    )
+    possessions, paths = build_possessions(
+        throws,
+        team_id=team_id,
+        outcomes=("goal", "turnover"),
+    )
+    return files, possessions, paths
+
+
+def _path_lookup(paths):
+    return {
+        str(path["possession_id"].iloc[0]): path
+        for path in paths
+        if not path.empty and "possession_id" in path
+    }
+
+
+def _group_stats(group, possession_by_id, total_o_line):
+    ids = [str(card.get("possession_id", "")) for card in group.get("possessions", [])]
+    ids = [possession_id for possession_id in ids if possession_id in possession_by_id.index]
+    frame = possession_by_id.reindex(ids).dropna(subset=["possession_id"])
+    frame = frame.loc[frame["line_type"].eq("o_line")].copy()
+    if frame.empty:
+        return {
+            "group_index": int(group.get("group_index", 0)),
+            "title": str(group.get("title") or "Pattern"),
+            "ids": [],
+            "n": 0,
+            "share": np.nan,
+            "goals": 0,
+            "turnovers": 0,
+            "efficiency": np.nan,
+            "total_aec_per_possession": np.nan,
+            "aec_per_throw": np.nan,
+            "median_throws": np.nan,
+            "huck_rate": np.nan,
+            "median_start_y": np.nan,
+            "median_field_progress": np.nan,
+        }
+
+    goals = int(frame["outcome"].eq("goal").sum())
+    turnovers = int(frame["outcome"].eq("turnover").sum())
+    aec_sum = pd.to_numeric(frame["total_aec"], errors="coerce").sum()
+    throw_sum = pd.to_numeric(frame["throw_count"], errors="coerce").sum()
+    return {
+        "group_index": int(group.get("group_index", 0)),
+        "title": str(group.get("title") or "Pattern"),
+        "ids": frame["possession_id"].astype(str).tolist(),
+        "n": int(len(frame)),
+        "share": float(len(frame) / total_o_line) if total_o_line else np.nan,
+        "goals": goals,
+        "turnovers": turnovers,
+        "efficiency": float(goals / len(frame)) if len(frame) else np.nan,
+        "total_aec_per_possession": float(frame["total_aec"].mean()),
+        "aec_per_throw": float(aec_sum / throw_sum) if throw_sum else np.nan,
+        "median_throws": float(frame["throw_count"].median()),
+        "huck_rate": float(frame["huck_count"].gt(0).mean()),
+        "median_start_y": float(frame["start_y"].median()),
+        "median_field_progress": float(frame["field_progress"].median()),
+    }
+
+
+def _team_summary(team_id, files, possessions):
+    frame = possessions.loc[possessions["line_type"].eq("o_line")].copy()
+    goals = int(frame["outcome"].eq("goal").sum())
+    turnovers = int(frame["outcome"].eq("turnover").sum())
+    total_aec = pd.to_numeric(frame["total_aec"], errors="coerce").sum()
+    throw_count = pd.to_numeric(frame["throw_count"], errors="coerce").sum()
+    return {
+        "team_id": team_id,
+        "team_name": FOCUS_TEAM_NAMES.get(team_id, team_id.title()),
+        "regular_season_games": len(files),
+        "o_line_possessions": int(len(frame)),
+        "goals": goals,
+        "turnovers": turnovers,
+        "efficiency": float(goals / len(frame)) if len(frame) else np.nan,
+        "total_aec_per_possession": float(frame["total_aec"].mean()) if len(frame) else np.nan,
+        "aec_per_throw": float(total_aec / throw_count) if throw_count else np.nan,
+        "median_throws": float(frame["throw_count"].median()) if len(frame) else np.nan,
+    }
+
+
+def collect_data(source_dir: Path, arrangement_dir: Path, regular_season_end: date):
+    team_ids = cached_team_ids(source_dir, regular_season_end)
+    loaded = {}
+    for team_id in team_ids:
+        files, possessions, paths = load_team(source_dir, team_id, regular_season_end)
+        loaded[team_id] = {
+            "files": files,
+            "possessions": possessions,
+            "paths": paths,
+            "path_by_id": _path_lookup(paths),
+        }
+
+    team_summaries = []
+    pattern_rows = []
+    focus_patterns = {}
+    for team_id in FOCUS_TEAMS:
+        if team_id not in loaded:
+            raise ValueError(f"Missing loaded data for focus team {team_id}")
+        data = loaded[team_id]
+        possessions = data["possessions"]
+        o_line_count = int(possessions["line_type"].eq("o_line").sum())
+        team_summaries.append(_team_summary(team_id, data["files"], possessions))
+        payload_path = arrangement_dir / f"{team_id}.json"
+        payload = json.loads(payload_path.read_text(encoding="utf-8"))
+        possession_by_id = possessions.set_index("possession_id", drop=False)
+        groups = payload.get("groups", [])[:3]
+        stats = []
+        for group in groups:
+            row = _group_stats(group, possession_by_id, o_line_count)
+            stats.append(row)
+            row_for_table = {
+                "team_id": team_id,
+                "team_name": FOCUS_TEAM_NAMES[team_id],
+                "pattern": len(stats),
+                **{key: value for key, value in row.items() if key not in {"ids"}},
+            }
+            pattern_rows.append(row_for_table)
+        focus_patterns[team_id] = {
+            "team_id": team_id,
+            "team_name": FOCUS_TEAM_NAMES[team_id],
+            "arrangement_saved_at": payload.get("saved_at"),
+            "arrangement_path": str(payload_path.relative_to(REPO_ROOT)),
+            "patterns": stats,
+        }
+
+    heatmap_rows = []
+    for team_id, data in loaded.items():
+        goals = data["possessions"].loc[
+            data["possessions"]["line_type"].eq("o_line")
+            & data["possessions"]["outcome"].eq("goal")
+        ].copy()
+        counts = goals["throw_count"].value_counts().to_dict()
+        total = int(len(goals))
+        mode = int(goals["throw_count"].mode().iloc[0]) if total else None
+        heatmap_rows.append(
+            {
+                "team_id": team_id,
+                "team_name": FOCUS_TEAM_NAMES.get(team_id, team_id.title()),
+                "o_line_goal_possessions": total,
+                "mode_throws": mode,
+                "counts": {str(int(key)): int(value) for key, value in counts.items()},
+            }
+        )
+    heatmap_rows.sort(key=lambda row: (row["mode_throws"] is None, row["mode_throws"] or 0, row["team_name"]))
+
+    league_counts = {}
+    for row in heatmap_rows:
+        for throw_count, count in row["counts"].items():
+            league_counts[int(throw_count)] = league_counts.get(int(throw_count), 0) + count
+    league_mode = max(league_counts, key=lambda key: (league_counts[key], -key)) if league_counts else None
+
+    observed_dates = []
+    for data in loaded.values():
+        for path in data["files"]:
+            sample = pd.read_csv(path, nrows=1, low_memory=False)
+            observed = _game_date(path, sample)
+            if observed is not None:
+                observed_dates.append(observed)
+
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "regular_season_end": regular_season_end.isoformat(),
+        "regular_season_start": min(observed_dates).isoformat(),
+        "team_ids": team_ids,
+        "focus_teams": list(FOCUS_TEAMS),
+        "team_summaries": team_summaries,
+        "pattern_rows": pattern_rows,
+        "focus_patterns": focus_patterns,
+        "heatmap_rows": heatmap_rows,
+        "league_counts": {str(key): value for key, value in sorted(league_counts.items())},
+        "league_mode_throws": league_mode,
+        "league_goal_possessions": int(sum(league_counts.values())),
+        "loaded": loaded,
+    }
+
+
+def _svg_text(x, y, text, *, size=14, color=None, weight="400", anchor="start", family="Arial, sans-serif"):
+    color = color or PAPER_COLORS["navy"]
+    return (
+        f'<text x="{x:.1f}" y="{y:.1f}" font-family="{family}" font-size="{size}px" '
+        f'font-weight="{weight}" fill="{color}" text-anchor="{anchor}">{escape(str(text))}</text>'
+    )
+
+
+def _svg_field(x, y, width, height, paths, stats, title, subtitle):
+    parts = []
+    parts.append(
+        f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="{height:.1f}" '
+        f'rx="8" fill="{PAPER_COLORS["field_bg"]}" stroke="#d7e2eb" stroke-width="1"/>'
+    )
+    margin_y = 24
+    field_y = y + margin_y
+    field_h = height - 118
+    field_w = field_h * (FIELD_X_MAX - FIELD_X_MIN) / (FIELD_Y_MAX - FIELD_Y_MIN)
+    field_x = x + (width - field_w) / 2
+
+    def sx(value):
+        return field_x + (float(value) - FIELD_X_MIN) / (FIELD_X_MAX - FIELD_X_MIN) * field_w
+
+    def sy(value):
+        return field_y + (FIELD_Y_MAX - float(value)) / (FIELD_Y_MAX - FIELD_Y_MIN) * field_h
+
+    parts.append(
+        f'<rect x="{field_x:.1f}" y="{field_y:.1f}" width="{field_w:.1f}" height="{field_h:.1f}" '
+        f'fill="{PAPER_COLORS["field"]}" stroke="{PAPER_COLORS["rule"]}" stroke-width="1.8"/>'
+    )
+    for y_value in (ENDZONE_LOW_Y, ENDZONE_HIGH_Y):
+        parts.append(
+            f'<line x1="{field_x:.1f}" y1="{sy(y_value):.1f}" x2="{field_x + field_w:.1f}" '
+            f'y2="{sy(y_value):.1f}" stroke="{PAPER_COLORS["rule"]}" stroke-width="1.2"/>'
+        )
+    for y_value in (40, 80):
+        parts.append(
+            f'<circle cx="{sx(0):.1f}" cy="{sy(y_value):.1f}" r="2.0" fill="{PAPER_COLORS["rule"]}"/>'
+        )
+
+    opacity = 0.18 if stats["n"] <= 25 else 0.10
+    stroke_width = 1.5 if stats["n"] <= 25 else 1.05
+    for path in paths:
+        if path.empty:
+            continue
+        outcome = str(path.get("outcome", pd.Series(["unknown"])).iloc[0]).lower()
+        color = PAPER_COLORS["goal"] if outcome == "goal" else PAPER_COLORS["turnover"]
+        path = path.sort_values("possession_throw")
+        points = []
+        for _, throw in path.iterrows():
+            try:
+                start = (sx(throw["ThrowerX"]), sy(throw["ThrowerY"]))
+                end = (sx(throw["ReceiverX"]), sy(throw["ReceiverY"]))
+            except (TypeError, ValueError):
+                continue
+            points.extend([start, end])
+            parts.append(
+                f'<line x1="{start[0]:.1f}" y1="{start[1]:.1f}" x2="{end[0]:.1f}" y2="{end[1]:.1f}" '
+                f'stroke="{color}" stroke-width="{stroke_width:.1f}" stroke-linecap="round" '
+                f'opacity="{opacity:.2f}"/>'
+            )
+        for px, py in points[::2]:
+            parts.append(
+                f'<circle cx="{px:.1f}" cy="{py:.1f}" r="1.7" fill="{color}" opacity="{min(0.8, opacity + 0.28):.2f}"/>'
+            )
+
+    parts.append(_svg_text(x + width / 2, y + 18, title, size=15, weight="700", anchor="middle"))
+    parts.append(
+        _svg_text(
+            x + width / 2,
+            y + height - 81,
+            subtitle,
+            size=12.5,
+            color=PAPER_COLORS["navy"],
+            weight="700",
+            anchor="middle",
+        )
+    )
+    metric_line_1 = (
+        f"{stats['n']} possessions | {stats['goals']} goals | {stats['turnovers']} turnovers"
+    )
+    metric_line_2 = (
+        f"Efficiency {_percent(stats['efficiency'])} | "
+        f"aEC/pos {_number(stats['total_aec_per_possession'])}"
+    )
+    metric_line_3 = (
+        f"aEC/throw {_number(stats['aec_per_throw'])} | "
+        f"Median {_number(stats['median_throws'], 1)} throws"
+    )
+    parts.append(
+        _svg_text(
+            x + width / 2,
+            y + height - 57,
+            metric_line_1,
+            size=12.5,
+            weight="700",
+            anchor="middle",
+        )
+    )
+    parts.append(
+        _svg_text(
+            x + width / 2,
+            y + height - 36,
+            metric_line_2,
+            size=12,
+            anchor="middle",
+        )
+    )
+    parts.append(
+        _svg_text(
+            x + width / 2,
+            y + height - 15,
+            metric_line_3,
+            size=12,
+            anchor="middle",
+        )
+    )
+    return "".join(parts)
+
+
+def _pattern_descriptor(stats):
+    start_y = stats.get("median_start_y")
+    progress = stats.get("median_field_progress")
+    huck_rate = stats.get("huck_rate")
+    if pd.isna(start_y):
+        start_label = "mixed start"
+    elif start_y < 20:
+        start_label = "back-third start"
+    elif start_y < 40:
+        start_label = "middle-third start"
+    else:
+        start_label = "advanced start"
+    if pd.isna(progress):
+        progress_label = "mixed progress"
+    elif progress >= 90:
+        progress_label = "full-field gain"
+    elif progress >= 75:
+        progress_label = "long gain"
+    else:
+        progress_label = "shorter gain"
+    if pd.isna(huck_rate) or huck_rate <= 0.10:
+        huck_label = "low-huck"
+    elif huck_rate >= 0.50:
+        huck_label = "huck-heavy"
+    else:
+        huck_label = "mixed hucks"
+    return f"{start_label} | {progress_label} | {huck_label}"
+
+
+def write_team_pattern_svg(team_id, data, out_path: Path):
+    patterns = data["patterns"]
+    path_by_id = data["path_by_id"]
+    width = 1120
+    height = 650
+    panel_width = 340
+    panel_height = 510
+    pieces = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
+        f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
+        _svg_text(26, 32, f"{FOCUS_TEAM_NAMES[team_id]}: three common O-line patterns", size=21, weight="700"),
+        _svg_text(26, 55, "Regular season; overlays show every O-line goal and turnover in the selected row.", size=12, color=PAPER_COLORS["muted"]),
+        f'<line x1="26" y1="72" x2="1094" y2="72" stroke="#d7e2eb" stroke-width="1"/>',
+    ]
+    for index, pattern in enumerate(patterns):
+        paths = [path_by_id[possession_id] for possession_id in pattern["ids"] if possession_id in path_by_id]
+        subtitle = str(pattern["title"])
+        if subtitle.lower().startswith("pattern group"):
+            subtitle = _pattern_descriptor(pattern)
+        pieces.append(
+            _svg_field(
+                16 + index * panel_width,
+                84,
+                panel_width - 18,
+                panel_height,
+                paths,
+                pattern,
+                f"Pattern {index + 1}",
+                subtitle,
+            )
+        )
+    legend_y = 632
+    pieces.append(f'<line x1="26" y1="{legend_y - 5}" x2="50" y2="{legend_y - 5}" stroke="{PAPER_COLORS["goal"]}" stroke-width="2.5"/>')
+    pieces.append(_svg_text(57, legend_y, "goal", size=11, color=PAPER_COLORS["muted"]))
+    pieces.append(f'<line x1="105" y1="{legend_y - 5}" x2="129" y2="{legend_y - 5}" stroke="{PAPER_COLORS["turnover"]}" stroke-width="2.5"/>')
+    pieces.append(_svg_text(136, legend_y, "turnover", size=11, color=PAPER_COLORS["muted"]))
+    pieces.append(_svg_text(1092, legend_y, "O-line only; paths are drawn in actual field coordinates.", size=11, color=PAPER_COLORS["muted"], anchor="end"))
+    pieces.append("</svg>")
+    out_path.write_text("".join(pieces), encoding="utf-8")
+
+
+def _heat_color(value, maximum):
+    if maximum <= 0:
+        fraction = 0.0
+    else:
+        fraction = max(0.0, min(1.0, float(value) / maximum))
+    light = (244, 250, 242)
+    dark = (8, 91, 48)
+    channels = [round(light[i] + fraction * (dark[i] - light[i])) for i in range(3)]
+    return "#" + "".join(f"{channel:02x}" for channel in channels)
+
+
+def write_heatmap_svg(heatmap_rows, league_mode, out_path: Path):
+    cell_w = 16
+    cell_h = 25
+    left = 190
+    top = 86
+    right = 185
+    bottom = 52
+    columns = HEATMAP_MAX_THROWS
+    width = left + columns * cell_w + right
+    height = top + len(heatmap_rows) * cell_h + bottom
+    maximum = max(
+        [
+            count / row["o_line_goal_possessions"]
+            for row in heatmap_rows
+            for throw_count, count in row["counts"].items()
+            if int(throw_count) <= HEATMAP_MAX_THROWS and row["o_line_goal_possessions"]
+        ]
+        or [0.0]
+    )
+    pieces = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
+        f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
+        _svg_text(24, 30, "O-line goal possession throw-count distribution", size=20, weight="700"),
+        _svg_text(24, 52, f"Each row is normalized within team; league-wide mode = {league_mode} throws.", size=12, color=PAPER_COLORS["muted"]),
+        _svg_text(left - 14, top - 18, "Team", size=11, weight="700", anchor="end"),
+        _svg_text(left + columns * cell_w + 30, top - 18, "n goals", size=11, weight="700"),
+    ]
+    for column in range(1, columns + 1):
+        if column == 1 or column % 2 == 0:
+            pieces.append(_svg_text(left + (column - 0.5) * cell_w, top - 27, str(column), size=9, color=PAPER_COLORS["muted"], anchor="middle"))
+    for row_index, row in enumerate(heatmap_rows):
+        y = top + row_index * cell_h
+        name = row["team_name"].replace("New York ", "").replace("Austin ", "").replace("Minnesota ", "").replace("Oakland ", "")
+        label = f"{name} (mode {row['mode_throws']})"
+        pieces.append(_svg_text(left - 12, y + 17, label, size=10.5, anchor="end"))
+        pieces.append(_svg_text(left + columns * cell_w + 30, y + 17, str(row["o_line_goal_possessions"]), size=10.5, color=PAPER_COLORS["muted"]))
+        for column in range(1, columns + 1):
+            count = row["counts"].get(str(column), 0)
+            share = count / row["o_line_goal_possessions"] if row["o_line_goal_possessions"] else 0.0
+            pieces.append(
+                f'<rect x="{left + (column - 1) * cell_w}" y="{y}" width="{cell_w}" height="{cell_h}" '
+                f'fill="{_heat_color(share, maximum)}" stroke="#ffffff" stroke-width="0.5"/>'
+            )
+    legend_x = left + columns * cell_w + 86
+    legend_y = top + 25
+    pieces.append(_svg_text(legend_x, legend_y - 12, "share of team goals", size=10, weight="700", anchor="middle"))
+    for index in range(6):
+        fraction = index / 5
+        y = legend_y + index * 31
+        pieces.append(f'<rect x="{legend_x - 15}" y="{y}" width="30" height="31" fill="{_heat_color(maximum * (1 - fraction), maximum)}"/>')
+        pieces.append(_svg_text(legend_x + 22, y + 20, f"{maximum * (1 - fraction):.2f}", size=9, color=PAPER_COLORS["muted"]))
+    pieces.append(_svg_text(24, height - 15, "Rows are regular-season O-line goals; postseason game files are excluded.", size=10.5, color=PAPER_COLORS["muted"]))
+    pieces.append("</svg>")
+    out_path.write_text("".join(pieces), encoding="utf-8")
+
+
+def write_tables(results, output_dir: Path):
+    pattern_frame = pd.DataFrame(results["pattern_rows"])
+    team_frame = pd.DataFrame(results["team_summaries"])
+    pattern_frame.to_csv(output_dir / "pattern_metrics.csv", index=False)
+    team_frame.to_csv(output_dir / "team_metrics.csv", index=False)
+
+    team_rows = []
+    for row in results["team_summaries"]:
+        team_rows.append(
+            " & ".join(
+                [
+                    _latex_text(row["team_name"]),
+                    str(row["regular_season_games"]),
+                    str(row["o_line_possessions"]),
+                    str(row["goals"]),
+                    str(row["turnovers"]),
+                    _latex_percent(row["efficiency"]),
+                    _latex_number(row["total_aec_per_possession"]),
+                    _latex_number(row["aec_per_throw"]),
+                ]
+            )
+            + r" \\"
+        )
+    team_rows.append(r"\bottomrule")
+    (output_dir / "generated_team_table.tex").write_text(
+        "\n".join(team_rows) + "\n", encoding="utf-8"
+    )
+
+    pattern_rows = []
+    for row in results["pattern_rows"]:
+        pattern_rows.append(
+            " & ".join(
+                [
+                    _latex_text(row["team_name"]),
+                    str(row["pattern"]),
+                    str(row["n"]),
+                    _latex_percent(row["share"]),
+                    str(row["goals"]),
+                    str(row["turnovers"]),
+                    _latex_percent(row["efficiency"]),
+                    _latex_number(row["total_aec_per_possession"]),
+                    _latex_number(row["aec_per_throw"]),
+                    _latex_number(row["median_throws"], 1),
+                ]
+            )
+            + r" \\"
+        )
+    pattern_rows.append(r"\bottomrule")
+    (output_dir / "generated_pattern_table.tex").write_text(
+        "\n".join(pattern_rows) + "\n", encoding="utf-8"
+    )
+
+    heatmap_rows = []
+    for row in results["heatmap_rows"]:
+        heatmap_rows.append(
+            " & ".join(
+                [
+                    _latex_text(row["team_name"]),
+                    str(row["o_line_goal_possessions"]),
+                    str(row["mode_throws"]),
+                ]
+            )
+            + r" \\"
+        )
+    (output_dir / "generated_heatmap_table.tex").write_text(
+        "\n".join(heatmap_rows) + "\n", encoding="utf-8"
+    )
+
+
+def _json_safe(results):
+    safe = {key: value for key, value in results.items() if key != "loaded"}
+    return safe
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Build LaTeX-ready UFA team possession pattern figures.")
+    parser.add_argument("--season", type=int, default=2026)
+    parser.add_argument("--regular-season-end", type=date.fromisoformat, default=REGULAR_SEASON_END)
+    parser.add_argument("--source-dir", type=Path, default=None)
+    parser.add_argument("--arrangement-dir", type=Path, default=None)
+    parser.add_argument("--output-dir", type=Path, default=None)
+    args = parser.parse_args()
+
+    source_dir = args.source_dir or (REPO_ROOT / "data" / "raw" / f"shownspace_throws_{args.season}_by_game")
+    arrangement_dir = args.arrangement_dir or (REPO_ROOT / "data" / "arrangements" / str(args.season))
+    output_dir = args.output_dir or (REPO_ROOT / "paper" / "generated")
+    figure_dir = output_dir / "figures"
+    figure_dir.mkdir(parents=True, exist_ok=True)
+
+    results = collect_data(source_dir, arrangement_dir, args.regular_season_end)
+    (output_dir / "metrics.json").write_text(json.dumps(_json_safe(results), indent=2) + "\n", encoding="utf-8")
+
+    for team_id in FOCUS_TEAMS:
+        write_team_pattern_svg(team_id, results["focus_patterns"][team_id] | {"path_by_id": results["loaded"][team_id]["path_by_id"]}, figure_dir / f"{team_id}_top3_patterns.svg")
+    write_heatmap_svg(results["heatmap_rows"], results["league_mode_throws"], figure_dir / "league_throw_count_heatmap.svg")
+    write_tables(results, output_dir)
+
+    print(f"Regular-season window: {results['regular_season_start']} through {results['regular_season_end']}")
+    print(f"Teams in heatmap: {len(results['team_ids'])}; league O-line goals: {results['league_goal_possessions']:,}; mode: {results['league_mode_throws']} throws")
+    for row in results["team_summaries"]:
+        print(f"{row['team_name']}: {row['regular_season_games']} games, {row['o_line_possessions']} O-line possessions, {row['goals']} goals, {row['turnovers']} turnovers")
+    print(f"Wrote paper data and figures to {output_dir.resolve()}")
+
+
+if __name__ == "__main__":
+    main()
