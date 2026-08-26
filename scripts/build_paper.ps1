@@ -10,7 +10,7 @@ Get-ChildItem -LiteralPath $buildDir -File -ErrorAction SilentlyContinue |
     Remove-Item -Force
 
 # Remove files from older direct builds so TeX cannot read stale root-level aux data.
-@("aux", "bbl", "blg", "log", "out", "pdf", "synctex.gz") | ForEach-Object {
+@("aux", "bbl", "blg", "log", "out", "synctex.gz") | ForEach-Object {
     $stalePath = Join-Path $paperDir ("{0}.{1}" -f $document, $_)
     if (Test-Path -LiteralPath $stalePath) {
         Remove-Item -LiteralPath $stalePath -Force
@@ -55,4 +55,9 @@ finally {
     Pop-Location
 }
 
-Write-Host "Built $buildDir\$document.pdf"
+$builtPdf = Join-Path $buildDir "$document.pdf"
+$publishedPdf = Join-Path $paperDir "$document.pdf"
+Copy-Item -LiteralPath $builtPdf -Destination $publishedPdf -Force
+
+Write-Host "Built $builtPdf"
+Write-Host "Updated $publishedPdf for LaTeX Workshop preview"

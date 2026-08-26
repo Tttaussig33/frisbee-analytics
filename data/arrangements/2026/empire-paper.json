@@ -1,0 +1,2857 @@
+{
+  "saved_at": "2026-08-25T22:35:07.348Z",
+  "cards_shown": 514,
+  "filtered_possessions": 514,
+  "groups": [
+    {
+      "group_index": 1,
+      "title": "Codex O-line pattern 22 | middle-right | mixed | 9-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|12|1|False",
+          "label": "493. Goal O-line | 2026-08-08-NY-BOS | Q2 P12 | 5 throws | aEC/T 0.209 | total 1.043 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|8|1|False",
+          "label": "350. Goal O-line | 2026-07-10-NY-CHI | Q4 P8 | 6 throws | aEC/T 0.167 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|9|1|True",
+          "label": "47. Goal O-line | 2026-05-10-DC-NY | Q2 P9 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|13|1|True",
+          "label": "416. Goal O-line | 2026-07-17-PHI-NY | Q2 P13 | 6 throws | aEC/T 0.170 | total 1.023 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|1|1|True",
+          "label": "458. Goal O-line | 2026-07-25-DC-NY | Q3 P1 | 9 throws | aEC/T 0.124 | total 1.117 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|9|1|True",
+          "label": "68. Goal O-line | 2026-05-10-DC-NY | Q4 P9 | 10 throws | aEC/T 0.108 | total 1.078 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|1|1|True",
+          "label": "419. Goal O-line | 2026-07-17-PHI-NY | Q3 P1 | 13 throws | aEC/T 0.086 | total 1.114 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|1|1|False",
+          "label": "362. Goal O-line | 2026-07-12-NY-TOR | Q2 P1 | 6 throws | aEC/T 0.180 | total 1.077 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|8|1|False",
+          "label": "501. Turnover O-line | 2026-08-08-NY-BOS | Q3 P8 | 7 throws | aEC/T -0.022 | total -0.155 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|5|1|True",
+          "label": "54. Turnover O-line | 2026-05-10-DC-NY | Q3 P5 | 7 throws | aEC/T -0.039 | total -0.271 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|11|1|True",
+          "label": "438. Goal O-line | 2026-07-17-PHI-NY | Q4 P11 | 8 throws | aEC/T 0.126 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|11|1|False",
+          "label": "331. Goal O-line | 2026-07-10-NY-CHI | Q2 P11 | 9 throws | aEC/T 0.114 | total 1.028 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|10|1|True",
+          "label": "59. Turnover O-line | 2026-05-10-DC-NY | Q3 P10 | 9 throws | aEC/T 0.000 | total 0.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|10|1|True",
+          "label": "90. Goal O-line | 2026-05-16-COL-NY | Q2 P10 | 9 throws | aEC/T 0.111 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|11|1|False",
+          "label": "359. Goal O-line | 2026-07-12-NY-TOR | Q1 P11 | 10 throws | aEC/T 0.101 | total 1.012 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|2|1|False",
+          "label": "376. Turnover O-line | 2026-07-12-NY-TOR | Q3 P2 | 10 throws | aEC/T -0.032 | total -0.319 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|5|1|True",
+          "label": "44. Goal O-line | 2026-05-10-DC-NY | Q2 P5 | 12 throws | aEC/T 0.083 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|12|1|True",
+          "label": "49. Goal O-line | 2026-05-10-DC-NY | Q2 P12 | 12 throws | aEC/T 0.087 | total 1.039 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|3|1|1|True",
+          "label": "263. Goal O-line | 2026-06-12-BOS-NY | Q3 P1 | 14 throws | aEC/T 0.076 | total 1.067 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|7|1|False",
+          "label": "117. Goal O-line | 2026-05-23-NY-DC | Q1 P7 | 18 throws | aEC/T 0.050 | total 0.893 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|15|1|False",
+          "label": "344. Goal O-line | 2026-07-10-NY-CHI | Q3 P15 | 4 throws | aEC/T 0.271 | total 1.085 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|8|1|True",
+          "label": "423. Goal O-line | 2026-07-17-PHI-NY | Q3 P8 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|1|1|True",
+          "label": "74. Goal O-line | 2026-05-16-COL-NY | Q1 P1 | 5 throws | aEC/T 0.213 | total 1.064 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|7|1|True",
+          "label": "156. Turnover O-line | 2026-05-29-PIT-NY | Q2 P7 | 5 throws | aEC/T -0.073 | total -0.364 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|2|1|False",
+          "label": "223. Goal O-line | 2026-06-06-NY-MTL | Q2 P2 | 5 throws | aEC/T 0.211 | total 1.053 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|5|1|False",
+          "label": "322. Goal O-line | 2026-07-10-NY-CHI | Q1 P5 | 6 throws | aEC/T 0.168 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|9|1|False",
+          "label": "369. Turnover O-line | 2026-07-12-NY-TOR | Q2 P9 | 6 throws | aEC/T 0.001 | total 0.009 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|2|8|1|True",
+          "label": "12. Turnover O-line | 2026-05-01-TOR-NY | Q2 P8 | 6 throws | aEC/T -0.049 | total -0.296 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|1|1|False",
+          "label": "477. Goal O-line | 2026-08-08-NY-BOS | Q1 P1 | 7 throws | aEC/T 0.155 | total 1.083 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|3|1|True",
+          "label": "53. Goal O-line | 2026-05-10-DC-NY | Q3 P3 | 7 throws | aEC/T 0.143 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|4|1|True",
+          "label": "65. Goal O-line | 2026-05-10-DC-NY | Q4 P4 | 8 throws | aEC/T 0.109 | total 0.875 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|9|1|True",
+          "label": "404. Goal O-line | 2026-07-17-PHI-NY | Q1 P9 | 8 throws | aEC/T 0.126 | total 1.009 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|2|1|False",
+          "label": "135. Goal O-line | 2026-05-23-NY-DC | Q4 P2 | 8 throws | aEC/T 0.125 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|3|1|True",
+          "label": "154. Goal O-line | 2026-05-29-PIT-NY | Q2 P3 | 11 throws | aEC/T 0.090 | total 0.990 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|4|1|False",
+          "label": "242. Goal O-line | 2026-06-06-NY-MTL | Q4 P4 | 11 throws | aEC/T 0.082 | total 0.898 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|7|1|False",
+          "label": "229. Goal O-line | 2026-06-06-NY-MTL | Q2 P7 | 12 throws | aEC/T 0.093 | total 1.118 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|1|1|True",
+          "label": "142. Goal O-line | 2026-05-29-PIT-NY | Q1 P1 | 13 throws | aEC/T 0.083 | total 1.076 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 2,
+      "title": "Codex O-line pattern 07 | middle-middle | direct | 3-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|15|1|False",
+          "label": "375. Goal O-line | 2026-07-12-NY-TOR | Q2 P15 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|6|3|False",
+          "label": "244. Turnover O-line | 2026-06-06-NY-MTL | Q4 P6 | 1 throws | aEC/T -0.642 | total -0.642 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|2|6|1|True",
+          "label": "11. Goal O-line | 2026-05-01-TOR-NY | Q2 P6 | 2 throws | aEC/T 0.500 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|5|1|True",
+          "label": "443. Goal O-line | 2026-07-25-DC-NY | Q1 P5 | 2 throws | aEC/T 0.499 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|3|1|False",
+          "label": "335. Goal O-line | 2026-07-10-NY-CHI | Q3 P3 | 3 throws | aEC/T 0.337 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|15|1|True",
+          "label": "51. Goal O-line | 2026-05-10-DC-NY | Q2 P15 | 3 throws | aEC/T 0.344 | total 1.031 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|5|1|True",
+          "label": "155. Goal O-line | 2026-05-29-PIT-NY | Q2 P5 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|1|1|False",
+          "label": "133. Turnover O-line | 2026-05-23-NY-DC | Q4 P1 | 3 throws | aEC/T -0.175 | total -0.525 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|7|1|True",
+          "label": "57. Goal O-line | 2026-05-10-DC-NY | Q3 P7 | 7 throws | aEC/T 0.143 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|11|1|False",
+          "label": "371. Goal O-line | 2026-07-12-NY-TOR | Q2 P11 | 3 throws | aEC/T 0.334 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|10|1|True",
+          "label": "414. Goal O-line | 2026-07-17-PHI-NY | Q2 P10 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|4|3|False",
+          "label": "218. Turnover O-line | 2026-06-06-NY-MTL | Q1 P4 | 3 throws | aEC/T -0.164 | total -0.492 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|10|1|False",
+          "label": "383. Goal O-line | 2026-07-12-NY-TOR | Q3 P10 | 3 throws | aEC/T 0.344 | total 1.032 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|12|1|True",
+          "label": "61. Goal O-line | 2026-05-10-DC-NY | Q3 P12 | 7 throws | aEC/T 0.157 | total 1.097 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|14|1|True",
+          "label": "426. Goal O-line | 2026-07-17-PHI-NY | Q3 P14 | 4 throws | aEC/T 0.255 | total 1.021 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|10|1|False",
+          "label": "505. Goal O-line | 2026-08-08-NY-BOS | Q3 P10 | 4 throws | aEC/T 0.245 | total 0.979 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|9|1|False",
+          "label": "247. Turnover O-line | 2026-06-06-NY-MTL | Q4 P9 | 4 throws | aEC/T -0.114 | total -0.456 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|5|1|True",
+          "label": "175. Goal O-line | 2026-05-29-PIT-NY | Q4 P5 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|8|1|True",
+          "label": "22. Goal O-line | 2026-05-01-TOR-NY | Q3 P8 | 5 throws | aEC/T 0.184 | total 0.922 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|4|1|True",
+          "label": "411. Goal O-line | 2026-07-17-PHI-NY | Q2 P4 | 5 throws | aEC/T 0.199 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|5|3|1|True",
+          "label": "277. Goal O-line | 2026-06-12-BOS-NY | Q5 P3 | 5 throws | aEC/T 0.209 | total 1.047 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|8|1|True",
+          "label": "413. Goal O-line | 2026-07-17-PHI-NY | Q2 P8 | 5 throws | aEC/T 0.196 | total 0.979 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 3,
+      "title": "Codex O-line pattern 23 | middle-middle | mixed | 9-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-25-DC-NY|4|6|6|True",
+          "label": "474. Goal O-line | 2026-07-25-DC-NY | Q4 P6 | 4 throws | aEC/T 0.229 | total 0.916 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|1|1|True",
+          "label": "15. Goal O-line | 2026-05-01-TOR-NY | Q3 P1 | 5 throws | aEC/T 0.215 | total 1.077 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|9|1|True",
+          "label": "58. Turnover O-line | 2026-05-10-DC-NY | Q3 P9 | 5 throws | aEC/T -0.059 | total -0.295 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|4|1|False",
+          "label": "379. Goal O-line | 2026-07-12-NY-TOR | Q3 P4 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|7|1|True",
+          "label": "100. Goal O-line | 2026-05-16-COL-NY | Q3 P7 | 7 throws | aEC/T 0.144 | total 1.005 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|9|1|False",
+          "label": "513. Goal O-line | 2026-08-08-NY-BOS | Q4 P9 | 7 throws | aEC/T 0.147 | total 1.026 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|4|2|1|True",
+          "label": "269. Turnover O-line | 2026-06-12-BOS-NY | Q4 P2 | 8 throws | aEC/T -0.020 | total -0.160 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|11|1|True",
+          "label": "103. Goal O-line | 2026-05-16-COL-NY | Q3 P11 | 8 throws | aEC/T 0.141 | total 1.131 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|1|1|1|True",
+          "label": "1. Goal O-line | 2026-05-01-TOR-NY | Q1 P1 | 9 throws | aEC/T 0.124 | total 1.113 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|5|1|False",
+          "label": "510. Goal O-line | 2026-08-08-NY-BOS | Q4 P5 | 9 throws | aEC/T 0.101 | total 0.913 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|2|1|False",
+          "label": "485. Goal O-line | 2026-08-08-NY-BOS | Q2 P2 | 9 throws | aEC/T 0.098 | total 0.883 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|1|10|1|False",
+          "label": "190. Goal O-line | 2026-06-05-NY-BOS | Q1 P10 | 10 throws | aEC/T 0.126 | total 1.264 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|4|1|True",
+          "label": "26. Goal O-line | 2026-05-01-TOR-NY | Q4 P4 | 10 throws | aEC/T 0.099 | total 0.988 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|4|1|True",
+          "label": "470. Goal O-line | 2026-07-25-DC-NY | Q4 P4 | 11 throws | aEC/T 0.090 | total 0.987 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|2|3|1|False",
+          "label": "123. Goal O-line | 2026-05-23-NY-DC | Q2 P3 | 13 throws | aEC/T 0.076 | total 0.983 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|2|2|3|True",
+          "label": "452. Goal O-line | 2026-07-25-DC-NY | Q2 P2 | 13 throws | aEC/T 0.076 | total 0.991 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|3|1|True",
+          "label": "16. Goal O-line | 2026-05-01-TOR-NY | Q3 P3 | 18 throws | aEC/T 0.055 | total 0.986 | Unclustered",
+          "overlay_selected": true
+        }
+      ]
+    },
+    {
+      "group_index": 4,
+      "title": "Codex O-line pattern 32 | middle-right | winding | 14-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-01-NY-PHI|3|4|1|False",
+          "label": "299. Goal O-line | 2026-07-01-NY-PHI | Q3 P4 | 10 throws | aEC/T 0.099 | total 0.986 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|9|1|False",
+          "label": "330. Goal O-line | 2026-07-10-NY-CHI | Q2 P9 | 11 throws | aEC/T 0.091 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|5|3|1|True",
+          "label": "71. Goal O-line | 2026-05-10-DC-NY | Q5 P3 | 12 throws | aEC/T 0.085 | total 1.020 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|9|1|True",
+          "label": "30. Goal O-line | 2026-05-01-TOR-NY | Q4 P9 | 13 throws | aEC/T 0.078 | total 1.011 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|6|1|True",
+          "label": "422. Goal O-line | 2026-07-17-PHI-NY | Q3 P6 | 14 throws | aEC/T 0.071 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|1|1|True",
+          "label": "40. Goal O-line | 2026-05-10-DC-NY | Q2 P1 | 14 throws | aEC/T 0.082 | total 1.146 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|3|4|3|False",
+          "label": "132. Goal O-line | 2026-05-23-NY-DC | Q3 P4 | 15 throws | aEC/T 0.081 | total 1.222 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|15|1|True",
+          "label": "440. Goal O-line | 2026-07-17-PHI-NY | Q4 P15 | 16 throws | aEC/T 0.086 | total 1.383 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|1|1|True",
+          "label": "94. Goal O-line | 2026-05-16-COL-NY | Q3 P1 | 17 throws | aEC/T 0.068 | total 1.155 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|3|1|False",
+          "label": "281. Goal O-line | 2026-07-01-NY-PHI | Q1 P3 | 21 throws | aEC/T 0.047 | total 0.983 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|3|7|1|True",
+          "label": "267. Goal O-line | 2026-06-12-BOS-NY | Q3 P7 | 23 throws | aEC/T 0.044 | total 1.020 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 5,
+      "title": "Codex O-line pattern 10 | middle-left | direct | 5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|3|1|True",
+          "label": "431. Turnover O-line | 2026-07-17-PHI-NY | Q4 P3 | 4 throws | aEC/T -0.089 | total -0.358 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|1|3|True",
+          "label": "63. Turnover O-line | 2026-05-10-DC-NY | Q4 P1 | 4 throws | aEC/T -0.055 | total -0.221 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|5|1|False",
+          "label": "219. Turnover O-line | 2026-06-06-NY-MTL | Q1 P5 | 5 throws | aEC/T -0.105 | total -0.524 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|2|1|False",
+          "label": "231. Turnover O-line | 2026-06-06-NY-MTL | Q3 P2 | 5 throws | aEC/T -0.114 | total -0.570 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|7|1|False",
+          "label": "196. Goal O-line | 2026-06-05-NY-BOS | Q2 P7 | 5 throws | aEC/T 0.194 | total 0.970 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|1|1|False",
+          "label": "305. Goal O-line | 2026-07-01-NY-PHI | Q4 P1 | 6 throws | aEC/T 0.180 | total 1.079 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|2|1|True",
+          "label": "172. Turnover O-line | 2026-05-29-PIT-NY | Q4 P2 | 6 throws | aEC/T 0.015 | total 0.093 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|2|1|True",
+          "label": "25. Goal O-line | 2026-05-01-TOR-NY | Q4 P2 | 6 throws | aEC/T 0.169 | total 1.014 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|1|8|1|False",
+          "label": "188. Turnover O-line | 2026-06-05-NY-BOS | Q1 P8 | 10 throws | aEC/T -0.065 | total -0.650 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 6,
+      "title": "Codex O-line pattern 15 | middle-left | mixed | 7-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|4|1|False",
+          "label": "201. Goal O-line | 2026-06-05-NY-BOS | Q3 P4 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|4|6|1|True",
+          "label": "273. Goal O-line | 2026-06-12-BOS-NY | Q4 P6 | 4 throws | aEC/T 0.236 | total 0.943 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|5|1|False",
+          "label": "194. Turnover O-line | 2026-06-05-NY-BOS | Q2 P5 | 6 throws | aEC/T -0.069 | total -0.415 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|1|1|True",
+          "label": "62. Turnover O-line | 2026-05-10-DC-NY | Q4 P1 | 6 throws | aEC/T -0.056 | total -0.338 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|3|1|False",
+          "label": "306. Goal O-line | 2026-07-01-NY-PHI | Q4 P3 | 6 throws | aEC/T 0.168 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|3|1|False",
+          "label": "508. Turnover O-line | 2026-08-08-NY-BOS | Q4 P3 | 7 throws | aEC/T -0.058 | total -0.405 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|2|3|False",
+          "label": "377. Goal O-line | 2026-07-12-NY-TOR | Q3 P2 | 7 throws | aEC/T 0.141 | total 0.989 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|7|1|False",
+          "label": "499. Turnover O-line | 2026-08-08-NY-BOS | Q3 P7 | 8 throws | aEC/T -0.031 | total -0.246 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|13|1|False",
+          "label": "343. Goal O-line | 2026-07-10-NY-CHI | Q3 P13 | 8 throws | aEC/T 0.143 | total 1.140 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|3|2|1|False",
+          "label": "130. Goal O-line | 2026-05-23-NY-DC | Q3 P2 | 8 throws | aEC/T 0.102 | total 0.812 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|2|1|False",
+          "label": "353. Goal O-line | 2026-07-12-NY-TOR | Q1 P2 | 9 throws | aEC/T 0.116 | total 1.042 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|1|6|1|True",
+          "label": "5. Goal O-line | 2026-05-01-TOR-NY | Q1 P6 | 9 throws | aEC/T 0.112 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 7,
+      "title": "Codex O-line pattern 14 | right-left | mixed | 6-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|1|1|False",
+          "label": "385. Turnover O-line | 2026-07-12-NY-TOR | Q4 P1 | 3 throws | aEC/T -0.154 | total -0.461 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|3|7|1|False",
+          "label": "301. Goal O-line | 2026-07-01-NY-PHI | Q3 P7 | 4 throws | aEC/T 0.240 | total 0.959 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|5|1|False",
+          "label": "388. Turnover O-line | 2026-07-12-NY-TOR | Q4 P5 | 5 throws | aEC/T -0.072 | total -0.362 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|6|1|False",
+          "label": "487. Goal O-line | 2026-08-08-NY-BOS | Q2 P6 | 5 throws | aEC/T 0.181 | total 0.905 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|2|2|1|True",
+          "label": "451. Turnover O-line | 2026-07-25-DC-NY | Q2 P2 | 7 throws | aEC/T -0.013 | total -0.092 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|4|1|False",
+          "label": "290. Goal O-line | 2026-07-01-NY-PHI | Q2 P4 | 7 throws | aEC/T 0.141 | total 0.989 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|1|4|1|True",
+          "label": "36. Turnover O-line | 2026-05-10-DC-NY | Q1 P4 | 8 throws | aEC/T -0.057 | total -0.455 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 8,
+      "title": "Codex O-line pattern 08 | right-left | mixed | 3.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|9|1|False",
+          "label": "482. Goal O-line | 2026-08-08-NY-BOS | Q1 P9 | 2 throws | aEC/T 0.501 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|13|1|False",
+          "label": "313. Goal O-line | 2026-07-01-NY-PHI | Q4 P13 | 3 throws | aEC/T 0.350 | total 1.050 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|8|3|False",
+          "label": "502. Turnover O-line | 2026-08-08-NY-BOS | Q3 P8 | 4 throws | aEC/T 0.047 | total 0.186 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|3|1|True",
+          "label": "95. Turnover O-line | 2026-05-16-COL-NY | Q3 P3 | 6 throws | aEC/T 0.014 | total 0.082 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 9,
+      "title": "Codex O-line pattern 11 | middle-left | mixed | 5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|10|1|False",
+          "label": "198. Goal O-line | 2026-06-05-NY-BOS | Q2 P10 | 3 throws | aEC/T 0.356 | total 1.068 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|7|3|True",
+          "label": "157. Goal O-line | 2026-05-29-PIT-NY | Q2 P7 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|6|1|False",
+          "label": "202. Goal O-line | 2026-06-05-NY-BOS | Q3 P6 | 5 throws | aEC/T 0.153 | total 0.767 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|7|1|False",
+          "label": "329. Goal O-line | 2026-07-10-NY-CHI | Q2 P7 | 11 throws | aEC/T 0.095 | total 1.049 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|4|1|False",
+          "label": "354. Goal O-line | 2026-07-12-NY-TOR | Q1 P4 | 11 throws | aEC/T 0.090 | total 0.991 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 10,
+      "title": "Codex O-line pattern 12 | middle-right | mixed | 5.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|2|3|True",
+          "label": "173. Goal O-line | 2026-05-29-PIT-NY | Q4 P2 | 2 throws | aEC/T 0.498 | total 0.996 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|1|1|False",
+          "label": "334. Goal O-line | 2026-07-10-NY-CHI | Q3 P1 | 3 throws | aEC/T 0.350 | total 1.050 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|5|1|True",
+          "label": "17. Goal O-line | 2026-05-01-TOR-NY | Q3 P5 | 5 throws | aEC/T 0.200 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|3|3|False",
+          "label": "497. Goal O-line | 2026-08-08-NY-BOS | Q3 P3 | 5 throws | aEC/T 0.199 | total 0.996 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|1|1|False",
+          "label": "222. Turnover O-line | 2026-06-06-NY-MTL | Q2 P1 | 5 throws | aEC/T -0.026 | total -0.129 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|1|4|1|True",
+          "label": "4. Goal O-line | 2026-05-01-TOR-NY | Q1 P4 | 6 throws | aEC/T 0.170 | total 1.018 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|1|8|3|False",
+          "label": "189. Goal O-line | 2026-06-05-NY-BOS | Q1 P8 | 7 throws | aEC/T 0.139 | total 0.975 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|9|1|False",
+          "label": "311. Goal O-line | 2026-07-01-NY-PHI | Q4 P9 | 7 throws | aEC/T 0.143 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|8|1|False",
+          "label": "488. Goal O-line | 2026-08-08-NY-BOS | Q2 P8 | 7 throws | aEC/T 0.143 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|8|1|False",
+          "label": "292. Goal O-line | 2026-07-01-NY-PHI | Q2 P8 | 9 throws | aEC/T 0.111 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 11,
+      "title": "Codex O-line pattern 17 | left-right | winding | 7.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|10|1|False",
+          "label": "341. Turnover O-line | 2026-07-10-NY-CHI | Q3 P10 | 4 throws | aEC/T -0.170 | total -0.682 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|2|7|1|True",
+          "label": "259. Turnover O-line | 2026-06-12-BOS-NY | Q2 P7 | 7 throws | aEC/T -0.078 | total -0.545 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|5|2|1|True",
+          "label": "276. Turnover O-line | 2026-06-12-BOS-NY | Q5 P2 | 8 throws | aEC/T -0.038 | total -0.305 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|9|1|False",
+          "label": "392. Turnover O-line | 2026-07-12-NY-TOR | Q4 P9 | 11 throws | aEC/T -0.036 | total -0.394 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 12,
+      "title": "Codex O-line pattern 18 | middle-left | mixed | 8-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|10|1|True",
+          "label": "159. Goal O-line | 2026-05-29-PIT-NY | Q2 P10 | 5 throws | aEC/T 0.204 | total 1.021 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|4|7|1|False",
+          "label": "211. Goal O-line | 2026-06-05-NY-BOS | Q4 P7 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|5|3|False",
+          "label": "283. Goal O-line | 2026-07-01-NY-PHI | Q1 P5 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|1|1|False",
+          "label": "495. Goal O-line | 2026-08-08-NY-BOS | Q3 P1 | 7 throws | aEC/T 0.152 | total 1.061 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|1|1|False",
+          "label": "288. Goal O-line | 2026-07-01-NY-PHI | Q2 P1 | 8 throws | aEC/T 0.136 | total 1.092 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|4|1|True",
+          "label": "86. Goal O-line | 2026-05-16-COL-NY | Q2 P4 | 8 throws | aEC/T 0.124 | total 0.992 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|3|1|True",
+          "label": "420. Goal O-line | 2026-07-17-PHI-NY | Q3 P3 | 9 throws | aEC/T 0.111 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|3|1|False",
+          "label": "387. Goal O-line | 2026-07-12-NY-TOR | Q4 P3 | 9 throws | aEC/T 0.106 | total 0.954 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|3|2|1|False",
+          "label": "298. Goal O-line | 2026-07-01-NY-PHI | Q3 P2 | 9 throws | aEC/T 0.113 | total 1.017 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|11|1|False",
+          "label": "342. Goal O-line | 2026-07-10-NY-CHI | Q3 P11 | 12 throws | aEC/T 0.087 | total 1.039 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 13,
+      "title": "Codex O-line pattern 25 | right-right | mixed | 9.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|7|1|False",
+          "label": "245. Turnover O-line | 2026-06-06-NY-MTL | Q4 P7 | 8 throws | aEC/T -0.047 | total -0.372 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|6|1|True",
+          "label": "434. Goal O-line | 2026-07-17-PHI-NY | Q4 P6 | 9 throws | aEC/T 0.111 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|2|1|False",
+          "label": "279. Turnover O-line | 2026-07-01-NY-PHI | Q1 P2 | 9 throws | aEC/T -0.039 | total -0.350 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|5|1|True",
+          "label": "461. Goal O-line | 2026-07-25-DC-NY | Q3 P5 | 10 throws | aEC/T 0.092 | total 0.919 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|8|1|True",
+          "label": "445. Goal O-line | 2026-07-25-DC-NY | Q1 P8 | 12 throws | aEC/T 0.084 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 14,
+      "title": "Codex O-line pattern 19 | middle-middle | winding | 8-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|8|5|False",
+          "label": "503. Turnover O-line | 2026-08-08-NY-BOS | Q3 P8 | 3 throws | aEC/T -0.142 | total -0.427 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|3|12|1|False",
+          "label": "304. Turnover O-line | 2026-07-01-NY-PHI | Q3 P12 | 4 throws | aEC/T -0.060 | total -0.242 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|2|3|False",
+          "label": "280. Turnover O-line | 2026-07-01-NY-PHI | Q1 P2 | 4 throws | aEC/T -0.146 | total -0.585 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|4|2|1|False",
+          "label": "207. Turnover O-line | 2026-06-05-NY-BOS | Q4 P2 | 6 throws | aEC/T -0.071 | total -0.427 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|1|1|False",
+          "label": "314. Turnover O-line | 2026-07-10-NY-CHI | Q1 P1 | 6 throws | aEC/T -0.078 | total -0.468 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|4|1|False",
+          "label": "193. Turnover O-line | 2026-06-05-NY-BOS | Q2 P4 | 7 throws | aEC/T -0.049 | total -0.340 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|6|1|True",
+          "label": "99. Turnover O-line | 2026-05-16-COL-NY | Q3 P6 | 8 throws | aEC/T -0.032 | total -0.260 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|9|1|False",
+          "label": "205. Turnover O-line | 2026-06-05-NY-BOS | Q3 P9 | 9 throws | aEC/T -0.036 | total -0.325 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|10|3|False",
+          "label": "249. Turnover O-line | 2026-06-06-NY-MTL | Q4 P10 | 9 throws | aEC/T 0.030 | total 0.272 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|2|8|1|True",
+          "label": "456. Turnover O-line | 2026-07-25-DC-NY | Q2 P8 | 10 throws | aEC/T 0.001 | total 0.014 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|1|1|True",
+          "label": "396. Turnover O-line | 2026-07-17-PHI-NY | Q1 P1 | 11 throws | aEC/T -0.018 | total -0.203 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|3|6|1|False",
+          "label": "300. Turnover O-line | 2026-07-01-NY-PHI | Q3 P6 | 15 throws | aEC/T -0.011 | total -0.168 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|1|2|1|True",
+          "label": "33. Turnover O-line | 2026-05-10-DC-NY | Q1 P2 | 20 throws | aEC/T 0.003 | total 0.055 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 15,
+      "title": "Codex O-line pattern 20 | middle-left | mixed | 8-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-10-DC-NY|2|14|1|True",
+          "label": "50. Turnover O-line | 2026-05-10-DC-NY | Q2 P14 | 2 throws | aEC/T -0.165 | total -0.329 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|7|3|False",
+          "label": "246. Goal O-line | 2026-06-06-NY-MTL | Q4 P7 | 4 throws | aEC/T 0.241 | total 0.963 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|5|1|True",
+          "label": "80. Goal O-line | 2026-05-16-COL-NY | Q1 P5 | 5 throws | aEC/T 0.197 | total 0.984 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|4|6|1|False",
+          "label": "210. Turnover O-line | 2026-06-05-NY-BOS | Q4 P6 | 5 throws | aEC/T -0.117 | total -0.585 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|11|1|False",
+          "label": "312. Goal O-line | 2026-07-01-NY-PHI | Q4 P11 | 8 throws | aEC/T 0.127 | total 1.012 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|10|1|True",
+          "label": "109. Goal O-line | 2026-05-16-COL-NY | Q4 P10 | 8 throws | aEC/T 0.119 | total 0.953 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|12|1|False",
+          "label": "384. Goal O-line | 2026-07-12-NY-TOR | Q3 P12 | 8 throws | aEC/T 0.147 | total 1.179 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|2|1|True",
+          "label": "64. Goal O-line | 2026-05-10-DC-NY | Q4 P2 | 9 throws | aEC/T 0.110 | total 0.987 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|7|1|True",
+          "label": "462. Goal O-line | 2026-07-25-DC-NY | Q3 P7 | 10 throws | aEC/T 0.099 | total 0.985 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|8|1|False",
+          "label": "382. Goal O-line | 2026-07-12-NY-TOR | Q3 P8 | 10 throws | aEC/T 0.101 | total 1.014 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 16,
+      "title": "Codex O-line pattern 21 | right-right | winding | 8-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|11|1|True",
+          "label": "31. Goal O-line | 2026-05-01-TOR-NY | Q4 P11 | 6 throws | aEC/T 0.160 | total 0.963 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|3|4|1|False",
+          "label": "131. Turnover O-line | 2026-05-23-NY-DC | Q3 P4 | 7 throws | aEC/T -0.080 | total -0.558 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|3|9|1|True",
+          "label": "268. Turnover O-line | 2026-06-12-BOS-NY | Q3 P9 | 7 throws | aEC/T -0.000 | total -0.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|1|9|1|True",
+          "label": "7. Goal O-line | 2026-05-01-TOR-NY | Q1 P9 | 8 throws | aEC/T 0.152 | total 1.217 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|2|6|1|False",
+          "label": "125. Turnover O-line | 2026-05-23-NY-DC | Q2 P6 | 8 throws | aEC/T -0.087 | total -0.695 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|2|5|1|True",
+          "label": "258. Goal O-line | 2026-06-12-BOS-NY | Q2 P5 | 10 throws | aEC/T 0.085 | total 0.853 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|5|1|True",
+          "label": "167. Goal O-line | 2026-05-29-PIT-NY | Q3 P5 | 14 throws | aEC/T 0.072 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|12|1|True",
+          "label": "91. Goal O-line | 2026-05-16-COL-NY | Q2 P12 | 16 throws | aEC/T 0.063 | total 1.014 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|6|1|True",
+          "label": "107. Goal O-line | 2026-05-16-COL-NY | Q4 P6 | 18 throws | aEC/T 0.059 | total 1.062 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 17,
+      "title": "Codex O-line pattern 24 | middle-right | winding | 9-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|12|1|True",
+          "label": "425. Goal O-line | 2026-07-17-PHI-NY | Q3 P12 | 3 throws | aEC/T 0.335 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|4|9|1|False",
+          "label": "213. Turnover O-line | 2026-06-05-NY-BOS | Q4 P9 | 4 throws | aEC/T -0.080 | total -0.321 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|3|1|False",
+          "label": "363. Goal O-line | 2026-07-12-NY-TOR | Q2 P3 | 9 throws | aEC/T 0.114 | total 1.024 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|9|1|False",
+          "label": "358. Goal O-line | 2026-07-12-NY-TOR | Q1 P9 | 9 throws | aEC/T 0.111 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|10|1|False",
+          "label": "351. Goal O-line | 2026-07-10-NY-CHI | Q4 P10 | 9 throws | aEC/T 0.112 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|1|1|False",
+          "label": "240. Goal O-line | 2026-06-06-NY-MTL | Q4 P1 | 10 throws | aEC/T 0.094 | total 0.937 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 18,
+      "title": "Codex O-line pattern 26 | right-left | mixed | 10-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|10|5|False",
+          "label": "250. Goal O-line | 2026-06-06-NY-MTL | Q4 P10 | 8 throws | aEC/T 0.145 | total 1.161 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|1|3|1|True",
+          "label": "252. Goal O-line | 2026-06-12-BOS-NY | Q1 P3 | 10 throws | aEC/T 0.099 | total 0.987 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|2|2|1|True",
+          "label": "256. Goal O-line | 2026-06-12-BOS-NY | Q2 P2 | 10 throws | aEC/T 0.099 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|15|1|True",
+          "label": "418. Goal O-line | 2026-07-17-PHI-NY | Q2 P15 | 10 throws | aEC/T 0.121 | total 1.209 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|2|1|True",
+          "label": "104. Goal O-line | 2026-05-16-COL-NY | Q4 P2 | 10 throws | aEC/T 0.092 | total 0.916 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|1|6|1|True",
+          "label": "39. Goal O-line | 2026-05-10-DC-NY | Q1 P6 | 10 throws | aEC/T 0.096 | total 0.958 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|5|1|True",
+          "label": "401. Goal O-line | 2026-07-17-PHI-NY | Q1 P5 | 10 throws | aEC/T 0.100 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|4|1|False",
+          "label": "347. Goal O-line | 2026-07-10-NY-CHI | Q4 P4 | 11 throws | aEC/T 0.090 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|4|3|1|False",
+          "label": "208. Goal O-line | 2026-06-05-NY-BOS | Q4 P3 | 13 throws | aEC/T 0.076 | total 0.991 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|5|1|False",
+          "label": "498. Goal O-line | 2026-08-08-NY-BOS | Q3 P5 | 13 throws | aEC/T 0.076 | total 0.987 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|2|1|False",
+          "label": "114. Goal O-line | 2026-05-23-NY-DC | Q1 P2 | 15 throws | aEC/T 0.065 | total 0.972 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|10|1|True",
+          "label": "447. Goal O-line | 2026-07-25-DC-NY | Q1 P10 | 17 throws | aEC/T 0.059 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 19,
+      "title": "Codex O-line pattern 27 | right-left | winding | 10.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-10-DC-NY|3|5|3|True",
+          "label": "55. Goal O-line | 2026-05-10-DC-NY | Q3 P5 | 9 throws | aEC/T 0.097 | total 0.872 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|5|3|False",
+          "label": "220. Goal O-line | 2026-06-06-NY-MTL | Q1 P5 | 9 throws | aEC/T 0.113 | total 1.019 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|7|1|True",
+          "label": "29. Goal O-line | 2026-05-01-TOR-NY | Q4 P7 | 12 throws | aEC/T 0.075 | total 0.902 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|1|1|True",
+          "label": "162. Turnover O-line | 2026-05-29-PIT-NY | Q3 P1 | 13 throws | aEC/T -0.004 | total -0.054 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 20,
+      "title": "Codex O-line pattern 28 | left-left | winding | 11-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|7|1|False",
+          "label": "356. Turnover O-line | 2026-07-12-NY-TOR | Q1 P7 | 7 throws | aEC/T 0.009 | total 0.066 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|13|1|True",
+          "label": "439. Goal O-line | 2026-07-17-PHI-NY | Q4 P13 | 11 throws | aEC/T 0.095 | total 1.047 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|10|1|True",
+          "label": "149. Goal O-line | 2026-05-29-PIT-NY | Q1 P10 | 11 throws | aEC/T 0.100 | total 1.100 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|6|1|True",
+          "label": "66. Goal O-line | 2026-05-10-DC-NY | Q4 P6 | 13 throws | aEC/T 0.077 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|2|8|3|True",
+          "label": "262. Turnover O-line | 2026-06-12-BOS-NY | Q2 P8 | 13 throws | aEC/T -0.017 | total -0.227 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 21,
+      "title": "Codex O-line pattern 29 | middle-right | mixed | 12-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-25-DC-NY|3|10|1|True",
+          "label": "466. Goal O-line | 2026-07-25-DC-NY | Q3 P10 | 6 throws | aEC/T 0.190 | total 1.140 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|14|1|True",
+          "label": "183. Goal O-line | 2026-05-29-PIT-NY | Q4 P14 | 10 throws | aEC/T 0.121 | total 1.205 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|5|1|False",
+          "label": "137. Goal O-line | 2026-05-23-NY-DC | Q4 P5 | 10 throws | aEC/T 0.091 | total 0.910 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|8|1|True",
+          "label": "108. Goal O-line | 2026-05-16-COL-NY | Q4 P8 | 11 throws | aEC/T 0.081 | total 0.893 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|6|1|True",
+          "label": "87. Goal O-line | 2026-05-16-COL-NY | Q2 P6 | 12 throws | aEC/T 0.091 | total 1.091 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|2|9|1|True",
+          "label": "14. Goal O-line | 2026-05-01-TOR-NY | Q2 P9 | 14 throws | aEC/T 0.096 | total 1.348 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|2|1|1|False",
+          "label": "122. Goal O-line | 2026-05-23-NY-DC | Q2 P1 | 15 throws | aEC/T 0.086 | total 1.294 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|2|4|1|True",
+          "label": "453. Goal O-line | 2026-07-25-DC-NY | Q2 P4 | 17 throws | aEC/T 0.052 | total 0.890 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|10|1|False",
+          "label": "121. Goal O-line | 2026-05-23-NY-DC | Q1 P10 | 18 throws | aEC/T 0.078 | total 1.412 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 22,
+      "title": "Codex O-line pattern 30 | right-middle | winding | 13-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-25-DC-NY|2|8|3|True",
+          "label": "457. Goal O-line | 2026-07-25-DC-NY | Q2 P8 | 6 throws | aEC/T 0.173 | total 1.039 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|3|9|1|False",
+          "label": "302. Goal O-line | 2026-07-01-NY-PHI | Q3 P9 | 7 throws | aEC/T 0.141 | total 0.984 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|5|5|1|True",
+          "label": "72. Goal O-line | 2026-05-10-DC-NY | Q5 P5 | 9 throws | aEC/T 0.123 | total 1.105 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|3|1|False",
+          "label": "478. Goal O-line | 2026-08-08-NY-BOS | Q1 P3 | 11 throws | aEC/T 0.092 | total 1.009 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|10|1|False",
+          "label": "393. Goal O-line | 2026-07-12-NY-TOR | Q4 P10 | 12 throws | aEC/T 0.085 | total 1.023 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|6|1|False",
+          "label": "291. Goal O-line | 2026-07-01-NY-PHI | Q2 P6 | 12 throws | aEC/T 0.084 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|5|1|False",
+          "label": "116. Goal O-line | 2026-05-23-NY-DC | Q1 P5 | 12 throws | aEC/T 0.084 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|14|1|True",
+          "label": "92. Goal O-line | 2026-05-16-COL-NY | Q2 P14 | 13 throws | aEC/T 0.110 | total 1.425 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|6|4|True",
+          "label": "169. Goal O-line | 2026-05-29-PIT-NY | Q3 P6 | 14 throws | aEC/T 0.060 | total 0.838 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|9|1|False",
+          "label": "141. Turnover O-line | 2026-05-23-NY-DC | Q4 P9 | 14 throws | aEC/T -0.005 | total -0.068 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|4|1|False",
+          "label": "327. Goal O-line | 2026-07-10-NY-CHI | Q2 P4 | 15 throws | aEC/T 0.066 | total 0.988 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|4|1|False",
+          "label": "226. Goal O-line | 2026-06-06-NY-MTL | Q2 P4 | 15 throws | aEC/T 0.066 | total 0.985 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|2|10|1|False",
+          "label": "128. Goal O-line | 2026-05-23-NY-DC | Q2 P10 | 18 throws | aEC/T 0.068 | total 1.231 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|9|1|True",
+          "label": "179. Goal O-line | 2026-05-29-PIT-NY | Q4 P9 | 19 throws | aEC/T 0.055 | total 1.052 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|4|1|False",
+          "label": "486. Goal O-line | 2026-08-08-NY-BOS | Q2 P4 | 22 throws | aEC/T 0.045 | total 0.983 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 23,
+      "title": "Codex O-line pattern 31 | left-middle | winding | 13-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|3|1|False",
+          "label": "496. Turnover O-line | 2026-08-08-NY-BOS | Q3 P3 | 2 throws | aEC/T -0.354 | total -0.707 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|3|3|False",
+          "label": "509. Goal O-line | 2026-08-08-NY-BOS | Q4 P3 | 10 throws | aEC/T 0.043 | total 0.432 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|2|4|2|False",
+          "label": "124. Goal O-line | 2026-05-23-NY-DC | Q2 P4 | 16 throws | aEC/T 0.062 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|8|7|False",
+          "label": "504. Goal O-line | 2026-08-08-NY-BOS | Q3 P8 | 20 throws | aEC/T 0.062 | total 1.242 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 24,
+      "title": "Codex O-line pattern 33 | middle-left | winding | 15-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|7|1|False",
+          "label": "237. Goal O-line | 2026-06-06-NY-MTL | Q3 P7 | 13 throws | aEC/T 0.080 | total 1.035 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|4|1|False",
+          "label": "217. Turnover O-line | 2026-06-06-NY-MTL | Q1 P4 | 14 throws | aEC/T -0.024 | total -0.329 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|10|1|True",
+          "label": "424. Goal O-line | 2026-07-17-PHI-NY | Q3 P10 | 14 throws | aEC/T 0.072 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|14|1|False",
+          "label": "333. Goal O-line | 2026-07-10-NY-CHI | Q2 P14 | 14 throws | aEC/T 0.080 | total 1.115 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|13|1|False",
+          "label": "360. Goal O-line | 2026-07-12-NY-TOR | Q1 P13 | 15 throws | aEC/T 0.083 | total 1.249 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|6|1|True",
+          "label": "412. Goal O-line | 2026-07-17-PHI-NY | Q2 P6 | 15 throws | aEC/T 0.067 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|2|5|False",
+          "label": "233. Turnover O-line | 2026-06-06-NY-MTL | Q3 P2 | 15 throws | aEC/T -0.002 | total -0.026 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|8|1|True",
+          "label": "148. Goal O-line | 2026-05-29-PIT-NY | Q1 P8 | 17 throws | aEC/T 0.071 | total 1.201 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|8|1|False",
+          "label": "324. Goal O-line | 2026-07-10-NY-CHI | Q1 P8 | 18 throws | aEC/T 0.075 | total 1.347 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|1|3|1|False",
+          "label": "185. Goal O-line | 2026-06-05-NY-BOS | Q1 P3 | 18 throws | aEC/T 0.054 | total 0.977 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|11|1|False",
+          "label": "484. Goal O-line | 2026-08-08-NY-BOS | Q1 P11 | 19 throws | aEC/T 0.056 | total 1.057 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|5|1|False",
+          "label": "236. Goal O-line | 2026-06-06-NY-MTL | Q3 P5 | 21 throws | aEC/T 0.043 | total 0.895 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 25,
+      "title": "Codex O-line pattern 34 | right-left | winding | 15-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|2|7|False",
+          "label": "234. Goal O-line | 2026-06-06-NY-MTL | Q3 P2 | 11 throws | aEC/T 0.091 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|2|3|1|True",
+          "label": "9. Goal O-line | 2026-05-01-TOR-NY | Q2 P3 | 19 throws | aEC/T 0.053 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 26,
+      "title": "Codex O-line pattern 35 | left-left | winding | 16-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-25-DC-NY|1|1|1|True",
+          "label": "441. Goal O-line | 2026-07-25-DC-NY | Q1 P1 | 11 throws | aEC/T 0.098 | total 1.081 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|2|1|False",
+          "label": "316. Goal O-line | 2026-07-10-NY-CHI | Q1 P2 | 11 throws | aEC/T 0.090 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|1|1|1|True",
+          "label": "251. Goal O-line | 2026-06-12-BOS-NY | Q1 P1 | 15 throws | aEC/T 0.084 | total 1.264 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|6|1|False",
+          "label": "337. Goal O-line | 2026-07-10-NY-CHI | Q3 P6 | 17 throws | aEC/T 0.052 | total 0.878 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|2|7|1|False",
+          "label": "126. Goal O-line | 2026-05-23-NY-DC | Q2 P7 | 19 throws | aEC/T 0.044 | total 0.827 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|1|1|1|False",
+          "label": "184. Goal O-line | 2026-06-05-NY-BOS | Q1 P1 | 19 throws | aEC/T 0.061 | total 1.167 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 27,
+      "title": "Codex O-line pattern 36 | middle-middle | winding | 26.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|6|1|False",
+          "label": "480. Goal O-line | 2026-08-08-NY-BOS | Q1 P6 | 26 throws | aEC/T 0.031 | total 0.817 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|1|1|False",
+          "label": "199. Goal O-line | 2026-06-05-NY-BOS | Q3 P1 | 27 throws | aEC/T 0.039 | total 1.054 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|6|2|False",
+          "label": "221. Goal D-line | 2026-06-06-NY-MTL | Q1 P6 | 2 throws | aEC/T 0.508 | total 1.017 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|3|4|False",
+          "label": "225. Turnover D-line | 2026-06-06-NY-MTL | Q2 P3 | 5 throws | aEC/T -0.120 | total -0.599 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|5|2|False",
+          "label": "227. Goal D-line | 2026-06-06-NY-MTL | Q2 P5 | 4 throws | aEC/T 0.216 | total 0.863 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|6|2|False",
+          "label": "228. Turnover D-line | 2026-06-06-NY-MTL | Q2 P6 | 9 throws | aEC/T -0.031 | total -0.281 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|8|2|False",
+          "label": "230. Goal D-line | 2026-06-06-NY-MTL | Q2 P8 | 13 throws | aEC/T 0.079 | total 1.031 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|3|2|False",
+          "label": "235. Goal D-line | 2026-06-06-NY-MTL | Q3 P3 | 2 throws | aEC/T 0.500 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|8|2|False",
+          "label": "238. Turnover D-line | 2026-06-06-NY-MTL | Q3 P8 | 1 throws | aEC/T -0.850 | total -0.850 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|8|4|False",
+          "label": "239. Goal D-line | 2026-06-06-NY-MTL | Q3 P8 | 3 throws | aEC/T 0.355 | total 1.064 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|2|2|False",
+          "label": "241. Goal D-line | 2026-06-06-NY-MTL | Q4 P2 | 7 throws | aEC/T 0.105 | total 0.733 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|1|4|2|True",
+          "label": "253. Goal D-line | 2026-06-12-BOS-NY | Q1 P4 | 19 throws | aEC/T 0.037 | total 0.708 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|1|5|2|True",
+          "label": "254. Goal D-line | 2026-06-12-BOS-NY | Q1 P5 | 19 throws | aEC/T 0.054 | total 1.028 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|1|6|2|True",
+          "label": "255. Turnover D-line | 2026-06-12-BOS-NY | Q1 P6 | 3 throws | aEC/T -0.246 | total -0.737 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|3|4|2|True",
+          "label": "265. Goal D-line | 2026-06-12-BOS-NY | Q3 P4 | 14 throws | aEC/T 0.072 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|3|5|2|True",
+          "label": "266. Goal D-line | 2026-06-12-BOS-NY | Q3 P5 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|4|3|2|True",
+          "label": "271. Goal D-line | 2026-06-12-BOS-NY | Q4 P3 | 7 throws | aEC/T 0.158 | total 1.107 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|4|7|2|True",
+          "label": "274. Turnover D-line | 2026-06-12-BOS-NY | Q4 P7 | 23 throws | aEC/T -0.023 | total -0.536 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|2|7|3|True",
+          "label": "260. Turnover D-line | 2026-06-12-BOS-NY | Q2 P7 | 7 throws | aEC/T -0.054 | total -0.376 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|6|2|False",
+          "label": "284. Turnover D-line | 2026-07-01-NY-PHI | Q1 P6 | 6 throws | aEC/T -0.021 | total -0.129 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|6|4|False",
+          "label": "285. Turnover D-line | 2026-07-01-NY-PHI | Q1 P6 | 1 throws | aEC/T -0.728 | total -0.728 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|7|2|False",
+          "label": "287. Goal D-line | 2026-07-01-NY-PHI | Q1 P7 | 6 throws | aEC/T 0.182 | total 1.093 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|2|2|False",
+          "label": "289. Goal D-line | 2026-07-01-NY-PHI | Q2 P2 | 11 throws | aEC/T 0.088 | total 0.971 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|2|3|2|False",
+          "label": "224. Turnover D-line | 2026-06-06-NY-MTL | Q2 P3 | 9 throws | aEC/T -0.027 | total -0.245 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|7|2|True",
+          "label": "67. Goal D-line | 2026-05-10-DC-NY | Q4 P7 | 18 throws | aEC/T 0.056 | total 1.007 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|5|1|2|True",
+          "label": "70. Goal D-line | 2026-05-10-DC-NY | Q5 P1 | 8 throws | aEC/T 0.094 | total 0.755 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|2|2|True",
+          "label": "75. Turnover D-line | 2026-05-16-COL-NY | Q1 P2 | 3 throws | aEC/T -0.151 | total -0.454 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|2|4|True",
+          "label": "76. Turnover D-line | 2026-05-16-COL-NY | Q1 P2 | 7 throws | aEC/T -0.041 | total -0.286 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|2|6|True",
+          "label": "77. Turnover D-line | 2026-05-16-COL-NY | Q1 P2 | 8 throws | aEC/T -0.026 | total -0.207 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|2|8|True",
+          "label": "78. Goal D-line | 2026-05-16-COL-NY | Q1 P2 | 5 throws | aEC/T 0.127 | total 0.636 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|3|2|True",
+          "label": "79. Goal D-line | 2026-05-16-COL-NY | Q1 P3 | 15 throws | aEC/T 0.067 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|6|2|True",
+          "label": "81. Turnover D-line | 2026-05-16-COL-NY | Q1 P6 | 14 throws | aEC/T -0.002 | total -0.022 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|6|4|True",
+          "label": "82. Turnover D-line | 2026-05-16-COL-NY | Q1 P6 | 5 throws | aEC/T -0.017 | total -0.085 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|1|6|6|True",
+          "label": "83. Goal D-line | 2026-05-16-COL-NY | Q1 P6 | 12 throws | aEC/T 0.111 | total 1.330 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|1|2|True",
+          "label": "84. Goal D-line | 2026-05-16-COL-NY | Q2 P1 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|2|2|True",
+          "label": "85. Goal D-line | 2026-05-16-COL-NY | Q2 P2 | 4 throws | aEC/T 0.239 | total 0.954 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|7|2|True",
+          "label": "88. Goal D-line | 2026-05-16-COL-NY | Q2 P7 | 6 throws | aEC/T 0.136 | total 0.819 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|8|2|True",
+          "label": "89. Goal D-line | 2026-05-16-COL-NY | Q2 P8 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|2|15|2|True",
+          "label": "93. Goal D-line | 2026-05-16-COL-NY | Q2 P15 | 6 throws | aEC/T 0.191 | total 1.147 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|4|2|True",
+          "label": "97. Goal D-line | 2026-05-16-COL-NY | Q3 P4 | 2 throws | aEC/T 0.500 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|8|2|True",
+          "label": "101. Goal D-line | 2026-05-16-COL-NY | Q3 P8 | 9 throws | aEC/T 0.096 | total 0.864 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|9|2|True",
+          "label": "102. Goal D-line | 2026-05-16-COL-NY | Q3 P9 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|3|2|True",
+          "label": "105. Goal D-line | 2026-05-16-COL-NY | Q4 P3 | 4 throws | aEC/T 0.249 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|4|2|True",
+          "label": "106. Goal D-line | 2026-05-16-COL-NY | Q4 P4 | 2 throws | aEC/T 0.500 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|12|2|True",
+          "label": "111. Goal D-line | 2026-05-16-COL-NY | Q4 P12 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|13|2|True",
+          "label": "112. Goal D-line | 2026-05-16-COL-NY | Q4 P13 | 4 throws | aEC/T 0.273 | total 1.092 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|1|2|False",
+          "label": "113. Turnover D-line | 2026-05-23-NY-DC | Q1 P1 | 5 throws | aEC/T -0.108 | total -0.538 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|3|2|False",
+          "label": "115. Goal D-line | 2026-05-23-NY-DC | Q1 P3 | 2 throws | aEC/T 0.417 | total 0.834 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|8|2|False",
+          "label": "118. Goal D-line | 2026-05-23-NY-DC | Q1 P8 | 2 throws | aEC/T 0.500 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|9|2|False",
+          "label": "119. Turnover D-line | 2026-05-23-NY-DC | Q1 P9 | 4 throws | aEC/T -0.088 | total -0.352 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|1|9|4|False",
+          "label": "120. Turnover D-line | 2026-05-23-NY-DC | Q1 P9 | 1 throws | aEC/T -0.888 | total -0.888 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|2|8|2|False",
+          "label": "127. Goal D-line | 2026-05-23-NY-DC | Q2 P8 | 2 throws | aEC/T 0.503 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|3|1|2|False",
+          "label": "129. Turnover D-line | 2026-05-23-NY-DC | Q3 P1 | 15 throws | aEC/T -0.018 | total -0.276 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|6|2|False",
+          "label": "138. Goal D-line | 2026-05-23-NY-DC | Q4 P6 | 3 throws | aEC/T 0.285 | total 0.856 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|7|2|False",
+          "label": "139. Goal D-line | 2026-05-23-NY-DC | Q4 P7 | 7 throws | aEC/T 0.089 | total 0.621 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|8|2|False",
+          "label": "140. Turnover D-line | 2026-05-23-NY-DC | Q4 P8 | 2 throws | aEC/T -0.248 | total -0.496 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|2|2|True",
+          "label": "143. Goal D-line | 2026-05-29-PIT-NY | Q1 P2 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|3|2|True",
+          "label": "144. Goal D-line | 2026-05-29-PIT-NY | Q1 P3 | 6 throws | aEC/T 0.167 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|4|2|True",
+          "label": "145. Goal D-line | 2026-05-29-PIT-NY | Q1 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|5|2|True",
+          "label": "146. Goal D-line | 2026-05-29-PIT-NY | Q1 P5 | 4 throws | aEC/T 0.251 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|6|2|True",
+          "label": "147. Goal D-line | 2026-05-29-PIT-NY | Q1 P6 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|11|2|True",
+          "label": "150. Goal D-line | 2026-05-29-PIT-NY | Q1 P11 | 13 throws | aEC/T 0.085 | total 1.106 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|12|2|True",
+          "label": "151. Turnover D-line | 2026-05-29-PIT-NY | Q1 P12 | 7 throws | aEC/T -0.017 | total -0.117 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|1|12|4|True",
+          "label": "152. Goal D-line | 2026-05-29-PIT-NY | Q1 P12 | 9 throws | aEC/T 0.111 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|1|2|True",
+          "label": "153. Goal D-line | 2026-05-29-PIT-NY | Q2 P1 | 12 throws | aEC/T 0.087 | total 1.041 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|8|2|True",
+          "label": "158. Goal D-line | 2026-05-29-PIT-NY | Q2 P8 | 18 throws | aEC/T 0.056 | total 1.014 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|11|2|True",
+          "label": "160. Goal D-line | 2026-05-29-PIT-NY | Q2 P11 | 6 throws | aEC/T 0.196 | total 1.177 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|2|12|2|True",
+          "label": "161. Goal D-line | 2026-05-29-PIT-NY | Q2 P12 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|2|2|True",
+          "label": "164. Goal D-line | 2026-05-29-PIT-NY | Q3 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|3|2|True",
+          "label": "165. Turnover D-line | 2026-05-29-PIT-NY | Q3 P3 | 6 throws | aEC/T -0.029 | total -0.173 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|3|4|True",
+          "label": "166. Goal D-line | 2026-05-29-PIT-NY | Q3 P3 | 3 throws | aEC/T 0.333 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|6|2|True",
+          "label": "168. Turnover D-line | 2026-05-29-PIT-NY | Q3 P6 | 9 throws | aEC/T -0.013 | total -0.120 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|7|2|True",
+          "label": "170. Goal D-line | 2026-05-29-PIT-NY | Q3 P7 | 5 throws | aEC/T 0.273 | total 1.363 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|1|2|True",
+          "label": "171. Turnover D-line | 2026-05-29-PIT-NY | Q4 P1 | 2 throws | aEC/T -0.279 | total -0.559 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|3|2|True",
+          "label": "174. Goal D-line | 2026-05-29-PIT-NY | Q4 P3 | 12 throws | aEC/T 0.083 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|6|2|True",
+          "label": "176. Goal D-line | 2026-05-29-PIT-NY | Q4 P6 | 4 throws | aEC/T 0.251 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|7|2|True",
+          "label": "177. Turnover D-line | 2026-05-29-PIT-NY | Q4 P7 | 11 throws | aEC/T -0.019 | total -0.210 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|7|4|True",
+          "label": "178. Goal D-line | 2026-05-29-PIT-NY | Q4 P7 | 4 throws | aEC/T 0.251 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|10|2|True",
+          "label": "180. Goal D-line | 2026-05-29-PIT-NY | Q4 P10 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|11|2|True",
+          "label": "181. Goal D-line | 2026-05-29-PIT-NY | Q4 P11 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|4|12|2|True",
+          "label": "182. Goal D-line | 2026-05-29-PIT-NY | Q4 P12 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|1|4|2|False",
+          "label": "186. Goal D-line | 2026-06-05-NY-BOS | Q1 P4 | 11 throws | aEC/T 0.034 | total 0.376 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|1|6|2|False",
+          "label": "187. Goal D-line | 2026-06-05-NY-BOS | Q1 P6 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|2|2|False",
+          "label": "192. Goal D-line | 2026-06-05-NY-BOS | Q2 P2 | 16 throws | aEC/T 0.055 | total 0.884 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|8|2|False",
+          "label": "197. Goal D-line | 2026-06-05-NY-BOS | Q2 P8 | 7 throws | aEC/T 0.145 | total 1.012 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|2|2|False",
+          "label": "200. Goal D-line | 2026-06-05-NY-BOS | Q3 P2 | 6 throws | aEC/T 0.166 | total 0.993 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|7|2|False",
+          "label": "203. Turnover D-line | 2026-06-05-NY-BOS | Q3 P7 | 2 throws | aEC/T -0.260 | total -0.519 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|9|3|False",
+          "label": "206. Goal D-line | 2026-06-05-NY-BOS | Q3 P9 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|4|8|2|False",
+          "label": "212. Turnover D-line | 2026-06-05-NY-BOS | Q4 P8 | 17 throws | aEC/T -0.050 | total -0.856 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|1|2|False",
+          "label": "214. Turnover D-line | 2026-06-06-NY-MTL | Q1 P1 | 2 throws | aEC/T -0.338 | total -0.676 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|1|4|False",
+          "label": "215. Goal D-line | 2026-06-06-NY-MTL | Q1 P1 | 14 throws | aEC/T 0.067 | total 0.945 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|9|2|False",
+          "label": "293. Goal D-line | 2026-07-01-NY-PHI | Q2 P9 | 12 throws | aEC/T 0.084 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|10|2|False",
+          "label": "294. Goal D-line | 2026-07-01-NY-PHI | Q2 P10 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|11|2|False",
+          "label": "295. Goal D-line | 2026-07-01-NY-PHI | Q2 P11 | 9 throws | aEC/T 0.105 | total 0.943 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|12|2|False",
+          "label": "296. Goal D-line | 2026-07-01-NY-PHI | Q2 P12 | 6 throws | aEC/T 0.179 | total 1.076 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|2|13|2|False",
+          "label": "297. Goal D-line | 2026-07-01-NY-PHI | Q2 P13 | 4 throws | aEC/T 0.230 | total 0.918 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|3|10|2|False",
+          "label": "303. Goal D-line | 2026-07-01-NY-PHI | Q3 P10 | 3 throws | aEC/T 0.334 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|4|2|False",
+          "label": "307. Goal D-line | 2026-07-01-NY-PHI | Q4 P4 | 9 throws | aEC/T 0.117 | total 1.054 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|5|2|False",
+          "label": "308. Goal D-line | 2026-07-01-NY-PHI | Q4 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|6|2|False",
+          "label": "309. Goal D-line | 2026-07-01-NY-PHI | Q4 P6 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|4|7|2|False",
+          "label": "310. Goal D-line | 2026-07-01-NY-PHI | Q4 P7 | 14 throws | aEC/T 0.072 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|3|2|False",
+          "label": "317. Turnover D-line | 2026-07-10-NY-CHI | Q1 P3 | 3 throws | aEC/T -0.306 | total -0.918 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|3|4|False",
+          "label": "318. Turnover D-line | 2026-07-10-NY-CHI | Q1 P3 | 11 throws | aEC/T -0.032 | total -0.351 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|3|6|False",
+          "label": "319. Goal D-line | 2026-07-10-NY-CHI | Q1 P3 | 14 throws | aEC/T 0.072 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|4|2|False",
+          "label": "320. Turnover D-line | 2026-07-10-NY-CHI | Q1 P4 | 2 throws | aEC/T -0.389 | total -0.777 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|4|4|False",
+          "label": "321. Turnover D-line | 2026-07-10-NY-CHI | Q1 P4 | 5 throws | aEC/T -0.075 | total -0.373 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|6|2|False",
+          "label": "323. Goal D-line | 2026-07-10-NY-CHI | Q1 P6 | 9 throws | aEC/T 0.099 | total 0.894 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|1|2|False",
+          "label": "325. Goal D-line | 2026-07-10-NY-CHI | Q2 P1 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|2|2|False",
+          "label": "326. Goal D-line | 2026-07-10-NY-CHI | Q2 P2 | 4 throws | aEC/T 0.252 | total 1.009 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|12|2|False",
+          "label": "332. Goal D-line | 2026-07-10-NY-CHI | Q2 P12 | 4 throws | aEC/T 0.244 | total 0.977 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|4|2|False",
+          "label": "336. Goal D-line | 2026-07-10-NY-CHI | Q3 P4 | 9 throws | aEC/T 0.111 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|7|2|False",
+          "label": "338. Goal D-line | 2026-07-10-NY-CHI | Q3 P7 | 4 throws | aEC/T 0.220 | total 0.880 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|8|2|False",
+          "label": "339. Goal D-line | 2026-07-10-NY-CHI | Q3 P8 | 5 throws | aEC/T 0.187 | total 0.936 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|3|9|2|False",
+          "label": "340. Turnover D-line | 2026-07-10-NY-CHI | Q3 P9 | 2 throws | aEC/T -0.301 | total -0.601 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|1|2|False",
+          "label": "345. Goal D-line | 2026-07-10-NY-CHI | Q4 P1 | 6 throws | aEC/T 0.169 | total 1.017 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|2|2|False",
+          "label": "346. Goal D-line | 2026-07-10-NY-CHI | Q4 P2 | 5 throws | aEC/T 0.194 | total 0.970 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|5|2|False",
+          "label": "348. Goal D-line | 2026-07-10-NY-CHI | Q4 P5 | 9 throws | aEC/T 0.111 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|6|2|False",
+          "label": "349. Goal D-line | 2026-07-10-NY-CHI | Q4 P6 | 3 throws | aEC/T 0.334 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|4|11|2|False",
+          "label": "352. Goal D-line | 2026-07-10-NY-CHI | Q4 P11 | 29 throws | aEC/T 0.041 | total 1.203 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|5|2|False",
+          "label": "355. Goal D-line | 2026-07-12-NY-TOR | Q1 P5 | 13 throws | aEC/T 0.075 | total 0.972 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|14|2|False",
+          "label": "361. Goal D-line | 2026-07-12-NY-TOR | Q1 P14 | 5 throws | aEC/T 0.178 | total 0.890 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|4|2|False",
+          "label": "364. Goal D-line | 2026-07-12-NY-TOR | Q2 P4 | 14 throws | aEC/T 0.070 | total 0.985 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|5|2|False",
+          "label": "365. Goal D-line | 2026-07-12-NY-TOR | Q2 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|6|2|False",
+          "label": "366. Goal D-line | 2026-07-12-NY-TOR | Q2 P6 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|7|2|False",
+          "label": "367. Turnover D-line | 2026-07-12-NY-TOR | Q2 P7 | 1 throws | aEC/T -0.708 | total -0.708 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|12|2|False",
+          "label": "372. Goal D-line | 2026-07-12-NY-TOR | Q2 P12 | 7 throws | aEC/T 0.139 | total 0.970 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|13|2|False",
+          "label": "373. Turnover D-line | 2026-07-12-NY-TOR | Q2 P13 | 4 throws | aEC/T -0.237 | total -0.950 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|13|4|False",
+          "label": "374. Goal D-line | 2026-07-12-NY-TOR | Q2 P13 | 8 throws | aEC/T 0.139 | total 1.114 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|3|2|False",
+          "label": "378. Turnover D-line | 2026-07-12-NY-TOR | Q3 P3 | 4 throws | aEC/T -0.106 | total -0.423 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|5|2|False",
+          "label": "380. Goal D-line | 2026-07-12-NY-TOR | Q3 P5 | 14 throws | aEC/T 0.032 | total 0.451 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|5|3|False",
+          "label": "389. Goal D-line | 2026-07-12-NY-TOR | Q4 P5 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|6|2|False",
+          "label": "390. Goal D-line | 2026-07-12-NY-TOR | Q4 P6 | 7 throws | aEC/T 0.143 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|11|2|False",
+          "label": "394. Goal D-line | 2026-07-12-NY-TOR | Q4 P11 | 7 throws | aEC/T 0.236 | total 1.655 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|2|2|True",
+          "label": "398. Turnover D-line | 2026-07-17-PHI-NY | Q1 P2 | 6 throws | aEC/T -0.058 | total -0.348 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|2|4|True",
+          "label": "399. Goal D-line | 2026-07-17-PHI-NY | Q1 P2 | 7 throws | aEC/T 0.142 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|3|2|True",
+          "label": "400. Goal D-line | 2026-07-17-PHI-NY | Q1 P3 | 9 throws | aEC/T 0.111 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|6|2|True",
+          "label": "402. Goal D-line | 2026-07-17-PHI-NY | Q1 P6 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|7|2|True",
+          "label": "403. Goal D-line | 2026-07-17-PHI-NY | Q1 P7 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|10|2|True",
+          "label": "405. Goal D-line | 2026-07-17-PHI-NY | Q1 P10 | 3 throws | aEC/T 0.341 | total 1.024 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|11|2|True",
+          "label": "406. Goal D-line | 2026-07-17-PHI-NY | Q1 P11 | 4 throws | aEC/T 0.275 | total 1.102 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|12|2|True",
+          "label": "407. Turnover D-line | 2026-07-17-PHI-NY | Q1 P12 | 4 throws | aEC/T -0.092 | total -0.368 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|12|4|True",
+          "label": "408. Goal D-line | 2026-07-17-PHI-NY | Q1 P12 | 3 throws | aEC/T 0.356 | total 1.068 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|1|2|True",
+          "label": "409. Goal D-line | 2026-07-17-PHI-NY | Q2 P1 | 4 throws | aEC/T 0.256 | total 1.022 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|2|2|True",
+          "label": "410. Goal D-line | 2026-07-17-PHI-NY | Q2 P2 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|11|2|True",
+          "label": "415. Goal D-line | 2026-07-17-PHI-NY | Q2 P11 | 4 throws | aEC/T 0.239 | total 0.958 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|2|14|2|True",
+          "label": "417. Turnover D-line | 2026-07-17-PHI-NY | Q2 P14 | 2 throws | aEC/T -0.350 | total -0.699 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|4|2|True",
+          "label": "421. Goal D-line | 2026-07-17-PHI-NY | Q3 P4 | 6 throws | aEC/T 0.128 | total 0.769 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|15|2|True",
+          "label": "427. Turnover D-line | 2026-07-17-PHI-NY | Q3 P15 | 2 throws | aEC/T -0.082 | total -0.164 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|15|4|True",
+          "label": "428. Goal D-line | 2026-07-17-PHI-NY | Q3 P15 | 5 throws | aEC/T 0.224 | total 1.119 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|3|16|2|True",
+          "label": "429. Turnover D-line | 2026-07-17-PHI-NY | Q3 P16 | 6 throws | aEC/T 0.024 | total 0.141 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|4|2|True",
+          "label": "433. Goal D-line | 2026-07-17-PHI-NY | Q4 P4 | 4 throws | aEC/T 0.245 | total 0.980 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|7|2|True",
+          "label": "435. Goal D-line | 2026-07-17-PHI-NY | Q4 P7 | 2 throws | aEC/T 0.446 | total 0.892 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|8|2|True",
+          "label": "436. Goal D-line | 2026-07-17-PHI-NY | Q4 P8 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|9|2|True",
+          "label": "437. Goal D-line | 2026-07-17-PHI-NY | Q4 P9 | 5 throws | aEC/T 0.200 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|6|6|False",
+          "label": "286. Goal D-line | 2026-07-01-NY-PHI | Q1 P6 | 10 throws | aEC/T 0.102 | total 1.021 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|3|5|2|True",
+          "label": "98. Turnover D-line | 2026-05-16-COL-NY | Q3 P5 | 10 throws | aEC/T -0.009 | total -0.086 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-COL-NY|4|11|2|True",
+          "label": "110. Goal D-line | 2026-05-16-COL-NY | Q4 P11 | 10 throws | aEC/T 0.085 | total 0.851 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|1|3|False",
+          "label": "134. Turnover D-line | 2026-05-23-NY-DC | Q4 P1 | 10 throws | aEC/T -0.054 | total -0.540 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|4|4|2|False",
+          "label": "209. Goal D-line | 2026-06-05-NY-BOS | Q4 P4 | 10 throws | aEC/T 0.099 | total 0.991 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|2|8|3|True",
+          "label": "13. Turnover D-line | 2026-05-01-TOR-NY | Q2 P8 | 10 throws | aEC/T 0.013 | total 0.131 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|6|4|True",
+          "label": "19. Turnover D-line | 2026-05-01-TOR-NY | Q3 P6 | 10 throws | aEC/T -0.016 | total -0.159 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-NY-CHI|2|5|2|False",
+          "label": "328. Goal D-line | 2026-07-10-NY-CHI | Q2 P5 | 10 throws | aEC/T 0.100 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|3|6|2|False",
+          "label": "381. Goal D-line | 2026-07-12-NY-TOR | Q3 P6 | 10 throws | aEC/T 0.100 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|6|2|True",
+          "label": "444. Goal D-line | 2026-07-25-DC-NY | Q1 P6 | 8 throws | aEC/T 0.125 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|9|2|True",
+          "label": "446. Turnover D-line | 2026-07-25-DC-NY | Q1 P9 | 2 throws | aEC/T -0.334 | total -0.667 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|11|2|True",
+          "label": "448. Goal D-line | 2026-07-25-DC-NY | Q1 P11 | 3 throws | aEC/T 0.338 | total 1.014 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|2|1|2|True",
+          "label": "450. Turnover D-line | 2026-07-25-DC-NY | Q2 P1 | 5 throws | aEC/T -0.207 | total -1.037 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|2|5|2|True",
+          "label": "454. Goal D-line | 2026-07-25-DC-NY | Q2 P5 | 3 throws | aEC/T 0.272 | total 0.815 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|2|6|2|True",
+          "label": "455. Goal D-line | 2026-07-25-DC-NY | Q2 P6 | 3 throws | aEC/T 0.310 | total 0.931 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|3|3|True",
+          "label": "460. Goal D-line | 2026-07-25-DC-NY | Q3 P3 | 6 throws | aEC/T 0.166 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|8|2|True",
+          "label": "463. Turnover D-line | 2026-07-25-DC-NY | Q3 P8 | 5 throws | aEC/T -0.096 | total -0.481 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|8|4|True",
+          "label": "464. Turnover D-line | 2026-07-25-DC-NY | Q3 P8 | 5 throws | aEC/T -0.116 | total -0.582 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|3|2|True",
+          "label": "469. Turnover D-line | 2026-07-25-DC-NY | Q4 P3 | 7 throws | aEC/T -0.044 | total -0.309 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|5|2|True",
+          "label": "471. Goal D-line | 2026-07-25-DC-NY | Q4 P5 | 8 throws | aEC/T 0.103 | total 0.826 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|6|2|True",
+          "label": "472. Turnover D-line | 2026-07-25-DC-NY | Q4 P6 | 3 throws | aEC/T -0.245 | total -0.734 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|6|4|True",
+          "label": "473. Turnover D-line | 2026-07-25-DC-NY | Q4 P6 | 7 throws | aEC/T -0.071 | total -0.494 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|7|2|True",
+          "label": "475. Goal D-line | 2026-07-25-DC-NY | Q4 P7 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|8|2|True",
+          "label": "476. Goal D-line | 2026-07-25-DC-NY | Q4 P8 | 22 throws | aEC/T 0.048 | total 1.050 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|4|2|False",
+          "label": "479. Goal D-line | 2026-08-08-NY-BOS | Q1 P4 | 6 throws | aEC/T 0.164 | total 0.983 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|7|2|False",
+          "label": "481. Goal D-line | 2026-08-08-NY-BOS | Q1 P7 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|1|10|2|False",
+          "label": "483. Turnover D-line | 2026-08-08-NY-BOS | Q1 P10 | 5 throws | aEC/T -0.132 | total -0.662 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|9|2|False",
+          "label": "489. Goal D-line | 2026-08-08-NY-BOS | Q2 P9 | 10 throws | aEC/T 0.092 | total 0.918 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|10|2|False",
+          "label": "490. Goal D-line | 2026-08-08-NY-BOS | Q2 P10 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|11|2|False",
+          "label": "491. Turnover D-line | 2026-08-08-NY-BOS | Q2 P11 | 8 throws | aEC/T -0.085 | total -0.682 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|11|4|False",
+          "label": "492. Turnover D-line | 2026-08-08-NY-BOS | Q2 P11 | 5 throws | aEC/T -0.161 | total -0.806 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|1|2|False",
+          "label": "506. Turnover D-line | 2026-08-08-NY-BOS | Q4 P1 | 3 throws | aEC/T -0.314 | total -0.943 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|6|2|False",
+          "label": "511. Goal D-line | 2026-08-08-NY-BOS | Q4 P6 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|10|2|False",
+          "label": "514. Goal D-line | 2026-08-08-NY-BOS | Q4 P10 | 17 throws | aEC/T 0.064 | total 1.088 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|1|2|2|True",
+          "label": "2. Turnover D-line | 2026-05-01-TOR-NY | Q1 P2 | 11 throws | aEC/T 0.012 | total 0.134 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|1|2|4|True",
+          "label": "3. Goal D-line | 2026-05-01-TOR-NY | Q1 P2 | 11 throws | aEC/T 0.089 | total 0.984 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|1|7|2|True",
+          "label": "6. Goal D-line | 2026-05-01-TOR-NY | Q1 P7 | 19 throws | aEC/T 0.046 | total 0.866 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|2|1|2|True",
+          "label": "8. Goal D-line | 2026-05-01-TOR-NY | Q2 P1 | 3 throws | aEC/T 0.339 | total 1.016 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|2|4|2|True",
+          "label": "10. Goal D-line | 2026-05-01-TOR-NY | Q2 P4 | 2 throws | aEC/T 0.479 | total 0.957 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|6|2|True",
+          "label": "18. Turnover D-line | 2026-05-01-TOR-NY | Q3 P6 | 6 throws | aEC/T -0.087 | total -0.523 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|6|6|True",
+          "label": "20. Goal D-line | 2026-05-01-TOR-NY | Q3 P6 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|7|2|True",
+          "label": "21. Turnover D-line | 2026-05-01-TOR-NY | Q3 P7 | 2 throws | aEC/T -0.336 | total -0.672 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|3|9|2|True",
+          "label": "23. Goal D-line | 2026-05-01-TOR-NY | Q3 P9 | 4 throws | aEC/T 0.273 | total 1.093 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|1|2|True",
+          "label": "24. Turnover D-line | 2026-05-01-TOR-NY | Q4 P1 | 2 throws | aEC/T -0.205 | total -0.409 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|5|2|True",
+          "label": "27. Turnover D-line | 2026-05-01-TOR-NY | Q4 P5 | 6 throws | aEC/T -0.072 | total -0.433 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|5|4|True",
+          "label": "28. Goal D-line | 2026-05-01-TOR-NY | Q4 P5 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-01-TOR-NY|4|12|2|True",
+          "label": "32. Goal D-line | 2026-05-01-TOR-NY | Q4 P12 | 22 throws | aEC/T 0.054 | total 1.198 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|1|3|2|True",
+          "label": "35. Turnover D-line | 2026-05-10-DC-NY | Q1 P3 | 13 throws | aEC/T -0.030 | total -0.395 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|2|2|True",
+          "label": "41. Goal D-line | 2026-05-10-DC-NY | Q2 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|3|2|True",
+          "label": "42. Goal D-line | 2026-05-10-DC-NY | Q2 P3 | 9 throws | aEC/T 0.109 | total 0.980 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|4|2|True",
+          "label": "43. Turnover D-line | 2026-05-10-DC-NY | Q2 P4 | 1 throws | aEC/T -0.882 | total -0.882 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|6|2|True",
+          "label": "45. Goal D-line | 2026-05-10-DC-NY | Q2 P6 | 6 throws | aEC/T 0.167 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|10|2|True",
+          "label": "48. Goal D-line | 2026-05-10-DC-NY | Q2 P10 | 14 throws | aEC/T 0.080 | total 1.119 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|1|2|True",
+          "label": "52. Goal D-line | 2026-05-10-DC-NY | Q3 P1 | 2 throws | aEC/T 0.513 | total 1.026 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|6|2|True",
+          "label": "56. Turnover D-line | 2026-05-10-DC-NY | Q3 P6 | 3 throws | aEC/T -0.255 | total -0.766 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|1|2|False",
+          "label": "191. Goal D-line | 2026-06-05-NY-BOS | Q2 P1 | 15 throws | aEC/T 0.074 | total 1.105 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 28,
+      "title": "Codex O-line pattern 06 | middle-middle | direct | 3-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|2|1|True",
+          "label": "430. Turnover O-line | 2026-07-17-PHI-NY | Q4 P2 | 1 throws | aEC/T -0.888 | total -0.888 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|2|14|1|False",
+          "label": "494. Turnover O-line | 2026-08-08-NY-BOS | Q2 P14 | 1 throws | aEC/T -0.793 | total -0.793 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|8|1|False",
+          "label": "391. Turnover O-line | 2026-07-12-NY-TOR | Q4 P8 | 2 throws | aEC/T -0.413 | total -0.825 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-23-NY-DC|4|4|1|False",
+          "label": "136. Turnover O-line | 2026-05-23-NY-DC | Q4 P4 | 2 throws | aEC/T -0.391 | total -0.781 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|10|1|False",
+          "label": "370. Turnover O-line | 2026-07-12-NY-TOR | Q2 P10 | 2 throws | aEC/T -0.420 | total -0.840 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|10|1|False",
+          "label": "248. Turnover O-line | 2026-06-06-NY-MTL | Q4 P10 | 2 throws | aEC/T -0.351 | total -0.703 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|2|1|True",
+          "label": "467. Turnover O-line | 2026-07-25-DC-NY | Q4 P2 | 3 throws | aEC/T -0.276 | total -0.828 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|3|1|True",
+          "label": "459. Turnover O-line | 2026-07-25-DC-NY | Q3 P3 | 3 throws | aEC/T -0.190 | total -0.571 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|5|1|1|True",
+          "label": "275. Turnover O-line | 2026-06-12-BOS-NY | Q5 P1 | 3 throws | aEC/T -0.236 | total -0.707 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|5|7|1|True",
+          "label": "73. Turnover O-line | 2026-05-10-DC-NY | Q5 P7 | 3 throws | aEC/T -0.234 | total -0.702 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|2|8|1|True",
+          "label": "46. Turnover O-line | 2026-05-10-DC-NY | Q2 P8 | 3 throws | aEC/T -0.211 | total -0.632 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|4|11|1|True",
+          "label": "69. Turnover O-line | 2026-05-10-DC-NY | Q4 P11 | 3 throws | aEC/T -0.195 | total -0.586 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|1|3|1|False",
+          "label": "216. Turnover O-line | 2026-06-06-NY-MTL | Q1 P3 | 4 throws | aEC/T -0.198 | total -0.792 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|2|1|False",
+          "label": "386. Turnover O-line | 2026-07-12-NY-TOR | Q4 P2 | 5 throws | aEC/T -0.133 | total -0.663 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 29,
+      "title": "Codex O-line pattern 05 | right-right | direct | 2.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-06-NY-MTL|4|6|1|False",
+          "label": "243. Turnover O-line | 2026-06-06-NY-MTL | Q4 P6 | 1 throws | aEC/T -0.736 | total -0.736 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|3|3|1|True",
+          "label": "264. Goal O-line | 2026-06-12-BOS-NY | Q3 P3 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|4|2|3|True",
+          "label": "468. Goal O-line | 2026-07-25-DC-NY | Q4 P2 | 2 throws | aEC/T 0.450 | total 0.900 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|1|4|5|True",
+          "label": "38. Goal O-line | 2026-05-10-DC-NY | Q1 P4 | 3 throws | aEC/T 0.295 | total 0.886 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|1|4|3|True",
+          "label": "37. Turnover O-line | 2026-05-10-DC-NY | Q1 P4 | 3 throws | aEC/T -0.018 | total -0.055 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|3|1|True",
+          "label": "442. Goal O-line | 2026-07-25-DC-NY | Q1 P3 | 4 throws | aEC/T 0.251 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 30,
+      "title": "Codex O-line pattern 04 | middle-middle | direct | 2-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-10-NY-CHI|1|1|3|False",
+          "label": "315. Turnover O-line | 2026-07-10-NY-CHI | Q1 P1 | 1 throws | aEC/T -0.654 | total -0.654 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|4|3|3|True",
+          "label": "432. Goal O-line | 2026-07-17-PHI-NY | Q4 P3 | 2 throws | aEC/T 0.500 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|1|7|3|False",
+          "label": "357. Goal O-line | 2026-07-12-NY-TOR | Q1 P7 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 31,
+      "title": "Codex O-line pattern 03 | left-middle | direct | 2-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-BOS-NY|5|5|1|True",
+          "label": "278. Turnover O-line | 2026-06-12-BOS-NY | Q5 P5 | 1 throws | aEC/T -0.354 | total -0.354 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|1|12|2|True",
+          "label": "449. Turnover O-line | 2026-07-25-DC-NY | Q1 P12 | 2 throws | aEC/T -0.253 | total -0.505 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-NY-MTL|3|2|3|False",
+          "label": "232. Turnover O-line | 2026-06-06-NY-MTL | Q3 P2 | 3 throws | aEC/T -0.278 | total -0.834 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 32,
+      "title": "Codex O-line pattern 02 | left-left | direct | 1-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-05-NY-BOS|2|5|3|False",
+          "label": "195. Goal O-line | 2026-06-05-NY-BOS | Q2 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|4|2|3|True",
+          "label": "270. Goal O-line | 2026-06-12-BOS-NY | Q4 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|4|13|1|False",
+          "label": "395. Goal O-line | 2026-07-12-NY-TOR | Q4 P13 | 3 throws | aEC/T 0.351 | total 1.054 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 33,
+      "title": "Codex O-line pattern 01 | right-middle | direct | 1-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-05-NY-BOS|3|8|1|False",
+          "label": "204. Turnover O-line | 2026-06-05-NY-BOS | Q3 P8 | 1 throws | aEC/T -0.922 | total -0.922 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|2|4|1|True",
+          "label": "257. Turnover O-line | 2026-06-12-BOS-NY | Q2 P4 | 1 throws | aEC/T -0.909 | total -0.909 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|2|1|False",
+          "label": "507. Turnover O-line | 2026-08-08-NY-BOS | Q4 P2 | 7 throws | aEC/T -0.104 | total -0.727 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 34,
+      "title": "Codex O-line pattern 09 | middle-middle | winding | 4-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-16-COL-NY|3|3|3|True",
+          "label": "96. Goal O-line | 2026-05-16-COL-NY | Q3 P3 | 2 throws | aEC/T 0.427 | total 0.855 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|3|7|3|False",
+          "label": "500. Turnover O-line | 2026-08-08-NY-BOS | Q3 P7 | 4 throws | aEC/T -0.154 | total -0.616 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|1|2|3|True",
+          "label": "34. Goal O-line | 2026-05-10-DC-NY | Q1 P2 | 4 throws | aEC/T 0.202 | total 0.808 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-29-PIT-NY|3|1|3|True",
+          "label": "163. Goal O-line | 2026-05-29-PIT-NY | Q3 P1 | 7 throws | aEC/T 0.147 | total 1.028 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-PHI-NY|1|1|3|True",
+          "label": "397. Goal O-line | 2026-07-17-PHI-NY | Q1 P1 | 9 throws | aEC/T 0.085 | total 0.765 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 35,
+      "title": "Codex O-line pattern 13 | right-middle | winding | 6-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-12-BOS-NY|4|5|1|True",
+          "label": "272. Turnover O-line | 2026-06-12-BOS-NY | Q4 P5 | 2 throws | aEC/T -0.416 | total -0.832 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-25-DC-NY|3|9|1|True",
+          "label": "465. Turnover O-line | 2026-07-25-DC-NY | Q3 P9 | 5 throws | aEC/T -0.134 | total -0.669 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-10-DC-NY|3|11|1|True",
+          "label": "60. Turnover O-line | 2026-05-10-DC-NY | Q3 P11 | 6 throws | aEC/T -0.084 | total -0.501 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-12-BOS-NY|2|8|1|True",
+          "label": "261. Turnover O-line | 2026-06-12-BOS-NY | Q2 P8 | 6 throws | aEC/T -0.116 | total -0.695 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-12-NY-TOR|2|8|1|False",
+          "label": "368. Turnover O-line | 2026-07-12-NY-TOR | Q2 P8 | 7 throws | aEC/T -0.106 | total -0.741 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-01-NY-PHI|1|5|1|False",
+          "label": "282. Turnover O-line | 2026-07-01-NY-PHI | Q1 P5 | 10 throws | aEC/T -0.059 | total -0.587 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-08-NY-BOS|4|8|1|False",
+          "label": "512. Turnover O-line | 2026-08-08-NY-BOS | Q4 P8 | 12 throws | aEC/T -0.026 | total -0.313 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    }
+  ]
+}

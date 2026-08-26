@@ -1,0 +1,2837 @@
+{
+  "saved_at": "2026-08-25T22:34:16.754Z",
+  "cards_shown": 510,
+  "filtered_possessions": 510,
+  "groups": [
+    {
+      "group_index": 1,
+      "title": "Codex O-line pattern 28 | middle-right | mixed | 12.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|7|1|True",
+          "label": "475. Turnover O-line | 2026-08-07-CAR-ATX | Q1 P7 | 5 throws | aEC/T -0.124 | total -0.618 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|2|3|True",
+          "label": "178. Goal O-line | 2026-05-31-SEA-ATX | Q2 P2 | 5 throws | aEC/T 0.200 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|11|1|False",
+          "label": "370. Goal O-line | 2026-07-11-ATX-ATL | Q1 P11 | 5 throws | aEC/T 0.185 | total 0.924 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|1|1|False",
+          "label": "245. Turnover O-line | 2026-06-06-ATX-LV | Q1 P1 | 6 throws | aEC/T -0.087 | total -0.522 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|8|4|True",
+          "label": "144. Goal O-line | 2026-05-16-LV-ATX | Q2 P8 | 7 throws | aEC/T 0.140 | total 0.978 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|11|1|True",
+          "label": "26. Goal O-line | 2026-04-25-ATL-ATX | Q3 P11 | 7 throws | aEC/T 0.149 | total 1.040 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|2|1|False",
+          "label": "362. Goal O-line | 2026-07-11-ATX-ATL | Q1 P2 | 9 throws | aEC/T 0.117 | total 1.054 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|3|1|True",
+          "label": "148. Goal O-line | 2026-05-16-LV-ATX | Q3 P3 | 9 throws | aEC/T 0.110 | total 0.991 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|6|1|True",
+          "label": "13. Goal O-line | 2026-04-25-ATL-ATX | Q2 P6 | 9 throws | aEC/T 0.084 | total 0.759 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|9|1|True",
+          "label": "6. Goal O-line | 2026-04-25-ATL-ATX | Q1 P9 | 11 throws | aEC/T 0.091 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|11|1|True",
+          "label": "185. Goal O-line | 2026-05-31-SEA-ATX | Q2 P11 | 11 throws | aEC/T 0.090 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|10|1|False",
+          "label": "224. Turnover O-line | 2026-06-05-ATX-SD | Q2 P10 | 12 throws | aEC/T -0.027 | total -0.328 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|5|6|1|True",
+          "label": "41. Goal O-line | 2026-04-25-ATL-ATX | Q5 P6 | 12 throws | aEC/T 0.100 | total 1.198 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|10|1|True",
+          "label": "437. Goal O-line | 2026-07-18-HTX-ATX | Q1 P10 | 13 throws | aEC/T 0.082 | total 1.068 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|7|1|True",
+          "label": "151. Goal O-line | 2026-05-16-LV-ATX | Q3 P7 | 13 throws | aEC/T 0.078 | total 1.012 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|9|1|True",
+          "label": "466. Turnover O-line | 2026-07-18-HTX-ATX | Q4 P9 | 14 throws | aEC/T -0.005 | total -0.065 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|4|1|False",
+          "label": "264. Goal O-line | 2026-06-06-ATX-LV | Q2 P4 | 14 throws | aEC/T 0.071 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|8|3|False",
+          "label": "359. Goal O-line | 2026-07-10-ATX-CAR | Q4 P8 | 14 throws | aEC/T 0.084 | total 1.178 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|1|1|False",
+          "label": "389. Goal O-line | 2026-07-11-ATX-ATL | Q4 P1 | 14 throws | aEC/T 0.077 | total 1.074 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|4|1|True",
+          "label": "157. Goal O-line | 2026-05-16-LV-ATX | Q4 P4 | 14 throws | aEC/T 0.070 | total 0.975 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|6|1|1|True",
+          "label": "42. Goal O-line | 2026-04-25-ATL-ATX | Q6 P1 | 15 throws | aEC/T 0.058 | total 0.869 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|14|1|True",
+          "label": "19. Goal O-line | 2026-04-25-ATL-ATX | Q2 P14 | 15 throws | aEC/T 0.101 | total 1.521 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|3|4|1|False",
+          "label": "415. Turnover O-line | 2026-07-17-ATX-HTX | Q3 P4 | 18 throws | aEC/T -0.002 | total -0.039 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|11|1|False",
+          "label": "225. Goal O-line | 2026-06-05-ATX-SD | Q2 P11 | 19 throws | aEC/T 0.063 | total 1.192 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|7|1|False",
+          "label": "394. Turnover O-line | 2026-07-11-ATX-ATL | Q4 P7 | 25 throws | aEC/T -0.030 | total -0.747 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|2|1|True",
+          "label": "430. Goal O-line | 2026-07-18-HTX-ATX | Q1 P2 | 28 throws | aEC/T 0.033 | total 0.914 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 2,
+      "title": "Codex O-line pattern 25 | middle-left | mixed | 12-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|9|1|True",
+          "label": "16. Goal O-line | 2026-04-25-ATL-ATX | Q2 P9 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|12|1|True",
+          "label": "123. Goal O-line | 2026-05-09-HTX-ATX | Q4 P12 | 6 throws | aEC/T 0.176 | total 1.055 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|2|1|False",
+          "label": "372. Goal O-line | 2026-07-11-ATX-ATL | Q2 P2 | 6 throws | aEC/T 0.166 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|1|4|1|False",
+          "label": "398. Turnover O-line | 2026-07-17-ATX-HTX | Q1 P4 | 7 throws | aEC/T -0.061 | total -0.427 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|12|1|False",
+          "label": "379. Turnover O-line | 2026-07-11-ATX-ATL | Q2 P12 | 7 throws | aEC/T 0.023 | total 0.159 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|7|1|True",
+          "label": "35. Turnover O-line | 2026-04-25-ATL-ATX | Q4 P7 | 9 throws | aEC/T -0.035 | total -0.317 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|8|1|True",
+          "label": "307. Goal O-line | 2026-06-19-SD-ATX | Q2 P8 | 10 throws | aEC/T 0.097 | total 0.974 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|1|1|True",
+          "label": "500. Goal O-line | 2026-08-07-CAR-ATX | Q4 P1 | 12 throws | aEC/T 0.093 | total 1.115 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|3|4|1|False",
+          "label": "348. Goal O-line | 2026-07-10-ATX-CAR | Q3 P4 | 12 throws | aEC/T 0.083 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|1|9|1|False",
+          "label": "403. Goal O-line | 2026-07-17-ATX-HTX | Q1 P9 | 12 throws | aEC/T 0.094 | total 1.127 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|9|1|False",
+          "label": "386. Goal O-line | 2026-07-11-ATX-ATL | Q3 P9 | 12 throws | aEC/T 0.095 | total 1.140 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|3|1|True",
+          "label": "482. Goal O-line | 2026-08-07-CAR-ATX | Q2 P3 | 12 throws | aEC/T 0.080 | total 0.959 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|1|1|False",
+          "label": "419. Goal O-line | 2026-07-17-ATX-HTX | Q4 P1 | 13 throws | aEC/T 0.085 | total 1.111 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|4|1|True",
+          "label": "304. Goal O-line | 2026-06-19-SD-ATX | Q2 P4 | 14 throws | aEC/T 0.071 | total 0.996 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|6|1|True",
+          "label": "448. Goal O-line | 2026-07-18-HTX-ATX | Q2 P6 | 17 throws | aEC/T 0.068 | total 1.151 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|9|1|True",
+          "label": "497. Goal O-line | 2026-08-07-CAR-ATX | Q3 P9 | 18 throws | aEC/T 0.051 | total 0.909 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 3,
+      "title": "Codex O-line pattern 12 | middle-middle | mixed | 5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-02-ATX-HTX|5|1|1|False",
+          "label": "79. Goal O-line | 2026-05-02-ATX-HTX | Q5 P1 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|10|1|False",
+          "label": "52. Goal O-line | 2026-05-02-ATX-HTX | Q1 P10 | 4 throws | aEC/T 0.265 | total 1.058 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|2|1|False",
+          "label": "381. Turnover O-line | 2026-07-11-ATX-ATL | Q3 P2 | 7 throws | aEC/T -0.077 | total -0.538 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|6|1|True",
+          "label": "495. Goal O-line | 2026-08-07-CAR-ATX | Q3 P6 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|7|1|True",
+          "label": "5. Goal O-line | 2026-04-25-ATL-ATX | Q1 P7 | 7 throws | aEC/T 0.143 | total 1.002 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|3|3|True",
+          "label": "472. Goal O-line | 2026-08-07-CAR-ATX | Q1 P3 | 4 throws | aEC/T 0.249 | total 0.998 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|7|1|False",
+          "label": "50. Goal O-line | 2026-05-02-ATX-HTX | Q1 P7 | 4 throws | aEC/T 0.253 | total 1.012 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|5|1|1|True",
+          "label": "327. Turnover O-line | 2026-06-19-SD-ATX | Q5 P1 | 4 throws | aEC/T -0.124 | total -0.496 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|5|2|1|True",
+          "label": "329. Goal O-line | 2026-06-19-SD-ATX | Q5 P2 | 5 throws | aEC/T 0.206 | total 1.029 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|8|1|False",
+          "label": "223. Goal O-line | 2026-06-05-ATX-SD | Q2 P8 | 5 throws | aEC/T 0.200 | total 1.002 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|1|1|False",
+          "label": "271. Turnover O-line | 2026-06-06-ATX-LV | Q3 P1 | 5 throws | aEC/T -0.072 | total -0.361 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|8|1|True",
+          "label": "24. Goal O-line | 2026-04-25-ATL-ATX | Q3 P8 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|10|1|True",
+          "label": "318. Goal O-line | 2026-06-19-SD-ATX | Q3 P10 | 7 throws | aEC/T 0.158 | total 1.107 | Unclustered",
+          "overlay_selected": true
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|1|2|1|False",
+          "label": "397. Goal O-line | 2026-07-17-ATX-HTX | Q1 P2 | 5 throws | aEC/T 0.195 | total 0.974 | Unclustered",
+          "overlay_selected": true
+        }
+      ]
+    },
+    {
+      "group_index": 4,
+      "title": "Pattern group 35",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|9|1|False",
+          "label": "78. Goal O-line | 2026-05-02-ATX-HTX | Q4 P9 | 6 throws | aEC/T 0.177 | total 1.059 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|11|1|False",
+          "label": "388. Goal O-line | 2026-07-11-ATX-ATL | Q3 P11 | 6 throws | aEC/T 0.191 | total 1.149 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|12|1|False",
+          "label": "411. Goal O-line | 2026-07-17-ATX-HTX | Q2 P12 | 11 throws | aEC/T 0.107 | total 1.181 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|3|1|False",
+          "label": "74. Turnover O-line | 2026-05-02-ATX-HTX | Q4 P3 | 12 throws | aEC/T 0.004 | total 0.054 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|3|3|1|False",
+          "label": "414. Turnover O-line | 2026-07-17-ATX-HTX | Q3 P3 | 21 throws | aEC/T 0.002 | total 0.048 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|6|1|True",
+          "label": "463. Goal O-line | 2026-07-18-HTX-ATX | Q4 P6 | 7 throws | aEC/T 0.143 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|4|1|False",
+          "label": "275. Turnover O-line | 2026-06-06-ATX-LV | Q3 P4 | 5 throws | aEC/T 0.017 | total 0.083 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 5,
+      "title": "Codex O-line pattern 06 | right-middle | direct | 3-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|5|1|False",
+          "label": "220. Turnover O-line | 2026-06-05-ATX-SD | Q2 P5 | 1 throws | aEC/T -0.705 | total -0.705 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|8|1|False",
+          "label": "215. Turnover O-line | 2026-06-05-ATX-SD | Q1 P8 | 2 throws | aEC/T -0.158 | total -0.316 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|3|1|True",
+          "label": "311. Goal O-line | 2026-06-19-SD-ATX | Q3 P3 | 2 throws | aEC/T 0.501 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|1|3|False",
+          "label": "405. Goal O-line | 2026-07-17-ATX-HTX | Q2 P1 | 2 throws | aEC/T 0.502 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|5|6|True",
+          "label": "96. Goal O-line | 2026-05-09-HTX-ATX | Q2 P5 | 3 throws | aEC/T 0.334 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|13|1|True",
+          "label": "28. Turnover O-line | 2026-04-25-ATL-ATX | Q3 P13 | 3 throws | aEC/T 0.106 | total 0.319 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|1|3|False",
+          "label": "54. Turnover O-line | 2026-05-02-ATX-HTX | Q2 P1 | 3 throws | aEC/T -0.096 | total -0.287 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|9|1|True",
+          "label": "325. Turnover O-line | 2026-06-19-SD-ATX | Q4 P9 | 4 throws | aEC/T -0.124 | total -0.494 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|1|1|True",
+          "label": "188. Goal O-line | 2026-05-31-SEA-ATX | Q3 P1 | 4 throws | aEC/T 0.238 | total 0.951 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|5|1|False",
+          "label": "58. Turnover O-line | 2026-05-02-ATX-HTX | Q2 P5 | 4 throws | aEC/T -0.094 | total -0.375 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|9|1|True",
+          "label": "317. Turnover O-line | 2026-06-19-SD-ATX | Q3 P9 | 4 throws | aEC/T -0.048 | total -0.192 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|10|1|True",
+          "label": "506. Goal O-line | 2026-08-07-CAR-ATX | Q4 P10 | 9 throws | aEC/T 0.101 | total 0.908 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|5|1|False",
+          "label": "365. Goal O-line | 2026-07-11-ATX-ATL | Q1 P5 | 12 throws | aEC/T 0.066 | total 0.794 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 6,
+      "title": "Codex O-line pattern 07 | left-left | direct | 3-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|10|4|True",
+          "label": "174. Goal O-line | 2026-05-31-SEA-ATX | Q1 P10 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|5|3|False",
+          "label": "48. Turnover O-line | 2026-05-02-ATX-HTX | Q1 P5 | 2 throws | aEC/T -0.210 | total -0.420 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|1|5|False",
+          "label": "273. Goal O-line | 2026-06-06-ATX-LV | Q3 P1 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|7|5|False",
+          "label": "396. Goal O-line | 2026-07-11-ATX-ATL | Q4 P7 | 3 throws | aEC/T 0.338 | total 1.015 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|1|1|False",
+          "label": "338. Goal O-line | 2026-07-10-ATX-CAR | Q2 P1 | 3 throws | aEC/T 0.345 | total 1.036 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|7|3|True",
+          "label": "171. Goal O-line | 2026-05-31-SEA-ATX | Q1 P7 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|2|4|False",
+          "label": "421. Goal O-line | 2026-07-17-ATX-HTX | Q4 P2 | 5 throws | aEC/T 0.199 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|1|1|True",
+          "label": "480. Goal O-line | 2026-08-07-CAR-ATX | Q2 P1 | 5 throws | aEC/T 0.206 | total 1.031 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|11|1|True",
+          "label": "100. Goal O-line | 2026-05-09-HTX-ATX | Q2 P11 | 7 throws | aEC/T 0.136 | total 0.954 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|1|1|True",
+          "label": "112. Goal O-line | 2026-05-09-HTX-ATX | Q4 P1 | 8 throws | aEC/T 0.113 | total 0.906 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|3|1|False",
+          "label": "339. Goal O-line | 2026-07-10-ATX-CAR | Q2 P3 | 8 throws | aEC/T 0.087 | total 0.700 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 7,
+      "title": "Codex O-line pattern 09 | middle-middle | direct | 4-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|4|1|True",
+          "label": "460. Goal O-line | 2026-07-18-HTX-ATX | Q4 P4 | 3 throws | aEC/T 0.323 | total 0.970 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|7|1|False",
+          "label": "214. Turnover O-line | 2026-06-05-ATX-SD | Q1 P7 | 3 throws | aEC/T -0.150 | total -0.451 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|9|1|False",
+          "label": "253. Goal O-line | 2026-06-06-ATX-LV | Q1 P9 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|7|1|False",
+          "label": "232. Goal O-line | 2026-06-05-ATX-SD | Q3 P7 | 4 throws | aEC/T 0.252 | total 1.008 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|6|1|True",
+          "label": "181. Goal O-line | 2026-05-31-SEA-ATX | Q2 P6 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|8|1|True",
+          "label": "183. Goal O-line | 2026-05-31-SEA-ATX | Q2 P8 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|9|1|True",
+          "label": "196. Goal O-line | 2026-05-31-SEA-ATX | Q3 P9 | 4 throws | aEC/T 0.254 | total 1.015 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|5|1|True",
+          "label": "294. Goal O-line | 2026-06-19-SD-ATX | Q1 P5 | 6 throws | aEC/T 0.167 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|5|1|True",
+          "label": "201. Goal O-line | 2026-05-31-SEA-ATX | Q4 P5 | 6 throws | aEC/T 0.155 | total 0.930 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|7|1|False",
+          "label": "342. Turnover O-line | 2026-07-10-ATX-CAR | Q2 P7 | 6 throws | aEC/T -0.066 | total -0.399 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 8,
+      "title": "Codex O-line pattern 10 | middle-middle | direct | 4.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|7|1|False",
+          "label": "408. Turnover O-line | 2026-07-17-ATX-HTX | Q2 P7 | 2 throws | aEC/T -0.255 | total -0.511 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|12|3|False",
+          "label": "380. Turnover O-line | 2026-07-11-ATX-ATL | Q2 P12 | 3 throws | aEC/T -0.046 | total -0.138 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|5|1|1|False",
+          "label": "241. Turnover O-line | 2026-06-05-ATX-SD | Q5 P1 | 3 throws | aEC/T -0.241 | total -0.724 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|6|1|True",
+          "label": "305. Goal O-line | 2026-06-19-SD-ATX | Q2 P6 | 4 throws | aEC/T 0.250 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|7|1|True",
+          "label": "454. Goal O-line | 2026-07-18-HTX-ATX | Q3 P7 | 4 throws | aEC/T 0.250 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|4|1|True",
+          "label": "3. Goal O-line | 2026-04-25-ATL-ATX | Q1 P4 | 4 throws | aEC/T 0.250 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|7|1|False",
+          "label": "65. Goal O-line | 2026-05-02-ATX-HTX | Q3 P7 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|1|1|True",
+          "label": "9. Goal O-line | 2026-04-25-ATL-ATX | Q2 P1 | 5 throws | aEC/T 0.213 | total 1.065 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|4|4|1|False",
+          "label": "236. Goal O-line | 2026-06-05-ATX-SD | Q4 P4 | 5 throws | aEC/T 0.190 | total 0.951 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|3|1|False",
+          "label": "406. Goal O-line | 2026-07-17-ATX-HTX | Q2 P3 | 5 throws | aEC/T 0.199 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|10|1|False",
+          "label": "410. Goal O-line | 2026-07-17-ATX-HTX | Q2 P10 | 6 throws | aEC/T 0.156 | total 0.935 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|2|1|True",
+          "label": "199. Goal O-line | 2026-05-31-SEA-ATX | Q4 P2 | 7 throws | aEC/T 0.141 | total 0.987 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|1|1|True",
+          "label": "165. Goal O-line | 2026-05-31-SEA-ATX | Q1 P1 | 7 throws | aEC/T 0.153 | total 1.072 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|4|1|True",
+          "label": "445. Goal O-line | 2026-07-18-HTX-ATX | Q2 P4 | 11 throws | aEC/T 0.091 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 9,
+      "title": "Codex O-line pattern 22 | middle-left | mixed | 10-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|6|1|True",
+          "label": "86. Turnover O-line | 2026-05-09-HTX-ATX | Q1 P6 | 5 throws | aEC/T -0.004 | total -0.021 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|1|3|3|False",
+          "label": "333. Goal O-line | 2026-07-10-ATX-CAR | Q1 P3 | 6 throws | aEC/T 0.165 | total 0.993 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|1|5|2|False",
+          "label": "400. Goal O-line | 2026-07-17-ATX-HTX | Q1 P5 | 9 throws | aEC/T 0.111 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|2|1|True",
+          "label": "319. Goal O-line | 2026-06-19-SD-ATX | Q4 P2 | 8 throws | aEC/T 0.134 | total 1.075 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|5|1|True",
+          "label": "169. Goal O-line | 2026-05-31-SEA-ATX | Q1 P5 | 8 throws | aEC/T 0.125 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|8|3|True",
+          "label": "204. Turnover O-line | 2026-05-31-SEA-ATX | Q4 P8 | 6 throws | aEC/T -0.085 | total -0.509 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|9|1|True",
+          "label": "99. Goal O-line | 2026-05-09-HTX-ATX | Q2 P9 | 9 throws | aEC/T 0.113 | total 1.013 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|2|1|False",
+          "label": "227. Turnover O-line | 2026-06-05-ATX-SD | Q3 P2 | 10 throws | aEC/T -0.036 | total -0.356 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|1|7|1|False",
+          "label": "401. Goal O-line | 2026-07-17-ATX-HTX | Q1 P7 | 10 throws | aEC/T 0.101 | total 1.008 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|9|1|False",
+          "label": "344. Goal O-line | 2026-07-10-ATX-CAR | Q2 P9 | 15 throws | aEC/T 0.067 | total 1.012 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|3|9|1|False",
+          "label": "351. Goal O-line | 2026-07-10-ATX-CAR | Q3 P9 | 10 throws | aEC/T 0.095 | total 0.947 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|3|1|False",
+          "label": "274. Turnover O-line | 2026-06-06-ATX-LV | Q3 P3 | 10 throws | aEC/T -0.009 | total -0.085 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|3|8|1|False",
+          "label": "350. Turnover O-line | 2026-07-10-ATX-CAR | Q3 P8 | 11 throws | aEC/T 0.005 | total 0.058 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|3|1|False",
+          "label": "228. Goal O-line | 2026-06-05-ATX-SD | Q3 P3 | 12 throws | aEC/T 0.083 | total 0.992 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|1|9|1|False",
+          "label": "337. Goal O-line | 2026-07-10-ATX-CAR | Q1 P9 | 14 throws | aEC/T 0.079 | total 1.101 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 10,
+      "title": "Codex O-line pattern 11 | left-left | mixed | 4.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|7|3|True",
+          "label": "476. Turnover O-line | 2026-08-07-CAR-ATX | Q1 P7 | 2 throws | aEC/T -0.313 | total -0.626 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|8|1|True",
+          "label": "478. Turnover O-line | 2026-08-07-CAR-ATX | Q1 P8 | 2 throws | aEC/T -0.226 | total -0.451 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|8|1|False",
+          "label": "343. Turnover O-line | 2026-07-10-ATX-CAR | Q2 P8 | 2 throws | aEC/T -0.231 | total -0.461 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|2|1|False",
+          "label": "43. Goal O-line | 2026-05-02-ATX-HTX | Q1 P2 | 7 throws | aEC/T 0.147 | total 1.027 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|1|1|False",
+          "label": "371. Turnover O-line | 2026-07-11-ATX-ATL | Q2 P1 | 7 throws | aEC/T -0.082 | total -0.574 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|1|2|True",
+          "label": "440. Turnover O-line | 2026-07-18-HTX-ATX | Q2 P1 | 14 throws | aEC/T -0.009 | total -0.132 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 11,
+      "title": "Codex O-line pattern 14 | right-left | direct | 5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|2|1|False",
+          "label": "61. Goal O-line | 2026-05-02-ATX-HTX | Q3 P2 | 3 throws | aEC/T 0.337 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|5|4|False",
+          "label": "266. Turnover O-line | 2026-06-06-ATX-LV | Q2 P5 | 3 throws | aEC/T -0.173 | total -0.518 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|6|1|True",
+          "label": "23. Goal O-line | 2026-04-25-ATL-ATX | Q3 P6 | 4 throws | aEC/T 0.112 | total 0.446 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|7|3|True",
+          "label": "88. Goal O-line | 2026-05-09-HTX-ATX | Q1 P7 | 5 throws | aEC/T 0.203 | total 1.013 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|5|1|False",
+          "label": "407. Goal O-line | 2026-07-17-ATX-HTX | Q2 P5 | 5 throws | aEC/T 0.201 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|5|1|False",
+          "label": "374. Goal O-line | 2026-07-11-ATX-ATL | Q2 P5 | 7 throws | aEC/T 0.120 | total 0.841 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|5|3|True",
+          "label": "474. Goal O-line | 2026-08-07-CAR-ATX | Q1 P5 | 8 throws | aEC/T 0.125 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|7|1|False",
+          "label": "288. Goal O-line | 2026-06-06-ATX-LV | Q4 P7 | 24 throws | aEC/T 0.040 | total 0.950 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 12,
+      "title": "Codex O-line pattern 15 | left-right | mixed | 5.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|7|1|False",
+          "label": "428. Goal O-line | 2026-07-17-ATX-HTX | Q4 P7 | 4 throws | aEC/T 0.270 | total 1.080 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|5|5|False",
+          "label": "49. Goal O-line | 2026-05-02-ATX-HTX | Q1 P5 | 4 throws | aEC/T 0.247 | total 0.986 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|7|3|False",
+          "label": "395. Turnover O-line | 2026-07-11-ATX-ATL | Q4 P7 | 5 throws | aEC/T -0.080 | total -0.401 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|3|1|True",
+          "label": "92. Goal O-line | 2026-05-09-HTX-ATX | Q2 P3 | 6 throws | aEC/T 0.165 | total 0.993 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|5|6|False",
+          "label": "267. Goal O-line | 2026-06-06-ATX-LV | Q2 P5 | 8 throws | aEC/T 0.125 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|4|1|True",
+          "label": "33. Turnover O-line | 2026-04-25-ATL-ATX | Q4 P4 | 11 throws | aEC/T -0.016 | total -0.181 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 13,
+      "title": "Codex O-line pattern 16 | left-right | mixed | 7-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|7|1|True",
+          "label": "486. Goal O-line | 2026-08-07-CAR-ATX | Q2 P7 | 4 throws | aEC/T 0.250 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|1|1|True",
+          "label": "155. Goal O-line | 2026-05-16-LV-ATX | Q4 P1 | 6 throws | aEC/T 0.174 | total 1.045 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|9|1|True",
+          "label": "162. Goal O-line | 2026-05-16-LV-ATX | Q4 P9 | 8 throws | aEC/T 0.127 | total 1.016 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|3|4|5|False",
+          "label": "417. Goal O-line | 2026-07-17-ATX-HTX | Q3 P4 | 15 throws | aEC/T 0.068 | total 1.027 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 14,
+      "title": "Codex O-line pattern 17 | left-right | mixed | 7-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|13|1|True",
+          "label": "508. Turnover O-line | 2026-08-07-CAR-ATX | Q4 P13 | 1 throws | aEC/T -0.582 | total -0.582 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|3|6|1|False",
+          "label": "349. Goal O-line | 2026-07-10-ATX-CAR | Q3 P6 | 3 throws | aEC/T 0.268 | total 0.804 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|5|3|False",
+          "label": "221. Goal O-line | 2026-06-05-ATX-SD | Q2 P5 | 4 throws | aEC/T 0.218 | total 0.872 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|6|4|True",
+          "label": "160. Goal O-line | 2026-05-16-LV-ATX | Q4 P6 | 7 throws | aEC/T 0.132 | total 0.925 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|3|1|True",
+          "label": "501. Goal O-line | 2026-08-07-CAR-ATX | Q4 P3 | 7 throws | aEC/T 0.120 | total 0.839 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|1|1|False",
+          "label": "404. Turnover O-line | 2026-07-17-ATX-HTX | Q2 P1 | 8 throws | aEC/T -0.027 | total -0.218 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|7|1|True",
+          "label": "504. Goal O-line | 2026-08-07-CAR-ATX | Q4 P7 | 8 throws | aEC/T 0.109 | total 0.869 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 15,
+      "title": "Codex O-line pattern 18 | left-right | winding | 7-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-17-ATX-HTX|1|4|3|False",
+          "label": "399. Goal O-line | 2026-07-17-ATX-HTX | Q1 P4 | 7 throws | aEC/T 0.143 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|4|3|False",
+          "label": "285. Goal O-line | 2026-06-06-ATX-LV | Q4 P4 | 7 throws | aEC/T 0.098 | total 0.688 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|2|4|False",
+          "label": "72. Turnover O-line | 2026-05-02-ATX-HTX | Q4 P2 | 8 throws | aEC/T -0.032 | total -0.255 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 16,
+      "title": "Codex O-line pattern 19 | left-left | mixed | 7.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|6|2|True",
+          "label": "295. Goal O-line | 2026-06-19-SD-ATX | Q1 P6 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|8|3|False",
+          "label": "216. Turnover O-line | 2026-06-05-ATX-SD | Q1 P8 | 6 throws | aEC/T -0.013 | total -0.080 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|5|8|True",
+          "label": "133. Turnover O-line | 2026-05-16-LV-ATX | Q1 P5 | 7 throws | aEC/T 0.038 | total 0.264 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|4|1|False",
+          "label": "284. Turnover O-line | 2026-06-06-ATX-LV | Q4 P4 | 7 throws | aEC/T 0.013 | total 0.092 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|11|1|True",
+          "label": "490. Turnover O-line | 2026-08-07-CAR-ATX | Q2 P11 | 7 throws | aEC/T -0.046 | total -0.323 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|3|1|True",
+          "label": "138. Goal O-line | 2026-05-16-LV-ATX | Q2 P3 | 7 throws | aEC/T 0.144 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|5|1|3|True",
+          "label": "328. Turnover O-line | 2026-06-19-SD-ATX | Q5 P1 | 8 throws | aEC/T -0.019 | total -0.149 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|11|1|False",
+          "label": "345. Goal O-line | 2026-07-10-ATX-CAR | Q2 P11 | 9 throws | aEC/T 0.125 | total 1.124 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|1|1|True",
+          "label": "137. Goal O-line | 2026-05-16-LV-ATX | Q2 P1 | 11 throws | aEC/T 0.099 | total 1.089 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|7|4|True",
+          "label": "108. Goal O-line | 2026-05-09-HTX-ATX | Q3 P7 | 12 throws | aEC/T 0.084 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|4|1|True",
+          "label": "321. Turnover O-line | 2026-06-19-SD-ATX | Q4 P4 | 12 throws | aEC/T -0.015 | total -0.182 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|1|1|True",
+          "label": "291. Goal O-line | 2026-06-19-SD-ATX | Q1 P1 | 15 throws | aEC/T 0.076 | total 1.144 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 17,
+      "title": "Codex O-line pattern 20 | middle-right | winding | 8-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|8|1|True",
+          "label": "36. Turnover O-line | 2026-04-25-ATL-ATX | Q4 P8 | 3 throws | aEC/T -0.256 | total -0.768 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|1|1|False",
+          "label": "69. Turnover O-line | 2026-05-02-ATX-HTX | Q4 P1 | 3 throws | aEC/T -0.219 | total -0.658 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|1|4|True",
+          "label": "441. Turnover O-line | 2026-07-18-HTX-ATX | Q2 P1 | 3 throws | aEC/T -0.232 | total -0.696 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|4|1|True",
+          "label": "11. Turnover O-line | 2026-04-25-ATL-ATX | Q2 P4 | 5 throws | aEC/T -0.127 | total -0.635 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|3|1|False",
+          "label": "208. Turnover O-line | 2026-06-05-ATX-SD | Q1 P3 | 8 throws | aEC/T -0.063 | total -0.505 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|4|7|1|False",
+          "label": "238. Turnover O-line | 2026-06-05-ATX-SD | Q4 P7 | 8 throws | aEC/T -0.068 | total -0.544 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|3|1|True",
+          "label": "303. Turnover O-line | 2026-06-19-SD-ATX | Q2 P3 | 8 throws | aEC/T -0.083 | total -0.661 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|4|3|1|False",
+          "label": "235. Turnover O-line | 2026-06-05-ATX-SD | Q4 P3 | 8 throws | aEC/T -0.043 | total -0.346 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|8|1|True",
+          "label": "298. Turnover O-line | 2026-06-19-SD-ATX | Q1 P8 | 13 throws | aEC/T -0.028 | total -0.370 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|1|1|False",
+          "label": "226. Turnover O-line | 2026-06-05-ATX-SD | Q3 P1 | 15 throws | aEC/T -0.032 | total -0.475 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 18,
+      "title": "Codex O-line pattern 21 | right-left | mixed | 8-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|2|3|True",
+          "label": "83. Goal O-line | 2026-05-09-HTX-ATX | Q1 P2 | 6 throws | aEC/T 0.166 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|1|3|False",
+          "label": "272. Turnover O-line | 2026-06-06-ATX-LV | Q3 P1 | 7 throws | aEC/T -0.006 | total -0.045 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|1|1|True",
+          "label": "30. Goal O-line | 2026-04-25-ATL-ATX | Q4 P1 | 7 throws | aEC/T 0.153 | total 1.069 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|14|1|True",
+          "label": "187. Goal O-line | 2026-05-31-SEA-ATX | Q2 P14 | 8 throws | aEC/T 0.139 | total 1.116 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|4|1|False",
+          "label": "57. Turnover O-line | 2026-05-02-ATX-HTX | Q2 P4 | 9 throws | aEC/T -0.010 | total -0.086 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|2|1|True",
+          "label": "459. Goal O-line | 2026-07-18-HTX-ATX | Q4 P2 | 12 throws | aEC/T 0.078 | total 0.941 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|7|1|True",
+          "label": "435. Goal O-line | 2026-07-18-HTX-ATX | Q1 P7 | 18 throws | aEC/T 0.056 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 19,
+      "title": "Pattern group 34",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-02-ATX-HTX|5|4|1|False",
+          "label": "81. Goal O-line | 2026-05-02-ATX-HTX | Q5 P4 | 14 throws | aEC/T 0.079 | total 1.101 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|3|5|False",
+          "label": "210. Goal O-line | 2026-06-05-ATX-SD | Q1 P3 | 16 throws | aEC/T 0.063 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|7|1|True",
+          "label": "315. Goal O-line | 2026-06-19-SD-ATX | Q3 P7 | 18 throws | aEC/T 0.057 | total 1.025 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|8|1|False",
+          "label": "269. Goal O-line | 2026-06-06-ATX-LV | Q2 P8 | 19 throws | aEC/T 0.044 | total 0.835 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|4|1|False",
+          "label": "46. Turnover O-line | 2026-05-02-ATX-HTX | Q1 P4 | 8 throws | aEC/T -0.063 | total -0.506 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 20,
+      "title": "Codex O-line pattern 23 | left-left | winding | 10-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|3|1|True",
+          "label": "103. Goal O-line | 2026-05-09-HTX-ATX | Q3 P3 | 4 throws | aEC/T 0.250 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|14|1|True",
+          "label": "509. Goal O-line | 2026-08-07-CAR-ATX | Q4 P14 | 7 throws | aEC/T 0.162 | total 1.136 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|6|1|True",
+          "label": "116. Goal O-line | 2026-05-09-HTX-ATX | Q4 P6 | 9 throws | aEC/T 0.110 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|7|1|False",
+          "label": "366. Turnover O-line | 2026-07-11-ATX-ATL | Q1 P7 | 10 throws | aEC/T -0.050 | total -0.501 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|10|1|False",
+          "label": "378. Goal O-line | 2026-07-11-ATX-ATL | Q2 P10 | 15 throws | aEC/T 0.070 | total 1.050 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|2|1|False",
+          "label": "55. Goal O-line | 2026-05-02-ATX-HTX | Q2 P2 | 17 throws | aEC/T 0.059 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|3|6|1|False",
+          "label": "418. Goal O-line | 2026-07-17-ATX-HTX | Q3 P6 | 18 throws | aEC/T 0.072 | total 1.297 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 21,
+      "title": "Codex O-line pattern 24 | middle-right | winding | 10.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|5|3|False",
+          "label": "230. Goal O-line | 2026-06-05-ATX-SD | Q3 P5 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|6|2|True",
+          "label": "97. Goal O-line | 2026-05-09-HTX-ATX | Q2 P6 | 7 throws | aEC/T 0.163 | total 1.141 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|3|3|False",
+          "label": "219. Goal O-line | 2026-06-05-ATX-SD | Q2 P3 | 8 throws | aEC/T 0.125 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|11|2|True",
+          "label": "507. Goal O-line | 2026-08-07-CAR-ATX | Q4 P11 | 9 throws | aEC/T 0.115 | total 1.037 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|7|3|False",
+          "label": "279. Goal O-line | 2026-06-06-ATX-LV | Q3 P7 | 10 throws | aEC/T 0.101 | total 1.008 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|13|1|True",
+          "label": "101. Turnover O-line | 2026-05-09-HTX-ATX | Q2 P13 | 11 throws | aEC/T 0.032 | total 0.352 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|8|1|True",
+          "label": "118. Goal O-line | 2026-05-09-HTX-ATX | Q4 P8 | 12 throws | aEC/T 0.084 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|4|7|3|False",
+          "label": "239. Goal O-line | 2026-06-05-ATX-SD | Q4 P7 | 13 throws | aEC/T 0.091 | total 1.185 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|5|3|1|False",
+          "label": "244. Goal O-line | 2026-06-05-ATX-SD | Q5 P3 | 13 throws | aEC/T 0.087 | total 1.135 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|2|1|True",
+          "label": "2. Goal O-line | 2026-04-25-ATL-ATX | Q1 P2 | 22 throws | aEC/T 0.042 | total 0.919 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 22,
+      "title": "Codex O-line pattern 26 | middle-left | mixed | 12-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|11|1|True",
+          "label": "164. Turnover O-line | 2026-05-16-LV-ATX | Q4 P11 | 6 throws | aEC/T -0.032 | total -0.192 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|7|1|False",
+          "label": "77. Goal O-line | 2026-05-02-ATX-HTX | Q4 P7 | 8 throws | aEC/T 0.127 | total 1.015 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|3|3|True",
+          "label": "114. Goal O-line | 2026-05-09-HTX-ATX | Q4 P3 | 9 throws | aEC/T 0.111 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|1|1|True",
+          "label": "310. Goal O-line | 2026-06-19-SD-ATX | Q3 P1 | 11 throws | aEC/T 0.101 | total 1.115 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|7|1|True",
+          "label": "324. Goal O-line | 2026-06-19-SD-ATX | Q4 P7 | 12 throws | aEC/T 0.068 | total 0.816 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|4|3|False",
+          "label": "276. Goal O-line | 2026-06-06-ATX-LV | Q3 P4 | 15 throws | aEC/T 0.065 | total 0.971 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|4|1|True",
+          "label": "494. Goal O-line | 2026-08-07-CAR-ATX | Q3 P4 | 16 throws | aEC/T 0.065 | total 1.047 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|6|1|True",
+          "label": "453. Turnover O-line | 2026-07-18-HTX-ATX | Q3 P6 | 18 throws | aEC/T -0.006 | total -0.116 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|5|2|True",
+          "label": "158. Goal O-line | 2026-05-16-LV-ATX | Q4 P5 | 18 throws | aEC/T 0.062 | total 1.113 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 23,
+      "title": "Codex O-line pattern 27 | middle-left | winding | 12.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|9|1|True",
+          "label": "172. Goal O-line | 2026-05-31-SEA-ATX | Q1 P9 | 9 throws | aEC/T 0.111 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|8|3|True",
+          "label": "37. Goal O-line | 2026-04-25-ATL-ATX | Q4 P8 | 11 throws | aEC/T 0.111 | total 1.226 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|10|1|True",
+          "label": "309. Goal O-line | 2026-06-19-SD-ATX | Q2 P10 | 12 throws | aEC/T 0.096 | total 1.157 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|1|1|True",
+          "label": "91. Goal O-line | 2026-05-09-HTX-ATX | Q2 P1 | 13 throws | aEC/T 0.083 | total 1.085 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|11|1|True",
+          "label": "17. Goal O-line | 2026-04-25-ATL-ATX | Q2 P11 | 15 throws | aEC/T 0.067 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|12|1|False",
+          "label": "68. Goal O-line | 2026-05-02-ATX-HTX | Q3 P12 | 15 throws | aEC/T 0.056 | total 0.843 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 24,
+      "title": "Codex O-line pattern 29 | right-right | winding | 14-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|8|1|True",
+          "label": "195. Turnover O-line | 2026-05-31-SEA-ATX | Q3 P8 | 8 throws | aEC/T -0.021 | total -0.172 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|12|1|True",
+          "label": "499. Goal O-line | 2026-08-07-CAR-ATX | Q3 P12 | 9 throws | aEC/T 0.146 | total 1.312 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|1|6|1|False",
+          "label": "335. Goal O-line | 2026-07-10-ATX-CAR | Q1 P6 | 11 throws | aEC/T 0.088 | total 0.967 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|10|1|True",
+          "label": "90. Goal O-line | 2026-05-09-HTX-ATX | Q1 P10 | 12 throws | aEC/T 0.107 | total 1.286 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|6|1|False",
+          "label": "384. Goal O-line | 2026-07-11-ATX-ATL | Q3 P6 | 13 throws | aEC/T 0.070 | total 0.908 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|5|1|False",
+          "label": "341. Goal O-line | 2026-07-10-ATX-CAR | Q2 P5 | 14 throws | aEC/T 0.071 | total 0.993 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|1|1|False",
+          "label": "53. Turnover O-line | 2026-05-02-ATX-HTX | Q2 P1 | 19 throws | aEC/T 0.005 | total 0.099 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|2|1|True",
+          "label": "82. Turnover O-line | 2026-05-09-HTX-ATX | Q1 P2 | 19 throws | aEC/T -0.011 | total -0.218 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|1|1|True",
+          "label": "449. Goal O-line | 2026-07-18-HTX-ATX | Q3 P1 | 21 throws | aEC/T 0.054 | total 1.130 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|1|1|False",
+          "label": "207. Goal O-line | 2026-06-05-ATX-SD | Q1 P1 | 21 throws | aEC/T 0.055 | total 1.150 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|11|1|True",
+          "label": "7. Goal O-line | 2026-04-25-ATL-ATX | Q1 P11 | 28 throws | aEC/T 0.038 | total 1.055 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 25,
+      "title": "Codex O-line pattern 30 | left-middle | winding | 16.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|4|1|True",
+          "label": "179. Goal O-line | 2026-05-31-SEA-ATX | Q2 P4 | 11 throws | aEC/T 0.102 | total 1.117 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|10|1|False",
+          "label": "67. Goal O-line | 2026-05-02-ATX-HTX | Q3 P10 | 15 throws | aEC/T 0.067 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|5|1|False",
+          "label": "76. Goal O-line | 2026-05-02-ATX-HTX | Q4 P5 | 18 throws | aEC/T 0.056 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|5|2|True",
+          "label": "314. Goal O-line | 2026-06-19-SD-ATX | Q3 P5 | 19 throws | aEC/T 0.052 | total 0.992 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 26,
+      "title": "Codex O-line pattern 31 | middle-middle | winding | 17.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|2|1|True",
+          "label": "444. Goal O-line | 2026-07-18-HTX-ATX | Q2 P2 | 14 throws | aEC/T 0.070 | total 0.975 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|5|1|False",
+          "label": "229. Turnover O-line | 2026-06-05-ATX-SD | Q3 P5 | 17 throws | aEC/T 0.007 | total 0.124 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|5|3|1|True",
+          "label": "39. Goal O-line | 2026-04-25-ATL-ATX | Q5 P3 | 18 throws | aEC/T 0.057 | total 1.019 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|1|1|False",
+          "label": "353. Goal O-line | 2026-07-10-ATX-CAR | Q4 P1 | 20 throws | aEC/T 0.062 | total 1.230 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 27,
+      "title": "Codex O-line pattern 32 | right-left | winding | 19.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|5|1|True",
+          "label": "34. Goal O-line | 2026-04-25-ATL-ATX | Q4 P5 | 13 throws | aEC/T 0.068 | total 0.886 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|2|1|True",
+          "label": "20. Goal O-line | 2026-04-25-ATL-ATX | Q3 P2 | 17 throws | aEC/T 0.053 | total 0.901 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|5|1|True",
+          "label": "150. Goal O-line | 2026-05-16-LV-ATX | Q3 P5 | 22 throws | aEC/T 0.052 | total 1.137 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|5|1|False",
+          "label": "356. Goal O-line | 2026-07-10-ATX-CAR | Q4 P5 | 22 throws | aEC/T 0.046 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 28,
+      "title": "Unsorted: new cards",
+      "break_before": true,
+      "auto_unsorted": true,
+      "possessions": [
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|12|2|True",
+          "label": "8. Goal D-line | 2026-04-25-ATL-ATX | Q1 P12 | 8 throws | aEC/T 0.151 | total 1.208 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|7|2|True",
+          "label": "14. Goal D-line | 2026-04-25-ATL-ATX | Q2 P7 | 4 throws | aEC/T 0.181 | total 0.722 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|8|2|True",
+          "label": "15. Turnover D-line | 2026-04-25-ATL-ATX | Q2 P8 | 2 throws | aEC/T -0.419 | total -0.837 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|12|2|True",
+          "label": "18. Goal D-line | 2026-04-25-ATL-ATX | Q2 P12 | 14 throws | aEC/T 0.063 | total 0.885 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|3|2|True",
+          "label": "21. Goal D-line | 2026-04-25-ATL-ATX | Q3 P3 | 8 throws | aEC/T 0.147 | total 1.178 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|4|2|True",
+          "label": "22. Goal D-line | 2026-04-25-ATL-ATX | Q3 P4 | 6 throws | aEC/T 0.132 | total 0.791 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|1|2|True",
+          "label": "469. Turnover D-line | 2026-08-07-CAR-ATX | Q1 P1 | 3 throws | aEC/T -0.151 | total -0.453 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|8|3|True",
+          "label": "479. Goal D-line | 2026-08-07-CAR-ATX | Q1 P8 | 10 throws | aEC/T 0.092 | total 0.917 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|2|2|True",
+          "label": "481. Turnover D-line | 2026-08-07-CAR-ATX | Q2 P2 | 9 throws | aEC/T -0.049 | total -0.444 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|4|2|True",
+          "label": "483. Turnover D-line | 2026-08-07-CAR-ATX | Q2 P4 | 1 throws | aEC/T -0.812 | total -0.812 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|8|2|True",
+          "label": "487. Goal D-line | 2026-08-07-CAR-ATX | Q2 P8 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|9|2|True",
+          "label": "488. Goal D-line | 2026-08-07-CAR-ATX | Q2 P9 | 4 throws | aEC/T 0.217 | total 0.869 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|10|2|True",
+          "label": "489. Turnover D-line | 2026-08-07-CAR-ATX | Q2 P10 | 6 throws | aEC/T -0.023 | total -0.138 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|1|2|True",
+          "label": "491. Goal D-line | 2026-08-07-CAR-ATX | Q3 P1 | 7 throws | aEC/T 0.153 | total 1.073 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|2|2|True",
+          "label": "492. Goal D-line | 2026-08-07-CAR-ATX | Q3 P2 | 12 throws | aEC/T 0.084 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|3|2|True",
+          "label": "493. Turnover D-line | 2026-08-07-CAR-ATX | Q3 P3 | 3 throws | aEC/T -0.133 | total -0.400 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|10|2|True",
+          "label": "498. Goal D-line | 2026-08-07-CAR-ATX | Q3 P10 | 4 throws | aEC/T 0.272 | total 1.090 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|4|2|True",
+          "label": "502. Goal D-line | 2026-08-07-CAR-ATX | Q4 P4 | 15 throws | aEC/T 0.070 | total 1.051 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|5|2|True",
+          "label": "503. Goal D-line | 2026-08-07-CAR-ATX | Q4 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|8|2|True",
+          "label": "505. Goal D-line | 2026-08-07-CAR-ATX | Q4 P8 | 8 throws | aEC/T 0.125 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|12|2|True",
+          "label": "27. Turnover D-line | 2026-04-25-ATL-ATX | Q3 P12 | 6 throws | aEC/T -0.092 | total -0.553 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|2|2|True",
+          "label": "31. Turnover D-line | 2026-04-25-ATL-ATX | Q4 P2 | 3 throws | aEC/T -0.243 | total -0.728 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|4|2|4|True",
+          "label": "32. Goal D-line | 2026-04-25-ATL-ATX | Q4 P2 | 8 throws | aEC/T 0.111 | total 0.889 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|5|4|2|True",
+          "label": "40. Goal D-line | 2026-04-25-ATL-ATX | Q5 P4 | 5 throws | aEC/T 0.211 | total 1.054 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|3|2|False",
+          "label": "44. Turnover D-line | 2026-05-02-ATX-HTX | Q1 P3 | 15 throws | aEC/T -0.007 | total -0.108 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|3|4|False",
+          "label": "45. Turnover D-line | 2026-05-02-ATX-HTX | Q1 P3 | 3 throws | aEC/T -0.183 | total -0.548 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|8|2|False",
+          "label": "51. Goal D-line | 2026-05-02-ATX-HTX | Q1 P8 | 5 throws | aEC/T 0.177 | total 0.885 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|3|2|False",
+          "label": "56. Turnover D-line | 2026-05-02-ATX-HTX | Q2 P3 | 4 throws | aEC/T -0.120 | total -0.480 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|5|3|False",
+          "label": "59. Turnover D-line | 2026-05-02-ATX-HTX | Q2 P5 | 4 throws | aEC/T -0.001 | total -0.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|3|2|False",
+          "label": "62. Goal D-line | 2026-05-02-ATX-HTX | Q3 P3 | 6 throws | aEC/T 0.151 | total 0.906 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|4|2|False",
+          "label": "63. Goal D-line | 2026-05-02-ATX-HTX | Q3 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|5|2|False",
+          "label": "64. Goal D-line | 2026-05-02-ATX-HTX | Q3 P5 | 13 throws | aEC/T 0.076 | total 0.984 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|3|8|2|False",
+          "label": "66. Goal D-line | 2026-05-02-ATX-HTX | Q3 P8 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|1|3|False",
+          "label": "70. Goal D-line | 2026-05-02-ATX-HTX | Q4 P1 | 2 throws | aEC/T 0.505 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|2|2|False",
+          "label": "71. Turnover D-line | 2026-05-02-ATX-HTX | Q4 P2 | 10 throws | aEC/T -0.027 | total -0.273 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|5|2|2|False",
+          "label": "80. Goal D-line | 2026-05-02-ATX-HTX | Q5 P2 | 8 throws | aEC/T 0.126 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|3|2|True",
+          "label": "84. Goal D-line | 2026-05-09-HTX-ATX | Q1 P3 | 20 throws | aEC/T 0.050 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|4|2|True",
+          "label": "85. Goal D-line | 2026-05-09-HTX-ATX | Q1 P4 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|8|2|True",
+          "label": "89. Goal D-line | 2026-05-09-HTX-ATX | Q1 P8 | 2 throws | aEC/T 0.505 | total 1.010 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|4|2|True",
+          "label": "93. Goal D-line | 2026-05-09-HTX-ATX | Q2 P4 | 2 throws | aEC/T 0.499 | total 0.999 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|5|2|True",
+          "label": "94. Turnover D-line | 2026-05-09-HTX-ATX | Q2 P5 | 3 throws | aEC/T -0.184 | total -0.551 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|5|4|True",
+          "label": "95. Turnover D-line | 2026-05-09-HTX-ATX | Q2 P5 | 4 throws | aEC/T -0.162 | total -0.648 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|1|2|True",
+          "label": "102. Goal D-line | 2026-05-09-HTX-ATX | Q3 P1 | 5 throws | aEC/T 0.169 | total 0.847 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|4|2|True",
+          "label": "104. Goal D-line | 2026-05-09-HTX-ATX | Q3 P4 | 12 throws | aEC/T 0.076 | total 0.917 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|5|2|True",
+          "label": "105. Goal D-line | 2026-05-09-HTX-ATX | Q3 P5 | 6 throws | aEC/T 0.167 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|6|2|True",
+          "label": "106. Goal D-line | 2026-05-09-HTX-ATX | Q3 P6 | 15 throws | aEC/T 0.076 | total 1.139 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|7|2|True",
+          "label": "107. Turnover D-line | 2026-05-09-HTX-ATX | Q3 P7 | 1 throws | aEC/T -0.690 | total -0.690 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|8|2|True",
+          "label": "109. Goal D-line | 2026-05-09-HTX-ATX | Q3 P8 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|9|2|True",
+          "label": "110. Turnover D-line | 2026-05-09-HTX-ATX | Q3 P9 | 1 throws | aEC/T -0.532 | total -0.532 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|3|9|4|True",
+          "label": "111. Turnover D-line | 2026-05-09-HTX-ATX | Q3 P9 | 2 throws | aEC/T -0.238 | total -0.476 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|7|2|True",
+          "label": "117. Turnover D-line | 2026-05-09-HTX-ATX | Q4 P7 | 9 throws | aEC/T -0.037 | total -0.334 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|9|2|True",
+          "label": "119. Goal D-line | 2026-05-09-HTX-ATX | Q4 P9 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|10|2|True",
+          "label": "120. Turnover D-line | 2026-05-09-HTX-ATX | Q4 P10 | 3 throws | aEC/T -0.176 | total -0.529 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|10|4|True",
+          "label": "121. Goal D-line | 2026-05-09-HTX-ATX | Q4 P10 | 7 throws | aEC/T 0.135 | total 0.942 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|11|2|True",
+          "label": "122. Turnover D-line | 2026-05-09-HTX-ATX | Q4 P11 | 3 throws | aEC/T -0.204 | total -0.613 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|13|2|True",
+          "label": "124. Goal D-line | 2026-05-09-HTX-ATX | Q4 P13 | 8 throws | aEC/T 0.149 | total 1.191 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|1|2|True",
+          "label": "125. Goal D-line | 2026-05-16-LV-ATX | Q1 P1 | 9 throws | aEC/T 0.119 | total 1.068 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|2|2|True",
+          "label": "126. Goal D-line | 2026-05-16-LV-ATX | Q1 P2 | 6 throws | aEC/T 0.170 | total 1.021 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|3|2|True",
+          "label": "127. Turnover D-line | 2026-05-16-LV-ATX | Q1 P3 | 17 throws | aEC/T -0.004 | total -0.073 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|3|4|True",
+          "label": "128. Goal D-line | 2026-05-16-LV-ATX | Q1 P3 | 4 throws | aEC/T 0.249 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|4|2|True",
+          "label": "129. Goal D-line | 2026-05-16-LV-ATX | Q1 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|5|2|True",
+          "label": "130. Turnover D-line | 2026-05-16-LV-ATX | Q1 P5 | 10 throws | aEC/T -0.007 | total -0.067 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|5|4|True",
+          "label": "131. Turnover D-line | 2026-05-16-LV-ATX | Q1 P5 | 1 throws | aEC/T -0.793 | total -0.793 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|5|6|True",
+          "label": "132. Turnover D-line | 2026-05-16-LV-ATX | Q1 P5 | 8 throws | aEC/T -0.030 | total -0.244 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|5|10|True",
+          "label": "134. Turnover D-line | 2026-05-16-LV-ATX | Q1 P5 | 2 throws | aEC/T -0.369 | total -0.738 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|5|12|True",
+          "label": "135. Goal D-line | 2026-05-16-LV-ATX | Q1 P5 | 16 throws | aEC/T 0.078 | total 1.240 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|1|6|2|True",
+          "label": "136. Goal D-line | 2026-05-16-LV-ATX | Q1 P6 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|4|2|True",
+          "label": "139. Goal D-line | 2026-05-16-LV-ATX | Q2 P4 | 5 throws | aEC/T 0.155 | total 0.775 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|5|2|True",
+          "label": "140. Goal D-line | 2026-05-16-LV-ATX | Q2 P5 | 12 throws | aEC/T 0.083 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|6|2|True",
+          "label": "141. Goal D-line | 2026-05-16-LV-ATX | Q2 P6 | 7 throws | aEC/T 0.140 | total 0.983 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|7|2|True",
+          "label": "142. Goal D-line | 2026-05-16-LV-ATX | Q2 P7 | 6 throws | aEC/T 0.131 | total 0.784 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|8|2|True",
+          "label": "143. Turnover D-line | 2026-05-16-LV-ATX | Q2 P8 | 14 throws | aEC/T -0.030 | total -0.417 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|2|9|2|True",
+          "label": "145. Turnover D-line | 2026-05-16-LV-ATX | Q2 P9 | 3 throws | aEC/T -0.242 | total -0.725 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|1|2|True",
+          "label": "146. Goal D-line | 2026-05-16-LV-ATX | Q3 P1 | 12 throws | aEC/T 0.081 | total 0.975 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|2|2|True",
+          "label": "147. Turnover D-line | 2026-05-16-LV-ATX | Q3 P2 | 3 throws | aEC/T -0.196 | total -0.587 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|4|2|True",
+          "label": "149. Turnover D-line | 2026-05-16-LV-ATX | Q3 P4 | 1 throws | aEC/T -0.608 | total -0.608 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|8|2|True",
+          "label": "152. Turnover D-line | 2026-05-16-LV-ATX | Q3 P8 | 1 throws | aEC/T -0.593 | total -0.593 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|8|4|True",
+          "label": "153. Goal D-line | 2026-05-16-LV-ATX | Q3 P8 | 5 throws | aEC/T 0.232 | total 1.160 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|3|9|2|True",
+          "label": "154. Turnover D-line | 2026-05-16-LV-ATX | Q3 P9 | 1 throws | aEC/T -0.374 | total -0.374 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|2|2|True",
+          "label": "156. Goal D-line | 2026-05-16-LV-ATX | Q4 P2 | 3 throws | aEC/T 0.335 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|7|2|True",
+          "label": "161. Goal D-line | 2026-05-16-LV-ATX | Q4 P7 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|10|2|True",
+          "label": "163. Turnover D-line | 2026-05-16-LV-ATX | Q4 P10 | 6 throws | aEC/T -0.095 | total -0.569 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|3|5|True",
+          "label": "168. Goal D-line | 2026-05-31-SEA-ATX | Q1 P3 | 10 throws | aEC/T 0.092 | total 0.923 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|10|2|True",
+          "label": "173. Turnover D-line | 2026-05-31-SEA-ATX | Q1 P10 | 12 throws | aEC/T 0.005 | total 0.057 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|5|2|True",
+          "label": "180. Turnover D-line | 2026-05-31-SEA-ATX | Q2 P5 | 1 throws | aEC/T -0.862 | total -0.862 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|7|2|True",
+          "label": "182. Turnover D-line | 2026-05-31-SEA-ATX | Q2 P7 | 1 throws | aEC/T -0.843 | total -0.843 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|2|2|True",
+          "label": "189. Goal D-line | 2026-05-31-SEA-ATX | Q3 P2 | 11 throws | aEC/T 0.095 | total 1.046 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|3|2|True",
+          "label": "190. Goal D-line | 2026-05-31-SEA-ATX | Q3 P3 | 12 throws | aEC/T 0.063 | total 0.761 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|4|2|True",
+          "label": "191. Goal D-line | 2026-05-31-SEA-ATX | Q3 P4 | 7 throws | aEC/T 0.142 | total 0.991 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|5|2|True",
+          "label": "192. Goal D-line | 2026-05-31-SEA-ATX | Q3 P5 | 14 throws | aEC/T 0.063 | total 0.877 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|6|2|True",
+          "label": "193. Goal D-line | 2026-05-31-SEA-ATX | Q3 P6 | 12 throws | aEC/T 0.084 | total 1.004 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|7|2|True",
+          "label": "194. Turnover D-line | 2026-05-31-SEA-ATX | Q3 P7 | 9 throws | aEC/T -0.134 | total -1.207 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|1|2|True",
+          "label": "198. Turnover D-line | 2026-05-31-SEA-ATX | Q4 P1 | 11 throws | aEC/T -0.012 | total -0.135 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|3|2|True",
+          "label": "200. Goal D-line | 2026-05-31-SEA-ATX | Q4 P3 | 3 throws | aEC/T 0.323 | total 0.969 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|6|2|True",
+          "label": "202. Goal D-line | 2026-05-31-SEA-ATX | Q4 P6 | 7 throws | aEC/T 0.143 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|8|5|True",
+          "label": "205. Goal D-line | 2026-05-31-SEA-ATX | Q4 P8 | 21 throws | aEC/T 0.051 | total 1.067 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|9|2|True",
+          "label": "206. Goal D-line | 2026-05-31-SEA-ATX | Q4 P9 | 18 throws | aEC/T 0.063 | total 1.132 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|3|3|False",
+          "label": "209. Turnover D-line | 2026-06-05-ATX-SD | Q1 P3 | 5 throws | aEC/T -0.089 | total -0.445 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|4|2|False",
+          "label": "211. Goal D-line | 2026-06-05-ATX-SD | Q1 P4 | 2 throws | aEC/T 0.500 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|5|2|False",
+          "label": "212. Goal D-line | 2026-06-05-ATX-SD | Q1 P5 | 2 throws | aEC/T 0.501 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|1|6|2|False",
+          "label": "213. Turnover D-line | 2026-06-05-ATX-SD | Q1 P6 | 3 throws | aEC/T -0.230 | total -0.690 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|1|2|False",
+          "label": "217. Goal D-line | 2026-06-05-ATX-SD | Q2 P1 | 10 throws | aEC/T 0.097 | total 0.974 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|6|2|False",
+          "label": "222. Goal D-line | 2026-06-05-ATX-SD | Q2 P6 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|6|2|False",
+          "label": "231. Turnover D-line | 2026-06-05-ATX-SD | Q3 P6 | 17 throws | aEC/T -0.012 | total -0.210 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|3|8|2|False",
+          "label": "233. Goal D-line | 2026-06-05-ATX-SD | Q3 P8 | 9 throws | aEC/T 0.135 | total 1.212 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|4|1|2|False",
+          "label": "234. Goal D-line | 2026-06-05-ATX-SD | Q4 P1 | 4 throws | aEC/T 0.258 | total 1.034 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|4|5|2|False",
+          "label": "237. Goal D-line | 2026-06-05-ATX-SD | Q4 P5 | 5 throws | aEC/T 0.168 | total 0.840 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|4|8|2|False",
+          "label": "240. Turnover D-line | 2026-06-05-ATX-SD | Q4 P8 | 18 throws | aEC/T 0.012 | total 0.223 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|5|2|2|False",
+          "label": "243. Turnover D-line | 2026-06-05-ATX-SD | Q5 P2 | 5 throws | aEC/T -0.045 | total -0.227 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|2|2|False",
+          "label": "247. Goal D-line | 2026-06-06-ATX-LV | Q1 P2 | 9 throws | aEC/T 0.114 | total 1.028 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|3|2|False",
+          "label": "248. Goal D-line | 2026-06-06-ATX-LV | Q1 P3 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|4|2|False",
+          "label": "249. Goal D-line | 2026-06-06-ATX-LV | Q1 P4 | 3 throws | aEC/T 0.313 | total 0.940 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|5|2|False",
+          "label": "250. Goal D-line | 2026-06-06-ATX-LV | Q1 P5 | 6 throws | aEC/T 0.138 | total 0.829 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|6|2|False",
+          "label": "251. Goal D-line | 2026-06-06-ATX-LV | Q1 P6 | 3 throws | aEC/T 0.333 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|10|2|False",
+          "label": "254. Turnover D-line | 2026-06-06-ATX-LV | Q1 P10 | 2 throws | aEC/T -0.422 | total -0.844 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|10|4|False",
+          "label": "255. Turnover D-line | 2026-06-06-ATX-LV | Q1 P10 | 6 throws | aEC/T -0.089 | total -0.535 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|10|6|False",
+          "label": "256. Turnover D-line | 2026-06-06-ATX-LV | Q1 P10 | 3 throws | aEC/T -0.209 | total -0.626 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|10|8|False",
+          "label": "257. Goal D-line | 2026-06-06-ATX-LV | Q1 P10 | 13 throws | aEC/T 0.083 | total 1.075 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|11|2|False",
+          "label": "258. Goal D-line | 2026-06-06-ATX-LV | Q1 P11 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|1|2|False",
+          "label": "259. Turnover D-line | 2026-06-06-ATX-LV | Q2 P1 | 10 throws | aEC/T 0.008 | total 0.081 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|1|4|False",
+          "label": "260. Goal D-line | 2026-06-06-ATX-LV | Q2 P1 | 4 throws | aEC/T 0.251 | total 1.005 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|2|2|False",
+          "label": "261. Goal D-line | 2026-06-06-ATX-LV | Q2 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|3|2|False",
+          "label": "262. Turnover D-line | 2026-06-06-ATX-LV | Q2 P3 | 1 throws | aEC/T -0.675 | total -0.675 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|3|4|False",
+          "label": "263. Turnover D-line | 2026-06-06-ATX-LV | Q2 P3 | 10 throws | aEC/T -0.003 | total -0.031 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|5|2|False",
+          "label": "265. Turnover D-line | 2026-06-06-ATX-LV | Q2 P5 | 8 throws | aEC/T -0.081 | total -0.644 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|6|2|False",
+          "label": "268. Goal D-line | 2026-06-06-ATX-LV | Q2 P6 | 2 throws | aEC/T 0.501 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|2|9|2|False",
+          "label": "270. Goal D-line | 2026-06-06-ATX-LV | Q2 P9 | 9 throws | aEC/T 0.143 | total 1.291 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|5|2|False",
+          "label": "277. Goal D-line | 2026-06-06-ATX-LV | Q3 P5 | 6 throws | aEC/T 0.165 | total 0.990 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|8|2|False",
+          "label": "280. Goal D-line | 2026-06-06-ATX-LV | Q3 P8 | 15 throws | aEC/T 0.072 | total 1.081 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|1|2|False",
+          "label": "281. Goal D-line | 2026-06-06-ATX-LV | Q4 P1 | 17 throws | aEC/T 0.055 | total 0.928 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|2|2|False",
+          "label": "282. Turnover D-line | 2026-06-06-ATX-LV | Q4 P2 | 1 throws | aEC/T -0.626 | total -0.626 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|2|4|False",
+          "label": "283. Goal D-line | 2026-06-06-ATX-LV | Q4 P2 | 2 throws | aEC/T 0.498 | total 0.995 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|5|2|False",
+          "label": "286. Goal D-line | 2026-06-06-ATX-LV | Q4 P5 | 6 throws | aEC/T 0.160 | total 0.959 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|6|2|False",
+          "label": "287. Turnover D-line | 2026-06-06-ATX-LV | Q4 P6 | 2 throws | aEC/T -0.288 | total -0.575 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|8|2|False",
+          "label": "289. Turnover D-line | 2026-06-06-ATX-LV | Q4 P8 | 7 throws | aEC/T -0.020 | total -0.143 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|4|8|4|False",
+          "label": "290. Goal D-line | 2026-06-06-ATX-LV | Q4 P8 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|2|2|True",
+          "label": "292. Goal D-line | 2026-06-19-SD-ATX | Q1 P2 | 20 throws | aEC/T 0.043 | total 0.857 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|3|2|True",
+          "label": "293. Goal D-line | 2026-06-19-SD-ATX | Q1 P3 | 5 throws | aEC/T 0.199 | total 0.996 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|7|2|True",
+          "label": "296. Turnover D-line | 2026-06-19-SD-ATX | Q1 P7 | 3 throws | aEC/T -0.021 | total -0.063 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|1|2|True",
+          "label": "302. Goal D-line | 2026-06-19-SD-ATX | Q2 P1 | 6 throws | aEC/T 0.136 | total 0.815 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|7|2|True",
+          "label": "306. Turnover D-line | 2026-06-19-SD-ATX | Q2 P7 | 12 throws | aEC/T -0.025 | total -0.302 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|4|2|True",
+          "label": "312. Turnover D-line | 2026-06-19-SD-ATX | Q3 P4 | 7 throws | aEC/T -0.069 | total -0.481 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|4|4|True",
+          "label": "313. Goal D-line | 2026-06-19-SD-ATX | Q3 P4 | 13 throws | aEC/T 0.076 | total 0.988 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|3|8|2|True",
+          "label": "316. Turnover D-line | 2026-06-19-SD-ATX | Q3 P8 | 2 throws | aEC/T -0.080 | total -0.159 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|3|2|True",
+          "label": "320. Turnover D-line | 2026-06-19-SD-ATX | Q4 P3 | 19 throws | aEC/T -0.021 | total -0.404 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|9|3|True",
+          "label": "326. Turnover D-line | 2026-06-19-SD-ATX | Q4 P9 | 2 throws | aEC/T -0.124 | total -0.248 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|6|1|2|True",
+          "label": "330. Goal D-line | 2026-06-19-SD-ATX | Q6 P1 | 4 throws | aEC/T 0.246 | total 0.984 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|1|1|2|False",
+          "label": "331. Goal D-line | 2026-07-10-ATX-CAR | Q1 P1 | 12 throws | aEC/T 0.091 | total 1.092 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|1|4|2|False",
+          "label": "334. Goal D-line | 2026-07-10-ATX-CAR | Q1 P4 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|1|7|2|False",
+          "label": "336. Goal D-line | 2026-07-10-ATX-CAR | Q1 P7 | 5 throws | aEC/T 0.200 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|2|4|2|False",
+          "label": "340. Turnover D-line | 2026-07-10-ATX-CAR | Q2 P4 | 3 throws | aEC/T -0.139 | total -0.418 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|2|2|False",
+          "label": "354. Goal D-line | 2026-07-10-ATX-CAR | Q4 P2 | 14 throws | aEC/T 0.075 | total 1.051 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|3|2|False",
+          "label": "355. Goal D-line | 2026-07-10-ATX-CAR | Q4 P3 | 5 throws | aEC/T 0.200 | total 0.998 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|6|2|False",
+          "label": "357. Goal D-line | 2026-07-10-ATX-CAR | Q4 P6 | 7 throws | aEC/T 0.144 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|3|2|False",
+          "label": "363. Turnover D-line | 2026-07-11-ATX-ATL | Q1 P3 | 2 throws | aEC/T -0.359 | total -0.718 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|3|4|False",
+          "label": "364. Goal D-line | 2026-07-11-ATX-ATL | Q1 P3 | 7 throws | aEC/T 0.142 | total 0.994 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|9|2|False",
+          "label": "369. Goal D-line | 2026-07-11-ATX-ATL | Q1 P9 | 13 throws | aEC/T 0.069 | total 0.899 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|6|2|False",
+          "label": "375. Goal D-line | 2026-07-11-ATX-ATL | Q2 P6 | 5 throws | aEC/T 0.178 | total 0.889 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|7|2|False",
+          "label": "376. Goal D-line | 2026-07-11-ATX-ATL | Q2 P7 | 2 throws | aEC/T 0.500 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|8|2|False",
+          "label": "377. Goal D-line | 2026-07-11-ATX-ATL | Q2 P8 | 13 throws | aEC/T 0.054 | total 0.704 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|4|2|False",
+          "label": "383. Goal D-line | 2026-07-11-ATX-ATL | Q3 P4 | 7 throws | aEC/T 0.126 | total 0.883 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|10|2|False",
+          "label": "387. Turnover D-line | 2026-07-11-ATX-ATL | Q3 P10 | 3 throws | aEC/T -0.130 | total -0.390 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|2|2|False",
+          "label": "390. Goal D-line | 2026-07-11-ATX-ATL | Q4 P2 | 6 throws | aEC/T 0.168 | total 1.006 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|3|2|False",
+          "label": "391. Turnover D-line | 2026-07-11-ATX-ATL | Q4 P3 | 12 throws | aEC/T -0.088 | total -1.058 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|5|2|False",
+          "label": "393. Goal D-line | 2026-07-11-ATX-ATL | Q4 P5 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|1|8|2|False",
+          "label": "402. Turnover D-line | 2026-07-17-ATX-HTX | Q1 P8 | 9 throws | aEC/T -0.073 | total -0.653 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|2|7|3|False",
+          "label": "409. Goal D-line | 2026-07-17-ATX-HTX | Q2 P7 | 3 throws | aEC/T 0.334 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|3|1|2|False",
+          "label": "412. Goal D-line | 2026-07-17-ATX-HTX | Q3 P1 | 7 throws | aEC/T 0.132 | total 0.921 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|3|2|2|False",
+          "label": "413. Turnover D-line | 2026-07-17-ATX-HTX | Q3 P2 | 8 throws | aEC/T -0.053 | total -0.425 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|2|2|False",
+          "label": "420. Turnover D-line | 2026-07-17-ATX-HTX | Q4 P2 | 13 throws | aEC/T -0.024 | total -0.317 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|3|2|False",
+          "label": "422. Turnover D-line | 2026-07-17-ATX-HTX | Q4 P3 | 7 throws | aEC/T -0.058 | total -0.407 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|3|4|False",
+          "label": "423. Turnover D-line | 2026-07-17-ATX-HTX | Q4 P3 | 9 throws | aEC/T 0.010 | total 0.092 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|3|6|False",
+          "label": "424. Goal D-line | 2026-07-17-ATX-HTX | Q4 P3 | 5 throws | aEC/T 0.200 | total 1.001 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|4|2|False",
+          "label": "425. Goal D-line | 2026-07-17-ATX-HTX | Q4 P4 | 9 throws | aEC/T 0.103 | total 0.928 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|5|2|False",
+          "label": "426. Goal D-line | 2026-07-17-ATX-HTX | Q4 P5 | 3 throws | aEC/T 0.334 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|4|6|2|False",
+          "label": "427. Turnover D-line | 2026-07-17-ATX-HTX | Q4 P6 | 2 throws | aEC/T -0.095 | total -0.190 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|3|2|True",
+          "label": "431. Goal D-line | 2026-07-18-HTX-ATX | Q1 P3 | 11 throws | aEC/T 0.090 | total 0.993 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|4|2|True",
+          "label": "432. Goal D-line | 2026-07-18-HTX-ATX | Q1 P4 | 12 throws | aEC/T 0.084 | total 1.003 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|5|2|True",
+          "label": "433. Goal D-line | 2026-07-18-HTX-ATX | Q1 P5 | 5 throws | aEC/T 0.185 | total 0.923 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|6|2|True",
+          "label": "434. Turnover D-line | 2026-07-18-HTX-ATX | Q1 P6 | 1 throws | aEC/T -0.745 | total -0.745 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|8|2|True",
+          "label": "436. Goal D-line | 2026-07-18-HTX-ATX | Q1 P8 | 12 throws | aEC/T 0.073 | total 0.877 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|11|2|True",
+          "label": "438. Turnover D-line | 2026-07-18-HTX-ATX | Q1 P11 | 2 throws | aEC/T -0.218 | total -0.436 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|1|8|True",
+          "label": "443. Turnover D-line | 2026-07-18-HTX-ATX | Q2 P1 | 2 throws | aEC/T -0.309 | total -0.617 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|5|2|True",
+          "label": "446. Turnover D-line | 2026-07-18-HTX-ATX | Q2 P5 | 5 throws | aEC/T -0.111 | total -0.556 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|5|4|True",
+          "label": "447. Turnover D-line | 2026-07-18-HTX-ATX | Q2 P5 | 5 throws | aEC/T -0.111 | total -0.555 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|2|2|True",
+          "label": "450. Goal D-line | 2026-07-18-HTX-ATX | Q3 P2 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|3|2|True",
+          "label": "451. Goal D-line | 2026-07-18-HTX-ATX | Q3 P3 | 3 throws | aEC/T 0.332 | total 0.997 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|4|2|True",
+          "label": "452. Goal D-line | 2026-07-18-HTX-ATX | Q3 P4 | 6 throws | aEC/T 0.130 | total 0.778 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|9|3|True",
+          "label": "456. Goal D-line | 2026-07-18-HTX-ATX | Q3 P9 | 10 throws | aEC/T 0.119 | total 1.191 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|10|2|True",
+          "label": "457. Goal D-line | 2026-07-18-HTX-ATX | Q3 P10 | 7 throws | aEC/T 0.165 | total 1.152 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|1|2|True",
+          "label": "458. Turnover D-line | 2026-07-18-HTX-ATX | Q4 P1 | 9 throws | aEC/T -0.015 | total -0.135 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|5|2|True",
+          "label": "461. Turnover D-line | 2026-07-18-HTX-ATX | Q4 P5 | 4 throws | aEC/T -0.056 | total -0.222 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|5|4|True",
+          "label": "462. Turnover D-line | 2026-07-18-HTX-ATX | Q4 P5 | 7 throws | aEC/T -0.045 | total -0.318 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|7|2|True",
+          "label": "464. Goal D-line | 2026-07-18-HTX-ATX | Q4 P7 | 13 throws | aEC/T 0.066 | total 0.862 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|8|2|True",
+          "label": "465. Turnover D-line | 2026-07-18-HTX-ATX | Q4 P8 | 4 throws | aEC/T -0.156 | total -0.625 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|10|2|True",
+          "label": "468. Goal D-line | 2026-07-18-HTX-ATX | Q4 P10 | 5 throws | aEC/T 0.225 | total 1.124 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|1|2|True",
+          "label": "1. Turnover D-line | 2026-04-25-ATL-ATX | Q1 P1 | 9 throws | aEC/T 0.011 | total 0.102 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 29,
+      "title": "Codex O-line pattern 01 | left-middle | direct | 1-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-19-SD-ATX|2|9|2|True",
+          "label": "308. Turnover O-line | 2026-06-19-SD-ATX | Q2 P9 | 1 throws | aEC/T -0.897 | total -0.897 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|3|7|1|False",
+          "label": "278. Turnover O-line | 2026-06-06-ATX-LV | Q3 P7 | 1 throws | aEC/T -0.843 | total -0.843 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|3|8|1|True",
+          "label": "496. Turnover O-line | 2026-08-07-CAR-ATX | Q3 P8 | 1 throws | aEC/T -0.838 | total -0.838 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|4|16|1|True",
+          "label": "510. Turnover O-line | 2026-08-07-CAR-ATX | Q4 P16 | 1 throws | aEC/T -0.722 | total -0.722 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 30,
+      "title": "Codex O-line pattern 02 | middle-middle | direct | 1-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|13|3|True",
+          "label": "29. Turnover O-line | 2026-04-25-ATL-ATX | Q3 P13 | 1 throws | aEC/T -0.299 | total -0.299 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-05-ATX-SD|5|1|3|False",
+          "label": "242. Goal O-line | 2026-06-05-ATX-SD | Q5 P1 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|1|3|False",
+          "label": "246. Goal O-line | 2026-06-06-ATX-LV | Q1 P1 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-17-ATX-HTX|3|4|3|False",
+          "label": "416. Turnover O-line | 2026-07-17-ATX-HTX | Q3 P4 | 1 throws | aEC/T -0.638 | total -0.638 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|8|3|False",
+          "label": "368. Goal O-line | 2026-07-11-ATX-ATL | Q1 P8 | 4 throws | aEC/T 0.250 | total 1.002 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 31,
+      "title": "Codex O-line pattern 03 | right-right | direct | 1.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-09-HTX-ATX|1|7|1|True",
+          "label": "87. Turnover O-line | 2026-05-09-HTX-ATX | Q1 P7 | 1 throws | aEC/T -0.863 | total -0.863 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|8|1|False",
+          "label": "385. Turnover O-line | 2026-07-11-ATX-ATL | Q3 P8 | 1 throws | aEC/T -0.819 | total -0.819 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|6|1|True",
+          "label": "485. Turnover O-line | 2026-08-07-CAR-ATX | Q2 P6 | 1 throws | aEC/T -0.825 | total -0.825 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|3|3|True",
+          "label": "167. Turnover O-line | 2026-05-31-SEA-ATX | Q1 P3 | 2 throws | aEC/T -0.382 | total -0.764 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|2|6|False",
+          "label": "73. Turnover O-line | 2026-05-02-ATX-HTX | Q4 P2 | 3 throws | aEC/T -0.218 | total -0.654 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|3|1|True",
+          "label": "471. Turnover O-line | 2026-08-07-CAR-ATX | Q1 P3 | 4 throws | aEC/T -0.177 | total -0.708 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 32,
+      "title": "Codex O-line pattern 04 | left-right | direct | 2-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-07-11-ATX-ATL|3|3|1|False",
+          "label": "382. Goal O-line | 2026-07-11-ATX-ATL | Q3 P3 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|4|3|3|False",
+          "label": "75. Goal O-line | 2026-05-02-ATX-HTX | Q4 P3 | 1 throws | aEC/T 1.000 | total 1.000 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|4|4|1|False",
+          "label": "392. Goal O-line | 2026-07-11-ATX-ATL | Q4 P4 | 2 throws | aEC/T 0.474 | total 0.947 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|4|9|3|True",
+          "label": "467. Goal O-line | 2026-07-18-HTX-ATX | Q4 P9 | 3 throws | aEC/T 0.345 | total 1.035 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|8|3|True",
+          "label": "299. Goal O-line | 2026-06-19-SD-ATX | Q1 P8 | 4 throws | aEC/T 0.255 | total 1.022 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 33,
+      "title": "Codex O-line pattern 05 | middle-right | winding | 3-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-06-05-ATX-SD|2|3|1|False",
+          "label": "218. Turnover O-line | 2026-06-05-ATX-SD | Q2 P3 | 2 throws | aEC/T -0.420 | total -0.839 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|1|5|1|False",
+          "label": "47. Turnover O-line | 2026-05-02-ATX-HTX | Q1 P5 | 3 throws | aEC/T -0.204 | total -0.611 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-16-LV-ATX|4|6|2|True",
+          "label": "159. Turnover O-line | 2026-05-16-LV-ATX | Q4 P6 | 7 throws | aEC/T -0.088 | total -0.613 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 34,
+      "title": "Codex O-line pattern 08 | middle-right | winding | 3.5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-04-25-ATL-ATX|5|2|1|True",
+          "label": "38. Turnover O-line | 2026-04-25-ATL-ATX | Q5 P2 | 1 throws | aEC/T -0.931 | total -0.931 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|7|5|True",
+          "label": "477. Turnover O-line | 2026-08-07-CAR-ATX | Q1 P7 | 1 throws | aEC/T -0.841 | total -0.841 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|10|1|True",
+          "label": "300. Turnover O-line | 2026-06-19-SD-ATX | Q1 P10 | 2 throws | aEC/T -0.432 | total -0.863 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|3|9|1|True",
+          "label": "455. Turnover O-line | 2026-07-18-HTX-ATX | Q3 P9 | 2 throws | aEC/T -0.422 | total -0.843 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|10|1|False",
+          "label": "360. Turnover O-line | 2026-07-10-ATX-CAR | Q4 P10 | 3 throws | aEC/T -0.253 | total -0.760 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|1|6|1|True",
+          "label": "4. Turnover O-line | 2026-04-25-ATL-ATX | Q1 P6 | 3 throws | aEC/T -0.297 | total -0.892 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|12|1|True",
+          "label": "439. Turnover O-line | 2026-07-18-HTX-ATX | Q1 P12 | 3 throws | aEC/T -0.175 | total -0.525 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|7|1|True",
+          "label": "170. Turnover O-line | 2026-05-31-SEA-ATX | Q1 P7 | 3 throws | aEC/T -0.293 | total -0.880 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|3|10|2|True",
+          "label": "197. Turnover O-line | 2026-05-31-SEA-ATX | Q3 P10 | 4 throws | aEC/T -0.160 | total -0.641 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|6|1|True",
+          "label": "323. Turnover O-line | 2026-06-19-SD-ATX | Q4 P6 | 4 throws | aEC/T -0.212 | total -0.848 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|13|1|True",
+          "label": "186. Turnover O-line | 2026-05-31-SEA-ATX | Q2 P13 | 4 throws | aEC/T -0.148 | total -0.593 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|3|10|1|True",
+          "label": "25. Turnover O-line | 2026-04-25-ATL-ATX | Q3 P10 | 5 throws | aEC/T -0.129 | total -0.647 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|4|5|1|True",
+          "label": "322. Turnover O-line | 2026-06-19-SD-ATX | Q4 P5 | 7 throws | aEC/T -0.123 | total -0.862 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|7|4|True",
+          "label": "297. Turnover O-line | 2026-06-19-SD-ATX | Q1 P7 | 7 throws | aEC/T -0.094 | total -0.656 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|5|1|True",
+          "label": "473. Turnover O-line | 2026-08-07-CAR-ATX | Q1 P5 | 12 throws | aEC/T -0.056 | total -0.673 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-06-ATX-LV|1|8|1|False",
+          "label": "252. Turnover O-line | 2026-06-06-ATX-LV | Q1 P8 | 13 throws | aEC/T -0.062 | total -0.807 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    },
+    {
+      "group_index": 35,
+      "title": "Codex O-line pattern 13 | middle-middle | mixed | 5-throw median",
+      "break_before": true,
+      "auto_unsorted": false,
+      "possessions": [
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|3|1|True",
+          "label": "113. Turnover O-line | 2026-05-09-HTX-ATX | Q4 P3 | 1 throws | aEC/T -0.865 | total -0.865 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|11|1|False",
+          "label": "361. Turnover O-line | 2026-07-10-ATX-CAR | Q4 P11 | 2 throws | aEC/T -0.176 | total -0.352 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|4|8|1|True",
+          "label": "203. Turnover O-line | 2026-05-31-SEA-ATX | Q4 P8 | 2 throws | aEC/T -0.377 | total -0.755 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|1|8|1|False",
+          "label": "367. Turnover O-line | 2026-07-11-ATX-ATL | Q1 P8 | 3 throws | aEC/T -0.232 | total -0.695 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|1|1|1|True",
+          "label": "429. Turnover O-line | 2026-07-18-HTX-ATX | Q1 P1 | 3 throws | aEC/T -0.238 | total -0.713 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|4|8|1|False",
+          "label": "358. Turnover O-line | 2026-07-10-ATX-CAR | Q4 P8 | 3 throws | aEC/T -0.248 | total -0.745 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-18-HTX-ATX|2|1|6|True",
+          "label": "442. Turnover O-line | 2026-07-18-HTX-ATX | Q2 P1 | 3 throws | aEC/T -0.299 | total -0.898 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|3|1|True",
+          "label": "10. Turnover O-line | 2026-04-25-ATL-ATX | Q2 P3 | 4 throws | aEC/T -0.188 | total -0.752 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|3|1|True",
+          "label": "166. Turnover O-line | 2026-05-31-SEA-ATX | Q1 P3 | 4 throws | aEC/T -0.146 | total -0.584 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|13|1|True",
+          "label": "176. Turnover O-line | 2026-05-31-SEA-ATX | Q1 P13 | 4 throws | aEC/T -0.160 | total -0.640 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|2|8|1|True",
+          "label": "98. Turnover O-line | 2026-05-09-HTX-ATX | Q2 P8 | 5 throws | aEC/T -0.081 | total -0.403 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-11-ATX-ATL|2|4|1|False",
+          "label": "373. Turnover O-line | 2026-07-11-ATX-ATL | Q2 P4 | 5 throws | aEC/T -0.130 | total -0.649 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|1|12|1|True",
+          "label": "175. Turnover O-line | 2026-05-31-SEA-ATX | Q1 P12 | 5 throws | aEC/T -0.104 | total -0.522 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|10|1|True",
+          "label": "184. Turnover O-line | 2026-05-31-SEA-ATX | Q2 P10 | 5 throws | aEC/T -0.072 | total -0.360 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-09-HTX-ATX|4|5|1|True",
+          "label": "115. Turnover O-line | 2026-05-09-HTX-ATX | Q4 P5 | 5 throws | aEC/T -0.157 | total -0.787 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-06-19-SD-ATX|1|11|1|True",
+          "label": "301. Turnover O-line | 2026-06-19-SD-ATX | Q1 P11 | 6 throws | aEC/T -0.067 | total -0.404 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|3|11|1|False",
+          "label": "352. Turnover O-line | 2026-07-10-ATX-CAR | Q3 P11 | 6 throws | aEC/T -0.088 | total -0.530 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|3|3|1|False",
+          "label": "347. Turnover O-line | 2026-07-10-ATX-CAR | Q3 P3 | 8 throws | aEC/T -0.109 | total -0.874 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|2|5|1|True",
+          "label": "484. Turnover O-line | 2026-08-07-CAR-ATX | Q2 P5 | 8 throws | aEC/T -0.044 | total -0.349 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-04-25-ATL-ATX|2|5|1|True",
+          "label": "12. Turnover O-line | 2026-04-25-ATL-ATX | Q2 P5 | 8 throws | aEC/T -0.059 | total -0.470 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-08-07-CAR-ATX|1|2|1|True",
+          "label": "470. Turnover O-line | 2026-08-07-CAR-ATX | Q1 P2 | 9 throws | aEC/T -0.061 | total -0.549 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|3|2|1|False",
+          "label": "346. Turnover O-line | 2026-07-10-ATX-CAR | Q3 P2 | 10 throws | aEC/T -0.035 | total -0.347 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-07-10-ATX-CAR|1|3|1|False",
+          "label": "332. Turnover O-line | 2026-07-10-ATX-CAR | Q1 P3 | 11 throws | aEC/T -0.040 | total -0.444 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-02-ATX-HTX|2|6|1|False",
+          "label": "60. Turnover O-line | 2026-05-02-ATX-HTX | Q2 P6 | 11 throws | aEC/T -0.018 | total -0.193 | Unclustered",
+          "overlay_selected": false
+        },
+        {
+          "possession_id": "2026-05-31-SEA-ATX|2|2|1|True",
+          "label": "177. Turnover O-line | 2026-05-31-SEA-ATX | Q2 P2 | 11 throws | aEC/T -0.014 | total -0.158 | Unclustered",
+          "overlay_selected": false
+        }
+      ]
+    }
+  ]
+}

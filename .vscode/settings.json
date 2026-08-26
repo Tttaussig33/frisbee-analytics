@@ -9,6 +9,17 @@
         "-file-line-error",
         "%DOC%"
       ]
+    },
+    {
+      "name": "paper-full-build",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "%WORKSPACE_FOLDER%/scripts/build_paper.ps1"
+      ]
     }
   ],
   "latex-workshop.latex.recipes": [
@@ -17,7 +28,13 @@
       "tools": [
         "pdflatex-direct"
       ]
+    },
+    {
+      "name": "paper full build",
+      "tools": [
+        "paper-full-build"
+      ]
     }
   ],
-  "latex-workshop.latex.recipe.default": "pdflatex direct"
+  "latex-workshop.latex.recipe.default": "paper full build"
 }

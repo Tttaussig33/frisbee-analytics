@@ -7,7 +7,7 @@ The manuscript is [`ufa_team_possession_patterns.tex`](ufa_team_possession_patte
 - Minnesota Wind Chill
 - Oakland Spiders
 
-The first three rows in each checkpoint are used as the selected recurring patterns. The paper's calculations are regular-season only: cached game files dated after July 19, 2026 are excluded, including the later playoff files in the raw-data directory.
+The first three rows in each `*-paper.json` checkpoint are used as the selected recurring patterns. The paper's calculations are regular-season only: cached game files dated after July 19, 2026 are excluded, including the later playoff files in the raw-data directory. The older arrangement checkpoints remain in the repository as historical references.
 
 ## Regenerate
 
@@ -59,4 +59,4 @@ with `paper/generated/` and the PNG figures.
 
 ## Interpretation notes
 
-The paper uses `goals / (goals + turnovers)` as its local pattern efficiency. This is intentionally distinct from the UFA's published OE/OEOE terminology. `aEC/possession` is the sum of throw-level aEC divided by possessions; `aEC/throw` is the sum divided by total throws. Both are reported because they answer different questions about a route.
+The paper uses `goals / (goals + turnovers)` as observed offensive efficiency (OE), also described as the goal-ending share for a pattern. It answers a narrow possession-level question: among the reconstructed possessions assigned to a pattern, what fraction ended in a goal rather than a turnover? The complementary turnover-ending share is represented by the turnover count. This is not a point-level scoring probability, because a team can recover the disc after a turnover and score later in the same point. For each possession, the per-throw aEC values supplied in the cached Shown Space rows are summed first. `aEC/possession` is then the arithmetic mean of those possession totals within the selected pattern, which is equivalent to total pattern aEC divided by the number of retained possessions. The paper does not use a throw-normalized aEC statistic, because dividing by throw count mechanically favors shorter possessions. No clipping or post-hoc renormalization is applied, so individual possession totals can be above 1 or below 0. The project does not claim to reproduce Shown Space's full underlying model or drive-level normalization; total aEC is treated as an additive descriptive signal.
