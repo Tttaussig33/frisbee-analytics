@@ -69,13 +69,28 @@ def _team_options(team_ids, season):
 
 
 def _arrangement_label(path, payload, team_id):
-    if path.stem == team_id:
+    stem = path.stem.casefold()
+    normalized_team_id = team_id.casefold()
+    if stem == normalized_team_id:
         return "Original arrangement"
+    if stem == f"{normalized_team_id}-paper":
+        return "Paper organization (used in paper)"
     configured_name = payload.get("arrangement_name")
     if configured_name:
         return str(configured_name)
     suffix = path.stem.removeprefix(f"{team_id}-").replace("-", " ").strip()
     return suffix.title() if suffix else "Project arrangement"
+
+
+def _arrangement_sort_key(path, team_id):
+    """Keep the shared paper layout immediately available in the picker."""
+    stem = path.stem.casefold()
+    normalized_team_id = team_id.casefold()
+    if stem == normalized_team_id:
+        return (0, path.name.casefold())
+    if stem == f"{normalized_team_id}-paper":
+        return (1, path.name.casefold())
+    return (2, path.name.casefold())
 
 
 def _write_index(output_dir, season, default_team, team_ids):
@@ -189,7 +204,7 @@ def main():
         arrangement_dir = REPO_ROOT / "data" / "arrangements" / str(args.season)
         arrangement_paths = sorted(
             arrangement_dir.glob(f"{export_team_id}*.json"),
-            key=lambda path: (path.stem != export_team_id, path.name),
+            key=lambda path: _arrangement_sort_key(path, export_team_id),
         )
         for arrangement_path in arrangement_paths:
             try:
