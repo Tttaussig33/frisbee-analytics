@@ -6,8 +6,6 @@ A project exploring how teams use space to move the disc and create scoring oppo
 
 - **[Open the possession browser](https://tttaussig33.github.io/frisbee-analytics/)** - Browse possessions for every team, filter by line and outcome, overlay field paths, compare teams, and organize recurring patterns.
 - **[Read the research paper](paper/ufa_team_possession_patterns.pdf)** - *Deep Hucks Or Small Ball? Spatial Patterns and Possession Value Among Four 2026 Semifinalists in the Ultimate Frisbee Association.*
-- [View the LaTeX source](paper/ufa_team_possession_patterns.tex)
-- [Paper notes and build instructions](paper/README.md)
 
 ## What it studies
 
