@@ -203,7 +203,7 @@ def main():
         project_arrangements = {}
         arrangement_dir = REPO_ROOT / "data" / "arrangements" / str(args.season)
         arrangement_paths = sorted(
-            arrangement_dir.glob(f"{export_team_id}*.json"),
+            arrangement_dir.glob(f"{export_team_id}-paper.json"),
             key=lambda path: _arrangement_sort_key(path, export_team_id),
         )
         for arrangement_path in arrangement_paths:
