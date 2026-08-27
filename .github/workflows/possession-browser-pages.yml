@@ -1,0 +1,73 @@
+name: Deploy possession browser to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/possession-browser-pages.yml"
+      - "data/arrangements/**"
+      - "data/raw/shownspace_throws_2026_by_game/**"
+      - "scripts/export_possession_pattern_browser.py"
+      - "src/ufa/**"
+  workflow_dispatch:
+
+concurrency:
+  group: possession-browser-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install browser build dependencies
+        run: python -m pip install --upgrade pip
+
+      - name: Install browser runtime dependencies
+        run: python -m pip install numpy pandas requests
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Generate all possession browser pages
+        run: >-
+          python scripts/export_possession_pattern_browser.py
+          --all-teams
+          --team glory
+          --season 2026
+          --output-dir outputs/possession_browsers
+
+      - name: Validate generated site
+        run: |
+          test -f outputs/possession_browsers/index.html
+          test -f outputs/possession_browsers/2026-glory.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: outputs/possession_browsers
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

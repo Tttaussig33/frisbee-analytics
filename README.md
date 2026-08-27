@@ -164,6 +164,29 @@ python scripts/export_possession_pattern_browser.py --all-teams --team glory --s
 Open `outputs/possession_browsers/index.html`; the team selector navigates among
 all 22 team pages without rerunning the notebook.
 
+### Publishing a browser link
+
+For a LinkedIn post, publish the complete `outputs/possession_browsers/` folder
+to any static HTTPS host and link to a team page such as
+`2026-glory.html` (or to `index.html` for the team picker). Do not link to a
+local `file://` path: browsers restrict site storage for local files, while the
+hosted HTTPS page has a stable origin where saves work.
+
+Visitors can drag cards into their own groups and use **Save locally**. The
+page autosaves the current arrangement and keeps a small local recovery history
+in that visitor's browser; nothing is uploaded to this project. Clearing site
+data, using private browsing, switching browsers/devices, or changing the
+published domain creates a separate local copy. **Download JSON** and **Import
+JSON** provide a portable backup when someone wants to move an arrangement.
+
+The repository includes `.github/workflows/possession-browser-pages.yml`, which
+regenerates all team pages and deploys them as a GitHub Pages artifact whenever
+the browser code or source data changes. One-time setup: GitHub Settings →
+Pages → Source → **GitHub Actions**. Then push to `main` or run the workflow
+from the Actions tab. The project URL will be
+`https://tttaussig33.github.io/frisbee-analytics/`, with direct team pages such
+as `2026-glory.html`.
+
 Shared arrangement checkpoints for Sol, Empire, Spiders, and Windchill live in
 `data/arrangements/2026/`. The generator embeds the available checkpoints into
 those team pages and adds an arrangement picker, so the original hand-organized

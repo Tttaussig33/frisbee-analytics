@@ -89,6 +89,11 @@ def _write_index(output_dir, season, default_team, team_ids):
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Standalone {season} UFA possession pattern browsers." />
+  <meta property="og:title" content="{season} UFA possession pattern browsers" />
+  <meta property="og:description" content="Explore UFA possession patterns and arrange them privately in your browser." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
   <meta http-equiv="refresh" content="0; url={default_page}" />
   <title>{season} UFA possession pattern browsers</title>
 </head>

@@ -2325,6 +2325,8 @@ def render_possession_free_board(
     recovery_status_id = f"ufa-free-recovery-status-{board_key}"
     project_arrangement_id = f"ufa-free-project-arrangement-{board_key}"
     project_arrangement_picker_id = f"{project_arrangement_id}-picker"
+    import_arrangement_id = f"ufa-free-import-arrangement-{board_key}"
+    import_arrangement_file_id = f"{import_arrangement_id}-file"
     storage_key = f"ufa-free-arrange:{persistence_token}"
     legacy_storage_key = f"ufa-free-arrange:{board_key}"
     recovery_storage_key = f"ufa-free-recovery:{persistence_token}"
@@ -3314,12 +3316,15 @@ def render_possession_free_board(
         "}"
         "if (status) {"
         "const sourceLabel = pendingSource === 'project'"
-        "? 'Loaded ' + (pendingLabel || 'project') + ' arrangement.'"
+         "? 'Loaded ' + (pendingLabel || 'project') + ' arrangement.'"
+         ": pendingSource === 'import'"
+         "? 'Imported ' + (pendingLabel || 'JSON') + ' arrangement.'"
         ": 'Loaded saved arrangement from this browser.';"
         "const missingMessage = missingIds.length"
         "? ' ' + missingIds.length + ' saved cards were not available on this page.'"
         ": '';"
         "status.textContent = sourceLabel + missingMessage;"
+        "status.classList.remove('save-error');"
         "}"
          f"{update_overlay}"
          f"{update_arrange_selection}"
@@ -3476,7 +3481,7 @@ def render_possession_free_board(
     if persistence_key:
         recovery_controls = f"""
             <details class="ufa-free-recovery-menu">
-              <summary>Recovery</summary>
+              <summary>Local saves</summary>
               <div class="ufa-free-recovery-popover">
                 <label class="ufa-free-recovery-control">
                   Version
@@ -3533,6 +3538,10 @@ def render_possession_free_board(
           <div class="ufa-free-board-meta">
             {shown_count} cards shown of {len(possessions)} filtered possessions
           </div>
+          <div class="ufa-free-local-save-note" role="note">
+            <strong>Make this arrangement yours.</strong>
+            <span>Changes autosave privately in this browser. Use <b>Save locally</b> for a checkpoint, or download JSON for a portable backup.</span>
+          </div>
           <div class="ufa-free-board-actions">
             <label>
               <span class="ufa-free-placement-label">Placement</span>
@@ -3553,17 +3562,22 @@ def render_possession_free_board(
              </button>
              <button class="ufa-free-export-arrangement" type="button"
                onclick="{escape(save_arrangement, quote=True)}">
-               Export arrangement
+               Download JSON
              </button>
              <button class="primary ufa-free-save-arrangement" type="button"
-              onclick="{escape(save_arrangement, quote=True)}">
-              Save arrangement
-            </button>
-            <button class="ufa-free-load-arrangement" type="button"
-              onclick="{escape(load_arrangement, quote=True)}">
-              Load saved
-            </button>
-            {project_arrangement_control}
+               onclick="{escape(save_arrangement, quote=True)}">
+               Save locally
+             </button>
+             <button class="ufa-free-load-arrangement" type="button"
+               onclick="{escape(load_arrangement, quote=True)}">
+               Load local
+             </button>
+             <button id="{import_arrangement_id}" class="ufa-free-import-arrangement" type="button">
+               Import JSON
+             </button>
+             <input id="{import_arrangement_file_id}" class="ufa-free-import-arrangement-file"
+               type="file" accept="application/json,.json" hidden />
+             {project_arrangement_control}
             <button class="ufa-free-clear-row-breaks" type="button"
               onclick="{escape(clear_row_breaks, quote=True)}">
               Clear row breaks
@@ -4048,12 +4062,39 @@ def _possession_browser_css():
         border-bottom: 1px solid #d8e1eb;
         background: #ffffff;
       }
-      /* Keep manual checkpoints available to autosave/recovery, but hide the controls for now. */
+      /* The standalone page is shareable, so make its local persistence controls explicit. */
+      .ufa-free-local-save-note {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 4px 8px;
+        margin: 0 0 12px;
+        padding: 9px 11px;
+        border: 1px solid #c9dce9;
+        border-left: 4px solid #2c7dcc;
+        border-radius: 7px;
+        background: #f2f8fc;
+        color: #40546e;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .ufa-free-local-save-note strong {
+        color: #173b62;
+      }
+      .ufa-free-local-save-note span {
+        flex: 1 1 420px;
+      }
       .ufa-free-save-arrangement,
       .ufa-free-load-arrangement,
+      .ufa-free-import-arrangement,
       .ufa-free-external-save-arrangement,
       .ufa-free-external-load-arrangement {
         display: none !important;
+      }
+      .standalone-browser .ufa-free-save-arrangement,
+      .standalone-browser .ufa-free-load-arrangement,
+      .standalone-browser .ufa-free-import-arrangement {
+        display: inline-flex !important;
       }
       .ufa-free-board-actions label {
         display: inline-flex;
@@ -4684,6 +4725,10 @@ def write_possession_pattern_browser_html(
         "}"
     )
     safe_title = escape(str(title))
+    safe_description = escape(
+        f"{str(title)}. Explore possession patterns, build your own arrangement, "
+        "and save it privately in your browser."
+    )
     selected_team_id = str(team_id or "").strip().lower()
     team_options_html = ""
     for option in team_options or []:
@@ -4821,6 +4866,11 @@ def write_possession_pattern_browser_html(
         '  <meta charset="utf-8" />\n'
         '  <meta name="viewport" content="width=device-width, initial-scale=1" />\n'
         f"  <title>{safe_title}</title>\n"
+        f'  <meta name="description" content="{safe_description}" />\n'
+        f'  <meta property="og:title" content="{safe_title}" />\n'
+        f'  <meta property="og:description" content="{safe_description}" />\n'
+        '  <meta property="og:type" content="website" />\n'
+        '  <meta name="twitter:card" content="summary" />\n'
         + """
         <script>
           (function () {
@@ -5328,6 +5378,15 @@ def write_possession_pattern_browser_html(
           html[data-theme="dark"] .ufa-free-export-status {
             color: #aebfb3;
           }
+          html[data-theme="dark"] .ufa-free-local-save-note {
+            border-color: #3d5f76;
+            border-left-color: #4d91d4;
+            background: #1d2b36;
+            color: #b9c9d3;
+          }
+          html[data-theme="dark"] .ufa-free-local-save-note strong {
+            color: #d4e6f5;
+          }
           html[data-theme="dark"] .ufa-free-export-download {
             color: #a9d2f2;
           }
@@ -5632,6 +5691,13 @@ def write_possession_pattern_browser_html(
               const overlayShell = browser.querySelector('.ufa-free-overlay-shell');
               const boardActions = browser.querySelector('.ufa-free-board-actions');
               const loadCheckpointButton = browser.querySelector('.ufa-free-load-arrangement');
+              const importArrangementButton = browser.querySelector(
+                '.ufa-free-import-arrangement'
+              );
+              const importArrangementFile = browser.querySelector(
+                '.ufa-free-import-arrangement-file'
+              );
+              const arrangementStatus = browser.querySelector('.ufa-free-export-status');
               const recoveryHistory = browser.querySelector('.ufa-free-recovery-history');
               const recoveryRestore = browser.querySelector('.ufa-free-recovery-restore');
               const recoveryStatus = browser.querySelector('.ufa-free-recovery-status');
@@ -5699,6 +5765,63 @@ def write_possession_pattern_browser_html(
               let recoveryApplying = false;
               let recoveryObserver = null;
               const recoveryLimit = 5;
+
+              if (importArrangementButton && importArrangementFile) {{
+                importArrangementButton.addEventListener('click', function () {{
+                  importArrangementFile.value = '';
+                  importArrangementFile.click();
+                }});
+                importArrangementFile.addEventListener('change', function () {{
+                  const file = importArrangementFile.files
+                    && importArrangementFile.files[0];
+                  if (!file) {{ return; }}
+                  const reader = new FileReader();
+                  reader.addEventListener('error', function () {{
+                    if (arrangementStatus) {{
+                      arrangementStatus.textContent = 'The JSON file could not be read.';
+                      arrangementStatus.classList.add('save-error');
+                    }}
+                  }});
+                  reader.addEventListener('load', function () {{
+                    const text = String(reader.result || '').trim();
+                    let payload = null;
+                    try {{
+                      payload = JSON.parse(text);
+                      if (!payload || !Array.isArray(payload.groups)) {{
+                        throw new Error('Arrangement groups are missing');
+                      }}
+                    }} catch (error) {{
+                      if (arrangementStatus) {{
+                        arrangementStatus.textContent = 'Choose an arrangement JSON file exported by this browser.';
+                        arrangementStatus.classList.add('save-error');
+                      }}
+                      return;
+                    }}
+                    if (!payload.groups.some(function (group) {{
+                      return group && Array.isArray(group.possessions);
+                    }})) {{
+                      if (arrangementStatus) {{
+                        arrangementStatus.textContent = 'This JSON file does not contain any arrangement groups.';
+                        arrangementStatus.classList.add('save-error');
+                      }}
+                      return;
+                    }}
+                    board._ufaPendingArrangementText = text;
+                    board._ufaPendingArrangementSource = 'import';
+                    board._ufaPendingArrangementLabel = file.name;
+                    try {{
+                      if (checkpointStorageKey) {{
+                        window.localStorage.setItem(checkpointStorageKey, text);
+                      }}
+                    }} catch (error) {{}}
+                    if (loadCheckpointButton) {{
+                      loadCheckpointButton.click();
+                      scheduleRecoverySave();
+                    }}
+                  }});
+                  reader.readAsText(file);
+                }});
+              }}
 
               function stopDragScroll() {{
                 dragScrollSpeed = 0;
