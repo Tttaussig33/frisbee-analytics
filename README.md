@@ -1,258 +1,33 @@
 # Ultimate Frisbee Analytics
 
-A small Python toolkit for pulling UFA game events, cleaning them into throw-level
-data, and calculating basic player/team throwing metrics.
+A project exploring how teams use space to move the disc and create scoring opportunities in the Ultimate Frisbee Association (UFA).
 
-## Current Milestone
+## Explore the project
 
-Given a game ID or date, the package can:
+- **[Open the possession browser](https://tttaussig33.github.io/frisbee-analytics/)** - Browse possessions for every team, filter by line and outcome, overlay field paths, compare teams, and organize recurring patterns.
+- **[Read the research paper](paper/ufa_team_possession_patterns.pdf)** - *Deep Hucks Or Small Ball? Spatial Patterns and Possession Value Among Four 2026 Semifinalists in the Ultimate Frisbee Association.*
+- [View the LaTeX source](paper/ufa_team_possession_patterns.tex)
+- [Paper notes and build instructions](paper/README.md)
 
-- fetch raw game events from the UFA Stats API
-- clean event rows into a throws dataframe
-- calculate attempts, completions, turnovers, completion percentage, and average
-  throw distance
-- calculate first-pass Shown Space-style summaries such as huck rate, huck
-  completion percentage, receiver yardage proxies, and optional xCP/CPOE or
-  expected contribution aggregates when model-output columns are available
-- save raw events, cleaned throws, thrower stats, and team stats as CSVs
+## What it studies
 
-## Quick Start
+The project combines public Shown Space play-by-play data with field coordinates, possession outcomes, and throw-level adjusted expected contribution (aEC) values. The browser makes it possible to inspect individual possessions and compare the recurring spatial patterns of different teams.
 
-```python
-import sys
+The paper focuses on regular-season O-line possessions from four 2026 UFA semifinalists:
 
-sys.path.insert(0, "src")
+- New York Empire
+- Austin Sol
+- Minnesota Wind Chill
+- Oakland Spiders
 
-from ufa import build_game_throws, save_game_pipeline_outputs
+Goals and turnovers are included so the selected patterns can be compared using observed offensive efficiency (OOE), total aEC per possession, throw count, and field-path overlays.
 
-result = build_game_throws(game_id="2024-06-08-LA-POR")
+## Local development
 
-throws = result.throws
-box_score_stats = result.box_score_stats
-thrower_stats = result.thrower_stats
-team_stats = result.team_stats
-
-# Receiver summaries are also available.
-from ufa import calculate_receiver_stats
-
-receiver_stats = calculate_receiver_stats(throws)
-
-save_game_pipeline_outputs(result, "data/processed")
-```
-
-Process the first game on a date:
-
-```python
-from ufa import build_game_throws
-
-result = build_game_throws(date="2024-06-08", game_index=0)
-```
-
-Process every game on a date:
-
-```python
-from ufa import build_date_throws
-
-results = build_date_throws("2024-06-08")
-```
-
-Fetch the current UFA data window from 2024 through today:
-
-```python
-from ufa import get_games_since_2024
-
-games = get_games_since_2024()
-```
-
-Search for games before choosing one to process:
-
-```python
-from ufa import search_games
-
-games = search_games("2024-06-01", "2024-06-30", team="breeze")
-games[["gameID", "awayTeamID", "homeTeamID", "awayScore", "homeScore"]]
-```
-
-Then use one of the returned IDs:
-
-```python
-from ufa import build_game_throws
-
-game_id = games.loc[0, "gameID"]
-result = build_game_throws(game_id=game_id)
-```
-
-## Expected Throwing Value
-
-The package has an adapter for CP/FV models trained from Braden Eberhard's
-Expected Throwing Value project. Pass fitted model dictionaries with `model`,
-`scaler`, and `features` keys into `ExpectedThrowingValueModel`, then pass the
-model to the pipeline.
-
-```python
-from ufa import ExpectedThrowingValueModel, build_game_throws
-
-etv_model = ExpectedThrowingValueModel(cp_model=cp_model, fv_model=fv_model)
-result = build_game_throws(game_id="2024-06-08-LA-POR", etv_model=etv_model)
-```
-
-You can also train simple baseline CP/FV models from cleaned throws:
-
-```python
-from ufa import build_etv_model, prepare_all_games_training_data, train_etv_models
-
-throws = prepare_all_games_training_data("data/raw/all_games_1024.csv")
-model_bundle = train_etv_models(throws)
-etv_model = build_etv_model(model_bundle)
-```
-
-Or use the convenience wrapper:
-
-```python
-from ufa import build_etv_model, train_etv_models_from_all_games
-
-model_bundle = train_etv_models_from_all_games("data/raw/all_games_1024.csv")
-etv_model = build_etv_model(model_bundle)
-```
-
-For shownspace-style validation, split the historical throws into train,
-validation, temporal holdout, and player holdout sets before training:
-
-```python
-from ufa import (
-    compare_model_bundles,
-    evaluate_etv_model_bundle,
-    format_model_performance_table,
-    model_performance_table_to_latex,
-    split_training_data,
-    train_etv_models_from_split,
-    train_xgboost_etv_models_from_split,
-)
-
-splits = split_training_data("data/raw/all_games_1024.csv")
-
-baseline_bundle = train_etv_models_from_split(splits)
-baseline_results = evaluate_etv_model_bundle(baseline_bundle, splits)
-
-xgb_bundle = train_xgboost_etv_models_from_split(splits)
-comparison = compare_model_bundles(
-    {"logistic": baseline_bundle, "xgboost": xgb_bundle},
-    splits,
-)
-paper_table = format_model_performance_table(comparison)
-latex = model_performance_table_to_latex(paper_table)
-```
-
-## Possession Pattern Browser
-
-Generate a standalone HTML browser from the cached per-game Shown Space throws:
-
-```powershell
-python scripts/export_possession_pattern_browser.py --team glory --season 2026
-```
-
-The output is written to `outputs/possession_browsers/2026-glory.html`. The
-standalone page includes possession filters, draggable cards, row groups,
-overlays, arrangement saving, a sticky arrangement toolbar, and a team selector.
-
-To generate the linked browser pages for every cached team:
+The browser is generated from the cached play-by-play data with:
 
 ```powershell
 python scripts/export_possession_pattern_browser.py --all-teams --team glory --season 2026
 ```
 
-Open `outputs/possession_browsers/index.html`; the team selector navigates among
-all 22 team pages without rerunning the notebook.
-
-### Publishing a browser link
-
-For a LinkedIn post, publish the complete `outputs/possession_browsers/` folder
-to any static HTTPS host and link to a team page such as
-`2026-glory.html` (or to `index.html` for the team picker). Do not link to a
-local `file://` path: browsers restrict site storage for local files, while the
-hosted HTTPS page has a stable origin where saves work.
-
-Visitors can drag cards into their own groups and use **Save locally**. The
-page autosaves the current arrangement and keeps a small local recovery history
-in that visitor's browser; nothing is uploaded to this project. Clearing site
-data, using private browsing, switching browsers/devices, or changing the
-published domain creates a separate local copy. **Download JSON** and **Import
-JSON** provide a portable backup when someone wants to move an arrangement.
-
-The repository includes `.github/workflows/possession-browser-pages.yml`, which
-regenerates all team pages and deploys them as a GitHub Pages artifact whenever
-the browser code or source data changes. One-time setup: GitHub Settings →
-Pages → Source → **GitHub Actions**. Then push to `main` or run the workflow
-from the Actions tab. The project URL will be
-`https://tttaussig33.github.io/frisbee-analytics/`, with direct team pages such
-as `2026-glory.html`.
-
-Shared arrangement checkpoints for Sol, Empire, Spiders, and Windchill live in
-`data/arrangements/2026/`. The generator embeds the available checkpoints into
-those team pages and adds an arrangement picker, so the original hand-organized
-layout and any generated alternatives can be loaded independently. After
-pulling the repository on another device, run the generator and choose the
-arrangement you want; it will be restored in that browser without depending on
-the original device's local storage.
-
-To build the geometry-first Codex alternatives from the four hand-organized
-examples:
-
-```powershell
-python scripts/build_pattern_arrangements.py --season 2026
-```
-
-This writes `*-codex.json` files beside the originals. It uses field-path
-locations as the clustering signal, uses smaller existing rows as seed examples,
-and splits oversized generic rows into more manageable spatial groups. It does
-not overwrite the original arrangements.
-
-For the browser's O-line all-outcomes view, build a separate scoped alternative:
-
-```powershell
-python scripts/build_pattern_arrangements.py --season 2026 --line-type o_line
-```
-
-This writes `*-codex-o-line.json` files containing only O-line goals and
-turnovers. The arrangement picker exposes these alongside the original and
-all-line Codex layouts. The O-line pass uses smaller spatial groups, a light
-throw-count signal, and a cohesion pass that splits unusually heterogeneous
-rows so their overlays are easier to interpret.
-
-## Team Possession Patterns Paper
-
-The current team-centered paper lives in `paper/ufa_team_possession_patterns.tex`.
-It uses the first three rows of the saved Empire, Sol, Wind Chill, and Spiders
-arrangements as recurring spatial patterns, includes goals and turnovers in the
-local efficiency calculation, and restricts reported results to regular-season
-game files through July 19, 2026. Rebuild its vector field figures and tables
-with:
-
-```powershell
-.\.venv\Scripts\python.exe scripts\build_paper_figures.py
-```
-
-The generated SVGs, CSV summaries, and LaTeX table fragments are written under
-`paper/generated/`. See `paper/README.md` for the LaTeX/Overleaf build steps and
-the exact metric definitions.
-
-## Validation
-
-Compare generated stats to a Shown Space-style reference CSV:
-
-```python
-from ufa import compare_metric_tables, load_reference_stats, summarize_metric_comparison
-
-reference = load_reference_stats("data/reference/shown_space_box_score.csv")
-comparison = compare_metric_tables(result.box_score_stats, reference)
-summary = summarize_metric_comparison(comparison)
-```
-
-## Core Modules
-
-- `src/ufa/client.py`: API calls for games and game events
-- `src/ufa/clean.py`: raw events to throw-level rows
-- `src/ufa/metrics.py`: player and team throwing summaries
-- `src/ufa/pipeline.py`: end-to-end orchestration helpers
-- `src/ufa/models.py`: baseline CP/FV model training and loading helpers
-- `src/ufa/validation.py`: compare generated metrics to reference tables
+The generated team pages are written to `outputs/possession_browsers/`. The GitHub Pages workflow publishes the browser at the link above.
