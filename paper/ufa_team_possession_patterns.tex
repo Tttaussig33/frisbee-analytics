@@ -39,88 +39,121 @@
 Professional ultimate possessions are often summarized by their endpoint: a goal,
 a turnover, or a break. That summary leaves out the route. This paper examines
 the repeated spatial routes used by the New York Empire, Austin Sol, Minnesota
-Wind Chill, and Oakland Spiders during the 2026 regular season. We combine
-throw-level Shown Space data with manually curated field-path groups, then
-describe each selected pattern using frequency, goal/turnover efficiency, total
-\aEC{} per possession, \aEC{} per throw, and throw count. The result is a team-centered
-view of offensive identity. The same outcome can emerge from a short, aggressive
-deep throw sequence, a longer reset-heavy possession, or a moderate path that quickly
-works the disc up the field. A league-wide throw-count heatmap provides the broader
-context: five throws is the modal length of an \Oline{} goal possession, but the
-four teams examined here occupy noticeably different parts of that distribution.
+Wind Chill, and Oakland Spiders during the 2026 regular season. We use Shown Space,
+a public analytics site for the Ultimate Frisbee Association (UFA) that publishes play-by-play
+records with throw coordinates and a supplied throw-level adjusted expected contribution (\aEC{}) value. We combine those records with
+manually curated groups of possessions whose plotted paths look similar, then
+describe each selected group using frequency, our observed offensive efficiency
+(OOE), total \aEC{} per possession, and throw count. The result is a team-centered
+view of offensive identity. The same outcome can emerge from an aggressive deep throw,
+a longer reset-heavy possession, or a moderate sequence that works the disc up
+the field. A league-wide throw-count heatmap supplies context for possession
+length, while the main comparison concerns spatial repetition: which areas of
+the field teams use, how often they use them, and how often those paths end in
+goals rather than turnovers. The four teams therefore can produce similar
+outcomes through spatially similar or visibly different combinations of hucks,
+unders, swings, and resets, even when their throw counts differ.
 \end{abstract}
 
 \section{Introduction}
 
-The modern Ultimate Frisbee Association (UFA) analytics conversation has moved well beyond the final line in a
-box score. Shown Space was introduced as a way to use the league's play-by-play
-infrastructure to ask how possessions develop, which actions change scoring
-probability, and which players drive that change \citep{eberhard2026shownspace}.
-That shift matters because two possessions can finish in the same end zone while
-asking very different questions of an offense. One may win through a full field deep throw; 
-another may survive several resets before a cut finally opens the goal line.
+\subsection{Previous work: Shown Space and player value}
 
-The Sloan work behind Shown Space established a related foundation by combining
-machine learning with completion probability and field value to estimate player
-decision-making in professional ultimate \citep{eberhard2025sloan}. The public
-articles that followed use that foundation as a storytelling device. In the
-six-passer comparison, for example, aEC is paired with complementary measures so
-that distinct jobs remain visible rather than being flattened into one ranking
-\citep{eberhard2026passers}. The lesson transfers naturally from players to
-teams: a leaderboard can identify who is productive, while paths can help explain
-what that productivity looks like.
+The Ultimate Frisbee Association (UFA) is a professional ultimate frisbee league
+whose analytics can describe more than the final line in a box score. Shown Space
+is a public UFA analytics website that turns the league's play-by-play record into
+throw-level observations. Its records and field maps show where the disc is
+released and received, how a possession progresses, and how individual throws
+are assigned expected scoring value. The site also supplies a throw-level
+adjusted expected contribution (\aEC{}) value, which this paper uses as a
+descriptive measure alongside the field path. That visual record makes it
+possible to compare possessions that result in a goal but use very different
+routes: one may feature a full-field huck, while another may rely on swings,
+unders, and resets before a lane opens near the end zone
+\citep{eberhard2026shownspace}.
 
-This paper applies that idea to the four UFA semifinalists represented in the
-2026 UFA playoffs. The question is deliberately narrower than ``Which
-team is best?'' We ask: \emph{What are the recurring spatial forms of each team's
-offense, and how do their outcomes and aEC values differ?} The answer should not
-be reduced to a single style label. The UFA's own team analysis emphasizes that
-the O-line and D-line can become meaningfully different teams after the disc
-changes hands, and that a deep ball is a tool rather than a complete offensive
-identity \citep{eberhard2026teamstrengths}. Our analysis therefore stays with
-\Oline{} possessions, includes both goals and turnovers, and treats spatial
-organization as evidence to be inspected rather than a substitute for judgment.
+The paper \emph{A Machine Learning Approach to Player Value and Decision Making
+in Professional Ultimate Frisbee} by Eberhard, Miller, and Sandholtz presents the
+machine-learning framework for estimating player and throw value. It combines the
+chance that a throw is completed with field position to estimate how a decision
+changes expected scoring value \citep{eberhard2025sloan}. Eberhard's later UFA
+articles use those measures to tell more specific stories about players, teams,
+roles, and offensive choices. His article \emph{Six Players, Six Different
+Passer Types} compares six throwers by contrasting their abilities and styles
+with complementary statistics, rather than treating a single aggregate value as
+a complete player description \citep{eberhard2026passers}. That structure is
+useful at the team level as well: a metric summarizes an outcome or contribution,
+while a path shows the sequence of throws and the field spaces used to produce it.
 
-\section{Data and Methods}
+\subsection{Research question and scope}
 
-\subsection{Sample and possession reconstruction}
+This study extends that field-map approach from individual throwers to teams.
+After seeing Shown Space maps, the motivating question was straightforward:
+if all of a team's regular-season possessions are placed on the same field, which
+spatial patterns recur? We ask: \emph{Which field spaces do the four semifinalists
+use in their offensive possessions, how frequently do those patterns
+appear, and how often do they end in goals?} The groups are deliberately based on
+the visual similarity of the plotted routes, so possessions with different throw
+counts can still belong to the same spatial family.
 
-The analysis uses the cached per-game Shown Space throw files in this project.
-The regular-season window runs from April 24 through July 19, 2026. The cache
-also contains later playoff files, so the figure-building script excludes games
-dated after July 19 before calculating any count, efficiency, or aEC statistic.
-Each focus team contributes 12 regular-season games. The resulting reconstructed
-\Oline{} samples are 257 possessions for New York, 285 for Austin, 266 for
-Minnesota, and 266 for Oakland.
+At the start of a point, the defensive line (D-line) pulls the disc to the
+opposing offensive line (O-line), much like a kickoff. The O-line advances by
+passing until it scores or turns the disc over. After a turnover, the D-line
+takes possession and attacks the end zone; a goal by the team that began on
+defense is called a break. In UFA throwing statistics, a huck is a throw of 40
+or more yards, so it is tracked separately from shorter completions
+\citep{cohen2024throwerstats}. This paper focuses on O-line possessions and
+retains both goals and offensive, possession-ending turnovers so that the
+selected patterns include successful and unsuccessful outcomes.
 
-A possession is formed by grouping throws with the same game, quarter, point,
-possession number, and home/away side. The final throw determines the outcome:
-the two retained outcomes are `goal' and `turnover'. The line type comes from
-the source \texttt{o\_line} field. For every possession, the pipeline retains
-the ordered throw path, starting and ending field coordinates, throw count,
-field progress, huck count, reset count, throw-level \aEC, and the derived
-possession totals.
+\section{Data and methods}
 
-The word ``efficiency'' has a deliberately local meaning in this paper. For a
-group of reconstructed \Oline{} possessions, it is
+\subsection{Sample and possession grouping}
+
+The analysis uses local copies of the per-game Shown Space play-by-play files in
+this project. Each row records one throw and includes the field coordinates and
+the supplied throw-level \aEC{} value used below. The regular-season sample runs
+from April 24 through July 19, 2026. Each focus team contributes 12 regular-season
+games. The resulting grouped \Oline{} samples are 257 possessions for New York,
+285 for Austin, 266 for Minnesota, and 266 for Oakland.
+
+Shown Space reports OE, its regular offensive efficiency statistic, in its team
+tables. To keep that source label distinct from the ratio calculated here, this
+paper calls its own measure observed offensive efficiency (OOE).
+
+We assemble a possession by grouping play-by-play rows with the same game,
+quarter, point, possession number, and home/away identity. This row grouping is a
+data-processing step; it is separate from the later manual grouping of paths that
+look alike. The final recorded event determines the outcome, and the two retained
+terminal outcomes are `goal' and `turnover'. The line type comes from the source
+\texttt{o\_line} field. For every assembled possession, the pipeline retains the
+ordered throw path, starting and ending field coordinates, throw count, field
+progress, huck count, throw-level \aEC{}, and derived possession
+totals.
+
+For a group of \Oline{} possessions assembled from these rows, this paper's
+observed offensive efficiency (OOE) is
 \[
-  \mathrm{efficiency} =
+  \mathrm{OOE} =
   \frac{\text{goals}}{\text{goals}+\text{turnovers}}.
 \]
-It is therefore an outcome ratio for this sample, not a claim that it is
-identical to the UFA's published OE or expectation-adjusted OEOE measures.
-Keeping that distinction explicit is essential when comparing a custom browser
-view with a public leaderboard.
+Here, a turnover (TO) means an offensive, possession-ending turnover in the
+grouped throw sequence. OOE is therefore the share of these possessions that
+ended in a goal rather than a turnover. It is an outcome ratio for this sample,
+not a claim that one possession-ending turnover prevents the team from scoring
+later in the point after the other team gains possession. That distinction is why
+OOE is reported for the selected possession groups rather than as a point-level
+scoring probability.
 
 \subsection{Human-in-the-loop spatial grouping}
 
-The first three rows in each saved arrangement checkpoint
-(\texttt{data/arrangements/2026/empire-paper.json}, \texttt{sol-paper.json},
-\texttt{windchill-paper.json}, and \texttt{spiders-paper.json}) are treated as that team's
-three selected recurring patterns. The grouping was made by reviewing field
-cards and overlaying paths, then deciding which routes were similar enough to
-share a row. This is a manual taxonomy with a reproducible checkpoint, not an
-unsupervised claim that the game contains exactly three natural clusters.
+The possession browser displays a team's field cards so they can be reviewed and
+placed into rows. Cards were initially organized by throw count to make the full
+set manageable, then moved together when their coordinate paths appeared similar.
+Three rows with the most recurring patterns were selected for each focus team as
+the spatial families analyzed here. This is a manual taxonomy with a reproducible
+arrangement, not an unsupervised claim that the game contains exactly three
+natural clusters.
 
 For the paper, a card contributes to a pattern's statistics only when its
 possession is in the regular-season data and its line type is \Oline{}. The field
@@ -137,53 +170,56 @@ We report:
 \begin{itemize}
   \item \textbf{frequency}: $n_g/N_t$, where $N_t$ is the team's regular-season
         \Oline{} possession count;
-  \item \textbf{efficiency}: the goal fraction defined above, with turnovers in
-        the denominator;
-  \item \textbf{total \aEC{} per possession}: $\frac{1}{n_g}\sum_{i \in g} A_i$;
+  \item \textbf{observed offensive efficiency (OOE)}: the goal fraction defined
+        above, with offensive turnovers in the denominator;
+  \item \textbf{aEC/pos. (mean total \aEC{} per possession)}:
+        $\frac{1}{n_g}\sum_{i \in g} A_i$;
         this is the arithmetic mean of the possession-level total aEC values in
         the selected pattern;
-  \item \textbf{\aEC{} per throw}: $\frac{\sum_{i \in g} A_i}{\sum_{i \in g} T_i}$;
-        this is the pattern's total aEC divided by its total throws; and
   \item \textbf{median throws}: the median number of throws in the pattern.
 \end{itemize}
 
-The throw-level \aEC{} values are taken from the cached Shown Space rows and
-summed within each possession. Thus, yes, \aEC{} per possession for a pattern is
-the aEC from all retained possessions in that pattern divided by the number of
-retained possessions. It is a group mean, not a raw team total. By contrast,
-\aEC{} per throw weights the pattern by its throws rather than giving every
-possession equal weight. Reporting both measures prevents a short possession
-from being mistaken for a high-volume one.
+The underlying input is a local copy of Shown Space's throw-by-throw play-by-play
+table: one row represents one throw, and each row carries the supplied throw-level
+\aEC{} value. We first sum those values across all throws in each possession.
+Therefore, aEC/pos. for a pattern is the arithmetic mean of those possession
+totals, or the total \aEC{} across all included possessions in the pattern divided
+by the number of included possessions. It is a group mean, not a raw team total.
+Throw count remains a separate descriptive measure; it is not used as a denominator
+for value, because that would mechanically favor shorter possessions.
 
-\subsection{Why aEC can be above one}
+\subsection{What total aEC represents}
 
-The Sloan paper's normalized drive-level illustration is useful for intuition:
-one complete scoring drive can be represented as one unit of contribution
-\citep{eberhard2025sloan}. In this project, however, the browser consumes the
-cached per-throw \aEC{} values and adds them; it does not clip each possession to
-the interval $[-1,1]$, force every goal to exactly one, or renormalize the
-selected pattern after the fact. The resulting total is therefore an additive
-contribution score, not a probability and not a hard upper-bounded scoring
-total. A goal possession can consequently be slightly above one, while a
-turnover can be negative. Those values reflect the model output and the
-aggregation convention used here; they should be compared consistently across
-possessions rather than read as literal probabilities of scoring.
+The paper \emph{A Machine Learning Approach to Player Value and Decision Making
+in Professional Ultimate Frisbee} uses a normalized drive-level illustration in
+which a complete scoring drive can be represented as one unit of contribution
+\citep{eberhard2025sloan}. This project did not reproduce the full Shown Space
+model or its drive-level normalization. Instead, it uses the throw-level \aEC{}
+values supplied in the local Shown Space play-by-play files and adds them within
+each possession assembled above. The result is an additive descriptive score. It is not
+a probability or a percentage, so a total above one does not imply more than a
+100 percent chance of scoring. It means that the positive contributions assigned
+to the individual throws sum to more than one under this aggregation convention;
+turnover-ending possessions can be negative. In other words, the one-unit example
+in that paper and the unnormalized possession sum reported here answer different
+questions.
 
 \section{Results}
 
 \subsection{The league context: five throws is common, not destiny}
 
 Figure~\ref{fig:heatmap} shows the throw-count distribution for regular-season
-\Oline{} goal possessions across all 22 cached teams. Each row is normalized within
-team, so the darkest cell answers a within-team question: which throw count
-appears most often among that team's goals? Across the league, the mode is five
-throws among 3,607 \Oline{} goal possessions. The focus teams do not share that
-mode. Austin peaks at four throws; Oakland and Minnesota peak at eight; New York
-peaks at nine. A mode describes the most frequent length, not an offensive
-instruction. It is best read alongside the rest of the row, especially when two
-nearby counts have similar mass.
+\Oline{} goal possessions across all 22 teams in the regular-season file set. Each
+row is normalized within team, so the darkest cell answers a within-team question:
+which throw count appears most often among that team's goals? Across the league,
+the mode is five throws among 3,607 \Oline{} goal possessions. The focus teams do
+not share that mode. Austin peaks at four throws; Oakland and Minnesota peak at
+eight; New York peaks at nine. The mode is simply the observed throw count with
+the largest share in that row; it does not show that a team deliberately targets
+that number of throws. It is best read alongside the rest of the row, especially
+when two nearby counts have similar mass.
 
-\begin{figure}[p]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.98\linewidth]{generated/figures/league_throw_count_heatmap.png}
   \caption{Regular-season throw-count distribution for \Oline{} goal possessions.
@@ -196,48 +232,49 @@ nearby counts have similar mass.
 \subsection{Team-level baseline}
 
 The four teams separate before the individual patterns are considered
-(Table~\ref{tab:team-summary}). New York's reconstructed \Oline{} converted 180
-of 257 possessions, or 70.0 percent. Oakland followed at 63.5 percent, while
+(Table~\ref{tab:team-summary}). New York's grouped \Oline{} sample converted 180
+of 257 possessions, or 70.0 percent OOE. Oakland followed at 63.5 percent, while
 Minnesota and Austin finished at 61.3 and 60.0 percent, respectively. New York
-also led this local sample in average total \aEC{} per possession (0.592) and
-aggregate \aEC{} per throw (0.070). Those values should be interpreted as
-descriptive summaries of the cached rows, not as a replacement for the public
-Shown Space team metrics.
+also led this local sample in mean total \aEC{} per possession (0.592), calculated
+by summing the supplied throw-level values within each possession and then
+averaging those possession totals across the team's \Oline{} sample. This figure
+is a descriptive summary of the local play-by-play rows, not a replacement for
+the public Shown Space team metrics.
 
 \begin{table}[H]
   \centering
-  \caption{Regular-season reconstructed \Oline{} baseline.}
+  \caption{Regular-season grouped \Oline{} baseline. OOE is this paper's observed
+  offensive efficiency, and TO denotes an offensive, possession-ending turnover.
+  The aEC/pos. column is the arithmetic mean of each included possession's total
+  \aEC{}, where a possession's total is the sum of the supplied \aEC{} values
+  across all of its throws.}
   \label{tab:team-summary}
   \small
-  \begin{tabular}{lrrrrrrr}
+  \begin{tabular}{lrrrrrr}
     \toprule
-    Team & Games & Pos. & Goals & TOs & Eff. & aEC/pos. & aEC/throw \\
+    Team & Games & Pos. & Goals & TOs & OOE & aEC/pos. \\
     \midrule
     \input{generated/generated_team_table.tex}
   \end{tabular}
 \end{table}
 
-\subsection{New York Empire: a direct branch beside two mixed routes}
+\subsection{New York Empire: scoring from all sides of the field}
 
-The new Empire checkpoint makes the largest selected group Pattern 1, saved as
-``O-line pattern 22.'' It contains 33 regular-season possessions: 27 goals and
-six turnovers, or 81.8 percent efficiency. Its median length is eight throws,
-and 42.4 percent of the possessions include a huck. Pattern 2, saved as
-``pattern 07,'' is much smaller at 20 possessions, but its direct three-throw
-shape is distinctive: every retained possession includes a huck, and its
-aggregate \aEC{} per throw is the highest of the Empire rows at 0.190. Pattern 3,
-``pattern 23,'' contains 11 possessions and has the same 81.8 percent
-efficiency as Pattern 1.
+The largest visually coherent Empire group contains 33 regular-season
+possessions: 27 goals and six offensive turnovers, for 81.8 percent OOE. These
+paths often use the middle of the field before flowing up the right sideline
+toward the end zone. Their median length is eight throws, suggesting a methodical
+progression built from quick and efficient passes, rather than one decisive
+huck. Pattern 2 changes the tempo. It has a median of three throws, with 16 goals
+and four turnovers across 20 possessions (80.0 percent OOE); many of its routes
+show a huck from the middle after a centering pass, with vertical unders and
+gainers mixed in. Pattern 3 is the opposite Pattern 1: it starts near the middle, flows
+up the left sideline, but finishes back toward the middle. Together, the three
+families suggest an offense comfortable attacking different all parts of the field,
+either through a controlled middle-to-sideline progression or a middle of the field deep
+throw.
 
-The value measures add an important qualification. Pattern 2's short sequence
-produces 0.702 mean total \aEC{} per possession, whereas Pattern 3 reaches 0.827
-despite taking a median of eight throws; Pattern 1 sits between them at 0.796.
-Empire's selected routes therefore illustrate two different kinds of value
-density: a compact, aggressive branch and longer mixed paths that accumulate
-more value across the possession. The similar conversion rates make the spatial
-contrast more informative than a simple success ranking.
-
-\begin{figure}[p]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.98\linewidth]{generated/figures/empire_top3_patterns.png}
   \caption{New York Empire's three selected recurring patterns. Each field
@@ -246,26 +283,19 @@ contrast more informative than a simple success ranking.
   \label{fig:empire}
 \end{figure}
 
-\subsection{Austin Sol: long mixed routes with a shorter aggressive branch}
+\subsection{Austin Sol: sidelines}
 
-Sol's first selected group, ``pattern 28,'' is the largest: 25 possessions,
-20 goals, and five turnovers, for 80.0 percent efficiency. It is also the
-longest of the three by median length at 13 throws, although only 44.0 percent
-of its paths contain a huck. Pattern 2, ``pattern 25,'' contributes 13
-possessions at 76.9 percent efficiency, with a 10-throw median and the lowest
-median starting position of the three. Pattern 3, ``pattern 12,'' is the
-smallest at 12 possessions; it has a five-throw median and a huck in 91.7
-percent of its paths.
+Sol's first pattern resembles the Empire's first in its broad middle-to-sideline
+progression. Look more closely, however, and the Sol paths use more horizontal
+movement across the full width of the field. The median is 13 throws, and 20 of
+25 possessions end in goals (80.0 percent OOE). That longer route suggests an
+offense that may take time to establish its flow while still reaching the end
+zone reliably. Patterns 2 emphasizes flow up the left sideline with occasional bounces to the middle, while pattern 3 contains the clearest
+cross-field, diagonal huck shapes. Together they present a wider, more patient
+attack in which swings and resets help create the eventual deep or end-zone
+opportunity.
 
-The aEC measures separate these routes cleanly. Patterns 1 and 2 have nearly
-identical mean totals, 0.762 and 0.767, while their aggregate \aEC{} per throw is
-only 0.060 and 0.077 because the sequences are long. Pattern 3 reaches the
-highest density, 0.124 per throw, but its mean total is lower at 0.649 and its
-efficiency is 75.0 percent. Sol's selected set thus pairs a high-volume,
-mixed progression with a shorter deep option; the latter is efficient in value
-per throw without dominating the complete-possession measure.
-
-\begin{figure}[p]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.98\linewidth]{generated/figures/sol_top3_patterns.png}
   \caption{Austin Sol's three selected recurring patterns. The selected rows
@@ -274,25 +304,21 @@ per throw without dominating the complete-possession measure.
   \label{fig:sol}
 \end{figure}
 
-\subsection{Minnesota Wind Chill: a short direct route inside a mixed set}
+\subsection{Minnesota Wind Chill: middle-heavy offense}
 
-Wind Chill's new Pattern 1, saved as ``pattern 15,'' includes 23 possessions,
-16 goals, and seven turnovers. Its 69.6 percent efficiency, eight-throw median,
-and 0.642 mean total \aEC{} describe a substantial but uneven route family.
-Pattern 2, ``pattern 09,'' is slightly more frequent at 24 possessions and
-more successful at 79.2 percent. Its direct four-to-five-throw shape includes
-a huck in 87.5 percent of cases and produces the strongest density of the
-three, 0.141 \aEC{} per throw. Pattern 3, ``pattern 23,'' contains 16
-possessions, has a 10.5-throw median, and converts 68.8 percent.
+All three of Wind Chill's selected patterns are generally centered in the middle
+of the field. Pattern 1 is the largest group, with 24 possessions, 19 goals, and
+five turnovers (79.2 percent OOE); its median is 4.5 throws. Pattern 2 contains
+23 possessions, with 16 goals and seven turnovers (69.6 percent OOE), and has a
+median of eight throws. Pattern 3 is smaller at 16 possessions, with 11 goals
+and five turnovers (68.8 percent OOE), and a median of 10.5 throws. The paths are
+relatively compact even when their lengths differ, implying an offense that
+values easy completions, unders, and flowy resets through the middle before advancing
+into the endzone. Wind Chill's identity in this sample is therefore less
+about one fixed throw count than about keeping the disc connected through the
+middle of the field.
 
-The selected Wind Chill paths therefore do not point to one fixed tempo. The
-short, huck-heavy branch is the most efficient in both outcome rate and \aEC{} per
-throw, while the two longer mixed groups provide more of the visual volume.
-That distinction matters when the league-wide mode of five throws is used as a
-reference: Wind Chill has a common short branch, but its selected offense also
-contains longer ways to advance the disc.
-
-\begin{figure}[p]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.98\linewidth]{generated/figures/windchill_top3_patterns.png}
   \caption{Minnesota Wind Chill's three selected recurring patterns. Pattern 3
@@ -301,58 +327,51 @@ contains longer ways to advance the disc.
   \label{fig:windchill}
 \end{figure}
 
-\subsection{Oakland Spiders: a high-volume branch and two efficient families}
+\subsection{Oakland Spiders: flowy possessions over middle-field hucks}
 
-Oakland's new first group, ``pattern 15,'' is the largest selected family at
-29 possessions, but its 13 goals and 16 turnovers produce only 44.8 percent
-efficiency. It has a six-throw median and a huck in 65.5 percent of paths. The
-smaller second group, ``pattern 18,'' looks very different: 14 possessions,
-13 goals, one turnover, and 92.9 percent efficiency. It begins from an
-advanced median starting position of roughly 45 yards and uses a median of
-eight throws. Pattern 3, ``pattern 21,'' is also small at 11 possessions, with
-10 goals, one turnover, 90.9 percent efficiency, a nine-throw median, and no
-hucks.
+The Spiders' first pattern is a warning against assuming that the most common
+path is the best one. It includes 29 possessions, but only 13 goals against 16
+offensive turnovers, for 44.8 percent OOE. The paths suggest that working the
+disc through the middle by way of hucks or unders is not their most reliable
+route. Patterns 2 and 3 look markedly different: they use more of the width of
+the field and work the disc upfield smoothly. Pattern 2 has 13 goals and one
+turnover across 14 possessions (92.9 percent OOE); Pattern 3 has 10 goals and
+one turnover across 11 possessions (90.9 percent OOE). The contrast is stark:
+Pattern 1 has eight times as many turnovers as Patterns 2 and 3 combined, 16
+versus two. For Oakland, the more successful spatial identity in these selected
+families is flow, width, and continued connection rather than repeated middle-
+field usage.
 
-The selected Spiders groups are consequently a warning against treating a
-large overlay as a representative one. Pattern 1 has the lowest mean total
-\aEC{}, 0.348, and the lowest \aEC{} per throw, 0.056, while Patterns 2 and 3 are
-much stronger at 0.918 and 0.887 mean total \aEC{}. Their paths support a more
-nuanced description: one common, huck-heavy family absorbs many turnovers,
-alongside two less frequent and much more efficient spatial families. The
-turnover-inclusive figures are what make that contrast visible.
-
-\begin{figure}[p]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.98\linewidth]{generated/figures/spiders_top3_patterns.png}
   \caption{Oakland Spiders' three selected recurring patterns. The first row
   is the largest and most turnover-heavy selected family; the two smaller rows
-  are much more efficient and lower-huck.}
+  have much higher OOE and fewer hucks.}
   \label{fig:spiders}
 \end{figure}
 
 \subsection{The comparison in one table}
 
-Table~\ref{tab:patterns} places the selected rows beside one another. The
-numbers show why frequency, efficiency, and aEC should be allowed to disagree.
-Empire's first row is its largest selected group, while the smaller second row
-has the highest \aEC{} per throw among the Empire rows. Austin's shorter third
-row has the strongest value density, whereas its two longer groups carry more
-total value per possession. Wind Chill's direct branch combines the best
-efficiency and density in its selected set. Oakland has the sharpest contrast:
-its largest row is turnover-heavy, while the two smaller rows are highly
-efficient. Those comparisons are possible because the table keeps frequency,
-outcomes, and additive aEC side by side.
+Table~\ref{tab:patterns} ranks all twelve selected groups by OOE rather than by
+frequency. That ordering makes the distinction between recurrence and outcome
+especially clear: the smaller Spiders groups have the highest OOE values, while
+the Empire and Sol groups combine larger samples with strong but less extreme
+goal-ending shares. The throw-count and aEC/pos. columns then add route length
+and additive contribution without making either one the definition of success.
 
-\begin{table}[p]
+\begin{table}[H]
   \centering
-  \caption{Metrics for the three selected patterns per focus team. Efficiency
-  includes turnovers; aEC/pos. is the mean total aEC, and aEC/throw is the
-  aggregate total aEC divided by aggregate throws.}
+  \caption{Metrics for the three selected patterns per focus team, ranked by
+  OOE. OOE is observed offensive efficiency: goals divided by goals plus
+  offensive, possession-ending turnovers. The aEC/pos. column is the arithmetic
+  mean of each included possession's total \aEC{}, where each possession total
+  is the sum of the supplied throw-level \aEC{} values across all of its throws.}
   \label{tab:patterns}
   \scriptsize
-  \begin{tabular}{llrrrrrrrr}
+  \begin{tabular}{rlrrrrrrrr}
     \toprule
-    Team & Pat. & $n$ & Share & G & TO & Eff. & aEC/pos. & aEC/throw & Med. throws \\
+    Rank & Team & Pat. & $n$ & Share & G & TO & OOE & aEC/pos. & Med. throws \\
     \midrule
     \input{generated/generated_pattern_table.tex}
   \end{tabular}
@@ -363,57 +382,52 @@ outcomes, and additive aEC side by side.
 \subsection{What the patterns add to the leaderboard}
 
 The main contribution of these displays is interpretive rather than merely
-decorative. A possession path supplies a bridge between a metric and a tactical
-description. The six-passer article makes that bridge at the player level by
-showing that high aEC can come from very different combinations of shooting,
-volume, field vision, or support \citep{eberhard2026passers}. Here, the same
+decorative. A possession path connects a metric to the sequence of throws that
+produced it. Eberhard's article \emph{Six Players, Six Different Passer Types}
+makes that connection at the player level by showing that high aEC can arise from different combinations
+of deep throws, throwing volume, field-position decisions, and continuation
+options such as swings and resets \citep{eberhard2026passers}. Here, the same
 logic operates one level up. Empire's selected rows suggest a direct aggressive
-branch alongside longer mixed solutions. Oakland's rows show why a team's most
-frequent family may not be its most efficient one. Austin and Minnesota both
-carry short, huck-heavy routes beside longer possessions that contribute more
-of the visual volume.
-
-The distinction between total \aEC{} and \aEC{} per throw is especially useful.
-Total \aEC{} asks how much value the entire possession accumulated. \aEC{} per throw
-asks how concentrated that value was across the sequence. A short possession
-can look excellent on the latter measure even when another longer possession
-produces more total value. Neither is a universal quality score; each answers a
-different question about the route.
+branch alongside longer diverse routes. Oakland's rows show why a team's most
+frequent family may not have the strongest OOE. Austin and Minnesota both carry
+short, huck-heavy routes beside longer possessions that contribute more of the
+chill flow up the field. Mean total \aEC{} and median throws remain useful context, but
+neither is a universal quality score; each describes a different aspect of the
+route.
 
 \subsection{Turnovers change the pattern story}
 
 If only scoring possessions were retained, several of the selected overlays
-would look cleaner and several efficiency numbers would become meaningless.
-Including turnovers changes the interpretation in two ways. First, it makes
-``how often this pattern scores'' an observable outcome ratio rather than a
-description of successful examples only. Second, it lets spatially similar
-routes reveal where the same idea breaks down. The red paths in the figures are
-not clutter; they are the negative evidence needed to distinguish a reliable
+would look cleaner and several OOE values would become meaningless. Including
+turnovers changes the interpretation in two ways. First, it makes ``how often
+this possession grouping ends in a goal'' an observable outcome ratio rather
+than a description of successful examples only. Second, it lets spatially similar
+routes reveal where the same pattern breaks down. Therefore, the negative evidence is needed to distinguish a reliable
 pattern from a memorable one.
 
 That is also why the manuscript reports $n$ beside every percentage. A 100
 percent group with two possessions is a promising observation. It is not a
 league-ready estimate. The public Shown Space writing repeatedly combines
-volume, efficiency, risk, and role when telling player stories
+volume, risk, and role when telling player stories
 \citep{eberhard2026mvp,eberhard2026decraene}; team patterns deserve the same
 discipline.
 
-\subsection{From recurring paths to tactical language}
+\subsection{From recurring paths to descriptive groupings}
 
-The current labels should remain modest. ``Lateral up left sideline'' is a
-geometric description grounded in the cards. A claim such as ``Oakland always
-attacks the left sideline'' would require more evidence: force direction,
-opponent quality, personnel, game state, and the paths that did not score.
-Likewise, a five-throw mode does not prove that a team is trying to reach five
-throws. It simply identifies the most common observed length in the selected
-outcome set.
+Early in the project, the analysis tried to give each set of similar possessions
+a short tactical label. As more cards were reviewed, that approach became harder
+to apply consistently: two paths could share a broad route while differing in
+the exact throws, release points, or finishing sequence. The final groups
+therefore function first as spatial groupings. Their labels describe what the
+overlays share, while leaving more specific tactical interpretation for later
+review.
 
-The productive next step is a second manual pass. Once a team has a small set
-of spatial families, an analyst can name them using both their geometry and
-their function: for example, a direct deep branch, a lateral continuation
-sequence, or a long reset-and-advance pattern. The figures make those judgments
-auditable. Another analyst can see the same overlays, disagree with a boundary,
-and revise the group without changing the underlying possession reconstruction.
+The productive next step is a second manual pass. Once a team has a small set of
+spatial families, an analyst can name them using both their geometry and their
+function: for example, a direct deep branch, a lateral continuation sequence,
+or a long reset-and-advance pattern. The figures make those judgments auditable.
+Another analyst can see the same overlays, disagree with a boundary, and revise
+the group without changing the underlying possession data.
 
 \section{Limitations}
 
@@ -421,8 +435,10 @@ Several limitations should shape how these results are used.
 
 First, the pattern taxonomy is analyst-curated. The three rows are useful
 descriptive units, but their boundaries reflect visual judgment and the current
-arrangement checkpoints. A future version should measure inter-rater agreement
-or compare the manual rows with a geometry-first clustering baseline.
+arrangement checkpoints. A future study could ask another analyst to classify
+the same cards and measure how often the two classifications agree. It could
+also compare these human-made rows with groups created from simple path
+coordinates and distances.
 
 Second, the paper studies four teams and three selected rows per team. Large
 unsorted groups remain outside the narrative by design. The figures are not a
@@ -434,41 +450,32 @@ changed its offense in the playoffs. Nor does the current summary adjust for
 opponent pressure, field conditions, score state, personnel, or starting field
 position. These factors can influence both the path and the outcome.
 
-Finally, the paper uses the cached throw-level \aEC{} values supplied by Shown
-Space; it does not refit or audit the underlying machine-learning model. The
-metric is treated as a contextual contribution signal, not as a causal estimate
-that a pattern alone produced the final score.
+Finally, the paper uses the throw-level \aEC{} values supplied in the local
+Shown Space play-by-play records; it does not refit or audit the underlying
+machine-learning model. The metric is treated as a contextual contribution
+signal, not as a causal estimate that a pattern alone produced the final score.
 
 \section{Conclusion}
 
 The four teams in this study do not reduce to a single offensive template.
-Empire's selected groups combine high conversion with a direct aggressive
-branch and longer mixed routes. Austin carries a short, aggressive option
-alongside longer sequences. Minnesota's selected set places a high-density
-direct branch beside longer mixed paths, with turnovers making the uncertainty
-visible. Oakland's three rows make the strongest case for heterogeneity: its
-largest selected family is turnover-heavy, while two smaller families are much
-more efficient and lower-huck.
+Empire's selected groups combine high OOE with a direct aggressive branch and
+longer middle-to-sideline routes. Austin carries a wide, patient attack beside
+shorter diagonal huck options. Minnesota keeps its selected paths compact and
+middle-heavy, emphasizing a clear team identity.
+Oakland makes the strongest case for heterogeneity: its largest selected family
+is turnover-heavy, while two smaller families are much more successful and
+flow-oriented.
 
-The practical result is a way to write about team offense that stays close to
-the field. The heatmap says how long possessions tend to last. The overlays say
-where the disc travels. Efficiency and \aEC{} say what those routes produced.
-Together they turn a possession browser into an argument about how teams build
-scores, while leaving enough of the evidence visible for the reader to make a
-different judgment.
-
-\section*{Reproducibility}
-
-All calculations and figures in this manuscript are regenerated with
-\texttt{scripts/build\_paper\_figures.py}. The script reads the four saved
-arrangements, filters the cached game files through July 19, 2026, writes the
-CSV/LaTeX tables under \texttt{paper/generated/}, and produces standalone SVG
-figures. The arrangement checkpoints remain separate from the generated
-figures so later manual edits can be compared with this version. The SVG
-figures are converted to the checked-in PNGs by
-\texttt{scripts/render\_paper\_figures.cjs} when the figures are regenerated.
+Taken together, the findings answer the title's question: both deep hucks and
+small-ball sequences can work. The better choice depends on a team's personnel,
+the strengths those players combine, and the scoring opportunities that
+combination creates. The heatmap and overlays show how those choices affect
+possession length, field movement, and outcomes, while OOE and total \aEC{}
+provide context without pretending that one number explains a route. The data
+do not identify a universal winning recipe; they show that teams are best served
+when their offensive design turns their particular connections into repeatable
+scoring opportunities.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
-
 \end{document}

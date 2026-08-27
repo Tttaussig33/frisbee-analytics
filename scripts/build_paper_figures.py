@@ -265,14 +265,24 @@ def collect_data(source_dir: Path, arrangement_dir: Path, regular_season_end: da
         payload = json.loads(payload_path.read_text(encoding="utf-8"))
         possession_by_id = possessions.set_index("possession_id", drop=False)
         groups = payload.get("groups", [])[:3]
+        grouped_stats = [
+            (group, _group_stats(group, possession_by_id, o_line_count))
+            for group in groups
+        ]
+        if team_id == "windchill":
+            grouped_stats.sort(
+                key=lambda item: (
+                    -item[1]["n"],
+                    item[1]["group_index"],
+                )
+            )
         stats = []
-        for group in groups:
-            row = _group_stats(group, possession_by_id, o_line_count)
+        for pattern_number, (group, row) in enumerate(grouped_stats, start=1):
             stats.append(row)
             row_for_table = {
                 "team_id": team_id,
                 "team_name": FOCUS_TEAM_NAMES[team_id],
-                "pattern": len(stats),
+                "pattern": pattern_number,
                 **{key: value for key, value in row.items() if key not in {"ids"}},
             }
             pattern_rows.append(row_for_table)
@@ -401,19 +411,17 @@ def _svg_field(x, y, width, height, paths, stats):
                 f'<circle cx="{px:.1f}" cy="{py:.1f}" r="1.7" fill="{color}" opacity="{min(0.8, opacity + 0.28):.2f}"/>'
             )
 
-    metric_line_1 = (
-        f"{stats['n']} possessions | {stats['goals']} goals | {stats['turnovers']} turnovers"
-    )
+    metric_line_1 = f"n={stats['n']} | G={stats['goals']} | TOs={stats['turnovers']}"
     metric_line_2 = (
-        f"OE {_percent(stats['goal_ending_share'])} | "
+        f"OOE {_percent(stats['goal_ending_share'])} | "
         f"aEC/pos {_number(stats['total_aec_per_possession'])}"
     )
     metric_line_3 = (
         f"Median {_number(stats['median_throws'], 1)} throws | "
-        f"Huck paths {_percent(stats['huck_rate'])}"
+        f"Hucks {_percent(stats['huck_rate'])}"
     )
     metric_lines = [metric_line_1, metric_line_2, metric_line_3]
-    metric_gap = 19
+    metric_gap = 22
     metric_last_y = y + height - 14
     metric_first_y = metric_last_y - metric_gap * (len(metric_lines) - 1)
     for index, line in enumerate(metric_lines):
@@ -422,7 +430,7 @@ def _svg_field(x, y, width, height, paths, stats):
                 x + width / 2,
                 metric_first_y + index * metric_gap,
                 line,
-                size=12.5 if index == 0 else 12,
+                size=17 if index == 0 else 16,
                 color=PAPER_COLORS["navy"],
                 weight="700" if index == 0 else "400",
                 anchor="middle",
@@ -482,7 +490,7 @@ def write_heatmap_svg(heatmap_rows, league_mode, out_path: Path):
     cell_w = 30
     cell_h = 32
     left = 230
-    top = 112
+    top = 124
     right = 260
     bottom = 108
     columns = list(range(1, HEATMAP_DISPLAY_THROWS + 1)) + [f">{HEATMAP_DISPLAY_THROWS}"]
@@ -503,7 +511,7 @@ def write_heatmap_svg(heatmap_rows, league_mode, out_path: Path):
         f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
         _svg_text(28, 34, "Regular-season O-line goal throw-count distribution", size=24, weight="700"),
         _svg_text(28, 61, f"Each row is normalized within team; league-wide mode = {league_mode} throws.", size=15, color=PAPER_COLORS["muted"]),
-        _svg_text(28, 86, f"Dark outline marks each team's mode; counts above {HEATMAP_DISPLAY_THROWS} throws are combined in the tail column.", size=13, color=PAPER_COLORS["muted"]),
+        _svg_text(28, 86, f"Dark outline marks each team's mode; >{HEATMAP_DISPLAY_THROWS} combines longer possessions.", size=13, color=PAPER_COLORS["muted"]),
         _svg_text(left - 16, top - 18, "Team", size=14, weight="700", anchor="end"),
         _svg_text(left + numeric_columns * cell_w + 32, top - 18, "n goals", size=14, weight="700"),
     ]
@@ -551,6 +559,16 @@ def write_heatmap_svg(heatmap_rows, league_mode, out_path: Path):
 
 def write_tables(results, output_dir: Path):
     pattern_frame = pd.DataFrame(results["pattern_rows"])
+    pattern_frame = (
+        pattern_frame.sort_values(
+            ["goal_ending_share", "n", "team_name", "pattern"],
+            ascending=[False, False, True, True],
+            na_position="last",
+            kind="stable",
+        )
+        .reset_index(drop=True)
+    )
+    pattern_frame.insert(0, "rank", range(1, len(pattern_frame) + 1))
     team_frame = pd.DataFrame(results["team_summaries"])
     pattern_frame.to_csv(output_dir / "pattern_metrics.csv", index=False)
     team_frame.to_csv(output_dir / "team_metrics.csv", index=False)
@@ -577,10 +595,11 @@ def write_tables(results, output_dir: Path):
     )
 
     pattern_rows = []
-    for row in results["pattern_rows"]:
+    for row in pattern_frame.to_dict("records"):
         pattern_rows.append(
             " & ".join(
                 [
+                    str(row["rank"]),
                     _latex_text(row["team_name"]),
                     str(row["pattern"]),
                     str(row["n"]),

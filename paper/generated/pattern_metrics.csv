@@ -1,13 +1,13 @@
-team_id,team_name,pattern,group_index,title,n,share,goals,turnovers,goal_ending_share,total_aec_per_possession,median_throws,huck_rate,median_start_y,median_field_progress
-empire,New York Empire,1,1,Codex O-line pattern 22 | middle-right | mixed | 9-throw median,33,0.12840466926070038,27,6,0.8181818181818182,0.796245414073768,8.0,0.42424242424242425,12.68,95.38
-empire,New York Empire,2,2,Codex O-line pattern 07 | middle-middle | direct | 3-throw median,20,0.07782101167315175,16,4,0.8,0.7015327924603196,3.0,1.0,14.52,93.47500000000001
-empire,New York Empire,3,3,Codex O-line pattern 23 | middle-middle | mixed | 9-throw median,11,0.042801556420233464,9,2,0.8181818181818182,0.8267516670511281,8.0,0.8181818181818182,11.38,96.89
-sol,Austin Sol,1,1,Codex O-line pattern 28 | middle-right | mixed | 12.5-throw median,25,0.08771929824561403,20,5,0.8,0.7616162072220416,13.0,0.44,22.15,83.35
-sol,Austin Sol,2,2,Codex O-line pattern 25 | middle-left | mixed | 12-throw median,13,0.0456140350877193,10,3,0.7692307692307693,0.7668031202314034,10.0,0.38461538461538464,4.77,104.17999999999999
-sol,Austin Sol,3,3,Codex O-line pattern 12 | middle-middle | mixed | 5-throw median,12,0.042105263157894736,9,3,0.75,0.6492362911804889,5.0,0.9166666666666666,12.25,92.435
-windchill,Minnesota Wind Chill,1,1,Codex pattern 15 | middle-right | mixed | 7.5-throw median,23,0.08646616541353383,16,7,0.6956521739130435,0.6422093993783708,8.0,0.4782608695652174,14.7,94.33
-windchill,Minnesota Wind Chill,2,2,Codex pattern 09 | middle-middle | direct | 4.5-throw median,24,0.09022556390977443,19,5,0.7916666666666666,0.7580823290804221,4.5,0.875,15.35,88.19
-windchill,Minnesota Wind Chill,3,3,Codex pattern 23 | right-right | mixed | 11-throw median,16,0.06015037593984962,11,5,0.6875,0.7302031087547521,10.5,0.4375,18.06,88.38499999999999
-spiders,Oakland Spiders,1,1,Codex O-line pattern 15 | middle-middle | mixed | 8-throw median,29,0.10902255639097744,13,16,0.4482758620689655,0.34820344584672713,6.0,0.6551724137931034,12.36,88.7
-spiders,Oakland Spiders,2,2,Codex O-line pattern 18 | middle-left | mixed | 8-throw median,14,0.05263157894736842,13,1,0.9285714285714286,0.9177766919102874,8.0,0.21428571428571427,44.995000000000005,60.385
-spiders,Oakland Spiders,3,3,Codex O-line pattern 21 | middle-left | mixed | 10-throw median,11,0.041353383458646614,10,1,0.9090909090909091,0.8870682891941808,9.0,0.0,20.0,82.06
+rank,team_id,team_name,pattern,group_index,title,n,share,goals,turnovers,goal_ending_share,total_aec_per_possession,median_throws,huck_rate,median_start_y,median_field_progress
+1,spiders,Oakland Spiders,2,2,Codex O-line pattern 18 | middle-left | mixed | 8-throw median,14,0.05263157894736842,13,1,0.9285714285714286,0.9177766919102874,8.0,0.21428571428571427,44.995000000000005,60.385
+2,spiders,Oakland Spiders,3,3,Codex O-line pattern 21 | middle-left | mixed | 10-throw median,11,0.041353383458646614,10,1,0.9090909090909091,0.8870682891941808,9.0,0.0,20.0,82.06
+3,empire,New York Empire,1,1,Codex O-line pattern 22 | middle-right | mixed | 9-throw median,33,0.12840466926070038,27,6,0.8181818181818182,0.796245414073768,8.0,0.42424242424242425,12.68,95.38
+4,empire,New York Empire,3,3,Codex O-line pattern 23 | middle-middle | mixed | 9-throw median,11,0.042801556420233464,9,2,0.8181818181818182,0.8267516670511281,8.0,0.8181818181818182,11.38,96.89
+5,sol,Austin Sol,1,1,Codex O-line pattern 28 | middle-right | mixed | 12.5-throw median,25,0.08771929824561403,20,5,0.8,0.7616162072220416,13.0,0.44,22.15,83.35
+6,empire,New York Empire,2,2,Codex O-line pattern 07 | middle-middle | direct | 3-throw median,20,0.07782101167315175,16,4,0.8,0.7015327924603196,3.0,1.0,14.52,93.47500000000001
+7,windchill,Minnesota Wind Chill,1,2,Codex pattern 09 | middle-middle | direct | 4.5-throw median,24,0.09022556390977443,19,5,0.7916666666666666,0.7580823290804221,4.5,0.875,15.35,88.19
+8,sol,Austin Sol,2,2,Codex O-line pattern 25 | middle-left | mixed | 12-throw median,13,0.0456140350877193,10,3,0.7692307692307693,0.7668031202314034,10.0,0.38461538461538464,4.77,104.17999999999999
+9,sol,Austin Sol,3,3,Codex O-line pattern 12 | middle-middle | mixed | 5-throw median,12,0.042105263157894736,9,3,0.75,0.6492362911804889,5.0,0.9166666666666666,12.25,92.435
+10,windchill,Minnesota Wind Chill,2,1,Codex pattern 15 | middle-right | mixed | 7.5-throw median,23,0.08646616541353383,16,7,0.6956521739130435,0.6422093993783708,8.0,0.4782608695652174,14.7,94.33
+11,windchill,Minnesota Wind Chill,3,3,Codex pattern 23 | right-right | mixed | 11-throw median,16,0.06015037593984962,11,5,0.6875,0.7302031087547521,10.5,0.4375,18.06,88.38499999999999
+12,spiders,Oakland Spiders,1,1,Codex O-line pattern 15 | middle-middle | mixed | 8-throw median,29,0.10902255639097744,13,16,0.4482758620689655,0.34820344584672713,6.0,0.6551724137931034,12.36,88.7
