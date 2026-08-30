@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - ".github/workflows/possession-browser-pages.yml"
-      - "index.html"
       - "data/arrangements/**"
       - "data/raw/shownspace_throws_2026_by_game/**"
       - "scripts/export_possession_pattern_browser.py"
@@ -47,9 +46,6 @@ jobs:
           --team glory
           --season 2026
           --output-dir outputs/possession_browsers
-
-      - name: Add lightweight landing page
-        run: cp index.html outputs/possession_browsers/index.html
 
       - name: Validate generated site
         run: |
