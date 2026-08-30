@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4efe6" />
+    <meta
+      name="description"
+      content="Explore how ultimate possessions move through the field."
+    />
+    <meta property="og:title" content="Possession Browser" />
+    <meta
+      property="og:description"
+      content="Explore how ultimate possessions move through the field."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tttaussig33.github.io/frisbee-analytics/" />
+    <title>Possession Browser</title>
+    <style>
+      :root {
+        --ink: #15241f;
+        --muted: #5b7067;
+        --paper: #f4efe6;
+        --lime: #cbed69;
+        --coral: #ef795f;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { min-height: 100%; }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 82% 12%, rgba(203, 237, 105, .42), transparent 18rem),
+          var(--paper);
+        font-family: Arial, Helvetica, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 28px;
+      }
+
+      .card {
+        width: min(620px, 100%);
+        padding: clamp(34px, 8vw, 72px);
+        border: 1px solid rgba(21, 36, 31, .15);
+        background: rgba(255, 253, 248, .78);
+        box-shadow: 16px 18px 0 rgba(21, 36, 31, .08);
+      }
+
+      .mark {
+        display: flex;
+        align-items: end;
+        gap: 4px;
+        width: 32px;
+        height: 28px;
+        margin-bottom: 48px;
+        padding: 3px;
+        border: 1px solid var(--ink);
+        border-radius: 50%;
+        transform: rotate(-24deg);
+      }
+
+      .mark span {
+        display: block;
+        width: 5px;
+        border-radius: 99px;
+        background: var(--ink);
+      }
+
+      .mark span:nth-child(1) { height: 9px; }
+      .mark span:nth-child(2) { height: 15px; }
+      .mark span:nth-child(3) { height: 20px; }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        margin: 0 9px 1px 0;
+        border-radius: 50%;
+        background: var(--coral);
+        content: "";
+      }
+
+      h1 {
+        max-width: 470px;
+        margin: 0 0 22px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(48px, 10vw, 86px);
+        font-weight: 400;
+        letter-spacing: -.065em;
+        line-height: .92;
+      }
+
+      h1 em { color: #b84b34; font-style: italic; }
+
+      p {
+        max-width: 390px;
+        margin: 0 0 32px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        min-height: 50px;
+        padding: 0 20px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: #fffdf8;
+        font-size: 12px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: transform 180ms ease, background 180ms ease;
+      }
+
+      a:hover { background: #29473c; transform: translateY(-2px); }
+
+      small {
+        display: block;
+        margin-top: 34px;
+        color: #71837b;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 520px) {
+        main { padding: 16px; }
+        .card { padding: 32px 25px; }
+        .mark { margin-bottom: 38px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <div class="mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="eyebrow">UFA / 2026</p>
+        <h1>Every possession <em>has a shape.</em></h1>
+        <p>
+          A visual browser for seeing how ultimate offenses move the disc —
+          one real possession, one field path, one pattern at a time.
+        </p>
+        <a href="2026-glory.html">Open the possession browser <span aria-hidden="true">→</span></a>
+        <small>Interactive browser · Boston Glory · goals + turnovers</small>
+      </section>
+    </main>
+  </body>
+</html>
