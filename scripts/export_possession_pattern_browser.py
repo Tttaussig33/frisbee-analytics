@@ -93,6 +93,36 @@ def _arrangement_sort_key(path, team_id):
     return (2, path.name.casefold())
 
 
+def _paper_selections(team_id, season):
+    """Use the published paper's exact possession IDs and pattern order."""
+    metrics_path = REPO_ROOT / "paper" / "generated" / "metrics.json"
+    if not metrics_path.exists():
+        return None
+    metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+    if not str(metrics.get("regular_season_start", "")).startswith(f"{season}-"):
+        return None
+    team = metrics.get("focus_patterns", {}).get(team_id)
+    if not team:
+        return None
+    return {
+        "team_name": team["team_name"],
+        "regular_season_start": metrics["regular_season_start"],
+        "regular_season_end": metrics["regular_season_end"],
+        "groups": [
+            {
+                "title": f"Paper pattern {index}",
+                "paper_pattern": index,
+                "break_before": True,
+                "possessions": [
+                    {"possession_id": possession_id, "overlay_selected": False}
+                    for possession_id in pattern["ids"]
+                ],
+            }
+            for index, pattern in enumerate(team["patterns"], start=1)
+        ],
+    }
+
+
 def _write_index(output_dir, season, default_team, team_ids):
     default_page = f"{season}-{default_team}.html"
     links = "\n".join(
@@ -238,6 +268,7 @@ def main():
             team_options=navigation_options,
             persistence_key=f"{args.season}:{export_team_id}",
             project_arrangements=project_arrangements,
+            paper_selections=_paper_selections(export_team_id, args.season),
         )
         print(
             f"{export_team_id.title()}: {len(game_files):,} games, "

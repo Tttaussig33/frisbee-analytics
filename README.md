@@ -20,6 +20,12 @@ The paper focuses on regular-season O-line possessions from four 2026 UFA semifi
 
 Goals and turnovers are included so the selected patterns can be compared using observed offensive efficiency (OOE), total aEC per possession, throw count, and field-path overlays.
 
+Each of these four teams' browser pages opens with the paper's three selected
+patterns at the top, using the same regular-season O-line possessions as the
+figures. Use the pattern buttons to jump to a group, **Show paper selections**
+to return to that view, or **Resume saved layout** to continue your own local
+arrangement. Other possessions remain available below the paper groups.
+
 ## Local development
 
 The browser is generated from the cached play-by-play data with:

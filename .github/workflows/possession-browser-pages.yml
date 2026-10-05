@@ -8,6 +8,7 @@ on:
       - ".github/workflows/possession-browser-pages.yml"
       - "index.html"
       - "data/arrangements/**"
+      - "paper/generated/metrics.json"
       - "data/raw/shownspace_throws_2026_by_game/**"
       - "scripts/export_possession_pattern_browser.py"
       - "src/ufa/**"

@@ -3290,7 +3290,9 @@ def render_possession_free_board(
         "? Boolean(group.break_before)"
         ": (groupIndex > 0 || title !== 'Group 1');"
         "if (breakBefore) {"
-        "board.appendChild(makeBreak(title, groupIndex + 1, Boolean(group.auto_unsorted)));"
+        "const breaker = makeBreak(title, groupIndex + 1, Boolean(group.auto_unsorted));"
+        "if (group.paper_pattern) { breaker.dataset.paperPattern = group.paper_pattern; }"
+        "board.appendChild(breaker);"
         "}"
         "(group.possessions || []).forEach(function(possession) {"
         "const card = cardMap[possession.possession_id];"
@@ -3305,7 +3307,7 @@ def render_possession_free_board(
         ".filter(function(possessionId) { return !usedIds.has(possessionId); })"
         ".map(function(possessionId) { return cardMap[possessionId]; });"
         "if (unlistedCards.length) {"
-        "const stagingBreak = makeBreak('Unsorted: new cards',"
+        "const stagingBreak = makeBreak(payload.unlisted_title || 'Unsorted: new cards',"
         "(payload.groups || []).length + 1, true);"
         "board.appendChild(stagingBreak);"
         "unlistedCards.forEach(function(card) { board.appendChild(card); });"
@@ -3315,7 +3317,9 @@ def render_possession_free_board(
         "output.style.display = 'none';"
         "}"
         "if (status) {"
-        "const sourceLabel = pendingSource === 'project'"
+        "const sourceLabel = pendingSource === 'paper'"
+        "? 'Paper selections loaded first. Other possessions follow below.'"
+        ": pendingSource === 'project'"
          "? 'Loaded ' + (pendingLabel || 'project') + ' arrangement.'"
          ": pendingSource === 'import'"
          "? 'Imported ' + (pendingLabel || 'JSON') + ' arrangement.'"
@@ -4669,6 +4673,7 @@ def write_possession_pattern_browser_html(
     persistence_key=None,
     project_arrangement_text=None,
     project_arrangements=None,
+    paper_selections=None,
 ):
     """Write a standalone HTML free-arrange possession browser."""
     output_path = Path(output_path)
@@ -4685,6 +4690,51 @@ def write_possession_pattern_browser_html(
     if max_cards is None:
         max_cards = len(browser_possessions)
     max_cards = max(1, min(int(max_cards), len(browser_possessions)))
+    paper_selections_html = ""
+    if paper_selections:
+        available_ids = set(browser_possessions.head(max_cards)["possession_id"])
+        paper_total = sum(len(group["possessions"]) for group in paper_selections["groups"])
+        paper_groups = [
+            {
+                **group,
+                "possessions": [
+                    card for card in group["possessions"]
+                    if card["possession_id"] in available_ids
+                ],
+            }
+            for group in paper_selections["groups"]
+        ]
+        available_total = sum(len(group["possessions"]) for group in paper_groups)
+        if available_total:
+            paper_payload = {
+                "groups": paper_groups,
+                "unlisted_title": "Other possessions (not selected for the paper)",
+            }
+            paper_buttons = "".join(
+                f'<button type="button" data-paper-jump="{int(group["paper_pattern"])}">'
+                f'{escape(group["title"])} · {len(group["possessions"])} possessions</button>'
+                for group in paper_groups
+            )
+            availability_note = (
+                f" {available_total} of {paper_total} paper possessions are available on this page."
+                if available_total != paper_total else ""
+            )
+            paper_selections_html = f"""
+            <section class="standalone-filters standalone-paper-selections"
+              aria-label="Selections used in the paper">
+              <div class="standalone-paper-description">
+                <strong>{escape(paper_selections['team_name'])}: selections used in the paper</strong>
+                <p>Regular-season O-line goals and turnovers. The three analyzed groups load first;
+                  other possessions follow below.{availability_note}</p>
+              </div>
+              <div class="standalone-paper-actions">
+                {paper_buttons}
+                <button id="standaloneLoadPaper" type="button">Show paper selections</button>
+                <button id="standaloneResumeLocal" type="button" hidden>Resume saved layout</button>
+              </div>
+              <textarea id="standalonePaperData" hidden>{escape(json.dumps(paper_payload))}</textarea>
+            </section>
+            """
     throw_counts = pd.to_numeric(
         browser_possessions.get("throw_count"), errors="coerce"
     ).dropna()
@@ -4945,6 +4995,10 @@ def write_possession_pattern_browser_html(
             letter-spacing: 0.08em;
             text-transform: uppercase;
           }
+          .standalone-paper-selections { display: block; }
+          .standalone-paper-description p { margin: 6px 0 12px; font-size: 13px; }
+          .standalone-paper-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+          .ufa-free-row-break[data-paper-pattern] { scroll-margin-top: 160px; }
           .standalone-filters select,
           .standalone-filters input,
           .standalone-filters button {
@@ -5652,6 +5706,7 @@ def write_possession_pattern_browser_html(
               <span id="standaloneVisibleCount" class="standalone-count"></span>
             </section>
             <main id="standaloneBrowser" class="standalone-browser">
+              {paper_selections_html}
               {board_html}
             </main>
           </div>
@@ -5698,6 +5753,9 @@ def write_possession_pattern_browser_html(
                 '.ufa-free-import-arrangement-file'
               );
               const arrangementStatus = browser.querySelector('.ufa-free-export-status');
+              const paperData = document.getElementById('standalonePaperData');
+              const loadPaperButton = document.getElementById('standaloneLoadPaper');
+              const resumeLocalButton = document.getElementById('standaloneResumeLocal');
               const recoveryHistory = browser.querySelector('.ufa-free-recovery-history');
               const recoveryRestore = browser.querySelector('.ufa-free-recovery-restore');
               const recoveryStatus = browser.querySelector('.ufa-free-recovery-status');
@@ -5764,6 +5822,7 @@ def write_possession_pattern_browser_html(
               let recoveryTimer = null;
               let recoveryApplying = false;
               let recoveryObserver = null;
+              let lastRecoverySignature = null;
               const recoveryLimit = 5;
 
               if (importArrangementButton && importArrangementFile) {{
@@ -6380,6 +6439,14 @@ def write_possession_pattern_browser_html(
                 if (recoveryApplying || !recoveryStorageKey) {{ return; }}
                 const payload = serializeRecoveryArrangement();
                 const signature = recoverySignature(payload);
+                // Merely opening the paper view must not replace a local save.
+                if (signature === lastRecoverySignature) {{
+                  if (recoveryStatus) {{
+                    recoveryStatus.textContent = 'Ready';
+                    recoveryStatus.title = 'No new changes to save';
+                  }}
+                  return;
+                }}
                 const snapshots = readRecoverySnapshots();
                 if (snapshots.length && snapshots[0].signature === signature) {{
                   if (recoveryStatus) {{
@@ -6399,6 +6466,8 @@ def write_possession_pattern_browser_html(
                 }};
                 snapshots.unshift(snapshot);
                 if (!writeRecoverySnapshots(snapshots)) {{ return; }}
+                lastRecoverySignature = signature;
+                if (resumeLocalButton) {{ resumeLocalButton.hidden = false; }}
                 if (recoveryStatus) {{
                   recoveryStatus.textContent = 'Saved';
                   recoveryStatus.title = 'Autosaved '
@@ -6514,13 +6583,14 @@ def write_possession_pattern_browser_html(
                 return true;
               }}
 
-              function startRecovery() {{
+              function startRecovery(openedPaper) {{
                 if (!recoveryStorageKey || !recoveryHistory || !recoveryRestore) {{
                   return;
                 }}
                 const snapshots = readRecoverySnapshots();
                 refreshRecoveryHistory();
-                if (snapshots.length) {{
+                if (resumeLocalButton) {{ resumeLocalButton.hidden = !snapshots.length; }}
+                if (snapshots.length && !openedPaper) {{
                   applyRecoverySnapshot(snapshots[0], true);
                 }} else if (recoveryStatus) {{
                   recoveryStatus.textContent = 'Saved';
@@ -6579,7 +6649,7 @@ def write_possession_pattern_browser_html(
                 }});
 
                 window.setTimeout(function () {{
-                  if (!snapshots.length) {{ return; }}
+                  if (openedPaper || !snapshots.length) {{ return; }}
                   const currentSignature = recoverySignature(serializeRecoveryArrangement());
                   if (currentSignature !== snapshots[0].signature) {{
                     scheduleRecoverySave();
@@ -6841,6 +6911,8 @@ def write_possession_pattern_browser_html(
                 refreshVisibleOverlay();
                 count.textContent = visible.toLocaleString() + ' shown of '
                   + matched.toLocaleString() + ' matching possessions';
+                const boardMeta = browser.querySelector('.ufa-free-board-content > .ufa-free-board-meta');
+                if (boardMeta) {{ boardMeta.textContent = count.textContent; }}
               }}
 
               [lineFilter, outcomeFilter, huckFilter, minThrows, maxThrows, cardLimit]
@@ -6926,8 +6998,56 @@ def write_possession_pattern_browser_html(
                 }});
               }}).observe(board, {{ childList: true }});
 
-              startRecovery();
+              function loadPaperSelections(automatic) {{
+                if (!paperData || !loadCheckpointButton) {{ return false; }}
+                board._ufaPendingArrangementText = paperData.value;
+                board._ufaPendingArrangementSource = 'paper';
+                board._ufaSuppressUndo = Boolean(automatic);
+                try {{
+                  loadCheckpointButton.click();
+                }} finally {{
+                  board._ufaSuppressUndo = false;
+                }}
+                lineFilter.value = 'o_line';
+                outcomeFilter.value = 'all';
+                huckFilter.value = 'all';
+                minThrows.value = '{min_throw_count}';
+                maxThrows.value = '{max_throw_count}';
+                cardLimit.value = '{max_cards}';
+                exactThrowCountInputs.forEach(function (input) {{ input.checked = false; }});
+                if (showOutcomeLabels) {{ showOutcomeLabels.checked = true; }}
+                updateExactThrowSummary();
+                previousThrowRange = null;
+                previousOutcomeFilter = null;
+                return true;
+              }}
+
+              if (loadPaperButton) {{
+                loadPaperButton.addEventListener('click', function () {{
+                  loadPaperSelections(false);
+                  applyFilters();
+                }});
+                browser.querySelectorAll('[data-paper-jump]').forEach(function (button) {{
+                  button.addEventListener('click', function () {{
+                    const selector = '[data-paper-pattern="' + button.dataset.paperJump + '"]';
+                    if (!board.querySelector(selector)) {{ loadPaperSelections(false); }}
+                    applyFilters();
+                    const row = board.querySelector(selector);
+                    if (row) {{ row.scrollIntoView({{ block: 'start' }}); }}
+                  }});
+                }});
+              }}
+              if (resumeLocalButton) {{
+                resumeLocalButton.addEventListener('click', function () {{
+                  const snapshot = readRecoverySnapshots()[0];
+                  if (snapshot) {{ applyRecoverySnapshot(snapshot, false); }}
+                }});
+              }}
+
+              const openedPaper = loadPaperSelections(true);
+              startRecovery(openedPaper);
               applyFilters();
+              lastRecoverySignature = recoverySignature(serializeRecoveryArrangement());
             }})();
           </script>
         </body>
